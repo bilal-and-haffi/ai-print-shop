@@ -8,12 +8,6 @@ export default function Home() {
     setPrompt(e.target.value)
   }
 
-  function onKeyDownHandler(event: KeyboardEvent<HTMLTextAreaElement>): void {
-    if (event.key === 'Enter') {
-      generateImage();
-    }
-  }
-
   const onGenerateButtonChange = () => {
     generateImage()
   }
@@ -37,7 +31,7 @@ export default function Home() {
       <h1 className="text-4xl font-bold">AI Personalised Gift Shop</h1>
       <p className="text-xl">Hoodies, T-shirts, Mugs, and more!</p>
       <Image src={'/hoodie.svg'} alt="Hoodie" width={200} height={200} priority={true} />
-      <textarea placeholder="Enter your promt here!" value={prompt} onChange={onInputChanged} className="text-black rounded-2xl p-8" onKeyDown={onKeyDownHandler} />
+      <textarea placeholder="Enter your promt here!" value={prompt} onChange={onInputChanged} className="text-black rounded-2xl p-8" />
       <button className='border-2 p-2 m-2' onClick={onGenerateButtonChange}>Generate</button>
 
     </main>

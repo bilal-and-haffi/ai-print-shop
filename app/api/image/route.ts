@@ -27,7 +27,7 @@ export async function POST(req: Request, res: Response) {
   }
 
 // Function to call OpenAI API using OpenAI npm package
-const generateImage = async (text: string) => {
+const generateImage = async (prompt: string) => {
     try {
       const apiKey = process.env.OPENAI_API_KEY;
       if (!apiKey) {
@@ -40,7 +40,7 @@ const generateImage = async (text: string) => {
   
       // Make API request
       const response = await openai.images.generate({
-        prompt: text,
+        prompt,
         n: 1, // Number of images to generate,
         response_format: 'b64_json', // Format of the response
       });
@@ -51,7 +51,7 @@ const generateImage = async (text: string) => {
       const b64Json = response.data[0].b64_json!;
       const imageB64Json = IMAGE_PREFIX + b64Json;
       try {
-        saveBase64AsFile(imageB64Json, 'image.jpg');
+        saveBase64AsFile(imageB64Json, 'app/api/image/generatedImage' + prompt + '.png');
       } catch (error) {
         console.error('Error saving the file:', error);
       }

@@ -41,7 +41,7 @@ export default function Home() {
       <Image src={'/hoodie.svg'} alt="Hoodie" width={200} height={200} priority={true} />
       <textarea placeholder="Enter your promt here!" value={prompt} onChange={onInputChanged} className="text-black rounded-2xl p-8" onKeyDown={onKeyDown} />
       <button className='border-2 p-2 m-2' onClick={onGenerateButtonChange}>Generate</button>
-      {image ? <Image src={'data:image/png;base64,' + image} alt="Generated Image" width={300} height={300} /> : <span> No image Yet </span>}
+      {image ? <Image src={image} alt="Generated Image" width={300} height={300} /> : <span> No image Yet </span>}
     </main>
   );
 }

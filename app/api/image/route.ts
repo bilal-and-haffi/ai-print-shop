@@ -1,6 +1,8 @@
 import { OpenAI } from "openai";
 import * as fs from 'fs';
 
+const IMAGE_PREFIX = 'data:image/png;base64,';
+
 function saveBase64AsFile(base64Data: string, filename: string): void {
     const base64Image: string = base64Data.split(';base64,').pop() || '';
     
@@ -47,14 +49,14 @@ const generateImage = async (text: string) => {
   
       // Log image URL
       const b64Json = response.data[0].b64_json!;
-      console.log({b64Json})
+      const imageB64Json = IMAGE_PREFIX + b64Json;
       try {
-        // saveBase64AsFile(b64Json, 'image.jpg');
+        saveBase64AsFile(imageB64Json, 'image.jpg');
       } catch (error) {
         console.error('Error saving the file:', error);
       }
 
-      return b64Json;
+      return imageB64Json;
     } catch (error) {
       console.error('Error generating image:', error);
       throw new Error('Error generating image');

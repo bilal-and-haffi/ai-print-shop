@@ -1,6 +1,19 @@
 import { OpenAI } from "openai";
+import * as fs from 'fs';
 
-export async function POST(req: Request) {
+function saveBase64AsFile(base64Data: string, filename: string): void {
+    const base64Image: string = base64Data.split(';base64,').pop() || '';
+    
+    fs.writeFile(filename, base64Image, {encoding: 'base64'}, (err: NodeJS.ErrnoException | null) => {
+        if (err) {
+            console.error('Error saving the file:', err);
+        } else {
+            console.log('File created');
+        }
+    });
+}
+
+export async function POST(req: Request, res: Response) {
   const reqJson = await req.json();
   const { text } = reqJson;
 
@@ -26,12 +39,22 @@ const generateImage = async (text: string) => {
       // Make API request
       const response = await openai.images.generate({
         prompt: text,
-        n: 1 // Number of images to generate
+        n: 1, // Number of images to generate,
+        response_format: 'b64_json', // Format of the response
       });
+
+      console.log(response.data[0])
   
       // Log image URL
-      const imageUrl = response.data[0].url;
-      return imageUrl;
+      const b64Json = response.data[0].b64_json!;
+      console.log({b64Json})
+      try {
+        // saveBase64AsFile(b64Json, 'image.jpg');
+      } catch (error) {
+        console.error('Error saving the file:', error);
+      }
+
+      return b64Json;
     } catch (error) {
       console.error('Error generating image:', error);
       throw new Error('Error generating image');

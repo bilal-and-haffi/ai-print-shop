@@ -4,7 +4,8 @@ Mostly from https://chat.openai.com/c/97f8530f-d52f-46a0-95ee-7691530bb250
   - [ ] Ensure the image meets Printify's format and resolution requirements.
   - [x] Implement a system to store images temporarily.
   - [ ] test on prod -- how???
-  - [ ] 
+  - [ ] Display image on frontend 
+      - [x] test on prod
 
 - [ ] **Create a Product with the Custom Image**
   - [ ] Use the Printify API to dynamically create a product when a purchase is intended.

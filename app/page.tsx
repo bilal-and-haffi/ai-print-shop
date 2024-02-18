@@ -1,5 +1,5 @@
 'use client'
-import { ChangeEvent, useState, KeyboardEvent } from "react";
+import { ChangeEvent, useState, KeyboardEvent, useEffect } from "react";
 import Image from 'next/image'
 
 export default function Home() {
@@ -8,6 +8,10 @@ export default function Home() {
   const onInputChanged = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setPrompt(e.target.value)
   }
+
+  useEffect(() => {
+    fetchShop()
+  }, [])
 
   const onKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter') {
@@ -32,6 +36,12 @@ export default function Home() {
       .then(data => {
         setImage(data);
       })
+  }
+
+  async function fetchShop() {
+    const res = await fetch('/api/shop')
+    const data = await res.json()
+    console.log({ data })
   }
 
   return (

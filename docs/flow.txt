@@ -1,0 +1,9 @@
+The front end sends the prompt to the backend. 
+
+The backend generates an image and sends it to pritify to store and keeps the id - maybe name it a certain way 
+
+Then we want to add the product to the printify store 
+
+For this we need the image id 
+
+Do we need a database? I think not right now

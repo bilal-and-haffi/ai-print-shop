@@ -5,6 +5,7 @@ Mostly from https://chat.openai.com/c/97f8530f-d52f-46a0-95ee-7691530bb250
   - [x] Implement a system to store images temporarily.
   - [x] Display image on frontend 
       - [x] test on prod
+- [ ] Post generated image to printify so that it can be used in a product 
 
 - [ ] **Create a Product with the Custom Image**
   - [ ] Use the Printify API to dynamically create a product when a purchase is intended.

@@ -6,21 +6,37 @@ export interface Image {
 export interface PrintifyProductRequest {
   title: string;
   description: string;
-  price: number;
   blueprint_id: number;
   print_provider_id: number;
-  variants: {
-    id: number;
-    price: number;
-  }[]
-  print_areas: [{
-    variant_ids: number[],
-    placeholders: [{
-        position: string,
-        images: string[]
-    }],
-  }]
+  variants: PrintifyVariantRequest[];
+  print_areas: PrintifyPrintAreaRequest[];
 }
+
+interface PrintifyVariantRequest {
+  id: number;
+  price: number;
+  is_enabled?: boolean;
+}
+
+interface PrintifyPrintAreaRequest {
+  variant_ids: number[];
+  placeholders: PrintifyPlaceholderRequest[];
+}
+
+interface PrintifyPlaceholderRequest {
+  position: string;
+  images: PrintifyImageRequest[];
+}
+
+interface PrintifyImageRequest {
+  id: string;
+  x: number;
+  y: number;
+  scale: number;
+  angle: number;
+}
+
+
 
 export interface PrintifyImageResponse { 
   id: string; 

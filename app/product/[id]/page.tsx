@@ -1,5 +1,5 @@
-import { PRINTIFY_BASE_URL } from "@/app/api/generateImage/route";
 import { Product } from "@/app/components/Product";
+import { PRINTIFY_BASE_URL } from "@/app/image/[prompt]/page";
 import { RetrieveProductResponse } from "@/interfaces/PrintifyTypes";
 
 export default async function ProductPage({ params }: { params: { id: string } }) {

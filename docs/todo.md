@@ -1,9 +1,10 @@
 - [x] post product
 - [x] get product 
 - [x] show product 
+- [x] image request shouldn't fail 
 - [ ] customer should be able to use ui on mobile and it should look pretty
-- [ ] image request shouldn't fail 
-    - [ ] I think it fails due to immediately requesting it before it is ready
+- [ ] User should not be able to create multiple products for the same prompt
+- [ ] unsused products should be deleted from printify 
 - [ ] the customer should be able to select their product
 - [ ] customer should be able to order their product 
 - [ ] customer should be able to pay for their product - stripe 

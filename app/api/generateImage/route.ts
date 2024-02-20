@@ -1,7 +1,7 @@
 import { OpenAI } from "openai";
 import { PrintifyImageResponse, PrintifyProductRequest, RetrieveProductResponse } from "@/interfaces/PrintifyTypes";
 
-const PRINTIFY_BASE_URL = 'https://api.printify.com';
+export const PRINTIFY_BASE_URL = 'https://api.printify.com';
 
 export async function POST(req: Request) {
     try {
@@ -49,19 +49,6 @@ export async function POST(req: Request) {
         console.error(error);
         return Response.error();
     }
-}
-
-export async function retrieveAProduct(product_id: string) {
-    const endpoint = `${PRINTIFY_BASE_URL}/v1/shops/${process.env.SHOP_ID}/products/${product_id}.json`;
-    const response = await fetch(endpoint, {
-        headers: {
-            'Content-Type': 'application/json',
-            authorization: `Bearer ${process.env.PRINTIFY_API_TOKEN}`
-        }
-    });
-    const retrievedProduct = await response.json() as RetrieveProductResponse;
-    console.log({product: retrievedProduct});
-    return retrievedProduct;
 }
 
 export async function publishPrintifyProduct(product_id: string) {

@@ -46,7 +46,7 @@ export default function Home() {
     }
 
     return (
-        <main className="flex min-h-screen flex-col items-center py-8 space-y-4 justify-between md:py-96">
+        <>
             <div id="heading">
                 <h1 className="text-2xl font-bold">AI Personalised Gift Shop</h1>
             </div>
@@ -56,6 +56,6 @@ export default function Home() {
                 <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline' onClick={onGenerateButtonChange}>Generate</button>
             </div>
             {image ? <Image src={image} alt="Generated Image" width={300} height={300} />: <Image src={'/hoodie.svg'} alt="Hoodie" width={100} height={100} priority={true} />}
-        </main>
+        </>
     );
 }

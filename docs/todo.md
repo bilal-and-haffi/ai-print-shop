@@ -3,11 +3,17 @@
 - [x] show product 
 - [x] image request shouldn't fail 
 - [ ] User should not be able to create multiple products for the same prompt -- will prevent hitting rate limit.
-    - [ ] 
-- [ ] we should post the order to printify - https://developers.printify.com/#what-you-can-do-with-the-order-resource
-- [ ] customer should be able to pay for their product - stripe 
+    - [ ] can implement this by having a page in between the getting of a new image and displaying it. so that refresh will not trigger new request. - but add a get new image button and a go back to home button. 
+- [ ] user should be able to buy their product
+    - [ ] buy now button should take to checkout 
+    - [ ] show product detail, price and shipping price 
+        - [ ] there's a printify endpoint for shopping cost 
+    - [ ] handle payment 
+    - [ ] submit order to printify - https://developers.printify.com/#what-you-can-do-with-the-order-resource
+    - [ ] see if anything else needs doing 
 - [ ] customer should be able to use ui on mobile and it should look pretty
-- [ ] unsused products should be deleted from printify 
+- [ ] unsused products should be automatically deleted from printify after a few days or weeks. 
+- [ ] user should get email with their products so that they can buy later if they decide to
 - [ ] the customer should be able to select their product
 - [ ] customer should be able to order their product 
 - [ ] add loading spinner while generating image because its slow -- maybe should lower resolution

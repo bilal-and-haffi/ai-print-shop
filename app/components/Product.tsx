@@ -1,4 +1,3 @@
-'use client'
 import { RetrieveProductResponse } from "@/interfaces/PrintifyTypes";
 import Image from 'next/image'
 

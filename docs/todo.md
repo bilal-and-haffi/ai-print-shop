@@ -2,13 +2,14 @@
 - [x] get product 
 - [x] show product 
 - [x] image request shouldn't fail 
+- [ ] User should not be able to create multiple products for the same prompt -- will prevent hitting rate limit.
+    - [ ] 
+- [ ] we should post the order to printify - https://developers.printify.com/#what-you-can-do-with-the-order-resource
+- [ ] customer should be able to pay for their product - stripe 
 - [ ] customer should be able to use ui on mobile and it should look pretty
-- [ ] User should not be able to create multiple products for the same prompt
 - [ ] unsused products should be deleted from printify 
 - [ ] the customer should be able to select their product
 - [ ] customer should be able to order their product 
-- [ ] customer should be able to pay for their product - stripe 
-- [ ] we should post the order to printify - https://developers.printify.com/#what-you-can-do-with-the-order-resource
 - [ ] add loading spinner while generating image because its slow -- maybe should lower resolution
 - [ ] reduce time taken between submitting text and getting response
 - [ ] split frontend into components and use server components for pages and components as much a possible 

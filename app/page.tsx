@@ -1,4 +1,3 @@
-'use client'
 import { TextAreaAndButton } from "./components/TextAreaAndButton";
 import Image from 'next/image'
 

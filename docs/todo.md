@@ -10,3 +10,4 @@
 - [ ] we should post the order to printify - https://developers.printify.com/#what-you-can-do-with-the-order-resource
 - [ ] add loading spinner while generating image because its slow -- maybe should lower resolution
 - [ ] reduce time taken between submitting text and getting response
+- [ ] split frontend into components and use server components for pages and components as much a possible 

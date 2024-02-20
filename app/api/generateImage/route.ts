@@ -1,5 +1,5 @@
 import { OpenAI } from "openai";
-import { CreateProductResponse, PrintifyImageResponse, PrintifyProductRequest } from "@/interfaces/Printify";
+import { PrintifyImageResponse, PrintifyProductRequest, RetrieveProductResponse } from "@/interfaces/PrintifyTypes";
 
 const PRINTIFY_BASE_URL = 'https://api.printify.com';
 
@@ -60,7 +60,7 @@ async function retrieveAProduct(product_id: string) {
             authorization: `Bearer ${process.env.PRINTIFY_API_TOKEN}`
         }
     });
-    const retrievedProduct = await response.json();
+    const retrievedProduct = await response.json() as RetrieveProductResponse;
     console.log({product: retrievedProduct});
     return retrievedProduct;
 }

@@ -1,10 +1,13 @@
 'use client'
 import { ChangeEvent, useState, KeyboardEvent, useEffect, useCallback } from "react";
 import Image from 'next/image'
+import { Product } from "./components/Product";
+import { RetrieveProductResponse } from "@/interfaces/PrintifyTypes";
 
 export default function Home() {
     const [prompt, setPrompt] = useState<string>("")
     const [image, setImage] = useState<string | undefined>(undefined)
+    const [retrievedProduct, setRetrievedProduct] = useState<RetrieveProductResponse | undefined>(undefined)
     const onInputChanged = (e: ChangeEvent<HTMLTextAreaElement>) => {
         setPrompt(e.target.value)
     } 
@@ -35,6 +38,7 @@ export default function Home() {
         const { url: imageUrl, retrievedProduct} = await response.json()
         console.log({imageUrl, retrievedProduct})
         setImage(imageUrl);
+        setRetrievedProduct(retrievedProduct);
     }
 
     return (
@@ -45,6 +49,7 @@ export default function Home() {
             <textarea placeholder="Enter your promt here!" value={prompt} onChange={onInputChanged} className="text-black rounded-2xl p-8" onKeyDown={onKeyDown} />
             <button className='border-2 p-2 m-2' onClick={onGenerateButtonChange}>Generate</button>
             {image ? <Image src={image} alt="Generated Image" width={300} height={300} /> : <span> No image Yet </span>}
+            {retrievedProduct ? <Product retrievedProduct={retrievedProduct} /> : <span> No product Yet </span>}
         </main>
     );
 }

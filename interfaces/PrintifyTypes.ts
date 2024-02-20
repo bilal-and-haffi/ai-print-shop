@@ -1,8 +1,7 @@
 export interface Image {
   id: string;
-
-
 }
+
 export interface PrintifyProductRequest {
   title: string;
   description: string;
@@ -34,13 +33,13 @@ export interface CreateProductResponse {
   sales_channel_properties: any[]; // Adjust type accordingly
 }
 
-interface ProductOption {
+export interface ProductOption {
   name: string;
   type: string;
   values: { id: number; title: string }[];
 }
 
-interface ProductVariant {
+export interface ProductVariant {
   id: number;
   sku: string;
   cost: number;
@@ -54,20 +53,20 @@ interface ProductVariant {
   options: number[];
 }
 
-interface ProductImage {
+export interface ProductImage {
   src: string;
   variant_ids: number[];
   position: string;
   is_default: boolean;
 }
 
-interface PrintArea {
+export interface PrintArea {
   variant_ids: number[];
   placeholders: Placeholder[];
   background: string;
 }
 
-interface Placeholder {
+export interface Placeholder {
   position: string;
   images: {
       id: string;
@@ -82,31 +81,29 @@ interface Placeholder {
   }[];
 }
 
-interface PrintifyVariantRequest {
+export interface PrintifyVariantRequest {
   id: number;
   price: number;
   is_enabled?: boolean;
 }
 
-interface PrintifyPrintAreaRequest {
+export interface PrintifyPrintAreaRequest {
   variant_ids: number[];
   placeholders: PrintifyPlaceholderRequest[];
 }
 
-interface PrintifyPlaceholderRequest {
+export interface PrintifyPlaceholderRequest {
   position: string;
   images: PrintifyImageRequest[];
 }
 
-interface PrintifyImageRequest {
+export interface PrintifyImageRequest {
   id: string;
   x: number;
   y: number;
   scale: number;
   angle: number;
 }
-
-
 
 export interface PrintifyImageResponse { 
   id: string; 
@@ -117,4 +114,26 @@ export interface PrintifyImageResponse {
   mime_type: string;
   preview_url: string;
   upload_time: string;
- }
+}
+
+export interface RetrieveProductResponse {
+  id: string;
+  title: string;
+  description: string;
+  tags: string[];
+  options: ProductOption[];
+  variants: ProductVariant[];
+  images: ProductImage[];
+  created_at: string;
+  updated_at: string;
+  visible: boolean;
+  is_locked: boolean;
+  is_printify_express_eligible: boolean;
+  is_printify_express_enabled: boolean;
+  blueprint_id: number;
+  user_id: number;
+  shop_id: number;
+  print_provider_id: number;
+  print_areas: PrintArea[];
+  sales_channel_properties: any[]; // Adjust type accordingly
+}

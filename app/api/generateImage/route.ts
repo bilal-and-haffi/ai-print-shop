@@ -1,8 +1,7 @@
 import { OpenAI } from "openai";
-import * as fs from 'fs';
-import { PrintifyImageResponse, PrintifyProductRequest } from "@/interfaces/Product";
+import { CreateProductResponse, PrintifyImageResponse, PrintifyProductRequest } from "@/interfaces/Printify";
 
-const IMAGE_PREFIX = 'data:image/png;base64,';
+const PRINTIFY_BASE_URL = 'https://api.printify.com';
 
 export async function POST(req: Request) {
     try {
@@ -28,8 +27,8 @@ export async function POST(req: Request) {
                         position: 'front',
                         images: [{
                             id: image.id,
-                            x: 0,
-                            y: 0,
+                            x: 0.5,
+                            y: 0.5,
                             scale: 1,
                             angle: 0
                         }]
@@ -39,9 +38,11 @@ export async function POST(req: Request) {
                 title: 'Generated Product',
                 variants: [{
                     id: 38192,
-                    price: 20,
+                    price: 200,
                 }]
             });
+        
+        publishPrintifyProduct(product.id)
         console.info({ product, image, url, reqJson, text });
         return Response.json(url);
     } catch (error) {
@@ -50,7 +51,30 @@ export async function POST(req: Request) {
     }
 }
 
-const PRINTIFY_BASE_URL = 'https://api.printify.com/v1/';
+
+export async function publishPrintifyProduct(product_id: string) {
+    const endpoint =  `${PRINTIFY_BASE_URL}/v1/shops/${process.env.SHOP_ID}/products/${product_id}/publish.json`;
+    const body = JSON.stringify({
+        title: true,
+        description: true,
+        images: true,
+        variants: true,
+        tags: true,
+        keyFeatures: true,
+        shipping_template: true
+    })
+    console.log({endpoint, body})
+    const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            authorization: `Bearer ${process.env.PRINTIFY_API_TOKEN}`
+        },
+        body
+    });
+    const publishProductResponse = await response.json();
+    console.log({publishProductResponse});
+}
 
 export async function postImageToPrintify(url: string, fileName: string): Promise<PrintifyImageResponse> {
     const imageRequest = {
@@ -58,7 +82,7 @@ export async function postImageToPrintify(url: string, fileName: string): Promis
         url: url
     };
     const imageRequestString = JSON.stringify(imageRequest);
-    const imageResponse = await fetch(`${PRINTIFY_BASE_URL}/uploads/images.json`, {
+    const imageResponse = await fetch(`${PRINTIFY_BASE_URL}/v1/uploads/images.json`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -122,7 +146,7 @@ async function createProduct({ blueprint_id, description, print_areas, print_pro
         },
         body: productRequestString
     })
-    const productData = await productResponse.json()
+    const productData = await productResponse.json();
     console.info({ productData })
-    return Response.json({ productData })   
+    return productData;
 }

@@ -43,16 +43,15 @@ export async function POST(req: Request) {
             });
         
         publishPrintifyProduct(postedProduct.id)
-        const retrievedProduct = await retrieveAProduct(postedProduct.id);
-        console.info({ postedProduct, image, url, reqJson, text, retrievedProduct });
-        return Response.json({url, retrievedProduct});
+        console.info({ postedProduct, image, url, reqJson, text });
+        return Response.json({url, productId: postedProduct.id});
     } catch (error) {
         console.error(error);
         return Response.error();
     }
 }
 
-async function retrieveAProduct(product_id: string) {
+export async function retrieveAProduct(product_id: string) {
     const endpoint = `${PRINTIFY_BASE_URL}/v1/shops/${process.env.SHOP_ID}/products/${product_id}.json`;
     const response = await fetch(endpoint, {
         headers: {

@@ -1,13 +1,16 @@
 'use client'
-import { ChangeEvent, useState, KeyboardEvent, useEffect, useCallback } from "react";
+import { ChangeEvent, useState, KeyboardEvent, useRef } from "react";
 import Image from 'next/image'
 import { Product } from "./components/Product";
 import { RetrieveProductResponse } from "@/interfaces/PrintifyTypes";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
     const [prompt, setPrompt] = useState<string>("")
     const [image, setImage] = useState<string | undefined>(undefined)
     const [retrievedProduct, setRetrievedProduct] = useState<RetrieveProductResponse | undefined>(undefined)
+    const textAreaRef = useRef<HTMLTextAreaElement>(null)
+    const router = useRouter()
     const onInputChanged = (e: ChangeEvent<HTMLTextAreaElement>) => {
         setPrompt(e.target.value)
     } 
@@ -16,6 +19,7 @@ export default function Home() {
         if (e.key === 'Enter') {
             e.preventDefault()
             submitGenerateText();
+            textAreaRef.current?.blur()
         }
     }
 
@@ -24,32 +28,34 @@ export default function Home() {
     }
 
     const submitGenerateText = async () => {
-        await generateAndSetImage()
+        const response = await postToGenerateImage()
+        const { url: imageUrl, productId} = await response.json()
+        console.log({imageUrl, productId})
+        setImage(imageUrl);
+        router.push(`/product/${productId}`)
     }
 
-    async function generateAndSetImage() {
-        const response = await fetch('/api/generateImage', {
+    async function postToGenerateImage() {
+        return await fetch('/api/generateImage', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({ text: prompt })
         })
-        const { url: imageUrl, retrievedProduct} = await response.json()
-        console.log({imageUrl, retrievedProduct})
-        setImage(imageUrl);
-        setRetrievedProduct(retrievedProduct);
     }
 
     return (
-        <main className="flex min-h-screen flex-col items-center justify-between p-48 text-xl">
-            <h1 className="text-4xl font-bold">AI Personalised Gift Shop</h1>
-            <p className="text-xl">Hoodies, T-shirts, Mugs, and more!</p>
-            <Image src={'/hoodie.svg'} alt="Hoodie" width={200} height={200} priority={true} />
-            <textarea placeholder="Enter your promt here!" value={prompt} onChange={onInputChanged} className="text-black rounded-2xl p-8" onKeyDown={onKeyDown} />
-            <button className='border-2 p-2 m-2' onClick={onGenerateButtonChange}>Generate</button>
-            {image ? <Image src={image} alt="Generated Image" width={300} height={300} /> : <span> No image Yet </span>}
-            {retrievedProduct ? <Product retrievedProduct={retrievedProduct} /> : <span> No product Yet </span>}
+        <main className="flex min-h-screen flex-col items-center py-8 space-y-4 justify-between md:py-96">
+            <div id="heading">
+                <h1 className="text-2xl font-bold">AI Personalised Gift Shop</h1>
+            </div>
+            <div className="flex flex-col space-y-4 w-5/6" id="form-container">
+                <label htmlFor="prompt" className="text-lg">Enter your prompt</label>
+                <textarea ref={textAreaRef} placeholder="Enter your promt here!" value={prompt} onChange={onInputChanged} className="text-black rounded-lg p-2 resize-none h-96" onKeyDown={onKeyDown} autoFocus/>
+                <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline' onClick={onGenerateButtonChange}>Generate</button>
+            </div>
+            {image ? <Image src={image} alt="Generated Image" width={300} height={300} />: <Image src={'/hoodie.svg'} alt="Hoodie" width={100} height={100} priority={true} />}
         </main>
     );
 }

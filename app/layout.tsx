@@ -5,18 +5,18 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "AI Personalised Gift Shop",
-  description: "Hoodies, T-shirts, Mugs, and more!",
+    title: "AI Personalised Gift Shop",
+    description: "Hoodies, T-shirts, Mugs, and more!",
 };
 
 export default function RootLayout({
-  children,
+    children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
-    </html>
-  );
+    return (
+        <html lang="en">
+            <body className={inter.className}>{children}</body>
+        </html>
+    );
 }

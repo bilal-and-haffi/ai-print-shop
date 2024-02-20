@@ -32,8 +32,9 @@ export default function Home() {
             },
             body: JSON.stringify({ text: prompt })
         })
-        const data = await response.json()
-        setImage(data);
+        const { url: imageUrl, retrievedProduct} = await response.json()
+        console.log({imageUrl, retrievedProduct})
+        setImage(imageUrl);
     }
 
     return (

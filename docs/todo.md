@@ -1,7 +1,12 @@
+- [x] post product
+- [x] get product 
+- [ ] show product 
+- [ ] the customer should be able to select there product
+- [ ] customer should be able to select their product size
+- [ ] customer should be able to select there product colour
+- [ ] customer should be able to order their product 
+- [ ] customer should be able to pay for their product - stripe 
+- [ ] customer should be able to use ui on mobile and it should look pretty
+- [ ] we should post the order to printify - https://developers.printify.com/#what-you-can-do-with-the-order-resource
 - [ ] add loading spinner while generating image because its slow -- maybe should lower resolution
 - [ ] reduce time taken between submitting text and getting response
-- [ ] post product
-- [ ] get product 
-- [ ] show product 
-- [ ] handle payment etc 
-- [ ] 

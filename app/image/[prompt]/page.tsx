@@ -50,26 +50,34 @@ async function publishPrintifyProduct(product_id: string) {
 }
 
 async function postImageToPrintify(url: string, fileName: string): Promise<PrintifyImageResponse> {
-    console.info('Posting image to Printify', { url, fileName });
-    const imageRequest = {
-        file_name: fileName,
-        url: url
-    };
-    const imageRequestString = JSON.stringify(imageRequest);
-    const imageResponse = await fetch(`${PRINTIFY_BASE_URL}/v1/uploads/images.json`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            authorization: `Bearer ${process.env.PRINTIFY_API_TOKEN}`
-        },
-        body: imageRequestString 
-    })
+    try {
+        console.info('postImageToPrintify', { url, fileName });
+        const imageRequest = {
+            file_name: fileName,
+            url: url
+        };
+        const imageRequestString = JSON.stringify(imageRequest);
+        console.info('Posting image to Printify', { imageRequest, imageRequestString })
+        const imageResponse = await fetch(`${PRINTIFY_BASE_URL}/v1/uploads/images.json`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                authorization: `Bearer ${process.env.PRINTIFY_API_TOKEN}`
+            },
+            body: imageRequestString 
+        })
+        console.info('Posted image to printify', { imageResponse });
 
-    const imageData: PrintifyImageResponse = await imageResponse.json();
+        const imageData: PrintifyImageResponse = await imageResponse.json();
     
-    console.info('Posted image to printify' ,{ imageRequest, imageRequestString, imageData })
+        console.info('Posted image to printify' ,{ imageRequest, imageRequestString, imageResponse, imageData })
     
-    return imageData;
+        return imageData;
+    }
+    catch (error) {
+        console.error('Error posting image to Printify', error);
+        throw new Error('Error posting image to Printify');
+    }
 }
 
 const generateImageUrl: (prompt: string) => Promise<string> = async (prompt: string) => {

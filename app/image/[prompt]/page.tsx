@@ -50,6 +50,7 @@ async function publishPrintifyProduct(product_id: string) {
 }
 
 async function postImageToPrintify(url: string, fileName: string): Promise<PrintifyImageResponse> {
+    console.info('Posting image to Printify', { url, fileName });
     const imageRequest = {
         file_name: fileName,
         url: url
@@ -66,7 +67,7 @@ async function postImageToPrintify(url: string, fileName: string): Promise<Print
 
     const imageData: PrintifyImageResponse = await imageResponse.json();
     
-    console.info({ imageRequest, imageRequestString, imageData })
+    console.info('Posted image to printify' ,{ imageRequest, imageRequestString, imageData })
     
     return imageData;
 }
@@ -81,6 +82,8 @@ const generateImageUrl: (prompt: string) => Promise<string> = async (prompt: str
 
         const openai = new OpenAI({apiKey});
 
+        console.info('Generating image...', { prompt });
+
         const response = await openai.images.generate({
             prompt,
             n: 1, 
@@ -89,6 +92,7 @@ const generateImageUrl: (prompt: string) => Promise<string> = async (prompt: str
         });
 
         const url = response.data[0].url!;
+        console.info('Generated image:', { url });
 
         return url;
     } catch (error) {

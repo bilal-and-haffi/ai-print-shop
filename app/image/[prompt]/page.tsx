@@ -57,8 +57,9 @@ async function postImageToPrintify(url: string, fileName: string): Promise<Print
             url: url
         };
         const imageRequestString = JSON.stringify(imageRequest);
-        console.info('Posting image to Printify', { imageRequest, imageRequestString })
-        const imageResponse = await fetch(`${PRINTIFY_BASE_URL}/v1/uploads/images.json`, {
+        const endpoint = `${PRINTIFY_BASE_URL}/v1/uploads/images.json`;
+        console.info('Posting image to Printify', { endpoint, imageRequest, imageRequestString })
+        const imageResponse = await fetch(endpoint, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

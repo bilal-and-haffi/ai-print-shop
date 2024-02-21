@@ -1,5 +1,6 @@
 import { RetrieveProductResponse } from "@/interfaces/PrintifyTypes";
 import Image from 'next/image'
+import Link from "next/link";
 
 export function Product(props: {retrievedProduct: RetrieveProductResponse}) {
     return (
@@ -12,7 +13,9 @@ export function Product(props: {retrievedProduct: RetrieveProductResponse}) {
                     return <Image key={index} src={image.src} alt="Product Image" width={300} height={300} />
                 })}
             </div>
-            <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'>Buy Now!</button>
+            <Link href={`/checkout/${props.retrievedProduct.id}`}>
+                <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'>Buy Now!</button>
+            </Link>
         </div>
     )
 }

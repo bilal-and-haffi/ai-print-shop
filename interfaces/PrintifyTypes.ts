@@ -137,3 +137,23 @@ export interface RetrieveProductResponse {
   print_areas: PrintArea[];
   sales_channel_properties: any[]; // Adjust type accordingly
 }
+
+export interface PrintifyShippingRequest {
+  line_items: Array<{
+      product_id?: string;
+      variant_id: number;
+      quantity: number;
+  }>;
+  address_to: {
+      first_name: string;
+      last_name: string;
+      email: string;
+      phone: string;
+      country: string;
+      region?: string;
+      address1: string;
+      address2?: string;
+      city: string;
+      zip: string;
+  };
+}

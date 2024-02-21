@@ -2,7 +2,7 @@
 - [x] get product 
 - [x] show product 
 - [x] image request shouldn't fail 
-- [ ] fix prod issue -- do again and see new logs because added more. 
+- [x] fix prod issue -- do again and see new logs because added more. 
 - [ ] user should be able to buy their product
     - [ ] buy now button should take to checkout 
     - [ ] show product detail, price and shipping price 

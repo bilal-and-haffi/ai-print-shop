@@ -4,7 +4,7 @@ import { PrintifyImageResponse, PrintifyProductRequest } from "@/interfaces/Prin
 import OpenAI from "openai";
 import { PRINTIFY_BASE_URL } from "@/app/consts";
 
-export const maxDuration = 900;
+export const maxDuration = 300;
 
 export default async function ImagePage(params: { params: { prompt: string} }) {
     const {prompt} = params.params;

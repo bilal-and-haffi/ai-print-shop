@@ -1,0 +1,111 @@
+{
+  "type": "excalidraw",
+  "version": 2,
+  "source": "https://marketplace.visualstudio.com/items?itemName=pomdtr.excalidraw-editor",
+  "elements": [
+    {
+      "id": "B6Vuczn5WTmgxpmzn7mS9",
+      "type": "rectangle",
+      "x": -275.50189519878336,
+      "y": -959.7884543120853,
+      "width": 418.5369862291791,
+      "height": 761.8880897418387,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "#f8f9fa",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "roundness": {
+        "type": 3
+      },
+      "seed": 98850170,
+      "version": 125,
+      "versionNonce": 560572966,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1708839104568,
+      "link": null,
+      "locked": false
+    },
+    {
+      "id": "HbpI0flUgwRxWU6Qg-US7",
+      "type": "rectangle",
+      "x": -216.91814204367984,
+      "y": -689.3359251777241,
+      "width": 293.49384438957486,
+      "height": 279.65240539918807,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "#f8f9fa",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "roundness": {
+        "type": 3
+      },
+      "seed": 292723514,
+      "version": 144,
+      "versionNonce": 866794426,
+      "isDeleted": false,
+      "boundElements": [
+        {
+          "type": "text",
+          "id": "ihQMA_RV-dR5FHFXwsa1Z"
+        }
+      ],
+      "updated": 1708839113996,
+      "link": null,
+      "locked": false
+    },
+    {
+      "id": "ihQMA_RV-dR5FHFXwsa1Z",
+      "type": "text",
+      "x": -158.8911371462557,
+      "y": -562.00972247813,
+      "width": 177.43983459472656,
+      "height": 25,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "#f8f9fa",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "roundness": null,
+      "seed": 1686711482,
+      "version": 127,
+      "versionNonce": 1092531322,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1708839113996,
+      "link": null,
+      "locked": false,
+      "text": "Enter your prompt",
+      "fontSize": 20,
+      "fontFamily": 1,
+      "textAlign": "center",
+      "verticalAlign": "middle",
+      "baseline": 18,
+      "containerId": "HbpI0flUgwRxWU6Qg-US7",
+      "originalText": "Enter your prompt",
+      "lineHeight": 1.25
+    }
+  ],
+  "appState": {
+    "gridSize": null,
+    "viewBackgroundColor": "#f8f9fa"
+  },
+  "files": {}
+}

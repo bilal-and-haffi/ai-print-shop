@@ -3,6 +3,7 @@
 - [x] show product 
 - [x] image request shouldn't fail 
 - [x] fix prod issue -- do again and see new logs because added more. 
+- [x] split frontend into components and use server components for pages and components as much a possible 
 - [ ] user should be able to buy their product
     - [ ] buy now button should take to checkout 
     - [ ] show product detail, price and shipping price 
@@ -21,6 +22,5 @@
 - [ ] customer should be able to order their product 
 - [ ] add loading spinner while generating image because its slow -- maybe should lower resolution
 - [ ] reduce time taken between submitting text and getting response
-- [ ] split frontend into components and use server components for pages and components as much a possible 
 - [ ] customer should be able to select their product size
 - [ ] customer should be able to select there product colour

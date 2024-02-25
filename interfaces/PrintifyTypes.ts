@@ -157,3 +157,42 @@ export interface PrintifyShippingRequest {
       zip: string;
   };
 }
+
+export interface PrintifyOrderExistingProductRequest {
+  external_id: string;
+  label?: string;
+  line_items: LineItem[];
+  shipping_method: number; // Required to specify what method of shipping is desired, "1" means standard shipping, "2" means express shipping. It is stored as an integer.
+  is_printify_express?: boolean;
+  send_shipping_notification?: boolean;
+  address_to: AddressTo;
+}
+
+export interface LineItem {
+  product_id: string;
+  variant_id: number;
+  quantity: number;
+}
+
+export interface AddressTo {
+  first_name: string;
+  last_name: string;
+  email: string;
+  phone: string;
+  country: string;
+  region: string;
+  address1: string;
+  address2: string;
+  city: string;
+  zip: string;
+}
+
+export interface PrintifyOrderResponse {
+  id: "5a96f649b2439217d070f507"
+}
+
+export interface PrintifyShippingResponse {
+    standard: number;
+    express: number;
+    priority: number;
+}

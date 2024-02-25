@@ -1,5 +1,6 @@
+import { AddressForm } from "@/app/components/AddressForm";
 import { PRINTIFY_BASE_URL } from "@/app/consts";
-import { PrintifyShippingRequest } from "@/interfaces/PrintifyTypes";
+import { PrintifyShippingRequest, PrintifyShippingResponse } from "@/interfaces/PrintifyTypes";
 
 export default async function Page(params: { params: { productId: string } }) {
     const {productId} = params.params;
@@ -13,7 +14,7 @@ export default async function Page(params: { params: { productId: string } }) {
     const shippingCost: PrintifyShippingResponse = await calculateShippingCost(productId, 1);
     console.debug({shippingCost})
     
-    const elements = [ ] 
+    const elements = [];
     for (const [key, value] of Object.entries(shippingCost)) {
         elements.push(<p key={key}>{capitalizeFirstLetter(key)}: {value}</p>)
     }
@@ -23,18 +24,13 @@ export default async function Page(params: { params: { productId: string } }) {
             <h1 className="text-4xl">Checkout Page</h1>
             <h2 className="text-2xl">Shipping Costs</h2>
             {shippingCost && elements}
+            <AddressForm productId={productId} shippingCost={shippingCost}/>
         </div>
     );
 }
 
 function capitalizeFirstLetter(string: string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
-}
-
-interface PrintifyShippingResponse {
-    standard: number;
-    express: number;
-    priority: number;
 }
 
 async function calculateShippingCost(productId: string, quantity: number) {

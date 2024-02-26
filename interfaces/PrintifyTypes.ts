@@ -69,15 +69,15 @@ export interface PrintArea {
 export interface Placeholder {
   position: string;
   images: {
-      id: string;
-      name: string;
-      type: string;
-      height: number;
-      width: number;
-      x: number;
-      y: number;
-      scale: number;
-      angle: number;
+    id: string;
+    name: string;
+    type: string;
+    height: number;
+    width: number;
+    x: number;
+    y: number;
+    scale: number;
+    angle: number;
   }[];
 }
 
@@ -105,9 +105,9 @@ export interface PrintifyImageRequest {
   angle: number;
 }
 
-export interface PrintifyImageResponse { 
-  id: string; 
-  file_name: string; 
+export interface PrintifyImageResponse {
+  id: string;
+  file_name: string;
   height: number;
   width: number;
   size: number;
@@ -140,21 +140,21 @@ export interface RetrieveProductResponse {
 
 export interface PrintifyShippingRequest {
   line_items: Array<{
-      product_id?: string;
-      variant_id: number;
-      quantity: number;
+    product_id?: string;
+    variant_id: number;
+    quantity: number;
   }>;
   address_to: {
-      first_name: string;
-      last_name: string;
-      email: string;
-      phone: string;
-      country: string;
-      region?: string;
-      address1: string;
-      address2?: string;
-      city: string;
-      zip: string;
+    first_name: string;
+    last_name: string;
+    email: string;
+    phone: string;
+    country: string;
+    region?: string;
+    address1: string;
+    address2?: string;
+    city: string;
+    zip: string;
   };
 }
 
@@ -189,10 +189,45 @@ export interface AddressTo {
 
 export interface PrintifyOrderResponse {
   id: string;
+  address_to: {
+    first_name: string;
+    last_name: string;
+    region: string;
+    address1: string;
+    city: string;
+    zip: string;
+    email: string;
+    phone: string;
+    country: string;
+    company: string;
+  };
+  line_items: LineItem[];
+  metadata: {
+    order_type: string;
+    shop_order_id: number;
+    shop_order_label: string;
+    shop_fulfilled_at: string;
+  };
+  total_price: number;
+  total_shipping: number;
+  total_tax: number;
+  status: string;
+  shipping_method: number;
+  is_printify_express: boolean;
+  shipments: {
+    carrier: string;
+    number: string;
+    url: string;
+    delivered_at: string;
+  }[];
+  created_at: string;
+  sent_to_production_at: string;
+  fulfilled_at: string;
+  printify_connect: { url: string; id: string };
 }
 
 export interface PrintifyShippingResponse {
-    standard: number;
-    express: number;
-    priority: number;
+  standard: number;
+  express: number;
+  priority: number;
 }

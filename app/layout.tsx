@@ -5,25 +5,25 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-    title: "AI Personalised Gift Shop",
-    description: "Hoodies, T-shirts, Mugs, and more!",
+  title: "AI Personalised Gift Shop",
+  description: "Hoodies, T-shirts, Mugs, and more!",
 };
 
 export default function RootLayout({
-    children,
+  children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-    return (
-        <html lang="en">
-            <body className={inter.className}>
-                <main className="flex min-h-screen flex-col items-center py-8 space-y-4 lg:justify-center lg:py-16">
-                    <div id="heading">
-                        <h1 className="text-2xl font-bold">AI Personalised Gift Shop</h1>
-                    </div>
-                    {children}
-                </main>
-            </body>
-        </html>
-    );
+  return (
+    <html lang="en">
+      <body className={inter.className}>
+        <main className="flex min-h-screen flex-col items-center py-8 space-y-4 lg:justify-center lg:py-16">
+          <div id="heading">
+            <h1 className="text-2xl font-bold">AI Personalised Gift Shop</h1>
+          </div>
+          {children}
+        </main>
+      </body>
+    </html>
+  );
 }

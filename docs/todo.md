@@ -1,33 +1,33 @@
 - [x] post product
-- [x] get product 
-- [x] show product 
-- [x] image request shouldn't fail 
-- [x] fix prod issue -- do again and see new logs because added more. 
-- [x] split frontend into components and use server components for pages and components as much a possible 
+- [x] get product
+- [x] show product
+- [x] image request shouldn't fail
+- [x] fix prod issue -- do again and see new logs because added more.
+- [x] split frontend into components and use server components for pages and components as much a possible
 - [ ] user should be able to buy their product
-    - [x] buy now button should take to checkout 
-    - [x] submit order to printify - https://developers.printify.com/#what-you-can-do-with-the-order-resource
-    - [ ] show product detail, price and shipping price on checkout page
-    - [ ] handle payment 
-        - [ ] confirm order
+  - [x] buy now button should take to checkout
+  - [x] submit order to printify - https://developers.printify.com/#what-you-can-do-with-the-order-resource
+  - [ ] show product detail, price and shipping price on checkout page
+  - [ ] handle payment
+    - [ ] confirm order
 - [ ] improve form validation
-    - [ ] country must be country code. - US or GB. Drop down probably good idea 
-    - [ ] potentially use an address picker npm package
+  - [ ] country must be country code. - US or GB. Drop down probably good idea
+  - [ ] potentially use an address picker npm package
 - [ ] User should not be able to create multiple products for the same prompt -- will prevent hitting rate limit.
-    - [ ] can implement this by having a page in between the getting of a new image and displaying it. so that refresh will not trigger new request. - but add a get new image button and a go back to home button. 
-- [ ] user can buy a hoodie with their image on it 
+  - [ ] can implement this by having a page in between the getting of a new image and displaying it. so that refresh will not trigger new request. - but add a get new image button and a go back to home button.
+- [ ] user can buy a hoodie with their image on it
 - [ ] user can buy a mug with their image on it
 - [ ] customer should be able to use ui on mobile and it should look pretty
-- [ ] unsused products should be automatically deleted from printify after a few days or weeks. 
+- [ ] unsused products should be automatically deleted from printify after a few days or weeks.
 - [ ] user should get email with their products so that they can buy later if they decide to
 - [ ] the customer should be able to select their product
-- [ ] customer should be able to order their product 
+- [ ] customer should be able to order their product
 - [ ] add loading spinner while generating image because its slow -- maybe should lower resolution
 - [ ] reduce time taken between submitting text and getting response
 - [ ] customer should be able to select their product size
 - [ ] customer should be able to select there product colour
-- [ ] save orders to db with with `external_id` as the index. 
+- [ ] save orders to db with with `external_id` as the index.
 - [ ] investigate if there is a better supplier for GB
 - [ ] offer different suppliers and products based on country
-    - [ ] let user change  their country
+  - [ ] let user change  their country
 - [ ] let user choose their shipping method

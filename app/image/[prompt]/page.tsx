@@ -3,6 +3,7 @@ import Image from "next/image";
 import { PrintifyImageResponse, PrintifyProductRequest } from "@/interfaces/PrintifyTypes";
 import OpenAI from "openai";
 import { PRINTIFY_BASE_URL } from "@/app/consts";
+import { log } from "@/functions/log";
 
 export const maxDuration = 300;
 
@@ -13,16 +14,16 @@ export default async function ImagePage(params: { params: { prompt: string} }) {
         console.error({prompt})
         return <div>Text is required</div>;
     }
-    console.log({prompt});
+    log({prompt});
     const url = await generateImageUrl(prompt);
     const image = await postImageToPrintify(url, 'generatedImage.png');
-    const postedProduct = await createProduct(constructProductRequest(image.id));
-    await publishPrintifyProduct(postedProduct.id)
+    const createProductResponse = await createProduct(constructProductRequest(image.id));
+    await publishPrintifyProduct(createProductResponse.id)
     return (
         <div>
             <h1>Image Page</h1>
             {image && <Image src={url} alt="Generated Image" width={200} height={200} />}
-            {postedProduct && <Link href={`/product/${postedProduct.id}`}>Go to product</Link>}
+            {createProductResponse && <Link href={`/product/${createProductResponse.id}`}>Go to product</Link>}
         </div>
     );
 }
@@ -38,7 +39,7 @@ async function publishPrintifyProduct(product_id: string) {
         keyFeatures: true,
         shipping_template: true
     })
-    console.log({endpoint, body})
+    log({endpoint, body})
     const response = await fetch(endpoint, {
         method: 'POST',
         headers: {
@@ -48,19 +49,19 @@ async function publishPrintifyProduct(product_id: string) {
         body
     });
     const publishProductResponse = await response.json();
-    console.log({publishProductResponse});
+    log({publishProductResponse});
 }
 
 async function postImageToPrintify(url: string, fileName: string): Promise<PrintifyImageResponse> {
     try {
-        console.info('postImageToPrintify', { url, fileName });
+        log('postImageToPrintify', { url, fileName });
         const imageRequest = {
             file_name: fileName,
             url: url
         };
         const imageRequestString = JSON.stringify(imageRequest);
         const endpoint = `${PRINTIFY_BASE_URL}/v1/uploads/images.json`;
-        console.info('Posting image to Printify', { endpoint, imageRequest, imageRequestString })
+        log('Posting image to Printify', { endpoint, imageRequest, imageRequestString })
         const imageResponse = await fetch(endpoint, {
             method: 'POST',
             headers: {
@@ -69,11 +70,11 @@ async function postImageToPrintify(url: string, fileName: string): Promise<Print
             },
             body: imageRequestString 
         })
-        console.info('Posted image to printify', { imageResponse });
+        log('Posted image to printify', { imageResponse });
 
         const imageData: PrintifyImageResponse = await imageResponse.json();
     
-        console.info('Posted image to printify' ,{ imageRequest, imageRequestString, imageResponse, imageData })
+        log('Posted image to printify', { imageRequest, imageRequestString, imageResponse, imageData })
     
         return imageData;
     }
@@ -93,7 +94,7 @@ const generateImageUrl: (prompt: string) => Promise<string> = async (prompt: str
 
         const openai = new OpenAI({apiKey});
 
-        console.info('Generating image...', { prompt });
+        log('Generating image...', { prompt });
 
         const response = await openai.images.generate({
             prompt,
@@ -103,7 +104,7 @@ const generateImageUrl: (prompt: string) => Promise<string> = async (prompt: str
         });
 
         const url = response.data[0].url!;
-        console.info('Generated image:', { url });
+        log('Generated image:', { url });
 
         return url;
     } catch (error) {
@@ -124,7 +125,7 @@ async function createProduct({ blueprint_id, description, print_areas, print_pro
         variants
     };
     const productRequestString = JSON.stringify(productRequest);
-    console.log({ productRequest, productRequestString });
+    log({ productRequest, productRequestString });
     
     const productResponse: any = await fetch(`https://api.printify.com/v1/shops/${process.env.SHOP_ID}/products.json`, {
         method: 'POST',
@@ -135,7 +136,7 @@ async function createProduct({ blueprint_id, description, print_areas, print_pro
         body: productRequestString
     })
     const productData = await productResponse.json();
-    console.info({ productData })
+    log({ productData })
     return productData;
 }
 
@@ -162,7 +163,7 @@ function constructProductRequest(image_id: string) {
         title: 'Generated Product',
         variants: [{
             id: 38192,
-            price: 200,
+            price: 2000, 
         }]
     };
     return productRequest;

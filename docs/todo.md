@@ -5,12 +5,14 @@
 - [x] fix prod issue -- do again and see new logs because added more. 
 - [x] split frontend into components and use server components for pages and components as much a possible 
 - [ ] user should be able to buy their product
-    - [ ] buy now button should take to checkout 
-    - [ ] show product detail, price and shipping price 
-        - [ ] there's a printify endpoint for shopping cost 
+    - [x] buy now button should take to checkout 
+    - [x] submit order to printify - https://developers.printify.com/#what-you-can-do-with-the-order-resource
+    - [ ] show product detail, price and shipping price on checkout page
     - [ ] handle payment 
-    - [ ] submit order to printify - https://developers.printify.com/#what-you-can-do-with-the-order-resource
-    - [ ] see if anything else needs doing 
+        - [ ] confirm order
+- [ ] improve form validation
+    - [ ] country must be country code. - US or GB. Drop down probably good idea 
+    - [ ] potentially use an address picker npm package
 - [ ] User should not be able to create multiple products for the same prompt -- will prevent hitting rate limit.
     - [ ] can implement this by having a page in between the getting of a new image and displaying it. so that refresh will not trigger new request. - but add a get new image button and a go back to home button. 
 - [ ] user can buy a hoodie with their image on it 
@@ -24,3 +26,8 @@
 - [ ] reduce time taken between submitting text and getting response
 - [ ] customer should be able to select their product size
 - [ ] customer should be able to select there product colour
+- [ ] save orders to db with with `external_id` as the index. 
+- [ ] investigate if there is a better supplier for GB
+- [ ] offer different suppliers and products based on country
+    - [ ] let user change  their country
+- [ ] let user choose their shipping method

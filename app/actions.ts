@@ -3,11 +3,28 @@
 import { AddressTo, LineItem, PrintifyOrderExistingProductRequest, PrintifyOrderResponse } from "@/interfaces/PrintifyTypes";
 import { PRINTIFY_BASE_URL } from "./consts";
 import { z } from "zod";
+import { v4 as uuidv4 } from 'uuid';
+import { log } from "../functions/log";
+import { redirect } from 'next/navigation'
 
 export async function processAddressForm(formData: FormData) {
     const rawFormData = Object.fromEntries(formData.entries())
-    const { first_name, last_name, email, phone, country, region, address1, address2, city, zip } = rawFormData;
-    console.info({ first_name, last_name, email, phone, country, region, address1, address2, city, zip });
+    const schema = z.object({
+        first_name: z.string(),
+        last_name: z.string(),
+        email: z.string(),
+        phone: z.string(),
+        country: z.string(),
+        region: z.string(),
+        address1: z.string(),
+        address2: z.string(),
+        city: z.string(),
+        zip: z.string(),
+        productId: z.string()
+    })
+    const parsedFormData = schema.parse(rawFormData);
+    const { first_name, last_name, email, phone, country, region, address1, address2, city, zip, productId } = parsedFormData;
+    log({ first_name, last_name, email, phone, country, region, address1, address2, city, zip, productId });
     const address_to = {
         first_name,
         last_name,
@@ -21,21 +38,22 @@ export async function processAddressForm(formData: FormData) {
         zip
     }
     
-    console.info({ address_to })
+    log({ address_to })
     const line_items: LineItem[] = [{
-        product_id: 'PRODUCT_ID',
+        product_id: productId,
         variant_id: 38192,
         quantity: 1
     }]
     const shipping_method = 1; // make me dynamic
-    createPrintifyOrderForExistingProduct(line_items, shipping_method, address_to)
+    const orderId = await createPrintifyOrderForExistingProduct(line_items, shipping_method, address_to)
+    log({ orderId })
+    redirect(`/payment/${orderId}`)
 }
 
 async function createPrintifyOrderForExistingProduct(line_items: LineItem[], shipping_method: number, address_to: AddressTo) {
     const endpoint = `${PRINTIFY_BASE_URL}/v1/shops/${process.env.SHOP_ID}/orders.json`;
     const body: PrintifyOrderExistingProductRequest = {
-        external_id: 'EXTERNAL_ID',
-        label: 'LABEL',
+        external_id: uuidv4(),
         line_items,
         shipping_method,
         send_shipping_notification: true,
@@ -49,8 +67,8 @@ async function createPrintifyOrderForExistingProduct(line_items: LineItem[], shi
         },
         body: JSON.stringify(body) 
     }
-    console.info({ endpoint, options })
+    log({ endpoint, options })
     const orderResponse = await (await fetch(endpoint, options)).json() as PrintifyOrderResponse;
-    console.info({ orderResponse })
+    log({ orderResponse })
     return orderResponse.id;
 }

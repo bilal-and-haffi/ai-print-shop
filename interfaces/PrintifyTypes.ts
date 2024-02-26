@@ -188,7 +188,7 @@ export interface AddressTo {
 }
 
 export interface PrintifyOrderResponse {
-  id: "5a96f649b2439217d070f507"
+  id: string;
 }
 
 export interface PrintifyShippingResponse {

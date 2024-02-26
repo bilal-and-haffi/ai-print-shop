@@ -1,5 +1,6 @@
 import { AddressForm } from "@/app/components/AddressForm";
 import { PRINTIFY_BASE_URL } from "@/app/consts";
+import { log } from "@/functions/log";
 import { PrintifyShippingRequest, PrintifyShippingResponse } from "@/interfaces/PrintifyTypes";
 
 export default async function Page(params: { params: { productId: string } }) {
@@ -63,8 +64,10 @@ async function calculateShippingCost(productId: string, quantity: number) {
         body: JSON.stringify(body)
     
     }
-    console.info('calculateShippingCost', { endpoint, options });
+
+    log('calculateShippingCost', { endpoint, options });
     const shippingResponse = await (await fetch(endpoint, options)).json();
-    console.info('calculateShippingCost', { shippingResponse });
+    log('calculateShippingCost', { shippingResponse });
+    
     return shippingResponse;
 }

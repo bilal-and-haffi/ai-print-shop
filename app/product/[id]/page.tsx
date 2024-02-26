@@ -1,5 +1,6 @@
 import { Product } from "@/app/components/Product";
 import { PRINTIFY_BASE_URL } from "@/app/consts";
+import { log } from "@/functions/log";
 import { RetrieveProductResponse } from "@/interfaces/PrintifyTypes";
 
 export default async function ProductPage({ params }: { params: { id: string } }) {
@@ -19,6 +20,6 @@ async function retrieveAProduct(product_id: string) {
         }
     });
     const retrievedProduct = await response.json() as RetrieveProductResponse;
-    console.log({product: retrievedProduct});
+    log({product: retrievedProduct});
     return retrievedProduct;
 }

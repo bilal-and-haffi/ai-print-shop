@@ -7,7 +7,7 @@ export function Product(props: {retrievedProduct: RetrieveProductResponse}) {
         <div>
             <p>{props.retrievedProduct.title}</p>
             <p>{props.retrievedProduct.description}</p>
-            <p>Price: £{props.retrievedProduct.variants[0].price}</p>
+            <p>Price: ${props.retrievedProduct.variants[0].price/100}</p>
             <div id="image-container" className="space-y-4">
                 {props.retrievedProduct.images.map((image, index) => {
                     return <Image key={index} src={image.src} alt="Product Image" width={300} height={300} />

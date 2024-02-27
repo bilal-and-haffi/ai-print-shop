@@ -9,7 +9,7 @@ export default async function ProductPage({
   params: { id: string };
 }) {
   const retrievedProduct = await retrieveAProduct(params.id);
-
+  
   return <Product retrievedProduct={retrievedProduct} />;
 }
 

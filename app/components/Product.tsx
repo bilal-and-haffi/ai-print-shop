@@ -3,11 +3,17 @@ import Image from "next/image";
 import Link from "next/link";
 
 export function Product(props: { retrievedProduct: RetrieveProductResponse }) {
+  const variant = props.retrievedProduct.variants.find(
+    (variant) => variant.id === 38192,
+  );
+  if (!variant) {
+    return <div>Variant not found</div>;
+  }
   return (
     <div>
       <p>{props.retrievedProduct.title}</p>
       <p>{props.retrievedProduct.description}</p>
-      <p>Price: ${props.retrievedProduct.variants[0].price / 100}</p>
+      <p>Price: ${variant.price / 100}</p>
       <div id="image-container" className="space-y-4">
         {props.retrievedProduct.images.map((image, index) => {
           return (

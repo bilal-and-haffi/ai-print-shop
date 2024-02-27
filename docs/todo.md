@@ -10,7 +10,7 @@
   - [ ] show product detail, price and shipping price on checkout page
   - [ ] handle payment
     - [ ] confirm order
-- [ ] improve form validation
+- [ ] improve form validation -- don't need to do this if handled by stripe
   - [ ] country must be country code. - US or GB. Drop down probably good idea
   - [ ] potentially use an address picker npm package
 - [ ] User should not be able to create multiple products for the same prompt -- will prevent hitting rate limit.
@@ -31,3 +31,5 @@
 - [ ] offer different suppliers and products based on country
   - [ ] let user change  their country
 - [ ] let user choose their shipping method
+- [ ] add uk t shirt provider
+  - [ ] https://printify.com/app/en-gb/products/6/gildan/unisex-heavy-cotton-tee?filters=%7B%22facility_region%22:%5B%22United%20Kingdom%22%5D%7D

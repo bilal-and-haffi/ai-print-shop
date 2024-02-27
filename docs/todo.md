@@ -10,27 +10,25 @@
   - [ ] show product detail, price and shipping price on checkout page
   - [ ] handle payment
     - [ ] confirm order
+- [ ] let user choose their shipping method
+- [ ] customer should be able to select their product size
+- [ ] customer should be able to select there product colour
 - [ ] improve form validation -- don't need to do this if handled by stripe
   - [ ] country must be country code. - US or GB. Drop down probably good idea
   - [ ] potentially use an address picker npm package
 - [ ] User should not be able to create multiple products for the same prompt -- will prevent hitting rate limit.
   - [ ] can implement this by having a page in between the getting of a new image and displaying it. so that refresh will not trigger new request. - but add a get new image button and a go back to home button.
+- [ ] offer different suppliers and products based on country
+  - [ ] add uk t shirt provider
+    - [ ] https://printify.com/app/en-gb/products/6/gildan/unisex-heavy-cotton-tee?filters=%7B%22facility_region%22:%5B%22United%20Kingdom%22%5D%7D
+  - [ ] let user change their country
 - [ ] user can buy a hoodie with their image on it
 - [ ] user can buy a mug with their image on it
-- [ ] customer should be able to use ui on mobile and it should look pretty
-- [ ] unsused products should be automatically deleted from printify after a few days or weeks.
 - [ ] user should get email with their products so that they can buy later if they decide to
-- [ ] the customer should be able to select their product
-- [ ] customer should be able to order their product
-- [ ] add loading spinner while generating image because its slow -- maybe should lower resolution
-- [ ] reduce time taken between submitting text and getting response
-- [ ] customer should be able to select their product size
-- [ ] customer should be able to select there product colour
+- [ ] add loading spinner while generating image because its slow
 - [ ] save orders to db with with `external_id` as the index.
-- [ ] investigate if there is a better supplier for GB
-- [ ] offer different suppliers and products based on country
-  - [ ] let user change  their country
-- [ ] let user choose their shipping method
-- [ ] add uk t shirt provider
-  - [ ] https://printify.com/app/en-gb/products/6/gildan/unisex-heavy-cotton-tee?filters=%7B%22facility_region%22:%5B%22United%20Kingdom%22%5D%7D
 - [ ] let user add multiple items to basket and checkout all of them together
+- [ ] convert costs and prices to UK GBP
+- [ ] customer should be able to use ui on mobile and it should look pretty
+- [ ] ui on large screens should look pretty
+- [ ] unsused products should be automatically deleted from printify after a few days or weeks.

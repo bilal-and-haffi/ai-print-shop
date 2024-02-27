@@ -33,3 +33,4 @@
 - [ ] let user choose their shipping method
 - [ ] add uk t shirt provider
   - [ ] https://printify.com/app/en-gb/products/6/gildan/unisex-heavy-cotton-tee?filters=%7B%22facility_region%22:%5B%22United%20Kingdom%22%5D%7D
+- [ ] let user add multiple items to basket and checkout all of them together

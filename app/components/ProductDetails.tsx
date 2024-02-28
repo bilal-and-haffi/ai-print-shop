@@ -29,14 +29,14 @@ export function ProductDetails(props: {
           <div
             key={index}
             className="flex-shrink-0"
-            style={{ scrollSnapAlign: "start" }}
+            style={{ scrollSnapAlign: "center" }}
           >
             <Image
               src={image.src}
               alt="Product Image"
               width={1200}
               height={1200}
-              layout="responsive"
+              style={{ height: "auto", width: "auto" }}
             />
           </div>
         ))}

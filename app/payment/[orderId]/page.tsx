@@ -1,6 +1,8 @@
 import { PRINTIFY_BASE_URL } from "@/app/consts";
 import { PrintifyOrderResponse } from "@/interfaces/PrintifyTypes";
 import { log } from "@/functions/log";
+import { ProductDetails } from "@/app/components/ProductDetails";
+import { retrieveAProduct } from "@/functions/retrieveAProduct";
 
 export default async function PaymentPage({
   params,
@@ -20,18 +22,28 @@ export default async function PaymentPage({
   const { total_price, total_shipping, total_tax } = orderDetails;
   log({ total_price, total_shipping, total_tax });
 
-  if (!total_price || !total_shipping || !total_tax) {
+  if ([total_price, total_shipping, total_tax].some((x) => x === undefined)) {
     console.error("Order Details are required", { orderDetails });
     console.error({ total_price, total_shipping, total_tax });
     return <div>Order Details are required</div>;
   }
 
+  const retrievedProducts = await Promise.all(
+    orderDetails.line_items.map(
+      async (x) => await retrieveAProduct(x.product_id),
+    ),
+  );
+
   return (
     <>
-      <h1>Order Details</h1>
+      <h1 className="text-xl">Order Details</h1>
       <p>Total Price: {total_price}</p>
       <p>Total Shipping: {total_shipping}</p>
       <p>Total Tax: {total_tax}</p>
+      <h1 className="text-xl pt-8">Your Basket</h1>
+      {retrievedProducts.map((retrievedProduct) => (
+        <ProductDetails retrievedProduct={retrievedProduct} />
+      ))}
     </>
   );
 }

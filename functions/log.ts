@@ -3,6 +3,6 @@ export function log(...args: any[]) {
   console.log(
     date.toTimeString() + ": ",
     ...args,
-    JSON.stringify(args, null, 2),
+    // JSON.stringify(args, null, 2),
   );
 }

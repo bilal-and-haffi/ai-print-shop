@@ -12,6 +12,17 @@ import { v4 as uuidv4 } from "uuid";
 import { log } from "../functions/log";
 import { redirect } from "next/navigation";
 
+export async function emailFormAction(formData: FormData) {
+  const rawFormData = Object.fromEntries(formData.entries());
+  const schema = z.object({
+    email: z.string(),
+  });
+  const parsedFormData = schema.parse(rawFormData);
+  const { email } = parsedFormData;
+  log({ email });
+  // ... send email
+}
+
 export async function processAddressForm(formData: FormData) {
   const rawFormData = Object.fromEntries(formData.entries());
   const schema = z.object({

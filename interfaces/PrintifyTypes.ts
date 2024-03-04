@@ -161,17 +161,32 @@ export interface PrintifyShippingRequest {
 export interface PrintifyOrderExistingProductRequest {
   external_id: string;
   label?: string;
-  line_items: LineItem[];
+  line_items: LineItemBase[];
   shipping_method: number; // Required to specify what method of shipping is desired, "1" means standard shipping, "2" means express shipping. It is stored as an integer.
   is_printify_express?: boolean;
   send_shipping_notification?: boolean;
   address_to: AddressTo;
 }
 
-export interface LineItem {
+export interface LineItemBase {
   product_id: string;
   variant_id: number;
   quantity: number;
+}
+
+export interface LineItemFull extends LineItemBase {
+  id: string;
+  print_provider_id: number;
+  shipping_cost: number;
+  cost: number;
+  status: string;
+  metadata: {
+    title: string;
+    price: number;
+    variant_label: string;
+    sku: string;
+    country: string;
+  };
 }
 
 export interface AddressTo {
@@ -201,7 +216,7 @@ export interface PrintifyOrderResponse {
     country: string;
     company: string;
   };
-  line_items: LineItem[];
+  line_items: LineItemFull[];
   metadata: {
     order_type: string;
     shop_order_id: number;

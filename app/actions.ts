@@ -2,7 +2,7 @@
 
 import {
   AddressTo,
-  LineItem,
+  LineItemBase,
   PrintifyOrderExistingProductRequest,
   PrintifyOrderResponse,
 } from "@/interfaces/PrintifyTypes";
@@ -79,7 +79,7 @@ export async function processAddressForm(formData: FormData) {
   };
 
   log({ address_to });
-  const line_items: LineItem[] = [
+  const line_items: LineItemBase[] = [
     {
       product_id: productId,
       variant_id: 38192,
@@ -97,7 +97,7 @@ export async function processAddressForm(formData: FormData) {
 }
 
 async function createPrintifyOrderForExistingProduct(
-  line_items: LineItem[],
+  line_items: LineItemBase[],
   shipping_method: number,
   address_to: AddressTo,
 ) {

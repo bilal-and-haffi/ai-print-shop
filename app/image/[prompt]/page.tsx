@@ -14,16 +14,16 @@ export default async function ImagePage(params: {
   params: { prompt: string };
 }) {
   const { prompt } = params.params;
+  const decodedPrompt = decodeURIComponent(prompt)
   if (!prompt) {
     console.error("Text is required", { params });
-    console.error({ prompt });
+    console.error({ decodedPrompt });
     return <div>Text is required</div>;
   }
-  log({ prompt });
-  const url = await generateImageUrl(prompt);
+  const url = await generateImageUrl(decodedPrompt); // Use the decoded prompt
   const image = await postImageToPrintify(url, "generatedImage.png");
   const createProductResponse = await createProduct(
-    constructTeeShirtProductRequest({ imageId: image.id, prompt }),
+    constructTeeShirtProductRequest({ imageId: image.id, prompt: decodedPrompt }), // Use the decoded prompt
   );
   await publishPrintifyProduct(createProductResponse.id);
   return (
@@ -124,7 +124,9 @@ const generateImageUrl: (prompt: string) => Promise<string> = async (
 
     const response = await openai.images.generate({
       prompt,
+      model: "dall-e-3",
       n: 1,
+      quality: 'hd',
       response_format: "url",
       style: "natural",
     });

@@ -15,7 +15,7 @@ export default async function ImagePage(params: {
   params: { prompt: string };
 }) {
   const { prompt } = params.params;
-  const decodedPrompt = decodeURIComponent(prompt)
+  const decodedPrompt = decodeURIComponent(prompt);
   if (!prompt) {
     console.error("Text is required", { params });
     console.error({ decodedPrompt });
@@ -28,20 +28,27 @@ export default async function ImagePage(params: {
   const host = pageHeaders.get("x-forwarded-host") || "localhost:3000";
   const apiUrl = `${protocol}://${host}/api/image`;
   log({ apiUrl });
-  log(JSON.stringify({ prompt: decodedPrompt }))
+  log(JSON.stringify({ prompt: decodedPrompt }));
 
-  const { url } = await fetch(apiUrl, {
+  const response = await fetch(apiUrl, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ prompt: decodedPrompt }),
-  }).then((response) => response.json());
-
+  });
+  console.log({ response });
+  const responseJson = await response.json();
+  console.log({ responseJson });
+  const { url } = responseJson;
+  console.log({ url });
   log("image url", url);
   const image = await postImageToPrintify(url, "generatedImage.png");
   const createProductResponse = await createProduct(
-    constructTeeShirtProductRequest({ imageId: image.id, prompt: decodedPrompt }),
+    constructTeeShirtProductRequest({
+      imageId: image.id,
+      prompt: decodedPrompt,
+    }),
   );
   await publishPrintifyProduct(createProductResponse.id);
   return (

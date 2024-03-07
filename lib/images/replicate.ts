@@ -56,6 +56,7 @@ export const generateReplicateImageUrl: (prompt: string) => Promise<string> = as
       const predictionResult = await getReplicatePrediction(getPredictionStatusUrl);
       const predictionResultJson = await predictionResult.json();
       predictionStatus = predictionResultJson.status;
+      log("Prediction status:", predictionStatus);
       if (predictionStatus === "succeeded") {
         predictionUrl = predictionResultJson.output[0];
       } else {

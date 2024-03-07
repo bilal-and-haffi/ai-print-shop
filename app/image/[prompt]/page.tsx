@@ -9,6 +9,7 @@ import { log } from "@/functions/log";
 import { generateReplicateImageUrl } from "@/lib/images/replicate";
 
 export const maxDuration = 300;
+export const revalidate = 0;
 
 export default async function ImagePage(params: {
   params: { prompt: string };

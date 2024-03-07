@@ -49,6 +49,7 @@ export const generateReplicateImageUrl: (prompt: string) => Promise<string> = as
     const prediction = await createReplicateImageJob(prompt);
     const createJobResponse = await prediction.json();
     let getPredictionStatusUrl = createJobResponse.urls.get;
+    log("Prediction status url:", getPredictionStatusUrl);
     let predictionUrl = "";
     let predictionStatus = "starting";
 

@@ -69,8 +69,8 @@ export default async function PaymentPage({
         <button type="submit">Proceed to checkout</button>
       </form>
       <h1 className="text-xl pt-8">Your Basket</h1>
-      {retrievedProducts.map((retrievedProduct) => (
-        <ProductDetails retrievedProduct={retrievedProduct} />
+      {retrievedProducts.map((retrievedProduct, index) => (
+        <ProductDetails key={index} retrievedProduct={retrievedProduct} />
       ))}
     </>
   );

@@ -1,5 +1,7 @@
 import { log } from "console";
 
+export const revalidate = 0;
+
 async function createReplicateImageJob(prompt: string) {
   return await fetch(
     "https://api.replicate.com/v1/predictions",
@@ -8,7 +10,6 @@ async function createReplicateImageJob(prompt: string) {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Token ${process.env.REPLICATE_API_KEY}`,
-        "Cache-Control": "no-store",
       },
       body: JSON.stringify({
         "version": "610dddf033f10431b1b55f24510b6009fcba23017ee551a1b9afbc4eec79e29c",
@@ -36,7 +37,6 @@ async function getReplicatePrediction(getPredicationUrl: string) {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Token ${process.env.REPLICATE_API_KEY}`,
-        "Cache-Control": "no-store",
       },
     })
 }

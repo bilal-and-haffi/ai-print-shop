@@ -9,7 +9,7 @@ async function createReplicateImageJob(prompt: string) {
         "Content-Type": "application/json",
         Authorization: `Token ${process.env.REPLICATE_API_KEY}`,
       },
-      cache: "no-cache",
+      cache: "no-store",
       body: JSON.stringify({
         "version": "610dddf033f10431b1b55f24510b6009fcba23017ee551a1b9afbc4eec79e29c",
         "input": {
@@ -37,7 +37,7 @@ async function getReplicatePrediction(getPredicationUrl: string) {
         "Content-Type": "application/json",
         Authorization: `Token ${process.env.REPLICATE_API_KEY}`,
       },
-      cache: "no-cache",
+      cache: "no-store",
     })
 }
 

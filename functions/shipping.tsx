@@ -3,7 +3,7 @@ import {
   PrintifyShippingResponse,
   PrintifyShippingRequest,
 } from "@/interfaces/PrintifyTypes";
-import { log } from "./log";
+import { logWithTimestamp } from "./logWithTimeStamp";
 
 function capitalizeFirstLetter(string: string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
@@ -53,9 +53,9 @@ async function calculateShippingCost(productId: string, quantity: number) {
     body: JSON.stringify(body),
   };
 
-  log("calculateShippingCost", { endpoint, options });
+  logWithTimestamp("calculateShippingCost", { endpoint, options });
   const shippingResponse = await (await fetch(endpoint, options)).json();
-  log("calculateShippingCost", { shippingResponse });
+  logWithTimestamp("calculateShippingCost", { shippingResponse });
 
   return shippingResponse;
 }

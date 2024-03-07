@@ -9,7 +9,7 @@ import {
 import { PRINTIFY_BASE_URL } from "./consts";
 import { z } from "zod";
 import { v4 as uuidv4 } from "uuid";
-import { log } from "../functions/log";
+import { logWithTimestamp } from "../functions/logWithTimeStamp";
 import { redirect } from "next/navigation";
 
 export async function emailFormAction(formData: FormData) {
@@ -19,7 +19,7 @@ export async function emailFormAction(formData: FormData) {
   });
   const parsedFormData = schema.parse(rawFormData);
   const { email } = parsedFormData;
-  log({ email });
+  logWithTimestamp({ email });
   // ... send email
 }
 
@@ -52,7 +52,7 @@ export async function processAddressForm(formData: FormData) {
     zip,
     productId,
   } = parsedFormData;
-  log({
+  logWithTimestamp({
     first_name,
     last_name,
     email,
@@ -78,7 +78,7 @@ export async function processAddressForm(formData: FormData) {
     zip,
   };
 
-  log({ address_to });
+  logWithTimestamp({ address_to });
   const line_items: LineItem[] = [
     {
       product_id: productId,
@@ -92,7 +92,7 @@ export async function processAddressForm(formData: FormData) {
     shipping_method,
     address_to,
   );
-  log({ orderId });
+  logWithTimestamp({ orderId });
   redirect(`/payment/${orderId}`);
 }
 
@@ -117,10 +117,10 @@ async function createPrintifyOrderForExistingProduct(
     },
     body: JSON.stringify(body),
   };
-  log({ endpoint, options });
+  logWithTimestamp({ endpoint, options });
   const orderResponse = (await (
     await fetch(endpoint, options)
   ).json()) as PrintifyOrderResponse;
-  log({ orderResponse });
+  logWithTimestamp({ orderResponse });
   return orderResponse.id;
 }

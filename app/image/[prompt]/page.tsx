@@ -6,7 +6,7 @@ import {
 } from "@/interfaces/PrintifyTypes";
 import OpenAI from "openai";
 import { PRINTIFY_BASE_URL } from "@/app/consts";
-import { log } from "@/functions/log";
+import { logWithTimestamp } from "@/functions/logWithTimeStamp";
 
 export const maxDuration = 300;
 
@@ -19,13 +19,14 @@ export default async function ImagePage(params: {
     console.error({ prompt });
     return <div>Text is required</div>;
   }
-  log({ prompt });
+  logWithTimestamp({ prompt });
   const url = await generateImageUrl(prompt);
   const image = await postImageToPrintify(url, "generatedImage.png");
   const createProductResponse = await createProduct(
     constructTeeShirtProductRequest({ imageId: image.id, prompt }),
   );
-  await publishPrintifyProduct(createProductResponse.id);
+  const productId = createProductResponse.id;
+  await publishPrintifyProduct(productId);
   return (
     <div>
       <h1>Image Page</h1>
@@ -50,7 +51,7 @@ async function publishPrintifyProduct(product_id: string) {
     keyFeatures: true,
     shipping_template: true,
   });
-  log({ endpoint, body });
+  logWithTimestamp({ endpoint, body });
   const response = await fetch(endpoint, {
     method: "POST",
     headers: {
@@ -60,7 +61,7 @@ async function publishPrintifyProduct(product_id: string) {
     body,
   });
   const publishProductResponse = await response.json();
-  log({ publishProductResponse });
+  logWithTimestamp({ publishProductResponse });
 }
 
 async function postImageToPrintify(
@@ -68,14 +69,14 @@ async function postImageToPrintify(
   fileName: string,
 ): Promise<PrintifyImageResponse> {
   try {
-    log("postImageToPrintify", { url, fileName });
+    logWithTimestamp("postImageToPrintify", { url, fileName });
     const imageRequest = {
       file_name: fileName,
       url: url,
     };
     const imageRequestString = JSON.stringify(imageRequest);
     const endpoint = `${PRINTIFY_BASE_URL}/v1/uploads/images.json`;
-    log("Posting image to Printify", {
+    logWithTimestamp("Posting image to Printify", {
       endpoint,
       imageRequest,
       imageRequestString,
@@ -88,11 +89,11 @@ async function postImageToPrintify(
       },
       body: imageRequestString,
     });
-    log("Posted image to printify", { imageResponse });
+    logWithTimestamp("Posted image to printify", { imageResponse });
 
     const imageData: PrintifyImageResponse = await imageResponse.json();
 
-    log("Posted image to printify", {
+    logWithTimestamp("Posted image to printify", {
       imageRequest,
       imageRequestString,
       imageResponse,
@@ -120,7 +121,7 @@ const generateImageUrl: (prompt: string) => Promise<string> = async (
 
     const openai = new OpenAI({ apiKey });
 
-    log("Generating image...", { prompt });
+    logWithTimestamp("Generating image...", { prompt });
 
     const response = await openai.images.generate({
       prompt,
@@ -130,7 +131,7 @@ const generateImageUrl: (prompt: string) => Promise<string> = async (
     });
 
     const url = response.data[0].url!;
-    log("Generated image:", { url });
+    logWithTimestamp("Generated image:", { url });
 
     return url;
   } catch (error) {
@@ -156,7 +157,7 @@ async function createProduct({
     variants,
   };
   const productRequestString = JSON.stringify(productRequest);
-  log({ productRequest, productRequestString });
+  logWithTimestamp({ productRequest, productRequestString });
 
   const productResponse: any = await fetch(
     `https://api.printify.com/v1/shops/${process.env.SHOP_ID}/products.json`,
@@ -170,7 +171,7 @@ async function createProduct({
     },
   );
   const productData = await productResponse.json();
-  log({ productData });
+  logWithTimestamp({ productData });
   return productData;
 }
 
@@ -208,7 +209,7 @@ function constructTeeShirtProductRequest({
       },
     ],
     print_provider_id: DIMONA_TEE_ID,
-    title: "Your prompt: " + '"' + prompt + '"',
+    title: prompt,
     variants: [
       {
         id: 38192,

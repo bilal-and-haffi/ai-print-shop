@@ -1,4 +1,4 @@
-export function log(...args: any[]) {
+export function logWithTimestamp(...args: any[]) {
   const date = new Date();
   console.log(
     date.toTimeString() + ": ",

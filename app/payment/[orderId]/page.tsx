@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { PRINTIFY_BASE_URL } from "@/app/consts";
 import { PrintifyOrderResponse } from "@/interfaces/PrintifyTypes";
-import { log } from "@/functions/log";
+import { logWithTimestamp } from "@/functions/logWithTimeStamp";
 import { ProductDetails } from "@/app/components/ProductDetails";
 import { retrieveAProduct } from "@/functions/retrieveAProduct";
 import { stripeServerClient } from "@/lib/stripe/client";
@@ -22,9 +22,9 @@ export default async function PaymentPage({
   }
 
   const orderDetails = await getOrderDetails(orderId);
-  log({ orderDetails });
+  logWithTimestamp({ orderDetails });
   const { total_price, total_shipping, total_tax } = orderDetails;
-  log({ total_price, total_shipping, total_tax });
+  logWithTimestamp({ total_price, total_shipping, total_tax });
 
   if ([total_price, total_shipping, total_tax].some((x) => x === undefined)) {
     console.error("Order Details are required", { orderDetails });
@@ -70,7 +70,7 @@ async function getOrderDetails(orderId: string) {
     },
   });
   const orderDetails = (await response.json()) as PrintifyOrderResponse;
-  log({ orderDetails });
+  logWithTimestamp({ orderDetails });
   return orderDetails;
 }
 

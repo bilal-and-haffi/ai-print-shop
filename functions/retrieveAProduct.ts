@@ -1,5 +1,5 @@
 import { PRINTIFY_BASE_URL } from "@/app/consts";
-import { log } from "@/functions/log";
+import { logWithTimestamp } from "@/functions/logWithTimeStamp";
 import { RetrieveProductResponse } from "@/interfaces/PrintifyTypes";
 
 export async function retrieveAProduct(product_id: string) {
@@ -10,9 +10,9 @@ export async function retrieveAProduct(product_id: string) {
       authorization: `Bearer ${process.env.PRINTIFY_API_TOKEN}`,
     },
   });
-  const product = (await response.json()) as RetrieveProductResponse;
+  const retrievedProduct = (await response.json()) as RetrieveProductResponse;
 
-  log({ product });
+  logWithTimestamp({ product: retrievedProduct });
 
-  return product;
+  return retrievedProduct;
 }

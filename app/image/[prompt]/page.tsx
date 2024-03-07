@@ -6,7 +6,7 @@ import {
 } from "@/interfaces/PrintifyTypes";
 import { PRINTIFY_BASE_URL } from "@/app/consts";
 import { log } from "@/functions/log";
-import { generateReplicateImageUrl } from "@/lib/images/replicate";
+import { headers } from "next/headers";
 
 export const maxDuration = 300;
 export const revalidate = 0;
@@ -21,7 +21,20 @@ export default async function ImagePage(params: {
     console.error({ decodedPrompt });
     return <div>Text is required</div>;
   }
-  const url = await generateReplicateImageUrl(decodedPrompt);
+
+  const pageHeaders = headers();
+
+  const protocol = pageHeaders.get("x-forwarded-proto") || "http";
+  const host = pageHeaders.get("x-forwarded-host") || "localhost:3000";
+
+  const { url } = await fetch(`${protocol}://${host}/api/image`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ prompt: decodedPrompt }),
+  }).then((response) => response.json());
+
   log("image url", url);
   const image = await postImageToPrintify(url, "generatedImage.png");
   const createProductResponse = await createProduct(

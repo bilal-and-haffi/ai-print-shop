@@ -26,8 +26,11 @@ export default async function ImagePage(params: {
 
   const protocol = pageHeaders.get("x-forwarded-proto") || "http";
   const host = pageHeaders.get("x-forwarded-host") || "localhost:3000";
+  const apiUrl = `${protocol}://${host}/api/image`;
+  log({ apiUrl });
+  log(JSON.stringify({ prompt: decodedPrompt }))
 
-  const { url } = await fetch(`${protocol}://${host}/api/image`, {
+  const { url } = await fetch(apiUrl, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

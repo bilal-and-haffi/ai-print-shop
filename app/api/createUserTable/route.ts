@@ -1,4 +1,5 @@
-// This is unused. Mergin in so that have set up db ready to use.
+// This is unused, here for example purposes only
+// call this by going to localhost:3000/api/createUserTable
 import { sql } from "@vercel/postgres";
 import { NextResponse } from "next/server";
 

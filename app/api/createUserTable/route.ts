@@ -1,3 +1,4 @@
+// This is unused. Mergin in so that have set up db ready to use.
 import { sql } from "@vercel/postgres";
 import { NextResponse } from "next/server";
 

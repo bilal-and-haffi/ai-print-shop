@@ -7,36 +7,105 @@ import {
 import OpenAI from "openai";
 import { PRINTIFY_BASE_URL } from "@/app/consts";
 import { log } from "@/functions/log";
+import { sql } from "@vercel/postgres";
 
 export const maxDuration = 300;
+export const dynamic = "force-dynamic";
 
 export default async function ImagePage(params: {
   params: { prompt: string };
 }) {
-  const { prompt } = params.params;
-  const decodedPrompt = decodeURIComponent(prompt)
-  if (!prompt) {
+  const { prompt: encodedPrompt } = params.params;
+
+  const decodedPrompt = decodeURIComponent(encodedPrompt);
+
+  if (!encodedPrompt) {
     console.error("Text is required", { params });
     console.error({ decodedPrompt });
     return <div>Text is required</div>;
   }
-  const url = await generateImageUrl(decodedPrompt); // Use the decoded prompt
-  const image = await postImageToPrintify(url, "generatedImage.png");
-  const createProductResponse = await createProduct(
-    constructTeeShirtProductRequest({ imageId: image.id, prompt: decodedPrompt }), // Use the decoded prompt
-  );
-  await publishPrintifyProduct(createProductResponse.id);
+
+  const imageRow = await getImageFromDbWithPrompt(decodedPrompt);
+
+  let url;
+  let productId;
+
+  if (imageRow) {
+    // if image is found in DB - same prompt has been searched before
+    log({ imageRow });
+    url = imageRow.printify_image_url;
+    productId = imageRow.printify_product_id;
+  } else {
+    log("Image not found in DB", { decodedPrompt });
+    url = await generateImageUrl(decodedPrompt);
+    const image = await postImageToPrintify(url, "generatedImage.png");
+
+    const createProductResponse = await createProduct(
+      constructTeeShirtProductRequest({
+        imageId: image.id,
+        prompt: decodedPrompt,
+      }),
+    );
+
+    productId = createProductResponse.id;
+
+    await addImageToDb(decodedPrompt, image.id, url, productId);
+    await publishPrintifyProduct(productId); // needed???
+  }
+
   return (
     <div>
-      <h1>Image Page</h1>
-      {image && (
+      {url && (
         <Image src={url} alt="Generated Image" width={200} height={200} />
       )}
-      {createProductResponse && (
-        <Link href={`/product/${createProductResponse.id}`}>Go to product</Link>
-      )}
+      {productId && <Link href={`/product/${productId}`}>Go to product</Link>}
     </div>
   );
+}
+
+interface ImageRow {
+  id: number;
+  prompt: string;
+  printify_image_id: string;
+  printify_image_url: string;
+  printify_product_id: string;
+}
+
+import { z } from "zod";
+
+const imageRowSchema = z.object({
+  id: z.number(),
+  prompt: z.string(),
+  printify_image_id: z.string(),
+  printify_image_url: z.string(),
+  printify_product_id: z.string(),
+});
+
+async function getImageFromDbWithPrompt(
+  prompt: string,
+): Promise<ImageRow | null> {
+  log({ prompt });
+  const data = await sql`SELECT * FROM image WHERE prompt=${prompt};`;
+  log({ data });
+  const imageRow = data.rows;
+  log({ imageRow });
+  if (imageRow.length > 0) {
+    return imageRowSchema.parse(imageRow[0]);
+  }
+
+  return null;
+}
+
+async function addImageToDb(
+  prompt: string,
+  printifyImageId: string,
+  url: string,
+  productId: string,
+) {
+  const addImageRow =
+    await sql`INSERT INTO image (prompt, printify_image_id, printify_image_url, printify_product_id) VALUES (${prompt}, ${printifyImageId}, ${url}, ${productId});`;
+  log({ addImageRow });
+  return addImageRow;
 }
 
 async function publishPrintifyProduct(product_id: string) {
@@ -68,18 +137,13 @@ async function postImageToPrintify(
   fileName: string,
 ): Promise<PrintifyImageResponse> {
   try {
-    log("postImageToPrintify", { url, fileName });
     const imageRequest = {
       file_name: fileName,
       url: url,
     };
     const imageRequestString = JSON.stringify(imageRequest);
     const endpoint = `${PRINTIFY_BASE_URL}/v1/uploads/images.json`;
-    log("Posting image to Printify", {
-      endpoint,
-      imageRequest,
-      imageRequestString,
-    });
+
     const imageResponse = await fetch(endpoint, {
       method: "POST",
       headers: {
@@ -88,16 +152,8 @@ async function postImageToPrintify(
       },
       body: imageRequestString,
     });
-    log("Posted image to printify", { imageResponse });
 
     const imageData: PrintifyImageResponse = await imageResponse.json();
-
-    log("Posted image to printify", {
-      imageRequest,
-      imageRequestString,
-      imageResponse,
-      imageData,
-    });
 
     return imageData;
   } catch (error) {
@@ -126,7 +182,7 @@ const generateImageUrl: (prompt: string) => Promise<string> = async (
       prompt,
       model: "dall-e-3",
       n: 1,
-      quality: 'hd',
+      quality: "hd",
       response_format: "url",
       style: "natural",
     });

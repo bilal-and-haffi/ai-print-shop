@@ -4,10 +4,31 @@ import {
   PrintifyProductRequest,
 } from "@/interfaces/PrintifyTypes";
 import OpenAI from "openai";
-import { PRINTIFY_BASE_URL, T_SHIRT_PRICE_IN_GBP } from "@/app/data/consts";
+import { PRINTIFY_BASE_URL } from "@/app/data/consts";
 import { log } from "@/functions/log";
 
 export const maxDuration = 300;
+
+export const products = {
+  dimona: {
+    id: 270,
+    variants: {
+      blackLarge: 38192,
+    },
+    blueprints: {
+      unisexSoftTee: 145,
+    },
+  },
+  printClever: {
+    id: 72,
+    variants: {
+      blackLarge: 12124,
+    },
+    blueprints: {
+      unisexHeavyCottonTee: 6,
+    },
+  },
+};
 
 export default async function ImagePage(params: {
   params: { prompt: string };
@@ -28,6 +49,9 @@ export default async function ImagePage(params: {
     constructTeeShirtProductRequest({
       imageId: image.id,
       prompt: decodedPrompt,
+      printProviderId: products.printClever.id,
+      productVariantId: products.printClever.variants.blackLarge,
+      blueprintId: products.printClever.blueprints.unisexHeavyCottonTee,
     }),
   );
   const productId = createProductResponse.id;
@@ -158,21 +182,24 @@ async function createProduct({
 function constructTeeShirtProductRequest({
   imageId,
   prompt,
+  printProviderId,
+  productVariantId,
+  blueprintId,
 }: {
   imageId: string;
   prompt: string;
+  printProviderId: number;
+  productVariantId: number;
+  blueprintId: number;
 }) {
-  const DIMONA_TEE_ID = 270;
-  const BLACK_LARGE_TEE_VARIANT_ID = 38192;
-  const UNISEX_SOFT_TEE_BLUEPRINT_ID = 145;
   const capitalisedPrompt = prompt.charAt(0).toUpperCase() + prompt.slice(1);
   const productRequest: PrintifyProductRequest = {
-    blueprint_id: UNISEX_SOFT_TEE_BLUEPRINT_ID,
+    blueprint_id: blueprintId,
     description:
       "Your new favorite t-shirt. Soft, comfortable, and high-quality.",
     print_areas: [
       {
-        variant_ids: [BLACK_LARGE_TEE_VARIANT_ID],
+        variant_ids: [productVariantId],
         placeholders: [
           {
             position: "front",
@@ -189,12 +216,12 @@ function constructTeeShirtProductRequest({
         ],
       },
     ],
-    print_provider_id: DIMONA_TEE_ID,
+    print_provider_id: printProviderId,
     title: capitalisedPrompt,
     variants: [
       {
-        id: 38192,
-        price: 1, // This is the retail price we'd be selling at on printify but we are not selling there and are only using API so N/A I think
+        id: productVariantId,
+        price: 1,
       },
     ],
   };

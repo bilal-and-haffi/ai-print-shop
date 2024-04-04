@@ -1,6 +1,8 @@
 "use client";
 import { ChangeEvent, useState, KeyboardEvent, useRef } from "react";
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 
 export function TextAreaAndButton() {
   const [prompt, setPrompt] = useState<string>("");
@@ -31,21 +33,21 @@ export function TextAreaAndButton() {
         <label htmlFor="prompt" className="text-lg">
           Enter your prompt
         </label>
-        <textarea
+        <Textarea
           ref={textAreaRef}
           placeholder="Enter your promt here!"
           value={prompt}
           onChange={onInputChanged}
-          className="text-white rounded-lg p-2 resize-none h-48 bg-slate-600"
+          className="text-white rounded-lg p-2 resize-none h-48 bg-slate-600 placeholder:text-white/50"
           onKeyDown={onKeyDown}
           autoFocus
         />
-        <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        <Button
+          className="bg-blue-500 hover:bg-blue-700"
           onClick={submitGenerateText}
         >
           Generate
-        </button>
+        </Button>
       </div>
     </>
   );

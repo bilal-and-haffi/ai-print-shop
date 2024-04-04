@@ -1,6 +1,6 @@
 "use client";
 
-import { EmailForm } from "@/app/components/EmailForm";
+import { EmailForm } from "@/components/EmailForm";
 
 export default function ErrorPage() {
   return (

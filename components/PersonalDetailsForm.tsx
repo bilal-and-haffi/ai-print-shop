@@ -1,5 +1,5 @@
 "use client";
-import { processPersonalDetailsForm } from "../actions";
+import { processPersonalDetailsForm } from "@/app/actions";
 import { useFormStatus } from "react-dom";
 
 // UK ONLY

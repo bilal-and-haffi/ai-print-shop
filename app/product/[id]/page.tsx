@@ -1,4 +1,4 @@
-import { ProductDetails } from "@/app/components/ProductDetails";
+import { ProductDetails } from "@/components/ProductDetails";
 import { retrieveAProduct } from "../../../functions/retrieveAProduct";
 
 export default async function ProductPage({

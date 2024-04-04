@@ -1,10 +1,4 @@
-import { PersonalDetailsForm } from "@/app/components/PersonalDetailsForm";
-import { PRINTIFY_BASE_URL } from "@/app/data/consts";
-import { log } from "@/functions/log";
-import {
-  PrintifyShippingRequest,
-  PrintifyShippingResponse,
-} from "@/interfaces/PrintifyTypes";
+import { PersonalDetailsForm } from "@/components/PersonalDetailsForm";
 
 export default async function Page(params: { params: { productId: string } }) {
   const { productId } = params.params;

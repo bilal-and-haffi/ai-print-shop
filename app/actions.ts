@@ -6,7 +6,7 @@ import {
   PrintifyOrderExistingProductRequest,
   PrintifyOrderResponse,
 } from "@/interfaces/PrintifyTypes";
-import { PRINTIFY_BASE_URL } from "./consts";
+import { PRINTIFY_BASE_URL } from "./data/consts";
 import { z } from "zod";
 import { v4 as uuidv4 } from "uuid";
 import { log } from "../functions/log";
@@ -23,7 +23,7 @@ export async function emailFormAction(formData: FormData) {
   // ... send email
 }
 
-export async function processAddressForm(formData: FormData) {
+export async function processPersonalDetailsForm(formData: FormData) {
   const rawFormData = Object.fromEntries(formData.entries());
   const schema = z.object({
     first_name: z.string(),

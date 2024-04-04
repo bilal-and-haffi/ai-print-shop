@@ -1,4 +1,4 @@
-import { PRINTIFY_BASE_URL } from "@/app/consts";
+import { PRINTIFY_BASE_URL } from "@/app/data/consts";
 import {
   PrintifyShippingResponse,
   PrintifyShippingRequest,

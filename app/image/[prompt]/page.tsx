@@ -4,7 +4,7 @@ import {
   PrintifyProductRequest,
 } from "@/interfaces/PrintifyTypes";
 import OpenAI from "openai";
-import { PRINTIFY_BASE_URL } from "@/app/consts";
+import { PRINTIFY_BASE_URL, T_SHIRT_PRICE_IN_GBP } from "@/app/data/consts";
 import { log } from "@/functions/log";
 
 export const maxDuration = 300;
@@ -165,6 +165,7 @@ function constructTeeShirtProductRequest({
   const DIMONA_TEE_ID = 270;
   const BLACK_LARGE_TEE_VARIANT_ID = 38192;
   const UNISEX_SOFT_TEE_BLUEPRINT_ID = 145;
+  const capitalisedPrompt = prompt.charAt(0).toUpperCase() + prompt.slice(1);
   const productRequest: PrintifyProductRequest = {
     blueprint_id: UNISEX_SOFT_TEE_BLUEPRINT_ID,
     description:
@@ -189,11 +190,11 @@ function constructTeeShirtProductRequest({
       },
     ],
     print_provider_id: DIMONA_TEE_ID,
-    title: prompt,
+    title: capitalisedPrompt,
     variants: [
       {
         id: 38192,
-        price: 2000,
+        price: 1, // This is the retail price we'd be selling at on printify but we are not selling there and are only using API so N/A I think
       },
     ],
   };

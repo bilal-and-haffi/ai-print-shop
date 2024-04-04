@@ -1,5 +1,9 @@
 import { z } from "zod";
-import { PRINTIFY_BASE_URL } from "@/app/consts";
+import {
+  MINIMUM_PROFIT_MARGIN,
+  PRINTIFY_BASE_URL,
+  T_SHIRT_PRICE_IN_GBP,
+} from "@/app/data/consts";
 import { PrintifyOrderResponse } from "@/interfaces/PrintifyTypes";
 import { log } from "@/functions/log";
 import { ProductDetails } from "@/app/components/ProductDetails";
@@ -7,6 +11,17 @@ import { retrieveAProduct } from "@/functions/retrieveAProduct";
 import { redirect } from "next/navigation";
 import { headers } from "next/headers";
 import { createCheckoutSession } from "@/lib/stripe/service";
+
+async function convertUSDToGBP(usd: number) {
+  const endpoint = `https://api.currencyapi.com/v3/latest?apikey=${process.env.CURRENCY_API_KEY}&currencies=USD&base_currency=GBP`;
+  const response = await fetch(endpoint);
+  const data = await response.json();
+  const { USD } = data.data;
+  const gbpInUsd = USD.value;
+  const gbp = usd / gbpInUsd;
+
+  return gbp;
+}
 
 export default async function PaymentPage({
   params,
@@ -23,12 +38,34 @@ export default async function PaymentPage({
 
   const orderDetails = await getOrderDetails(orderId);
   log({ orderDetails });
-  const { total_price, total_shipping, total_tax, line_items } = orderDetails;
+  const { total_price, total_shipping, total_tax, line_items } = orderDetails; // these are actually costs to us - they are not prices to customer
 
   if ([total_price, total_shipping, total_tax].some((x) => x === undefined)) {
     console.error("Order Details are required", { orderDetails });
     console.error({ total_price, total_shipping, total_tax });
     return <div>Order Details are required</div>;
+  }
+
+  const totalCostInUsCents = total_price + total_shipping + total_tax;
+  const totalCostInUSD = totalCostInUsCents / 100;
+  const totalCostInGBP = await convertUSDToGBP(totalCostInUSD);
+  const tShirtPriceInGBP = T_SHIRT_PRICE_IN_GBP;
+
+  if (tShirtPriceInGBP + MINIMUM_PROFIT_MARGIN < totalCostInGBP) {
+    // these are intentionally hard errors so that we know we need to fix something
+    console.error("Profit margin is less than minimum", {
+      totalCostInGBP,
+      tShirtPriceInGBP,
+      MINIMUM_PROFIT_MARGIN,
+    });
+    throw new Error(
+      JSON.stringify({
+        msg: "Profit margin is less than minimum",
+        totalCostInGBP,
+        tShirtPriceInGBP,
+        MINIMUM_PROFIT_MARGIN,
+      }),
+    );
   }
 
   const retrievedProducts = await Promise.all(
@@ -40,15 +77,9 @@ export default async function PaymentPage({
   return (
     <>
       <h1 className="text-xl">Order Details</h1>
-      <p>Total Price: {total_price}</p>
-      <p>Total Shipping: {total_shipping}</p>
-      <p>Total Tax: {total_tax}</p>
-      <p>Total: {total_price + total_shipping + total_tax}</p>
+      <p>Total Price: £{tShirtPriceInGBP}</p>
 
-      <form
-        action={handleCheckout}
-        className="mt-8 block w-1/5 rounded-md py-2 text-center text-sm font-semibold text-white ring-2 bg-blue-500 hover:bg-blue-800 hover:ring-0"
-      >
+      <form action={handleCheckout} className="w-5/6 lg:w-2/6 text-center">
         <input type="hidden" name="total_price" value={total_price} />
         <input type="hidden" name="total_shipping" value={total_shipping} />
         <input
@@ -66,9 +97,13 @@ export default async function PaymentPage({
           name="order_preview"
           value={retrievedProducts[0].images[0].src}
         />
-        <button type="submit">Proceed to checkout</button>
+        <button
+          className="rounded-md py-2 w-full text-center text-sm font-semibold text-white ring-2 bg-blue-500 hover:bg-blue-800 hover:ring-0"
+          type="submit"
+        >
+          Proceed to checkout
+        </button>
       </form>
-      <h1 className="text-xl pt-8">Your Basket</h1>
       {retrievedProducts.map((retrievedProduct, index) => (
         <ProductDetails key={index} retrievedProduct={retrievedProduct} />
       ))}
@@ -100,8 +135,8 @@ async function handleCheckout(formData: FormData) {
     order_preview: z.string(),
   });
   const parsedFormData = schema.parse(rawFormData);
-  const totalShipping = Number(parsedFormData.total_shipping);
-  const totalStripePrice = Number(parsedFormData.total_price) - totalShipping;
+  const totalShipping = Number(0);
+  const totalStripePrice = Number(T_SHIRT_PRICE_IN_GBP) * 100;
   const headersList = headers();
   const referer = headersList.get("referer") || "";
   const origin = headersList.get("origin") || "";

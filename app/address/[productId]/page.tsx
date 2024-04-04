@@ -1,5 +1,5 @@
-import { AddressForm } from "@/app/components/AddressForm";
-import { PRINTIFY_BASE_URL } from "@/app/consts";
+import { PersonalDetailsForm } from "@/app/components/PersonalDetailsForm";
+import { PRINTIFY_BASE_URL } from "@/app/data/consts";
 import { log } from "@/functions/log";
 import {
   PrintifyShippingRequest,
@@ -15,5 +15,5 @@ export default async function Page(params: { params: { productId: string } }) {
     return <div>Product ID is required</div>;
   }
 
-  return <AddressForm productId={productId} />;
+  return <PersonalDetailsForm productId={productId} />;
 }

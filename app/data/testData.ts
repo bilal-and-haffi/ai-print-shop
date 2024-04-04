@@ -1,4 +1,12 @@
-export const PRINTIFY_BASE_URL = "https://api.printify.com";
+// TEST DATA
+
+export const stripeTestCard = {
+  number: "4242424242424242",
+  exp_month: "12",
+  exp_year: "23",
+  cvc: "123",
+};
+
 export const sampleAddressTo = {
   first_name: "John",
   last_name: "Smith",

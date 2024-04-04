@@ -16,7 +16,7 @@ export function ProductDetails(props: {
 
   return (
     <div className="space-y-4 w-5/6 lg:w-1/3">
-      <p>{retrievedProduct.title}</p>
+      <p>Your prompt: {retrievedProduct.title}</p>
       <p>{retrievedProduct.description}</p>
       <p>Colour/ size: {variant.title}</p>
       <p>Price: ${variant.price / 100}</p>
@@ -37,10 +37,12 @@ export function ProductDetails(props: {
               width={1200}
               height={1200}
               style={{ height: "auto", width: "auto" }}
+              priority
             />
           </div>
         ))}
       </div>
+
       {props.withBuyNow && (
         <div id="linkContainer" className="self-center w-full">
           <Link href={`/address/${retrievedProduct.id}`}>
@@ -50,6 +52,23 @@ export function ProductDetails(props: {
           </Link>
         </div>
       )}
+
+      <div id="linkContainer" className="self-center w-full">
+        <a href={`/image/${retrievedProduct.title}`}>
+          {/* Using <Link> instead of <a> here caused a bug where this wouldn't work for many seconds after page load. */}
+          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full">
+            Generate new image with same prompt
+          </button>
+        </a>
+      </div>
+
+      <div id="linkContainer" className="self-center w-full">
+        <Link href={`/`}>
+          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full">
+            Generate new image with new prompt
+          </button>
+        </Link>
+      </div>
     </div>
   );
 }

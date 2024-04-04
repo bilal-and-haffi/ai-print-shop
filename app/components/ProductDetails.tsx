@@ -54,11 +54,12 @@ export function ProductDetails(props: {
       )}
 
       <div id="linkContainer" className="self-center w-full">
-        <Link href={`/image/${retrievedProduct.title}`}>
+        <a href={`/image/${retrievedProduct.title}`}>
+          {/* Using <Link> instead of <a> here caused a bug where this wouldn't work for many seconds after page load. */}
           <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full">
             Generate new image with same prompt
           </button>
-        </Link>
+        </a>
       </div>
 
       <div id="linkContainer" className="self-center w-full">

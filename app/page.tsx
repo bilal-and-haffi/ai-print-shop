@@ -1,4 +1,4 @@
-import { TextAreaAndButton } from "./components/TextAreaAndButton";
+import { TextAreaAndButton } from "../components/TextAreaAndButton";
 import Image from "next/image";
 
 export default function Home() {

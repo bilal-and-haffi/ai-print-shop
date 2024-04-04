@@ -1,4 +1,4 @@
-import { emailFormAction } from "../actions";
+import { emailFormAction } from "../app/actions";
 
 export function EmailForm() {
   return (

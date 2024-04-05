@@ -1,8 +1,7 @@
 import { RetrieveProductResponse } from "@/interfaces/PrintifyTypes";
 import Image from "next/image";
 import Link from "next/link";
-import { T_SHIRT_PRICE_IN_GBP } from "../data/consts";
-import { products } from "../image/[prompt]/page";
+import { T_SHIRT_PRICE_IN_GBP, products } from "../data/consts";
 
 export function ProductDetails(props: {
   retrievedProduct: RetrieveProductResponse;

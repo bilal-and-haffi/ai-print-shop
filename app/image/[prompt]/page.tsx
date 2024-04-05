@@ -4,31 +4,10 @@ import {
   PrintifyProductRequest,
 } from "@/interfaces/PrintifyTypes";
 import OpenAI from "openai";
-import { PRINTIFY_BASE_URL } from "@/app/data/consts";
+import { PRINTIFY_BASE_URL, products } from "@/app/data/consts";
 import { log } from "@/functions/log";
 
 export const maxDuration = 300;
-
-export const products = {
-  dimona: {
-    id: 270,
-    variants: {
-      blackLarge: 38192,
-    },
-    blueprints: {
-      unisexSoftTee: 145,
-    },
-  },
-  printClever: {
-    id: 72,
-    variants: {
-      blackLarge: 12124,
-    },
-    blueprints: {
-      unisexHeavyCottonTee: 6,
-    },
-  },
-};
 
 export default async function ImagePage(params: {
   params: { prompt: string };
@@ -56,7 +35,7 @@ export default async function ImagePage(params: {
   );
   const productId = createProductResponse.id;
 
-  await publishPrintifyProduct(productId); // needed???
+  // await publishPrintifyProduct(productId); // not needed???
   redirect(`/product/${productId}`, RedirectType.replace);
 }
 

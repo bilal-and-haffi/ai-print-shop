@@ -1,7 +1,7 @@
 import { RetrieveProductResponse } from "@/interfaces/PrintifyTypes";
 import Image from "next/image";
 import Link from "next/link";
-import { T_SHIRT_PRICE_IN_GBP } from "../data/consts";
+import { T_SHIRT_PRICE_IN_GBP, products } from "../data/consts";
 
 export function ProductDetails(props: {
   retrievedProduct: RetrieveProductResponse;
@@ -9,7 +9,7 @@ export function ProductDetails(props: {
 }) {
   const { retrievedProduct } = props;
   const variant = retrievedProduct.variants.find(
-    (variant) => variant.id === 38192,
+    (variant) => variant.id === products.printClever.variants.blackLarge,
   );
   if (!variant) {
     return <div>Variant not found</div>;

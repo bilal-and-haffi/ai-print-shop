@@ -82,7 +82,7 @@ export async function processPersonalDetailsForm(formData: FormData) {
   const line_items: LineItemBase[] = [
     {
       product_id: productId,
-      variant_id: 38192,
+      variant_id: 12124, // make me dynamic
       quantity: 1,
     },
   ];

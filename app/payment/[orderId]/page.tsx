@@ -3,6 +3,7 @@ import {
   MINIMUM_PROFIT_MARGIN,
   PRINTIFY_BASE_URL,
   T_SHIRT_PRICE_IN_GBP,
+  VAT_MULTIPLIER,
 } from "@/app/data/consts";
 import { PrintifyOrderResponse } from "@/interfaces/PrintifyTypes";
 import { log } from "@/functions/log";
@@ -48,10 +49,18 @@ export default async function PaymentPage({
 
   const totalCostInUsCents = total_price + total_shipping + total_tax;
   const totalCostInUSD = totalCostInUsCents / 100;
-  const totalCostInGBP = await convertUSDToGBP(totalCostInUSD);
+  const totalCostInGBP =
+    (await convertUSDToGBP(totalCostInUSD)) * VAT_MULTIPLIER;
   const tShirtPriceInGBP = T_SHIRT_PRICE_IN_GBP;
 
-  if (tShirtPriceInGBP + MINIMUM_PROFIT_MARGIN < totalCostInGBP) {
+  console.log({
+    totalCostInGBP,
+    tShirtPriceInGBP,
+    MINIMUM_PROFIT_MARGIN,
+    bool: Boolean(tShirtPriceInGBP + MINIMUM_PROFIT_MARGIN < totalCostInGBP),
+  });
+
+  if (tShirtPriceInGBP < totalCostInGBP + MINIMUM_PROFIT_MARGIN) {
     // these are intentionally hard errors so that we know we need to fix something
     console.error("Profit margin is less than minimum", {
       totalCostInGBP,

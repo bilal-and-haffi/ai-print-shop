@@ -21,3 +21,4 @@ export const products = {
     },
   },
 };
+export const VAT_MULTIPLIER = 1.2;

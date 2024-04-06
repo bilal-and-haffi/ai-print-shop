@@ -45,7 +45,7 @@ export function ProductDetails({
   );
 
   return (
-    <div className="flex flex-col justify-center items-center text-center space-y-4 w-5/6 lg:w-1/3">
+    <div className="flex w-5/6 flex-col items-center justify-center space-y-4 text-center lg:w-1/3">
       <ImagesCarousel images={filteredImages} />
       <div>
         <SizeAndColorForm
@@ -56,7 +56,7 @@ export function ProductDetails({
         />
       </div>
       {withBuyNow && (
-        <div id="linkContainer" className="self-center w-full">
+        <div id="linkContainer" className="w-full self-center">
           <Button
             onClick={() => {
               fetch("/checkout", {
@@ -77,25 +77,25 @@ export function ProductDetails({
                   window.location.href = data.url;
                 });
             }}
-            className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
+            className="focus:shadow-outline w-full rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-700 focus:outline-none"
           >
             Buy now for £{T_SHIRT_PRICE_IN_GBP}
           </Button>
         </div>
       )}
 
-      <div id="linkContainer" className="self-center w-full">
+      <div id="linkContainer" className="w-full self-center">
         <a href={`/image/${retrievedProduct.title}`}>
           {/* Using <Link> instead of <a> here caused a bug where this wouldn't work for many seconds after page load. */}
-          <Button className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full">
+          <Button className="focus:shadow-outline w-full rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-700 focus:outline-none">
             Generate new image with same prompt
           </Button>
         </a>
       </div>
 
-      <div id="linkContainer" className="self-center w-full">
+      <div id="linkContainer" className="w-full self-center">
         <Link href={`/`}>
-          <Button className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full">
+          <Button className="focus:shadow-outline w-full rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-700 focus:outline-none">
             Generate new image with new prompt
           </Button>
         </Link>

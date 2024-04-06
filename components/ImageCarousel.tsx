@@ -18,7 +18,7 @@ export function ImagesCarousel(props: { images: ProductImage[] }) {
   const { images } = props;
 
   return (
-    <Carousel className="w-full flex">
+    <Carousel className="flex w-full">
       <CarouselContent className="">
         {images.map((image, index) => (
           <CarouselItem key={index}>
@@ -26,7 +26,7 @@ export function ImagesCarousel(props: { images: ProductImage[] }) {
               className={
                 imageLoaded
                   ? ""
-                  : "flex aspect-square animate-pulse rounded-md bg-muted"
+                  : "flex aspect-square animate-pulse rounded-md bg-muted "
               }
             >
               <Card>

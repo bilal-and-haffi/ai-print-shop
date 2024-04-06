@@ -13,7 +13,7 @@ export const SizeAndColorForm = ({
   sizeId: number;
   colorId: number;
 }) => (
-  <div className="text-center flex flex-col my-4">
+  <div className="my-4 flex flex-col text-center">
     <form>
       <div className="mb-4">
         <label htmlFor="size">Size:</label>

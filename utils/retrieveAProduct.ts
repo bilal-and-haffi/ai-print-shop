@@ -1,5 +1,5 @@
 import { PRINTIFY_BASE_URL } from "@/app/data/consts";
-import { log } from "@/functions/log";
+import { log } from "@/utils/log";
 import { RetrieveProductResponse } from "@/interfaces/PrintifyTypes";
 
 export async function retrieveAProduct(product_id: string) {

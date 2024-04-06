@@ -9,7 +9,7 @@ import {
 import { PRINTIFY_BASE_URL } from "./data/consts";
 import { z } from "zod";
 import { v4 as uuidv4 } from "uuid";
-import { log } from "../functions/log";
+import { log } from "../utils/log";
 import { redirect } from "next/navigation";
 
 export async function emailFormAction(formData: FormData) {
@@ -21,6 +21,18 @@ export async function emailFormAction(formData: FormData) {
   const { email } = parsedFormData;
   log({ email });
   // ... send email
+}
+
+export async function processSizeAndColorFormAction(formData: FormData) {
+  const rawFormData = Object.fromEntries(formData.entries());
+  console.log({ rawFormData });
+  // const schema = z.object({
+  //   productId: z.string(),
+  // });
+  // const parsedFormData = schema.parse(rawFormData);
+  // const { productId } = parsedFormData;
+  // log({ productId });
+  // redirect(`/personal-details/${productId}`);
 }
 
 export async function processPersonalDetailsForm(formData: FormData) {

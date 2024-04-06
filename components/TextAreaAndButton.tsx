@@ -29,7 +29,7 @@ export function TextAreaAndButton() {
     return (
         <>
             <div
-                className="flex flex-col space-y-4 w-5/6 lg:w-1/2"
+                className="flex w-5/6 flex-col space-y-4 lg:w-1/2"
                 id="form-container"
             >
                 <label htmlFor="prompt" className="text-lg">
@@ -40,7 +40,7 @@ export function TextAreaAndButton() {
                     placeholder="Enter your promt here!"
                     value={prompt}
                     onChange={onInputChanged}
-                    className="text-white rounded-lg p-2 resize-none h-48 bg-slate-600 placeholder:text-white/50"
+                    className="h-48 resize-none rounded-lg bg-slate-600 p-2 text-white placeholder:text-white/50"
                     onKeyDown={onKeyDown}
                     autoFocus
                 />

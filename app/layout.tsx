@@ -17,7 +17,7 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className={`${inter.className} bg-black text-white`}>
-                <main className="flex min-h-screen flex-col items-center py-8 space-y-4 lg:justify-center lg:py-16">
+                <main className="flex min-h-screen flex-col items-center space-y-4 py-8 lg:justify-center lg:py-16">
                     <div id="heading">
                         <h1 className="text-2xl font-bold">
                             AI Personalised Gift Shop

@@ -2,21 +2,21 @@ import { ProductDetails } from "@/components/ProductDetails";
 import { retrieveAProduct } from "@/lib/printify/service";
 
 export default async function ProductPage({
-  params,
-  searchParams,
+    params,
+    searchParams,
 }: {
-  params: { id: string };
-  searchParams: { size?: number; color?: number };
+    params: { id: string };
+    searchParams: { size?: number; color?: number };
 }) {
-  const { size, color } = searchParams;
-  const retrievedProduct = await retrieveAProduct(params.id);
+    const { size, color } = searchParams;
+    const retrievedProduct = await retrieveAProduct(params.id);
 
-  return (
-    <ProductDetails
-      retrievedProduct={retrievedProduct}
-      withBuyNow={true}
-      size={size}
-      color={color}
-    />
-  );
+    return (
+        <ProductDetails
+            retrievedProduct={retrievedProduct}
+            withBuyNow={true}
+            size={size}
+            color={color}
+        />
+    );
 }

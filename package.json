@@ -10,7 +10,8 @@
     "prettier": "prettier --write .",
     "test": "jest",
     "db-cli": "sh ./scripts/db-cli.sh",
-    "get-envs": "vercel env pull .env.development.local"
+    "get-envs": "vercel env pull .env.development.local",
+    "stripe:listen": "stripe listen --events payment_intent.succeeded --forward-to localhost:3000/api/webhooks/pi_success"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.0.2",

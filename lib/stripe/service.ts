@@ -9,6 +9,7 @@ interface checkOutSessionParams {
   orderVariantLabel: string;
   orderPreview: string;
   productId: string;
+  orderVariantId: string;
 }
 
 export async function createCheckoutSession(params: checkOutSessionParams) {
@@ -21,6 +22,7 @@ export async function createCheckoutSession(params: checkOutSessionParams) {
     orderVariantLabel,
     orderPreview,
     productId,
+    orderVariantId,
   } = params;
   return await stripeServerClient.checkout.sessions.create({
     customer_email: "test@example.com",
@@ -66,11 +68,13 @@ export async function createCheckoutSession(params: checkOutSessionParams) {
       },
     ],
     metadata: {
-      product_id: productId,
+      productId,
+      orderVariantId,
     },
     payment_intent_data: {
       metadata: {
-        product_id: productId,
+        productId,
+        orderVariantId,
       },
     },
     mode: "payment",

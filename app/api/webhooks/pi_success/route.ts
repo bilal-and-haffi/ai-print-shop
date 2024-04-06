@@ -17,8 +17,8 @@ export async function POST(request: NextRequest) {
 
   const line_items: LineItemBase[] = [
     {
-      product_id: metaData.product_id,
-      variant_id: 12124, // make me dynamic
+      product_id: metaData.productId,
+      variant_id: metaData.orderVariantId,
       quantity: 1,
     },
   ];

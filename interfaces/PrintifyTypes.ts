@@ -195,7 +195,7 @@ export interface AddressTo {
   email?: string;
   phone?: string;
   country: string;
-  region?: string;
+  region: string;
   address1: string;
   address2?: string;
   city: string;

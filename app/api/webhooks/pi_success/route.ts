@@ -1,7 +1,8 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { log } from '@/utils/log';
-import { createPrintifyOrderForExistingProduct } from '@/lib/printify/service';
-import { LineItemBase } from '@/interfaces/PrintifyTypes';
+import { NextRequest, NextResponse } from "next/server";
+import { log } from "@/utils/log";
+import { createPrintifyOrderForExistingProduct } from "@/lib/printify/service";
+import { LineItemBase } from "@/interfaces/PrintifyTypes";
+import { getCountry } from "@/lib/postcode/getCountry";
 
 export async function POST(request: NextRequest) {
   const req = await request.json();
@@ -13,7 +14,6 @@ export async function POST(request: NextRequest) {
   const metaData = eventData.object.metadata;
 
   console.log({ shipping, metaData });
-
 
   const line_items: LineItemBase[] = [
     {
@@ -34,12 +34,14 @@ export async function POST(request: NextRequest) {
       email: shipping.email,
       phone: shipping.phone,
       country: shipping.address.country,
-      region: shipping.address.state,
+      region:
+        shipping.address.state ||
+        (await getCountry(shipping.address.postal_code)),
       address1: shipping.address.line1,
       address2: shipping.address.line2,
       city: shipping.address.city,
       zip: shipping.address.postal_code,
-    }
+    },
   );
 
   log({ orderId });

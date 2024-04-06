@@ -7,7 +7,6 @@ export const maxDuration = 300;
 
 export default async function GenerateImagePage(params: {
     params: { prompt: string };
-    searchParams: { generateNew?: string };
 }) {
     const { prompt: encodedPrompt } = params.params;
     const decodedPrompt = decodeURIComponent(encodedPrompt);

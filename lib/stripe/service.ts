@@ -8,6 +8,7 @@ interface checkOutSessionParams {
   orderTitle: string;
   orderVariantLabel: string;
   orderPreview: string;
+  productId: string;
 }
 
 export async function createCheckoutSession(params: checkOutSessionParams) {
@@ -19,9 +20,14 @@ export async function createCheckoutSession(params: checkOutSessionParams) {
     orderTitle,
     orderVariantLabel,
     orderPreview,
+    productId,
   } = params;
   return await stripeServerClient.checkout.sessions.create({
     customer_email: "test@example.com",
+    billing_address_collection: "required",
+    shipping_address_collection: {
+      allowed_countries: ["GB"],
+    },
     shipping_options: [
       {
         shipping_rate_data: {
@@ -59,6 +65,14 @@ export async function createCheckoutSession(params: checkOutSessionParams) {
         quantity: 1,
       },
     ],
+    metadata: {
+      product_id: productId,
+    },
+    payment_intent_data: {
+      metadata: {
+        product_id: productId,
+      },
+    },
     mode: "payment",
     success_url: `${origin}/payment/success`,
     cancel_url: referer,

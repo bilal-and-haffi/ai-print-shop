@@ -1,3 +1,5 @@
+'use client'
+
 import { Button } from "@/components/ui/button";
 import { RetrieveProductResponse } from "@/interfaces/PrintifyTypes";
 import Link from "next/link";
@@ -77,11 +79,28 @@ export function ProductDetails({
       </div>
       {withBuyNow && (
         <div id="linkContainer" className="self-center w-full">
-          <Link href={`/address/${retrievedProduct.id}`}>
-            <Button className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full">
-              Buy Now!
-            </Button>
-          </Link>
+          <Button
+            onClick={() => {
+              fetch("/checkout", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  product_id: retrievedProduct.id,
+                  order_title: retrievedProduct.title,
+                  order_variant_label: variant.title,
+                  order_preview: retrievedProduct.images[0].src,
+                }),
+              })
+                .then((res) => res.json())
+                .then((data) => {
+                  window.location.href = data.url;
+                });
+            }}
+            className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full">
+            Proceed to checkout
+          </Button>
         </div>
       )}
 

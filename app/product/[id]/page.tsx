@@ -1,5 +1,5 @@
 import { ProductDetails } from "@/components/ProductDetails";
-import { retrieveAProduct } from "../../../utils/retrieveAProduct";
+import { retrieveAProduct } from "@/lib/printify/service";
 
 export default async function ProductPage({
   params,

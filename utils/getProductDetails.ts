@@ -1,28 +1,6 @@
 import { PRINTIFY_BASE_URL } from "@/app/data/consts";
+import { EssentialProductDetails, Variant } from "@/interfaces/PrintifyTypes";
 
-interface EssentialProductDetails {
-  id: number;
-  color: string;
-  size: string;
-}
-
-interface Placeholder {
-  position: string;
-  height: number;
-  width: number;
-}
-
-interface Options {
-  color: string;
-  size: string;
-}
-
-interface Variant {
-  id: number;
-  title: string;
-  options: Options;
-  placeholders: Placeholder[];
-}
 
 export async function fetchProductVariants(
   blueprintId: number,

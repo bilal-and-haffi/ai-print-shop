@@ -191,13 +191,13 @@ export interface LineItemFull extends LineItemBase {
 
 export interface AddressTo {
   first_name: string;
-  last_name: string;
-  email: string;
-  phone: string;
-  country: string;  
-  region: string;
+  last_name?: string;
+  email?: string;
+  phone?: string;
+  country: string;
+  region?: string;
   address1: string;
-  address2: string;
+  address2?: string;
   city: string;
   zip: string;
 }
@@ -245,4 +245,28 @@ export interface PrintifyShippingResponse {
   standard: number;
   express: number;
   priority: number;
+}
+
+export interface EssentialProductDetails {
+  id: number;
+  color: string;
+  size: string;
+}
+
+export interface Placeholder {
+  position: string;
+  height: number;
+  width: number;
+}
+
+export interface Options {
+  color: string;
+  size: string;
+}
+
+export interface Variant {
+  id: number;
+  title: string;
+  options: Options;
+  placeholders: Placeholder[];
 }

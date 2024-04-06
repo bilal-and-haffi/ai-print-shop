@@ -1,16 +1,13 @@
 "use server";
 
 import {
-  AddressTo,
   LineItemBase,
-  PrintifyOrderExistingProductRequest,
-  PrintifyOrderResponse,
 } from "@/interfaces/PrintifyTypes";
-import { PRINTIFY_BASE_URL } from "./data/consts";
 import { z } from "zod";
-import { v4 as uuidv4 } from "uuid";
 import { log } from "../utils/log";
+
 import { redirect } from "next/navigation";
+import { createPrintifyOrderForExistingProduct } from "@/lib/printify/service";
 
 export async function emailFormAction(formData: FormData) {
   const rawFormData = Object.fromEntries(formData.entries());
@@ -108,31 +105,3 @@ export async function processPersonalDetailsForm(formData: FormData) {
   redirect(`/payment/${orderId}`);
 }
 
-async function createPrintifyOrderForExistingProduct(
-  line_items: LineItemBase[],
-  shipping_method: number,
-  address_to: AddressTo,
-) {
-  const endpoint = `${PRINTIFY_BASE_URL}/v1/shops/${process.env.SHOP_ID}/orders.json`;
-  const body: PrintifyOrderExistingProductRequest = {
-    external_id: uuidv4(),
-    line_items,
-    shipping_method,
-    send_shipping_notification: true,
-    address_to,
-  };
-  const options: RequestInit = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      authorization: `Bearer ${process.env.PRINTIFY_API_TOKEN}`,
-    },
-    body: JSON.stringify(body),
-  };
-  log({ endpoint, options });
-  const orderResponse = (await (
-    await fetch(endpoint, options)
-  ).json()) as PrintifyOrderResponse;
-  log({ orderResponse });
-  return orderResponse.id;
-}

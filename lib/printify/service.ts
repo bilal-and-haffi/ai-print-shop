@@ -14,22 +14,19 @@ import {
 
 export async function constructPrintifyProductRequest({
   printifyImageId,
-  prompt,
   printProviderId,
   blueprintId,
 }: {
   printifyImageId: string;
-  prompt: string;
   printProviderId: number;
   blueprintId: number;
 }) {
   const variants = await fetchProductVariants(blueprintId, printProviderId);
   const variantIds = variants.map((variant) => variant.id);
 
-  const capitalisedPrompt = prompt.charAt(0).toUpperCase() + prompt.slice(1);
   const productRequest: PrintifyProductRequest = {
     blueprint_id: blueprintId,
-    description: "TODO: make dynamic description",
+    description: "",
     print_areas: [
       {
         variant_ids: variantIds,
@@ -50,7 +47,7 @@ export async function constructPrintifyProductRequest({
       },
     ],
     print_provider_id: printProviderId,
-    title: capitalisedPrompt,
+    title: "Generated Product",
     variants: variantIds.map((variantId) => ({
       id: variantId,
       price: 1,

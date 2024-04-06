@@ -10,6 +10,7 @@ interface checkOutSessionParams {
   orderPreview: string;
   productId: string;
   orderVariantId: string;
+  internalOrderId: number;
 }
 
 export async function createCheckoutSession(params: checkOutSessionParams) {
@@ -23,9 +24,11 @@ export async function createCheckoutSession(params: checkOutSessionParams) {
     orderPreview,
     productId,
     orderVariantId,
+    internalOrderId,
   } = params;
   return await stripeServerClient.checkout.sessions.create({
-    customer_email: "test@example.com",
+    customer_email: "new@example.com",
+    customer_creation: "always",
     billing_address_collection: "required",
     shipping_address_collection: {
       allowed_countries: ["GB"],
@@ -70,11 +73,13 @@ export async function createCheckoutSession(params: checkOutSessionParams) {
     metadata: {
       productId,
       orderVariantId,
+      internalOrderId: internalOrderId.toString(),
     },
     payment_intent_data: {
       metadata: {
         productId,
         orderVariantId,
+        internalOrderId: internalOrderId.toString(),
       },
     },
     mode: "payment",

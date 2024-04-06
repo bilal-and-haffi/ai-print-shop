@@ -10,7 +10,7 @@ export function TextAreaAndButton() {
   const router = useRouter();
   const submitGenerateText = async () => {
     if (prompt.trim() === "") return;
-    
+
     router.push(`/image/${prompt}`);
   };
 

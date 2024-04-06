@@ -1,4 +1,4 @@
-# Ai Personalised Gifts - can rename
+# Ai Personalised Gifts
 
 **Download excalidraw plugin and see the docs directory**
 
@@ -48,4 +48,20 @@ or
 
 ```bash
   npm run stripe:listen
+```
+
+# DB
+
+- Need to have .env.development.local with updated pg connection values
+
+Update schema:
+
+```bash
+  npm run db:push
+```
+
+Studio:
+
+```bash
+  npm run db:studio
 ```

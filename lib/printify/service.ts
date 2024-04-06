@@ -85,8 +85,9 @@ export async function createPrintifyOrderForExistingProduct(
   const orderResponse = (await (
     await fetch(endpoint, options)
   ).json()) as PrintifyOrderResponse;
-  console.log({ orderResponse });
-  return orderResponse.id;
+
+  console.log({ orderId: orderResponse.id });
+  return orderResponse;
 }
 
 export async function retrieveAProduct(product_id: string) {

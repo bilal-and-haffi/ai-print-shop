@@ -1,7 +1,13 @@
-'use client';
+"use client";
 
 import { ProductImage } from "@/interfaces/PrintifyTypes";
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 import { useState } from "react";
@@ -16,7 +22,13 @@ export function ImagesCarousel(props: { images: ProductImage[] }) {
       <CarouselContent className="">
         {images.map((image, index) => (
           <CarouselItem key={index}>
-            <div className={imageLoaded ? "" : "flex aspect-square animate-pulse rounded-md bg-muted"}>
+            <div
+              className={
+                imageLoaded
+                  ? ""
+                  : "flex aspect-square animate-pulse rounded-md bg-muted"
+              }
+            >
               <Card>
                 <CardContent>
                   <Image

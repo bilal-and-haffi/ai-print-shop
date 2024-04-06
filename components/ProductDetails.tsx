@@ -87,9 +87,10 @@ export function ProductDetails({
                   "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                  product_id: retrievedProduct.id,
+                  productId: retrievedProduct.id,
                   order_title: retrievedProduct.title,
                   order_variant_label: variant.title,
+                  orderVariantId: variant.id,
                   order_preview: retrievedProduct.images[0].src,
                 }),
               })

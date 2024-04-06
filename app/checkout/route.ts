@@ -12,10 +12,6 @@ export async function POST(request: NextRequest) {
   const referer = headersList.get("referer") || "";
   const origin = headersList.get("origin") || "";
 
-  const productId = req.product_id;
-
-  log({ productId });
-
   const session = await createCheckoutSession({
     referer,
     origin,
@@ -24,7 +20,8 @@ export async function POST(request: NextRequest) {
     orderTitle: req.order_title,
     orderVariantLabel: req.order_variant_label,
     orderPreview: req.order_preview,
-    productId: req.product_id,
+    productId: req.productId,
+    orderVariantId: req.orderVariantId,
   });
 
   return NextResponse.json({ message: "success", url: session!.url! });

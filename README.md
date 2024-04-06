@@ -1,4 +1,4 @@
-# Ai Personalised Gifts - can rename
+# Ai Personalised Gifts
 
 **Download excalidraw plugin and see the docs directory**
 

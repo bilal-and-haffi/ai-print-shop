@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { log } from "@/utils/log";
 import { createPrintifyOrderForExistingProduct } from "@/lib/printify/service";
 import { LineItemBase } from "@/interfaces/PrintifyTypes";
 import { getCountry } from "@/lib/postcode/getCountry";
@@ -44,7 +43,7 @@ export async function POST(request: NextRequest) {
     },
   );
 
-  log({ orderId });
+  console.log({ orderId });
 
   return NextResponse.json({ message: "success" });
 }

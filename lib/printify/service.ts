@@ -1,7 +1,16 @@
 import { PRINTIFY_BASE_URL } from "@/app/data/consts";
 import { v4 as uuidv4 } from "uuid";
-import { AddressTo, EssentialProductDetails, LineItemBase, PrintifyImageResponse, PrintifyOrderExistingProductRequest, PrintifyOrderResponse, PrintifyProductRequest, RetrieveProductResponse, Variant } from "@/interfaces/PrintifyTypes";
-import { log } from "@/utils/log";
+import {
+  AddressTo,
+  EssentialProductDetails,
+  LineItemBase,
+  PrintifyImageResponse,
+  PrintifyOrderExistingProductRequest,
+  PrintifyOrderResponse,
+  PrintifyProductRequest,
+  RetrieveProductResponse,
+  Variant,
+} from "@/interfaces/PrintifyTypes";
 
 export async function createPrintifyOrderForExistingProduct(
   line_items: LineItemBase[],
@@ -25,14 +34,13 @@ export async function createPrintifyOrderForExistingProduct(
     },
     body: JSON.stringify(body),
   };
-  log({ endpoint, options });
+  console.log({ endpoint, options });
   const orderResponse = (await (
     await fetch(endpoint, options)
   ).json()) as PrintifyOrderResponse;
-  log({ orderResponse });
+  console.log({ orderResponse });
   return orderResponse.id;
 }
-
 
 export async function retrieveAProduct(product_id: string) {
   const endpoint = `${PRINTIFY_BASE_URL}/v1/shops/${process.env.SHOP_ID}/products/${product_id}.json`;
@@ -44,11 +52,10 @@ export async function retrieveAProduct(product_id: string) {
   });
   const product = (await response.json()) as RetrieveProductResponse;
 
-  log({ product });
+  console.log({ product });
 
   return product;
 }
-
 
 export async function getOrderDetails(orderId: string) {
   const endpoint = `${PRINTIFY_BASE_URL}/v1/shops/${process.env.SHOP_ID}/orders/${orderId}.json`;
@@ -59,7 +66,7 @@ export async function getOrderDetails(orderId: string) {
     },
   });
   const orderDetails = (await response.json()) as PrintifyOrderResponse;
-  log({ orderDetails });
+  console.log({ orderDetails });
   return orderDetails;
 }
 
@@ -132,7 +139,7 @@ export async function createProduct({
     variants,
   };
   const productRequestString = JSON.stringify(productRequest);
-  log({ productRequest, productRequestString });
+  console.log({ productRequest, productRequestString });
 
   const productResponse: any = await fetch(
     `${PRINTIFY_BASE_URL}/v1/shops/${process.env.SHOP_ID}/products.json`,
@@ -146,10 +153,9 @@ export async function createProduct({
     },
   );
   const productData = await productResponse.json();
-  log({ productData });
+  console.log({ productData });
   return productData;
 }
-
 
 export async function fetchProductVariants(
   blueprintId: number,

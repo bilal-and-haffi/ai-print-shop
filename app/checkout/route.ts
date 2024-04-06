@@ -1,7 +1,6 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { createCheckoutSession } from '@/lib/stripe/service';
-import { T_SHIRT_PRICE_IN_GBP } from '@/app/data/consts';
-import { log } from '@/utils/log';
+import { NextRequest, NextResponse } from "next/server";
+import { createCheckoutSession } from "@/lib/stripe/service";
+import { T_SHIRT_PRICE_IN_GBP } from "@/app/data/consts";
 
 export async function POST(request: NextRequest) {
   const req = await request.json();

@@ -11,7 +11,7 @@ describe("fetchProductVariants", () => {
 describe("mapProductDetails", () => {
   it("should return an object with the essential product details", () => {
     const variant = printCleverTShirtFixture.variants[0];
-    const data = mapProductDetails(variant);
+    const data = mapProductDetails(variant as any);
     expect(data).toEqual({
       id: variant.id,
       color: variant.options.color,

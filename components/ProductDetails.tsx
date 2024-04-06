@@ -17,11 +17,11 @@ export function ProductDetails({
 }: {
     retrievedProduct: RetrieveProductResponse;
     withBuyNow?: boolean;
-    size?: number;
+    size?: number;          
     color?: number;
 }) {
     const colours = retrievedProduct.options[0].values;
-    const sizes = retrievedProduct.options[1].values;
+    const sizes = retrievedProduct.options[1].values; // will not work for mug
     const variant = retrievedProduct.variants.find(
         (variant) => variant.options[0] == color && variant.options[1] == size,
     );

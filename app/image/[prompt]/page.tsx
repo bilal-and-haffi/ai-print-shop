@@ -4,8 +4,16 @@ import {
   PrintifyProductRequest,
 } from "@/interfaces/PrintifyTypes";
 import OpenAI from "openai";
-import { PRINTIFY_BASE_URL, products } from "@/app/data/consts";
-import { log } from "@/functions/log";
+import {
+  PRINTIFY_BASE_URL,
+  printCleverId,
+  unisexHeavyCottonTeeBlueprintId,
+} from "@/app/data/consts";
+import { log } from "@/utils/log";
+import {
+  fetchProductVariants,
+  mapProductDetails,
+} from "@/utils/getProductDetails";
 
 export const maxDuration = 300;
 
@@ -24,41 +32,24 @@ export default async function ImagePage(params: {
 
   const url = await generateImageUrl(decodedPrompt);
   const image = await postImageToPrintify(url, "generatedImage.png");
-  const createProductResponse = await createProduct(
-    constructTeeShirtProductRequest({
-      imageId: image.id,
-      prompt: decodedPrompt,
-      printProviderId: products.printClever.id,
-      productVariantId: products.printClever.variants.blackLarge,
-      blueprintId: products.printClever.blueprints.unisexHeavyCottonTee,
-    }),
-  );
+  const [printProviderId, blueprintId] = [
+    printCleverId,
+    unisexHeavyCottonTeeBlueprintId,
+  ];
+  const variants = await fetchProductVariants(blueprintId, printProviderId);
+  const variantIds = variants.map((variant) => variant.id);
+
+  const teeShirtProductRequest = constructTeeShirtProductRequest({
+    imageId: image.id,
+    prompt: decodedPrompt,
+    printProviderId,
+    productVariantIds: variantIds,
+    blueprintId,
+  });
+  const createProductResponse = await createProduct(teeShirtProductRequest);
   const productId = createProductResponse.id;
 
-  // await publishPrintifyProduct(productId); // not needed???
   redirect(`/product/${productId}`, RedirectType.replace);
-}
-
-async function publishPrintifyProduct(product_id: string) {
-  const endpoint = `${PRINTIFY_BASE_URL}/v1/shops/${process.env.SHOP_ID}/products/${product_id}/publish.json`;
-  const body = JSON.stringify({
-    title: true,
-    description: true,
-    images: true,
-    variants: true,
-    tags: true,
-    keyFeatures: true,
-    shipping_template: true,
-  });
-
-  await fetch(endpoint, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      authorization: `Bearer ${process.env.PRINTIFY_API_TOKEN}`,
-    },
-    body,
-  });
 }
 
 async function postImageToPrintify(
@@ -162,13 +153,13 @@ function constructTeeShirtProductRequest({
   imageId,
   prompt,
   printProviderId,
-  productVariantId,
+  productVariantIds,
   blueprintId,
 }: {
   imageId: string;
   prompt: string;
   printProviderId: number;
-  productVariantId: number;
+  productVariantIds: number[];
   blueprintId: number;
 }) {
   const capitalisedPrompt = prompt.charAt(0).toUpperCase() + prompt.slice(1);
@@ -178,7 +169,7 @@ function constructTeeShirtProductRequest({
       "Your new favorite t-shirt. Soft, comfortable, and high-quality.",
     print_areas: [
       {
-        variant_ids: [productVariantId],
+        variant_ids: productVariantIds,
         placeholders: [
           {
             position: "front",
@@ -197,12 +188,10 @@ function constructTeeShirtProductRequest({
     ],
     print_provider_id: printProviderId,
     title: capitalisedPrompt,
-    variants: [
-      {
-        id: productVariantId,
-        price: 1,
-      },
-    ],
+    variants: productVariantIds.map((variantId) => ({
+      id: variantId,
+      price: 1,
+    })),
   };
   return productRequest;
 }

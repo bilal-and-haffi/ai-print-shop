@@ -6,9 +6,9 @@ import {
   VAT_MULTIPLIER,
 } from "@/app/data/consts";
 import { PrintifyOrderResponse } from "@/interfaces/PrintifyTypes";
-import { log } from "@/functions/log";
+import { log } from "@/utils/log";
 import { ProductDetails } from "@/components/ProductDetails";
-import { retrieveAProduct } from "@/functions/retrieveAProduct";
+import { retrieveAProduct } from "@/utils/retrieveAProduct";
 import { redirect } from "next/navigation";
 import { headers } from "next/headers";
 import { createCheckoutSession } from "@/lib/stripe/service";

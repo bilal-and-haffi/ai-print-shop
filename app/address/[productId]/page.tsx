@@ -1,6 +1,8 @@
 import { PersonalDetailsForm } from "@/components/PersonalDetailsForm";
 
-export default async function Page(params: { params: { productId: string } }) {
+export default async function Page(params: {
+  params: { productId: string };
+}) {
   const { productId } = params.params;
 
   if (!productId) {
@@ -9,5 +11,7 @@ export default async function Page(params: { params: { productId: string } }) {
     return <div>Product ID is required</div>;
   }
 
-  return <PersonalDetailsForm productId={productId} />;
+  return (
+    <PersonalDetailsForm productId={productId} />
+  );
 }

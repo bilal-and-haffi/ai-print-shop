@@ -1,6 +1,7 @@
 import { RedirectType, redirect } from "next/navigation";
 import { generateImageUrl } from "@/lib/openai/generateImageUrl";
 import { postImageToPrintify } from "@/lib/printify/service";
+import { addToImageTable } from "@/db/image";
 
 export const maxDuration = 300;
 
@@ -23,6 +24,12 @@ export default async function GenerateImagePage(params: {
     openaiImageUrl,
     "generatedImage.png",
   );
+
+  await addToImageTable({
+    prompt: decodedPrompt,
+    printifyImageId: printifyImageId,
+    printifyImageUrl: openaiImageUrl,
+  });
 
   redirect(`/product/tshirt/${printifyImageId}`, RedirectType.replace);
 }

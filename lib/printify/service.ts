@@ -11,6 +11,7 @@ import {
   RetrieveProductResponse,
   Variant,
 } from "@/interfaces/PrintifyTypes";
+import { getPromptFromImageId } from "@/db/image";
 
 export async function constructPrintifyProductRequest({
   printifyImageId,
@@ -23,6 +24,7 @@ export async function constructPrintifyProductRequest({
 }) {
   const variants = await fetchProductVariants(blueprintId, printProviderId);
   const variantIds = variants.map((variant) => variant.id);
+  const prompt = await getPromptFromImageId(printifyImageId);
 
   const productRequest: PrintifyProductRequest = {
     blueprint_id: blueprintId,
@@ -47,7 +49,7 @@ export async function constructPrintifyProductRequest({
       },
     ],
     print_provider_id: printProviderId,
-    title: "Generated Product",
+    title: prompt,
     variants: variantIds.map((variantId) => ({
       id: variantId,
       price: 1,

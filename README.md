@@ -49,3 +49,19 @@ or
 ```bash
   npm run stripe:listen
 ```
+
+# DB
+
+- Need to have .env.development.local with updated pg connection values
+
+Update schema:
+
+```bash
+  npm run db:push
+```
+
+Studio:
+
+```bash
+  npm run db:studio
+```

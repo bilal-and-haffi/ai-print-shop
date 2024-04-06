@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { Button } from "@/components/ui/button";
 import { RetrieveProductResponse } from "@/interfaces/PrintifyTypes";
@@ -99,7 +99,8 @@ export function ProductDetails({
                   window.location.href = data.url;
                 });
             }}
-            className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full">
+            className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
+          >
             Proceed to checkout
           </Button>
         </div>

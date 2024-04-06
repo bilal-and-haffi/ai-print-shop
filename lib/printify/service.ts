@@ -1,6 +1,16 @@
 import { PRINTIFY_BASE_URL } from "@/app/data/consts";
 import { v4 as uuidv4 } from "uuid";
-import { AddressTo, EssentialProductDetails, LineItemBase, PrintifyImageResponse, PrintifyOrderExistingProductRequest, PrintifyOrderResponse, PrintifyProductRequest, RetrieveProductResponse, Variant } from "@/interfaces/PrintifyTypes";
+import {
+  AddressTo,
+  EssentialProductDetails,
+  LineItemBase,
+  PrintifyImageResponse,
+  PrintifyOrderExistingProductRequest,
+  PrintifyOrderResponse,
+  PrintifyProductRequest,
+  RetrieveProductResponse,
+  Variant,
+} from "@/interfaces/PrintifyTypes";
 import { log } from "@/utils/log";
 
 export async function createPrintifyOrderForExistingProduct(
@@ -29,10 +39,10 @@ export async function createPrintifyOrderForExistingProduct(
   const orderResponse = (await (
     await fetch(endpoint, options)
   ).json()) as PrintifyOrderResponse;
-  log({ orderResponse });
-  return orderResponse.id;
-}
 
+  log({ orderId: orderResponse.id });
+  return orderResponse;
+}
 
 export async function retrieveAProduct(product_id: string) {
   const endpoint = `${PRINTIFY_BASE_URL}/v1/shops/${process.env.SHOP_ID}/products/${product_id}.json`;
@@ -48,7 +58,6 @@ export async function retrieveAProduct(product_id: string) {
 
   return product;
 }
-
 
 export async function getOrderDetails(orderId: string) {
   const endpoint = `${PRINTIFY_BASE_URL}/v1/shops/${process.env.SHOP_ID}/orders/${orderId}.json`;
@@ -149,7 +158,6 @@ export async function createProduct({
   log({ productData });
   return productData;
 }
-
 
 export async function fetchProductVariants(
   blueprintId: number,

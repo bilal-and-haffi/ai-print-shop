@@ -1,11 +1,16 @@
 import { RedirectType, redirect } from "next/navigation";
-import {
-  PrintifyProductRequest,
-} from "@/interfaces/PrintifyTypes";
+import { PrintifyProductRequest } from "@/interfaces/PrintifyTypes";
 import OpenAI from "openai";
 import { log } from "@/utils/log";
-import { createProduct, fetchProductVariants, postImageToPrintify } from "@/lib/printify/service";
-import { printCleverId, unisexHeavyCottonTeeBlueprintId } from "@/app/data/consts";
+import {
+  createProduct,
+  fetchProductVariants,
+  postImageToPrintify,
+} from "@/lib/printify/service";
+import {
+  printCleverId,
+  unisexHeavyCottonTeeBlueprintId,
+} from "@/app/data/consts";
 
 export const maxDuration = 300;
 
@@ -44,7 +49,6 @@ export default async function ImagePage(params: {
   redirect(`/product/${productId}`, RedirectType.replace);
 }
 
-
 const generateImageUrl: (prompt: string) => Promise<string> = async (
   prompt: string,
 ) => {
@@ -76,7 +80,6 @@ const generateImageUrl: (prompt: string) => Promise<string> = async (
 
   return url;
 };
-
 
 function constructTeeShirtProductRequest({
   imageId,

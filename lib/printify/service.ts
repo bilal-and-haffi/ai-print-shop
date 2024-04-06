@@ -11,7 +11,52 @@ import {
   RetrieveProductResponse,
   Variant,
 } from "@/interfaces/PrintifyTypes";
-import { log } from "@/utils/log";
+import { getPromptFromImageId } from "@/db/image";
+
+export async function constructPrintifyProductRequest({
+  printifyImageId,
+  printProviderId,
+  blueprintId,
+}: {
+  printifyImageId: string;
+  printProviderId: number;
+  blueprintId: number;
+}) {
+  const variants = await fetchProductVariants(blueprintId, printProviderId);
+  const variantIds = variants.map((variant) => variant.id);
+  const prompt = await getPromptFromImageId(printifyImageId);
+
+  const productRequest: PrintifyProductRequest = {
+    blueprint_id: blueprintId,
+    description: "",
+    print_areas: [
+      {
+        variant_ids: variantIds,
+        placeholders: [
+          {
+            position: "front",
+            images: [
+              {
+                id: printifyImageId,
+                x: 0.5,
+                y: 0.5,
+                scale: 1,
+                angle: 0,
+              },
+            ],
+          },
+        ],
+      },
+    ],
+    print_provider_id: printProviderId,
+    title: prompt,
+    variants: variantIds.map((variantId) => ({
+      id: variantId,
+      price: 1,
+    })),
+  };
+  return productRequest;
+}
 
 export async function createPrintifyOrderForExistingProduct(
   line_items: LineItemBase[],
@@ -35,12 +80,12 @@ export async function createPrintifyOrderForExistingProduct(
     },
     body: JSON.stringify(body),
   };
-  log({ endpoint, options });
+  console.log({ endpoint, options });
   const orderResponse = (await (
     await fetch(endpoint, options)
   ).json()) as PrintifyOrderResponse;
 
-  log({ orderId: orderResponse.id });
+  console.log({ orderId: orderResponse.id });
   return orderResponse;
 }
 
@@ -54,7 +99,7 @@ export async function retrieveAProduct(product_id: string) {
   });
   const product = (await response.json()) as RetrieveProductResponse;
 
-  log({ product });
+  console.log({ product });
 
   return product;
 }
@@ -68,7 +113,7 @@ export async function getOrderDetails(orderId: string) {
     },
   });
   const orderDetails = (await response.json()) as PrintifyOrderResponse;
-  log({ orderDetails });
+  console.log({ orderDetails });
   return orderDetails;
 }
 
@@ -124,7 +169,7 @@ export async function postImageToPrintify(
   }
 }
 
-export async function createProduct({
+export async function createPrintifyProduct({
   blueprint_id,
   description,
   print_areas,
@@ -141,7 +186,7 @@ export async function createProduct({
     variants,
   };
   const productRequestString = JSON.stringify(productRequest);
-  log({ productRequest, productRequestString });
+  console.log({ productRequest, productRequestString });
 
   const productResponse: any = await fetch(
     `${PRINTIFY_BASE_URL}/v1/shops/${process.env.SHOP_ID}/products.json`,
@@ -155,7 +200,7 @@ export async function createProduct({
     },
   );
   const productData = await productResponse.json();
-  log({ productData });
+  console.log({ productData });
   return productData;
 }
 

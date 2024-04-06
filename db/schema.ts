@@ -12,7 +12,7 @@ export const imageTable = pgTable("image", {
   prompt: varchar("prompt").notNull(),
   printifyImageId: varchar("printify_image_id").notNull(),
   printifyImageUrl: varchar("printify_image_url").notNull(),
-  printifyProductId: varchar("printify_product_id").notNull(),
+  printifyProductId: varchar("printify_product_id"),
   createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
 });
 

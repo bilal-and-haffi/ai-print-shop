@@ -3,16 +3,41 @@ import { ChangeEvent, useState, KeyboardEvent, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
+import {
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from "@/components/ui/form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { set, z } from "zod";
+
+const FormSchema = z.object({
+    modelProvider: z.string().default("openai"),
+});
 
 export function TextAreaAndButton() {
-    const initalPrompt = process.env.NEXT_PUBLIC_ENV === "development" ? "test" : "";
+    const initalPrompt =
+        process.env.NEXT_PUBLIC_ENV === "development" ? "test" : "";
     const [prompt, setPrompt] = useState<string>(initalPrompt);
+    const [modelProvider, setModelProvider] = useState<string>("openai");
+
     const textAreaRef = useRef<HTMLTextAreaElement>(null);
     const router = useRouter();
     const submitGenerateText = async () => {
         if (prompt.trim() === "") return;
 
-        router.push(`/image/${prompt}`);
+        router.push(`/image/${prompt}?model=${modelProvider}`);
     };
 
     const onInputChanged = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -27,15 +52,59 @@ export function TextAreaAndButton() {
         }
     };
 
+    const form = useForm<z.infer<typeof FormSchema>>({
+        resolver: zodResolver(FormSchema),
+    });
+
     return (
         <>
             <div
-                className="flex w-5/6 flex-col space-y-4 lg:w-1/2"
+                className="flex w-5/6 flex-col items-center space-y-4 lg:w-1/2"
                 id="form-container"
             >
                 <label htmlFor="prompt" className="text-lg">
                     Enter your prompt
                 </label>
+                <Form {...form}>
+                    <form className="w-2/3 space-y-6 text-black">
+                        <FormField
+                            control={form.control}
+                            name="modelProvider"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel></FormLabel>
+                                    <Select
+                                        onValueChange={(e) => {
+                                            setModelProvider(e);
+                                        }}
+                                        defaultValue={field.value}
+                                    >
+                                        <FormControl>
+                                            <SelectTrigger>
+                                                <SelectValue placeholder="Select model" />
+                                            </SelectTrigger>
+                                        </FormControl>
+                                        <SelectContent>
+                                            <SelectItem
+                                                className="px-2"
+                                                value="openai"
+                                            >
+                                                OpenAI/dall-e-3
+                                            </SelectItem>
+                                            <SelectItem
+                                                className="px-2"
+                                                value="stable-diffusion"
+                                            >
+                                                Stability-ai/stable-diffusion
+                                            </SelectItem>
+                                        </SelectContent>
+                                    </Select>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                    </form>
+                </Form>
                 <Textarea
                     ref={textAreaRef}
                     placeholder="Enter your promt here!"

@@ -1,12 +1,16 @@
 import { RedirectType, redirect } from "next/navigation";
-import { generateImageUrl } from "@/lib/openai/generateImageUrl";
 import { postImageToPrintify } from "@/lib/printify/service";
 import { addToImageTable } from "@/db/image";
+import { generateOpenAiImageUrl } from "@/lib/images/openai";
+import { generateStableDiffusionImageUrl } from "@/lib/images/replicate";
 
 export const maxDuration = 300;
 
+const ModelsEnum = ["openai", "stable-diffusion"] as const;
+
 export default async function GenerateImagePage(params: {
     params: { prompt: string };
+    searchParams: { model: string };
 }) {
     const { prompt: encodedPrompt } = params.params;
     const decodedPrompt = decodeURIComponent(encodedPrompt);
@@ -17,17 +21,28 @@ export default async function GenerateImagePage(params: {
         return <div>Text is required</div>;
     }
 
-    const openaiImageUrl = await generateImageUrl(decodedPrompt);
+    const { model } = params.searchParams;
+
+    let generatedImageUrl: string;
+    if (model === ModelsEnum[0]) {
+        generatedImageUrl = await generateOpenAiImageUrl(decodedPrompt);
+    } else if (model === ModelsEnum[1]) {
+        generatedImageUrl =
+            await generateStableDiffusionImageUrl(decodedPrompt);
+    } else {
+        console.error("Invalid model", { model });
+        return <div>Invalid model</div>;
+    }
 
     const { id: printifyImageId } = await postImageToPrintify(
-        openaiImageUrl,
+        generatedImageUrl,
         "generatedImage.png",
     );
 
     await addToImageTable({
         prompt: decodedPrompt,
         printifyImageId: printifyImageId,
-        printifyImageUrl: openaiImageUrl,
+        printifyImageUrl: generatedImageUrl,
     });
 
     redirect(`/product/tshirt/${printifyImageId}`, RedirectType.replace);

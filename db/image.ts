@@ -4,12 +4,6 @@ import { imageTable } from "@/db/schema";
 import { eq } from "drizzle-orm";
 
 type ImageInsert = typeof imageTable.$inferInsert;
-
-export const getExampleTable = async () => {
-    const selectResult = await dbClient.select().from(imageTable);
-    console.log("Results", selectResult);
-};
-
 export const addToImageTable = async ({
     prompt,
     printifyImageId,
@@ -19,7 +13,6 @@ export const addToImageTable = async ({
         .insert(imageTable)
         .values({ prompt, printifyImageId, printifyImageUrl })
         .returning({ id: imageTable.id });
-    console.log("Inserted", insertResult);
     return insertResult[0].id;
 };
 

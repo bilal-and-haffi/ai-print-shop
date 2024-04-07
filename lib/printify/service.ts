@@ -99,8 +99,6 @@ export async function retrieveAProduct(product_id: string) {
     });
     const product = (await response.json()) as RetrieveProductResponse;
 
-    console.log({ product });
-
     return product;
 }
 
@@ -186,7 +184,6 @@ export async function createPrintifyProduct({
         variants,
     };
     const productRequestString = JSON.stringify(productRequest);
-    console.log({ productRequest, productRequestString });
 
     const productResponse: any = await fetch(
         `${PRINTIFY_BASE_URL}/v1/shops/${process.env.SHOP_ID}/products.json`,
@@ -200,7 +197,6 @@ export async function createPrintifyProduct({
         },
     );
     const productData = await productResponse.json();
-    console.log({ productData });
     return productData;
 }
 

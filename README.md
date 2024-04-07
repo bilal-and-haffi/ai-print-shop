@@ -15,19 +15,7 @@
 -   I want emails telling me about my purchase and delivery
 -   I want to be delivered the product
 
-## How it will work
-
--   UI in react
--   external API for generating image
--   external API for merch - this could handle payment and delivery too
-    -   Alternatively Handle payment with stripe
--   Handle emails and texts
--   Handle orders
--   Could use shopify
-
-# Dev Stuff
-
-How to connect to db:
+# How to connect to db:
 
 -   https://nextjs.org/learn/dashboard-app/setting-up-your-database
 -   https://vercel.com/bilal-minhas-s-team/ai-personalised-gifts/stores/postgres/store_7uMyihjo3sZQ7I8k/guides

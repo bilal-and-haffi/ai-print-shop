@@ -3,9 +3,11 @@ import { Architecture, Runtime } from "aws-cdk-lib/aws-lambda";
 import { NodejsFunction } from "aws-cdk-lib/aws-lambda-nodejs";
 import { RetentionDays } from "aws-cdk-lib/aws-logs";
 import { Construct } from "constructs";
-import { config as dotenvConfig } from "dotenv";
+import { config as dotEnvConfig } from "dotenv";
 
-dotenvConfig();
+dotEnvConfig({
+    path: "./.env.development.local",
+});
 
 export class GenericLambda extends NodejsFunction {
     constructor(scope: Construct, fileName: string) {

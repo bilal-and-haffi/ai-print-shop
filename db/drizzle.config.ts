@@ -1,7 +1,7 @@
 import { defineConfig } from "drizzle-kit";
-import { config as dotEndConfig } from "dotenv";
+import { config as dotEnvConfig } from "dotenv";
 
-dotEndConfig({
+dotEnvConfig({
     path: "./.env.development.local",
 });
 

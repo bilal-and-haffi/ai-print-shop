@@ -17,7 +17,7 @@ export const imageTable = pgTable("image", {
 });
 
 export const orderTable = pgTable(
-    "order",
+    "orders",
     {
         id: bigserial("id", { mode: "number" }).primaryKey(),
         printifyOrderId: varchar("printify_order_id"),

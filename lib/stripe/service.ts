@@ -26,8 +26,8 @@ export async function createCheckoutSession(params: checkOutSessionParams) {
         orderVariantId,
         internalOrderId,
     } = params;
+
     return await stripeServerClient.checkout.sessions.create({
-        customer_email: "new@example.com",
         customer_creation: "always",
         billing_address_collection: "required",
         shipping_address_collection: {

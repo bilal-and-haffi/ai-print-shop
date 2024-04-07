@@ -86,13 +86,11 @@ export function TextAreaAndButton() {
                                         </FormControl>
                                         <SelectContent>
                                             <SelectItem
-                                                className="px-2"
                                                 value="openai"
                                             >
                                                 OpenAI/dall-e-3
                                             </SelectItem>
                                             <SelectItem
-                                                className="px-2"
                                                 value="stable-diffusion"
                                             >
                                                 Stability-ai/stable-diffusion

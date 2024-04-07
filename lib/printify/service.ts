@@ -13,7 +13,7 @@ import {
 } from "@/interfaces/PrintifyTypes";
 import { getPromptFromImageId } from "@/db/image";
 
-export async function constructPrintifyProductRequest({
+async function constructPrintifyProductRequest({
     printifyImageId,
     printProviderId,
     blueprintId,
@@ -168,13 +168,26 @@ export async function postImageToPrintify(
 }
 
 export async function createPrintifyProduct({
-    blueprint_id,
-    description,
-    print_areas,
-    print_provider_id,
-    title,
-    variants,
-}: PrintifyProductRequest) {
+    printifyImageId,
+    printProviderId,
+    blueprintId,
+}: {
+    printifyImageId: string;
+    printProviderId: number;
+    blueprintId: number;
+}) {
+    const {
+        blueprint_id,
+        description,
+        print_areas,
+        print_provider_id,
+        title,
+        variants,
+    } = await constructPrintifyProductRequest({
+        printifyImageId,
+        printProviderId,
+        blueprintId,
+    });
     const productRequest: PrintifyProductRequest = {
         blueprint_id,
         description,

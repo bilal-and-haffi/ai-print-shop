@@ -5,7 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 
 export function TextAreaAndButton() {
-    const [prompt, setPrompt] = useState<string>("");
+    const initalPrompt = process.env.NEXT_PUBLIC_ENV === "development" ? "test" : "";
+    const [prompt, setPrompt] = useState<string>(initalPrompt);
     const textAreaRef = useRef<HTMLTextAreaElement>(null);
     const router = useRouter();
     const submitGenerateText = async () => {

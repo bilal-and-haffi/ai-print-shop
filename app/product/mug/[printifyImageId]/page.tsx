@@ -1,7 +1,7 @@
 import { ProductDetails } from "@/components/ProductDetails";
-import { createPrintifyHoodieProduct } from "@/lib/printify/products/createPrintifyHoodieProduct";
+import { createPrintifyMugProduct } from "@/lib/printify/products/createPrintifyMugProduct";
 
-export default async function HoodieProductPage({
+export default async function MugProductPage({
     params,
     searchParams,
 }: {
@@ -10,14 +10,14 @@ export default async function HoodieProductPage({
 }) {
     const { printifyImageId } = params;
     const { size, color } = searchParams;
-    const hoodieProduct = await createPrintifyHoodieProduct(printifyImageId);
+    const hoodieProduct = await createPrintifyMugProduct(printifyImageId);
 
     return (
         <>
             <ProductDetails
                 retrievedProduct={hoodieProduct}
-                sizeId={size || 16} // large
-                colorId={color || 418} // black
+                sizeId={size || 1189}
+                colorId={color || 2621}
                 printifyImageId={printifyImageId}
             />
         </>

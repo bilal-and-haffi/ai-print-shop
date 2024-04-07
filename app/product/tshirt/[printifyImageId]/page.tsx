@@ -1,18 +1,7 @@
-import {
-    T_SHIRT_PRICE_IN_GBP,
-    printCleverId,
-    unisexHeavyCottonTeeBlueprintId,
-} from "@/app/data/consts";
 import { ProductDetails } from "@/components/ProductDetails";
-import { Button } from "@/components/ui/button";
-import {
-    constructPrintifyProductRequest,
-    createPrintifyProduct,
-    retrieveAProduct,
-} from "@/lib/printify/service";
-import Link from "next/link";
+import { createPrintifyTshirtProduct } from "@/lib/printify/products/createPrintifyTShirtProduct";
 
-export default async function TShirtPage({
+export default async function TShirtProductPage({
     params,
     searchParams,
 }: {
@@ -21,30 +10,15 @@ export default async function TShirtPage({
 }) {
     const { printifyImageId } = params;
     const { size, color } = searchParams;
-    console.log({ printifyImageId });
-
-    const teeShirtProductRequest = await constructPrintifyProductRequest({
-        printifyImageId: printifyImageId,
-        printProviderId: printCleverId,
-        blueprintId: unisexHeavyCottonTeeBlueprintId,
-    });
-
-    const { id: teeShirtPrintifyProductId } = await createPrintifyProduct(
-        teeShirtProductRequest,
-    );
-
-    const retrievedProduct = await retrieveAProduct(teeShirtPrintifyProductId);
+    const tshirtProduct = await createPrintifyTshirtProduct(printifyImageId);
 
     return (
         <>
-            <Link href={`/product/hoodie/${printifyImageId}`}>
-                <Button>Hoodie</Button>
-            </Link>
             <ProductDetails
-                retrievedProduct={retrievedProduct}
-                withBuyNow={true}
-                size={size}
-                color={color}
+                retrievedProduct={tshirtProduct}
+                sizeId={size || 16} // large
+                colorId={color || 418} // black
+                printifyImageId={printifyImageId}
             />
         </>
     );

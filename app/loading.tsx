@@ -1,3 +1,10 @@
+import { LoadingSpinner } from "@/components/LoadingSpinner";
+
 export default function Loading() {
-    return "Loading...";
+    return (
+        <>
+            <p>Loading</p>
+            <LoadingSpinner />
+        </>
+    );
 }

@@ -1,8 +1,16 @@
 "use client";
-import { Button } from "@/components/ui/button";
+import { useState } from "react";
 import { Options } from "./ProductDetails";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
+import { usePathname } from "next/navigation";
 
-export const SizeAndColorForm = ({
+export const SizeAndColorSelector = ({
     sizes,
     colours,
     sizeId,
@@ -12,44 +20,57 @@ export const SizeAndColorForm = ({
     colours: Options[];
     sizeId: number;
     colorId: number;
-}) => (
-    <div className="my-4 flex flex-col text-center">
-        <form>
-            <div className="mb-4">
-                <label htmlFor="size">Size:</label>
-                {/* TODO: handle invalid colour and size combination */}
-                <select
-                    name="size"
-                    id="size"
-                    className="text-black"
-                    defaultValue={sizeId}
-                >
-                    {sizes.map((size) => (
-                        <option key={size.id} value={size.id}>
-                            {size.title}
-                        </option>
-                    ))}
-                </select>
-            </div>
-            <div>
-                <label htmlFor="color">Color:</label>
-                <select
-                    name="color"
-                    id="color"
-                    className="text-black"
-                    defaultValue={colorId}
-                >
-                    {colours.map((color) => (
-                        <option key={color.id} value={color.id}>
-                            {color.title}
-                        </option>
-                    ))}
-                </select>
-            </div>
+}) => {
+    const basePathname = usePathname();
+    const [selectedSize, setSelectedSize] = useState(sizeId.toString());
+    const [selectedColor, setSelectedColor] = useState(colorId.toString());
 
-            <Button className="mt-4" type="submit">
-                Update
-            </Button>
-        </form>
-    </div>
-);
+    function onSizeChange(value: string) {
+        setSelectedSize(value);
+        window.location.href = `${basePathname}?size=${value}&color=${selectedColor}`; // temprorary fix
+    }
+
+    function onColorChange(value: string) {
+        setSelectedColor(value);
+        window.location.href = `${basePathname}?size=${selectedSize}&color=${value}`; // temprorary fix
+    }
+
+    return (
+        <div id="selectContainer" className="text-black">
+            <Select
+                onValueChange={(value) => onSizeChange(value)}
+                value={selectedSize}
+            >
+                <SelectTrigger className="w-[180px]">
+                    <SelectValue placeholder="Size" />
+                </SelectTrigger>
+                <SelectContent>
+                    {sizes.map((size) => (
+                        <SelectItem key={size.id} value={size.id.toString()}>
+                            {size.title}
+                        </SelectItem>
+                    ))}
+                </SelectContent>
+            </Select>
+
+            <Select
+                onValueChange={(value) => onColorChange(value)}
+                value={selectedColor}
+            >
+                <SelectTrigger className="w-[180px]">
+                    <SelectValue placeholder="Color" />
+                </SelectTrigger>
+                <SelectContent>
+                    {colours.map((colour) => (
+                        <SelectItem
+                            key={colour.id}
+                            value={colour.id.toString()}
+                        >
+                            {colour.title}
+                        </SelectItem>
+                    ))}
+                </SelectContent>
+            </Select>
+        </div>
+    );
+};

@@ -61,12 +61,15 @@ export function ProductDetails({
                 </Link>
             </div>
             <ImagesCarousel images={filteredImages} />
-            <SizeAndColorSelector
-                sizes={sizeOptions}
-                colours={colourOptions}
-                sizeId={sizeId}
-                colorId={colorId}
-            />
+            <div className="flex flex-col justify-center space-y-4">
+                <span className="text-sm">{retrievedProduct.description}</span>
+                <SizeAndColorSelector
+                    sizes={sizeOptions}
+                    colours={colourOptions}
+                    sizeId={sizeId}
+                    colorId={colorId}
+                />
+            </div>
             <LinksToProducts printifyImageId={printifyImageId} />
             <div
                 id="linkContainer"
@@ -84,7 +87,7 @@ export function ProductDetails({
                                 order_title: retrievedProduct.title,
                                 order_variant_label: variant.title,
                                 orderVariantId: variant.id,
-                                order_preview: retrievedProduct.images[0].src,
+                                order_preview: retrievedProduct.images[0].src,  
                             }),
                         })
                             .then((res) => res.json())

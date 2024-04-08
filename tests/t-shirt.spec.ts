@@ -5,31 +5,43 @@ test("has title", async ({ page }) => {
     await expect(page).toHaveTitle(/AI Personalised Gift Shop/);
 });
 
-test("should allow user to buy a t shirt", async ({ page }) => {
+test("should allow user to switch between products", async ({ page }) => {
     await page.goto("/");
-    await page.screenshot({ path: "tests/screenshots/homepage.png" });
     // in test env we will already have "test" in the input field and that is mocked
     const generateButton = await page.getByText("Generate");
     await generateButton.click();
     await expect(page).toHaveURL(/\/tshirt/);
 
-    await page.screenshot({ path: "tests/screenshots/tshirt-page.png" });
+    const tShirtDescription = await page.getByText("unisex heavy cotton tee");
+    expect(tShirtDescription).toBeVisible();
 
+    // get buttons
     const tShirtButton = await page.getByText("T Shirt");
-    await expect(tShirtButton).toBeVisible();
-
     const hoodieButton = await page.getByText("Hoodie");
-    await expect(hoodieButton).toBeVisible();
+    const mugButton = await page.getByRole("button", { name: "Mug" });
 
-    const mugButton = await page.getByText("Mug");
+    // Check if the product buttons are visible
+    await expect(tShirtButton).toBeVisible();
+    await expect(hoodieButton).toBeVisible();
     await expect(mugButton).toBeVisible();
 
-    const buyNowButton = await page.getByText("Buy now");
-    await buyNowButton.click();
+    // check if can go to hoodie product
+    await hoodieButton.click();
+    const hoodieDescription = await page.getByText(
+        "unisex heavy blend hooded sweatshirt",
+    );
+    await expect(hoodieDescription).toBeVisible();
+    await expect(tShirtButton).not.toHaveClass(/ring-white/);
+    await expect(hoodieButton).toHaveClass(/ring-white/);
+    await expect(mugButton).not.toHaveClass(/ring-white/);
 
-    await expect(page).toHaveURL(/\/checkout/);
-
-    // TODO: complete checkout process
-
-    // TODO: check if the order is created
+    // check if can go to mug product
+    await mugButton.click();
+    const mugDescription = await page.getByText(
+        "Choose from seven bold accent colors and customize these two-tone mugs with your original designs.",
+    );
+    await expect(mugDescription).toBeVisible();
+    await expect(tShirtButton).not.toHaveClass(/ring-white/);
+    await expect(hoodieButton).not.toHaveClass(/ring-white/);
+    await expect(mugButton).toHaveClass(/ring-white/);
 });

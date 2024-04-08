@@ -85,14 +85,10 @@ export function TextAreaAndButton() {
                                             </SelectTrigger>
                                         </FormControl>
                                         <SelectContent>
-                                            <SelectItem
-                                                value="openai"
-                                            >
+                                            <SelectItem value="openai">
                                                 OpenAI/dall-e-3
                                             </SelectItem>
-                                            <SelectItem
-                                                value="stable-diffusion"
-                                            >
+                                            <SelectItem value="stable-diffusion">
                                                 Stability-ai/stable-diffusion
                                             </SelectItem>
                                         </SelectContent>

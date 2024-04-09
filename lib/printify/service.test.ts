@@ -1,5 +1,5 @@
-import { default as printCleverTShirtFixture } from "../../utils/print-clever-t-shirt.json";
 import { fetchProductVariants, mapProductDetails } from "./service";
+import printCleverTShirtFixture from "../../fixtures/print-clever-t-shirt.json";
 
 describe("fetchProductVariants", () => {
     it.skip("should return a list of variants", async () => {

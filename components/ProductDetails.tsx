@@ -1,13 +1,16 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { RetrieveProductResponse } from "@/interfaces/PrintifyTypes";
-import Link from "next/link";
+import {
+    ProductVariant,
+    RetrieveProductResponse,
+} from "@/interfaces/PrintifyTypes";
 import { ImagesCarousel } from "./ImageCarousel";
 import { T_SHIRT_PRICE_IN_GBP } from "@/app/data/consts";
 import { SizeAndColorSelector } from "./SizeAndColorForm";
-import { LinksToProducts } from "./LinksToProducts";
 import Image from "next/image";
+import { useEffect, useMemo, useState } from "react";
+import { GenerateImageLinks } from "./GenerateImageLinks";
 
 export interface Options {
     id: number;
@@ -16,58 +19,81 @@ export interface Options {
 
 export function ProductDetails({
     retrievedProduct,
-    colorId,
-    sizeId,
-    printifyImageId,
+    initialSizeId,
+    initialColorId,
 }: {
     retrievedProduct: RetrieveProductResponse;
-    sizeId: number;
-    colorId: number;
-    printifyImageId: string;
+    initialSizeId: number;
+    initialColorId: number;
 }) {
+    console.log({ retrievedProduct });
     const colourOptions: Options[] = retrievedProduct.options[0].values;
     const sizeOptions: Options[] = retrievedProduct.options[1].values;
-    const variant = retrievedProduct.variants.find(
-        (variant) =>
-            variant.options[0] == colorId && variant.options[1] == sizeId,
-    );
-
-    if (!variant) {
-        // FIXME! SHOULD NOT HAPPEN! DON'T LET CUSTOMER PICK A NON EXISTING VARIANT.
-        return <div>Variant not found</div>;
-    }
-
     const { images } = retrievedProduct;
-    const filteredImages = images.filter((image) =>
-        image.variant_ids.includes(variant.id),
+
+    const [selectedSizeId, setSelectedSizeId] = useState(
+        initialSizeId.toString(),
     );
+    const [selectedColorId, setSelectedColorId] = useState(
+        initialColorId.toString(),
+    );
+
+    const initialSelectedVariant = findSelectedVariant(
+        selectedSizeId,
+        selectedColorId,
+        retrievedProduct,
+    ) as ProductVariant; // hack
+
+    const [selectedVariant, setSelectedVariant] = useState<ProductVariant>(
+        initialSelectedVariant,
+    );
+
+    useEffect(() => {
+        setSelectedVariant(
+            findSelectedVariant(
+                selectedSizeId,
+                selectedColorId,
+                retrievedProduct,
+            ) || initialSelectedVariant, // hacky fix for when the new selected variant is not in the list
+        );
+    }, [
+        selectedSizeId,
+        selectedColorId,
+        retrievedProduct,
+        initialSelectedVariant,
+    ]);
+
+    const filteredImages = useMemo(
+        () =>
+            selectedVariant
+                ? images.filter((image) =>
+                      image.variant_ids.includes(selectedVariant.id),
+                  )
+                : [],
+        [selectedVariant, images],
+    );
+
+    const productType = retrievedProduct.tags[1];
+    console.log(productType);
 
     return (
         <div className="flex w-5/6 flex-col items-center justify-center space-y-4 text-center lg:w-1/3">
-            <div id="linkContainer" className="w-full self-center">
-                <a href={`/image/${retrievedProduct.title}`}>
-                    {/* Using <Link> instead of <a> here caused a bug where this wouldn't work for many seconds after page load. */}
-                    <Button className="focus:shadow-outline w-full rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-700 focus:outline-none">
-                        Generate new image with same prompt
-                    </Button>
-                </a>
+            <GenerateImageLinks prompt={retrievedProduct.title} />
+            {images ? (
+                <ImagesCarousel images={filteredImages} />
+            ) : (
+                <div>Product Not Available</div>
+            )}
+            <div className="flex flex-col justify-center space-y-4">
+                <SizeAndColorSelector
+                    sizes={sizeOptions}
+                    colours={colourOptions}
+                    selectedSizeId={selectedSizeId}
+                    selectedColorId={selectedColorId}
+                    setSelectedSizeId={setSelectedSizeId}
+                    setSelectedColorId={setSelectedColorId}
+                />
             </div>
-
-            <div id="linkContainer" className="w-full self-center">
-                <Link href={`/`}>
-                    <Button className="focus:shadow-outline w-full rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-700 focus:outline-none">
-                        Generate new image with new prompt
-                    </Button>
-                </Link>
-            </div>
-            <ImagesCarousel images={filteredImages} />
-            <SizeAndColorSelector
-                sizes={sizeOptions}
-                colours={colourOptions}
-                sizeId={sizeId}
-                colorId={colorId}
-            />
-            <LinksToProducts printifyImageId={printifyImageId} />
             <div
                 id="linkContainer"
                 className="flex w-full flex-col space-y-3 self-center"
@@ -81,9 +107,10 @@ export function ProductDetails({
                             },
                             body: JSON.stringify({
                                 productId: retrievedProduct.id,
+                                productType: productType,
                                 order_title: retrievedProduct.title,
-                                order_variant_label: variant.title,
-                                orderVariantId: variant.id,
+                                order_variant_label: selectedVariant.title,
+                                orderVariantId: selectedVariant.id,
                                 order_preview: retrievedProduct.images[0].src,
                             }),
                         })
@@ -107,5 +134,17 @@ export function ProductDetails({
                 </div>
             </div>
         </div>
+    );
+}
+
+function findSelectedVariant(
+    sizeId: string,
+    colorId: string,
+    retrievedProduct: RetrieveProductResponse,
+) {
+    return retrievedProduct.variants.find(
+        (variant) =>
+            variant.options[0] == Number(colorId) &&
+            variant.options[1] == Number(sizeId),
     );
 }

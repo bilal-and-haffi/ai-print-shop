@@ -27,6 +27,7 @@ export async function POST(request: NextRequest) {
         orderVariantLabel: req.order_variant_label,
         orderPreview: req.order_preview,
         productId: req.productId,
+        productType: req.productType,
         orderVariantId: req.orderVariantId,
         internalOrderId,
     });

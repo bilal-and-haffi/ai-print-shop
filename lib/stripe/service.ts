@@ -9,6 +9,7 @@ interface checkOutSessionParams {
     orderVariantLabel: string;
     orderPreview: string;
     productId: string;
+    productType: string;
     orderVariantId: string;
     internalOrderId: number;
 }
@@ -23,6 +24,7 @@ export async function createCheckoutSession(params: checkOutSessionParams) {
         orderVariantLabel,
         orderPreview,
         productId,
+        productType,
         orderVariantId,
         internalOrderId,
     } = params;
@@ -61,7 +63,7 @@ export async function createCheckoutSession(params: checkOutSessionParams) {
                 price_data: {
                     currency: "gbp",
                     product_data: {
-                        name: `T-shirt - ${orderVariantLabel}`, // TODO: Figure out dynamically
+                        name: `${productType} - ${orderVariantLabel}`, // TODO: Figure out dynamically
                         description: orderTitle,
                         images: [orderPreview],
                     },

@@ -8,38 +8,38 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { usePathname } from "next/navigation";
 
 export const SizeAndColorSelector = ({
     sizes,
     colours,
-    sizeId,
-    colorId,
+    selectedSizeId,
+    selectedColorId,
+    setSelectedSizeId,
+    setSelectedColorId,
 }: {
     sizes: Options[];
     colours: Options[];
-    sizeId: number;
-    colorId: number;
+    selectedSizeId: string;
+    selectedColorId: string;
+    setSelectedSizeId: (sizeId: string) => void;
+    setSelectedColorId: (colorId: string) => void;
 }) => {
-    const basePathname = usePathname();
-    const [selectedSize, setSelectedSize] = useState(sizeId.toString());
-    const [selectedColor, setSelectedColor] = useState(colorId.toString());
-
     function onSizeChange(value: string) {
-        setSelectedSize(value);
-        window.location.href = `${basePathname}?size=${value}&color=${selectedColor}`; // temprorary fix
+        setSelectedSizeId(value);
     }
 
     function onColorChange(value: string) {
-        setSelectedColor(value);
-        window.location.href = `${basePathname}?size=${selectedSize}&color=${value}`; // temprorary fix
+        setSelectedColorId(value);
     }
 
     return (
-        <div id="selectContainer" className="space-y-2 text-black">
+        <div
+            id="selectContainer"
+            className="flex w-full flex-col items-center space-y-2 text-black"
+        >
             <Select
                 onValueChange={(value) => onSizeChange(value)}
-                value={selectedSize}
+                value={selectedSizeId}
             >
                 <SelectTrigger className="w-[180px]">
                     <SelectValue placeholder="Size" />
@@ -55,7 +55,7 @@ export const SizeAndColorSelector = ({
 
             <Select
                 onValueChange={(value) => onColorChange(value)}
-                value={selectedColor}
+                value={selectedColorId}
             >
                 <SelectTrigger className="w-[180px]">
                     <SelectValue placeholder="Color" />

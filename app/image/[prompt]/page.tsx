@@ -45,5 +45,5 @@ export default async function GenerateImagePage(params: {
         printifyImageUrl: generatedImageUrl,
     });
 
-    redirect(`/product/tshirt/${printifyImageId}`, RedirectType.replace);
+    redirect(`/product/${printifyImageId}`, RedirectType.replace);
 }

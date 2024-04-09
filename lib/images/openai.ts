@@ -7,7 +7,7 @@ export const generateOpenAiImageUrl = async (prompt: string) => {
             "Test prompt detected. Returning test image. (Saving costs).",
         );
         const testImageUrl =
-            "https://oaidalleapiprodscus.blob.core.windows.net/private/org-FLazZlTS0p7egMXaAKZzIe20/user-Z2REKmhVOXP6HYDZ7uA1smQ0/img-Mke4Q3XcO1B5GjrgROAatzbb.png?st=2024-04-07T11%3A41%3A24Z&se=2024-04-07T13%3A41%3A24Z&sp=r&sv=2021-08-06&sr=b&rscd=inline&rsct=image/png&skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2024-04-07T00%3A10%3A51Z&ske=2024-04-08T00%3A10%3A51Z&sks=b&skv=2021-08-06&sig=WaxW%2B2HslAXRRC7G66ZIRZJCZlEDE/E9s/ITowJ3IcA%3D";
+            "https://static.wikia.nocookie.net/dragonball/images/b/ba/Goku_anime_profile.png/revision/latest?cb=20220825041430";
 
         return testImageUrl;
     }

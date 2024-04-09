@@ -160,6 +160,8 @@ export async function postImageToPrintify(
 
         const imageData: PrintifyImageResponse = await imageResponse.json();
 
+        console.log({ imageData });
+
         return imageData;
     } catch (error) {
         console.error("Error posting image to Printify", error);

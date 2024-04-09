@@ -1,28 +1,34 @@
-# disabled because doesn't run on ci yet and don't want to have a failing check
 name: Playwright Tests
 on:
     push:
-        branches: [main, master]
+        branches: [main]
     pull_request:
-        branches: [main, master]
+        branches: [main]
+
+env:
+    CI: true
+    CURRENCY_API_KEY: ${{ secrets.CURRENCY_API_KEY }}
+    NEXT_PUBLIC_ENV: ${{ secrets.NEXT_PUBLIC_ENV }}
+    POSTGRES_URL: ${{ secrets.POSTGRES_URL }}
+    PRINTIFY_API_TOKEN: ${{ secrets.PRINTIFY_API_TOKEN }}
+    SHOP_ID: ${{ secrets.SHOP_ID }}
+
 jobs:
     test:
-        timeout-minutes: 60
+        timeout-minutes: 10
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v4
-            - uses: actions/setup-node@v4
+            - name: Checkout code
+              uses: actions/checkout@v4
+            - name: Setup Node.js environment
+              uses: actions/setup-node@v4
               with:
-                  node-version: lts/*
-        # - name: Install dependencies
-        #   run: npm ci
-        # - name: Install Playwright Browsers
-        #   run: npx playwright install --with-deps
-        # - name: Run Playwright tests
-        #   run: npx playwright test
-        # - uses: actions/upload-artifact@v4
-        #   if: always()
-        #   with:
-        #     name: playwright-report
-        #     path: playwright-report/
-        #     retention-days: 30
+                  node-version: 20.11
+                  cache: "npm"
+
+            - name: Install dependencies
+              run: npm install -D
+            - name: Install Playwright Browsers
+              run: npm run e2e:install
+            - name: Run Playwright tests
+              run: npm run e2e:headless

@@ -58,6 +58,9 @@ Studio:
 
 # Playwright Commands
 
+`npx playwright install`
+Installs the necessary dependencies.
+
 `npx playwright test`
 Runs the end-to-end tests.
 

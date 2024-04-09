@@ -1,4 +1,4 @@
-export const LoadingSpinner = () => (
+export const PageLoadingSpinner = () => (
     <div role="status">
         <svg
             aria-hidden="true"

@@ -11,6 +11,7 @@ import { SizeAndColorSelector } from "./SizeAndColorForm";
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import { GenerateImageLinks } from "./GenerateImageLinks";
+import { SmallLoadingSpinner } from "./SmallLoadingSpinner";
 
 export interface Options {
     id: number;
@@ -26,7 +27,8 @@ export function ProductDetails({
     initialSizeId: number;
     initialColorId: number;
 }) {
-    console.log({ retrievedProduct });
+    const [checkoutLoading, setCheckoutLoading] = useState(false);
+
     const colourOptions: Options[] = retrievedProduct.options[0].values;
     const sizeOptions: Options[] = retrievedProduct.options[1].values;
     const { images } = retrievedProduct;
@@ -100,6 +102,7 @@ export function ProductDetails({
             >
                 <Button
                     onClick={() => {
+                        setCheckoutLoading(true);
                         fetch("/checkout", {
                             method: "POST",
                             headers: {
@@ -117,11 +120,18 @@ export function ProductDetails({
                             .then((res) => res.json())
                             .then((data) => {
                                 window.location.href = data.url;
+                                setCheckoutLoading(false);
                             });
                     }}
                     className="focus:shadow-outline flex w-2/3 flex-row self-center rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-700 focus:outline-none"
                 >
-                    <p>Buy now for £{T_SHIRT_PRICE_IN_GBP}</p>
+                    {checkoutLoading ? (
+                        <div className="flex flex-row items-center">
+                            <SmallLoadingSpinner className="fill-white" />
+                        </div>
+                    ) : (
+                        <p>Buy now for £{T_SHIRT_PRICE_IN_GBP}</p>
+                    )}
                 </Button>
                 <div className="flex flex-row items-center self-center rounded py-2 pl-3">
                     Powered by

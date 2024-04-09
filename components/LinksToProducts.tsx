@@ -1,6 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { ProductType } from "./Products";
+import { ProductType } from "@/components/Products";
 
 export const ProductSwitcher = ({
     selectedProductType,

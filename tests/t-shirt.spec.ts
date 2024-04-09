@@ -7,6 +7,10 @@ test("has title", async ({ page }) => {
 
 test("should allow user to switch between products", async ({ page }) => {
     await page.goto("/");
+
+    // select model
+    await page.selectOption("#form-container > form > div > select", "openai");
+
     // in test env we will already have "test" in the input field and that is mocked
     const generateButton = await page.getByText("Generate");
     await generateButton.click();

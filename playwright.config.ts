@@ -2,7 +2,7 @@ import { defineConfig, devices } from "@playwright/test";
 import { config as dotEnvConfig } from "dotenv";
 
 dotEnvConfig({
-    path: ".env.development.local",
+    path: process.env.CI ? "./.env.ci" : "./.env.development.local",
 });
 
 /**

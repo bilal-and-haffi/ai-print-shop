@@ -1,17 +1,14 @@
-name: Playwright Tests
+name: Playwright Preview tests
 on:
-    push:
-        branches: [main]
     pull_request:
         branches: [main]
 
 env:
     CI: true
-    CURRENCY_API_KEY: ${{ secrets.CURRENCY_API_KEY }}
     NEXT_PUBLIC_ENV: ${{ secrets.NEXT_PUBLIC_ENV }}
-    POSTGRES_URL: ${{ secrets.POSTGRES_URL }}
-    PRINTIFY_API_TOKEN: ${{ secrets.PRINTIFY_API_TOKEN }}
-    SHOP_ID: ${{ secrets.SHOP_ID }}
+    VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+    VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+    VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 
 jobs:
     test:
@@ -28,6 +25,12 @@ jobs:
 
             - name: Install dependencies
               run: npm install -D
+            - name: Install vercel cli
+              run: npm install --global vercel@latest
+            - name: Pull Vercel preview environment
+              run: vercel env pull --yes .env.ci --environment=preview --git-branch=${{ github.head_ref }} --token=${{ secrets.VERCEL_TOKEN }}
+            - name: Drizzle push to db branch
+              run: npm run db:push
             - name: Install Playwright Browsers
               run: npm run e2e:install
             - name: Run Playwright tests

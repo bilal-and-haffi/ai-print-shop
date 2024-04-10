@@ -1,13 +1,16 @@
 import type { Config } from "jest";
 import nextJest from "next/jest.js";
-import dotenv from "dotenv";
+import { config as dotEnvConfig } from "dotenv";
 
 const createJestConfig = nextJest({
     // Provide the path to your Next.js app to load next.config.js and .env files in your test environment
     dir: "./",
 });
 
-dotenv.config({ path: ".env.development.local" });
+dotEnvConfig({
+    path: process.env.CI ? "./.env.ci" : "./.env.development.local",
+});
+
 // Add any custom config to be passed to Jest
 const config: Config = {
     coverageProvider: "v8",

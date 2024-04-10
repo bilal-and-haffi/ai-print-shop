@@ -27,7 +27,7 @@ yarn-error.log*
 
 # local env files
 .env*.local
-.env
+.env*
 .env.development
 
 # vercel
@@ -43,3 +43,5 @@ next-env.d.ts
 /blob-report/
 /playwright/.cache/
 tests/screenshots
+
+creds.txt

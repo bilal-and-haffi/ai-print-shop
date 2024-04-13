@@ -104,6 +104,8 @@ export async function retrieveAProduct(product_id: string) {
 }
 
 export async function getOrderDetails(orderId: string) {
+    console.log({ orderId });
+
     const endpoint = `${PRINTIFY_BASE_URL}/v1/shops/${envServer.SHOP_ID}/orders/${orderId}.json`;
     const response = await fetch(endpoint, {
         headers: {

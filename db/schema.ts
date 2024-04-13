@@ -23,6 +23,7 @@ export const orderTable = pgTable(
         printifyOrderId: varchar("printify_order_id"),
         printifyProductId: varchar("printify_product_id").notNull(),
         printifyVariantId: varchar("printify_variant_id").notNull(),
+        stripeSessionId: varchar("stripe_session_id"),
         stripeCustomerId: varchar("stripe_customer_id"),
         quantity: integer("quantity").notNull(),
         status: varchar("status").notNull().default("payment_pending"),

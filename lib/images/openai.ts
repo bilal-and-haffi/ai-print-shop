@@ -1,8 +1,12 @@
 import OpenAI from "openai";
+import { envServer } from "../env/server";
 
 export const generateOpenAiImageUrl = async (prompt: string) => {
     const isTestPrompt = prompt === "test";
-    if (isTestPrompt && process.env.NODE_ENV === "development") {
+    if (
+        (isTestPrompt && envServer.VERCEL_ENV === "development") ||
+        envServer.VERCEL_ENV === "preview"
+    ) {
         console.log(
             "Test prompt detected. Returning test image. (Saving costs).",
         );
@@ -12,7 +16,7 @@ export const generateOpenAiImageUrl = async (prompt: string) => {
         return testImageUrl;
     }
 
-    const apiKey = process.env.OPENAI_API_KEY;
+    const apiKey = envServer.OPENAI_API_KEY;
     if (!apiKey) {
         console.error(
             "API key not found. Please set the OPENAI_API_KEY in your .env file.",
@@ -25,7 +29,7 @@ export const generateOpenAiImageUrl = async (prompt: string) => {
     console.log("Generating image with openai...", { prompt });
 
     const model =
-        process.env.NODE_ENV === "production" ? "dall-e-3" : "dall-e-2";
+        envServer.VERCEL_ENV === "production" ? "dall-e-3" : "dall-e-2";
 
     const response = await openai.images.generate({
         prompt,

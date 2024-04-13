@@ -3,7 +3,16 @@ name: CI
 on: [push]
 
 env:
+    CI: true
+    AI_GIFTS_API_URL: http://localhost:3000
+    CURRENCY_API_KEY: foo
     DATABASE_URL: postgres://postgres:password@localhost:5432/test
+    DATABASE_URL_UNPOOLED: postgres://postgres:password@localhost:5432/test
+    OPENAI_API_KEY: foo
+    OPENAI_ORG_ID: foo
+    PRINTIFY_API_TOKEN: foo
+    SHOP_ID: foo
+    STRIPE_SECRET_KEY: foo
 
 jobs:
     checks:

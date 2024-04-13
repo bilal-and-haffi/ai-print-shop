@@ -1,16 +1,12 @@
 import { defineConfig } from "drizzle-kit";
-import { config as dotEnvConfig } from "dotenv";
-
-dotEnvConfig({
-    path: process.env.CI ? "./.env.ci" : "./.env.development.local",
-});
+import { envServer } from "@/lib/env/server";
 
 export default defineConfig({
     schema: "./db/schema.ts",
     driver: "pg",
     dbCredentials: {
-        connectionString: process.env.DATABASE_URL as string,
+        connectionString: envServer.DATABASE_URL as string,
     },
     verbose: true,
-    strict: process.env.CI ? false : true,
+    strict: envServer.CI ? false : true,
 });

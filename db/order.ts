@@ -35,3 +35,22 @@ export async function updateOrderStatus(
         .set({ status, stripeCustomerId, printifyOrderId })
         .where(eq(orderTable.id, internalOrderId));
 }
+
+export async function updateOrderSessionId(
+    internalOrderId: number,
+    stripeSessionId: string,
+) {
+    return await dbClient
+        .update(orderTable)
+        .set({ stripeSessionId })
+        .where(eq(orderTable.id, internalOrderId));
+}
+
+export type OrderRow = typeof orderTable.$inferSelect;
+export async function getOrderById(internalOrderId: number) {
+    const resp = await dbClient
+        .select()
+        .from(orderTable)
+        .where(eq(orderTable.id, internalOrderId));
+    return resp[0];
+}

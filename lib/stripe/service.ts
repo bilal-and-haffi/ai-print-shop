@@ -85,7 +85,7 @@ export async function createCheckoutSession(params: checkOutSessionParams) {
             },
         },
         mode: "payment",
-        success_url: `${origin}/payment/success`,
+        success_url: `${origin}/payment/success?orderId=${internalOrderId}`,
         cancel_url: referer,
         automatic_tax: {
             enabled: true,

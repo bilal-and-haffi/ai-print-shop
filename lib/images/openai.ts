@@ -3,10 +3,7 @@ import { envServer } from "../env/server";
 
 export const generateOpenAiImageUrl = async (prompt: string) => {
     const isTestPrompt = prompt === "test";
-    if (
-        (isTestPrompt && envServer.VERCEL_ENV === "development") ||
-        envServer.VERCEL_ENV === "preview"
-    ) {
+    if (isTestPrompt && envServer.CI) {
         console.log(
             "Test prompt detected. Returning test image. (Saving costs).",
         );

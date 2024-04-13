@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createCheckoutSession } from "@/lib/stripe/service";
 import { T_SHIRT_PRICE_IN_GBP } from "@/app/data/consts";
-import { addNewOrder } from "@/db/order";
+import { addNewOrder, updateOrderSessionId } from "@/db/order";
 
 export async function POST(request: NextRequest) {
     const req = await request.json();
@@ -31,6 +31,8 @@ export async function POST(request: NextRequest) {
         orderVariantId: req.orderVariantId,
         internalOrderId,
     });
+
+    await updateOrderSessionId(internalOrderId, session.id);
 
     return NextResponse.json({ message: "success", url: session!.url! });
 }

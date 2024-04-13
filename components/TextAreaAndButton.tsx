@@ -20,7 +20,8 @@ import {
 } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { set, z } from "zod";
+import { z } from "zod";
+import { envClient } from "@/lib/env/client";
 
 const FormSchema = z.object({
     modelProvider: z.string().default("openai"),
@@ -28,7 +29,7 @@ const FormSchema = z.object({
 
 export function TextAreaAndButton() {
     const initalPrompt =
-        process.env.NEXT_PUBLIC_ENV === "development" ? "test" : "";
+        envClient.NEXT_PUBLIC_ENV === "development" ? "test" : "";
     const [prompt, setPrompt] = useState<string>(initalPrompt);
     const [modelProvider, setModelProvider] = useState<string>("openai");
 

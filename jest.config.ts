@@ -1,14 +1,9 @@
 import type { Config } from "jest";
 import nextJest from "next/jest.js";
-import { config as dotEnvConfig } from "dotenv";
 
 const createJestConfig = nextJest({
     // Provide the path to your Next.js app to load next.config.js and .env files in your test environment
     dir: "./",
-});
-
-dotEnvConfig({
-    path: process.env.CI ? "./.env.ci" : "./.env.development.local",
 });
 
 // Add any custom config to be passed to Jest

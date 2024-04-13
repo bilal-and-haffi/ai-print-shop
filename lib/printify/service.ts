@@ -11,6 +11,7 @@ import {
     RetrieveProductResponse,
     Variant,
 } from "@/interfaces/PrintifyTypes";
+import { envServer } from "@/lib/env/server";
 import { getPromptFromImageId } from "@/db/image";
 
 async function constructPrintifyProductRequest({
@@ -63,7 +64,7 @@ export async function createPrintifyOrderForExistingProduct(
     shipping_method: number,
     address_to: AddressTo,
 ) {
-    const endpoint = `${PRINTIFY_BASE_URL}/v1/shops/${process.env.SHOP_ID}/orders.json`;
+    const endpoint = `${PRINTIFY_BASE_URL}/v1/shops/${envServer.SHOP_ID}/orders.json`;
     const body: PrintifyOrderExistingProductRequest = {
         external_id: uuidv4(),
         line_items,
@@ -76,7 +77,7 @@ export async function createPrintifyOrderForExistingProduct(
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            authorization: `Bearer ${process.env.PRINTIFY_API_TOKEN}`,
+            authorization: `Bearer ${envServer.PRINTIFY_API_TOKEN}`,
         },
         body: JSON.stringify(body),
     };
@@ -90,11 +91,11 @@ export async function createPrintifyOrderForExistingProduct(
 }
 
 export async function retrieveAProduct(product_id: string) {
-    const endpoint = `${PRINTIFY_BASE_URL}/v1/shops/${process.env.SHOP_ID}/products/${product_id}.json`;
+    const endpoint = `${PRINTIFY_BASE_URL}/v1/shops/${envServer.SHOP_ID}/products/${product_id}.json`;
     const response = await fetch(endpoint, {
         headers: {
             "Content-Type": "application/json",
-            authorization: `Bearer ${process.env.PRINTIFY_API_TOKEN}`,
+            authorization: `Bearer ${envServer.PRINTIFY_API_TOKEN}`,
         },
     });
     const product = (await response.json()) as RetrieveProductResponse;
@@ -103,11 +104,11 @@ export async function retrieveAProduct(product_id: string) {
 }
 
 export async function getOrderDetails(orderId: string) {
-    const endpoint = `${PRINTIFY_BASE_URL}/v1/shops/${process.env.SHOP_ID}/orders/${orderId}.json`;
+    const endpoint = `${PRINTIFY_BASE_URL}/v1/shops/${envServer.SHOP_ID}/orders/${orderId}.json`;
     const response = await fetch(endpoint, {
         headers: {
             "Content-Type": "application/json",
-            authorization: `Bearer ${process.env.PRINTIFY_API_TOKEN}`,
+            authorization: `Bearer ${envServer.PRINTIFY_API_TOKEN}`,
         },
     });
     const orderDetails = (await response.json()) as PrintifyOrderResponse;
@@ -116,7 +117,7 @@ export async function getOrderDetails(orderId: string) {
 }
 
 export async function publishPrintifyProduct(product_id: string) {
-    const endpoint = `${PRINTIFY_BASE_URL}/v1/shops/${process.env.SHOP_ID}/products/${product_id}/publish.json`;
+    const endpoint = `${PRINTIFY_BASE_URL}/v1/shops/${envServer.SHOP_ID}/products/${product_id}/publish.json`;
     const body = JSON.stringify({
         title: true,
         description: true,
@@ -131,7 +132,7 @@ export async function publishPrintifyProduct(product_id: string) {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            authorization: `Bearer ${process.env.PRINTIFY_API_TOKEN}`,
+            authorization: `Bearer ${envServer.PRINTIFY_API_TOKEN}`,
         },
         body,
     });
@@ -153,7 +154,7 @@ export async function postImageToPrintify(
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                authorization: `Bearer ${process.env.PRINTIFY_API_TOKEN}`,
+                authorization: `Bearer ${envServer.PRINTIFY_API_TOKEN}`,
             },
             body: imageRequestString,
         });
@@ -201,12 +202,12 @@ export async function createPrintifyProduct({
     const productRequestString = JSON.stringify(productRequest);
 
     const productResponse: any = await fetch(
-        `${PRINTIFY_BASE_URL}/v1/shops/${process.env.SHOP_ID}/products.json`,
+        `${PRINTIFY_BASE_URL}/v1/shops/${envServer.SHOP_ID}/products.json`,
         {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${process.env.PRINTIFY_API_TOKEN}`,
+                Authorization: `Bearer ${envServer.PRINTIFY_API_TOKEN}`,
             },
             body: productRequestString,
         },
@@ -223,7 +224,7 @@ export async function fetchProductVariants(
     const options: RequestInit = {
         headers: {
             "Content-Type": "application/json",
-            authorization: `Bearer ${process.env.PRINTIFY_API_TOKEN}`,
+            authorization: `Bearer ${envServer.PRINTIFY_API_TOKEN}`,
         },
     };
     const response = await (await fetch(endpoint, options)).json();

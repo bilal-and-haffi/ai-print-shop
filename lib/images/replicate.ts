@@ -1,7 +1,9 @@
+import { envServer } from "@/lib/env/server";
+
 export async function generateStableDiffusionImageUrl(
     prompt: string,
 ): Promise<string> {
-    const baseUrl = process.env.AI_GIFTS_API_URL as string;
+    const baseUrl = envServer.AI_GIFTS_API_URL as string;
     const resp = await fetch(`${baseUrl}/text2img`, {
         method: "POST",
         headers: {

@@ -21,8 +21,10 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en">
-            <body className={`${inter.className} bg-black text-white`}>
+        <html lang="en" className="overflow-x-hidden">
+            <body
+                className={`${inter.className} relative overflow-x-hidden bg-black text-white`}
+            >
                 <main className="flex min-h-screen flex-col items-center space-y-4 py-8 lg:justify-center lg:py-16">
                     <div id="heading">
                         <h1 className="text-2xl font-bold">

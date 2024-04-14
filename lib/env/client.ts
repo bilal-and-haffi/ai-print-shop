@@ -8,7 +8,7 @@ const envSchema = z.object({
             z.literal("testing"),
             z.literal("production"),
         ])
-        .default("development"),
+        .default("production"),
 });
 
 export const envClient = envSchema.parse({

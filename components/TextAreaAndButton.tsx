@@ -113,7 +113,7 @@ export function TextAreaAndButton() {
                     className="bg-blue-500 hover:bg-blue-700"
                     onClick={submitGenerateText}
                 >
-                    Generate
+                    Generate Image
                 </Button>
             </div>
         </>

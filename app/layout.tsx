@@ -7,12 +7,6 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
     title: "AI Personalised Gift Shop",
     description: "Hoodies, T-shirts, Mugs, and more!",
-    viewport: {
-        initialScale: 1,
-        width: "device-width",
-        maximumScale: 1,
-        userScalable: false,
-    },
 };
 
 export default function RootLayout({

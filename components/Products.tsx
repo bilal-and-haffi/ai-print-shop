@@ -31,6 +31,7 @@ export const Products = ({
                         retrievedProduct={tShirtProduct}
                         initialSizeId={16} // large
                         initialColorId={418} // black
+                        priceInGbp={25}
                     />
                 );
             case ProductType.Hoodie:
@@ -39,6 +40,7 @@ export const Products = ({
                         retrievedProduct={hoodieProduct}
                         initialSizeId={16} // large
                         initialColorId={418} // black
+                        priceInGbp={40}
                     />
                 );
             case ProductType.Mug:
@@ -47,6 +49,7 @@ export const Products = ({
                         retrievedProduct={mugProduct}
                         initialSizeId={1189}
                         initialColorId={2621}
+                        priceInGbp={20}
                     />
                 );
         }

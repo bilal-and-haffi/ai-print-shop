@@ -11,8 +11,6 @@ export async function POST(request: NextRequest) {
     const metaData = eventData.object.metadata;
     const stripeCustomerId = eventData.object.customer;
 
-    console.log({ shipping, metaData });
-
     // update order status to payment_received
     await updateOrderStatus({
         internalOrderId: metaData.internalOrderId,

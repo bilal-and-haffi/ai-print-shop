@@ -21,6 +21,5 @@ export const getPromptFromImageId = async (printifyImageId: string) => {
         .select()
         .from(imageTable)
         .where(eq(imageTable.printifyImageId, printifyImageId));
-    console.log("Prompt", selectResult);
     return selectResult[0].prompt;
 };

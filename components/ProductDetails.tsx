@@ -6,7 +6,6 @@ import {
     RetrieveProductResponse,
 } from "@/interfaces/PrintifyTypes";
 import { ImagesCarousel } from "./ImageCarousel";
-import { T_SHIRT_PRICE_IN_GBP } from "@/app/data/consts";
 import { SizeAndColorSelector } from "./SizeAndColorForm";
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
@@ -22,10 +21,12 @@ export function ProductDetails({
     retrievedProduct,
     initialSizeId,
     initialColorId,
+    priceInGbp,
 }: {
     retrievedProduct: RetrieveProductResponse;
     initialSizeId: number;
     initialColorId: number;
+    priceInGbp: number;
 }) {
     const [checkoutLoading, setCheckoutLoading] = useState(false);
 
@@ -115,6 +116,7 @@ export function ProductDetails({
                                 order_variant_label: selectedVariant.title,
                                 orderVariantId: selectedVariant.id,
                                 order_preview: retrievedProduct.images[0].src,
+                                price: priceInGbp * 100,
                             }),
                         })
                             .then((res) => res.json())
@@ -130,7 +132,7 @@ export function ProductDetails({
                             <SmallLoadingSpinner className="fill-white" />
                         </div>
                     ) : (
-                        <p>Buy now for £{T_SHIRT_PRICE_IN_GBP}</p>
+                        <p>Buy now for £{priceInGbp}</p>
                     )}
                 </Button>
                 <div className="flex flex-row items-center self-center rounded py-2 pl-3">

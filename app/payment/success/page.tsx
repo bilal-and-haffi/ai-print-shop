@@ -36,10 +36,14 @@ export default async function Page(params: {
     searchParams: { orderId: string };
 }) {
     const internalOrderId = Number(params.searchParams.orderId);
-
     const { printifyOrderId } = await pollForInternalOrder(internalOrderId);
 
-    const printifyOrder = await pollForPrintifyOrder(printifyOrderId!);
+    if (!printifyOrderId) {
+        console.log("No printify order id for internal order", internalOrderId);
+        throw new Error("No printify order id");
+    }
+
+    const printifyOrder = await pollForPrintifyOrder(printifyOrderId);
 
     return (
         <div className="flex flex-col items-center space-y-5">

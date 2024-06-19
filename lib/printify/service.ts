@@ -53,7 +53,7 @@ async function constructPrintifyProductRequest({
         title: prompt,
         variants: variantIds.map((variantId) => ({
             id: variantId,
-            price: 1,
+            price: 1, // ???
         })),
     };
     return productRequest;

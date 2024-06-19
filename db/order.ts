@@ -2,12 +2,13 @@ import { orderTable } from "@/db/schema";
 import { dbClient } from "@/db/client";
 import { eq } from "drizzle-orm";
 
+// these happen in this order
 export type OrderStatusEnum =
     | "payment_pending"
     | "payment_received"
     | "ordered"
-    | "shipped"
-    | "delivered";
+    | "shipped" // unused right now
+    | "delivered"; // unused right now
 
 type CreateOrderParams = typeof orderTable.$inferInsert;
 export async function addNewOrder(createOrderParams: CreateOrderParams) {

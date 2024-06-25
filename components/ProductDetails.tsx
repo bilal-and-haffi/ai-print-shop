@@ -9,7 +9,6 @@ import { ImagesCarousel } from "./ImageCarousel";
 import { Size, SizeAndColorSelector } from "./SizeAndColorForm";
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
-import { GenerateImageLinks } from "./GenerateImageLinks";
 import { SmallLoadingSpinner } from "./SmallLoadingSpinner";
 import { isPriceOkay } from "../lib/pricing/isPriceOkay";
 import { Variant } from "@/interfaces/Printify/Variant";
@@ -82,7 +81,6 @@ export function ProductDetails({
 
     return (
         <div className="flex w-5/6 flex-col items-center justify-center space-y-4 text-center lg:w-1/3">
-            <GenerateImageLinks prompt={retrievedProduct.title} />
             {images ? (
                 <ImagesCarousel images={filteredImages} />
             ) : (

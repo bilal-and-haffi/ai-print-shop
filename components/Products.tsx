@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import { ProductDetails } from "./ProductDetails";
-import { ProductSwitcher } from "./LinksToProducts";
 import { RetrieveProductResponse } from "@/interfaces/PrintifyTypes";
 import { Variant } from "@/interfaces/Printify/Variant";
+import { ProductSwitcher } from "./ProductSwitcher";
 
 export const enum ProductType {
     TShirt = "tshirt",
@@ -71,6 +71,7 @@ export const Products = ({
             <ProductSwitcher
                 selectedProductType={selectedProductType}
                 setSelectedProductType={setSelectedProductType}
+                prompt={tShirtProduct.title}
             />
             <CurrentProductDetails />
         </>

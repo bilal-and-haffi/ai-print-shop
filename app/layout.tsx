@@ -1,6 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { CardFooter } from "@/components/ui/card";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,11 +25,11 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en" className="overflow-x-hidden">
+        <html lang="en" className="h-full">
             <body
-                className={`${inter.className} relative overflow-x-hidden bg-black text-white`}
+                className={`${inter.className} flex h-full flex-col bg-black text-white`}
             >
-                <main className="flex min-h-screen flex-col items-center space-y-4 py-8 lg:justify-center lg:py-16">
+                <main className="flex flex-1 flex-col items-center space-y-4 py-8 lg:justify-center lg:py-16">
                     <div id="heading">
                         <h1 className="text-2xl font-bold">
                             AI Personalised Gift Shop
@@ -34,6 +37,18 @@ export default function RootLayout({
                     </div>
                     {children}
                 </main>
+                <footer className="mt-auto w-full">
+                    <CardFooter className="p-0">
+                        <Button
+                            asChild
+                            className="focus:shadow-outline w-full rounded rounded-none bg-blue-500 px-4 py-2 text-white hover:bg-blue-700 focus:outline-none"
+                        >
+                            <Link href="mailto:ai-personalised-gifts@mail.com">
+                                Contact us at ai-personalised-gifts@mail.com
+                            </Link>
+                        </Button>
+                    </CardFooter>
+                </footer>
             </body>
         </html>
     );

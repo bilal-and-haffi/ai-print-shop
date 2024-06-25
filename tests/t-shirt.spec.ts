@@ -5,6 +5,12 @@ test("has title", async ({ page }) => {
     await expect(page).toHaveTitle(/AI Personalised Gift Shop/);
 });
 
+test("shows email address", async ({ page }) => {
+    await page.goto("/");
+    const emailButton = await page.getByText("ai-personalised-gifts@mail.com");
+    await expect(emailButton).toBeVisible();
+});
+
 test("should allow user to switch between products", async ({ page }) => {
     await page.goto("/");
 
@@ -12,6 +18,8 @@ test("should allow user to switch between products", async ({ page }) => {
     await page.selectOption("#form-container > form > div > select", "openai");
 
     // in test env we will already have "test" in the input field and that is mocked
+    const input = await page.getByRole("textbox");
+    await input.fill("test prompt");
     const generateButton = await page.getByText("Generate");
     await generateButton.click();
     await expect(page).toHaveURL(/\/product/);

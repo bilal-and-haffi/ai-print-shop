@@ -85,16 +85,15 @@ export function ProductDetails({
             ) : (
                 <div>Product Not Available</div>
             )}
-            <div className="flex flex-col justify-center space-y-4">
-                <SizeAndColorSelector
-                    sizes={sizeOptions}
-                    colours={colourOptions}
-                    selectedSizeId={selectedSizeId}
-                    selectedColorId={selectedColorId}
-                    setSelectedSizeId={setSelectedSizeId}
-                    setSelectedColorId={setSelectedColorId}
-                />
-            </div>
+            <SizeAndColorSelector
+                sizes={sizeOptions}
+                colours={colourOptions}
+                selectedSizeId={selectedSizeId}
+                selectedColorId={selectedColorId}
+                setSelectedSizeId={setSelectedSizeId}
+                setSelectedColorId={setSelectedColorId}
+                prompt={retrievedProduct.title}
+            />
             <div
                 id="linkContainer"
                 className="flex w-full flex-col space-y-3 self-center"

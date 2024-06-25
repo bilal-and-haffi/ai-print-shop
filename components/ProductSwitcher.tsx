@@ -16,13 +16,8 @@ export const ProductSwitcher = ({
     return (
         <div
             id="links-to-products-container"
-            className="flex w-5/6 items-center justify-between space-x-4 lg:w-1/3"
+            className="flex w-5/6 items-center justify-center space-x-4 lg:w-1/3"
         >
-            <Link href={`/`}>
-                <Button data-testid="Go back">
-                    <ChevronLeft className="h-4 w-4" />
-                </Button>
-            </Link>
             <div
                 id="product-links"
                 className="flex flex-col space-y-2 md:flex-row md:space-x-4 md:space-y-0"
@@ -58,12 +53,6 @@ export const ProductSwitcher = ({
                     Mug
                 </Button>
             </div>
-            {/* needs to be an a because otherwise causes bugs */}
-            <a href={`/image/${prompt}?model=openai`}>
-                <Button data-testid="Generate new image with same prompt button">
-                    <RefreshCw className="h-4 w-4" />
-                </Button>
-            </a>
         </div>
     );
 };

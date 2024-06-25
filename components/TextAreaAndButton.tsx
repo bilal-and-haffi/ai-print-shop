@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 "use client";
 import { ChangeEvent, useState, KeyboardEvent, useRef } from "react";
 import { useRouter } from "next/navigation";
@@ -102,10 +103,10 @@ export function TextAreaAndButton() {
                 </Form>
                 <Textarea
                     ref={textAreaRef}
-                    placeholder="Enter your promt here!"
+                    placeholder="Enter your prompt here!"
                     value={prompt}
                     onChange={onInputChanged}
-                    className="h-48 resize-none rounded-lg bg-slate-600 p-2 text-white placeholder:text-white/50"
+                    className="h-48 resize-none rounded-lg bg-slate-600 p-4 text-white placeholder:text-white/50"
                     onKeyDown={onKeyDown}
                     autoFocus
                 />
@@ -115,6 +116,33 @@ export function TextAreaAndButton() {
                 >
                     Generate Image
                 </Button>
+
+                <div className="instructions">
+                    <h2 className="mb-2 text-lg font-bold">How It Works:</h2>
+                    <ol className="list-inside list-decimal space-y-2">
+                        <li>
+                            <strong>Enter Your Prompt:</strong> Type your idea
+                            or description into the text box.
+                        </li>
+                        <li>
+                            <strong>Generate Your Image:</strong> Click
+                            'Generate Image'. AI will create an image based on
+                            your prompt.
+                        </li>
+                        <li>
+                            <strong>Choose Your Product:</strong> Select a
+                            T-shirt, mug, or hoodie to see your design on it.
+                        </li>
+                        <li>
+                            <strong>Purchase:</strong> Click 'Buy Now' and enter
+                            your details to complete the purchase with Stripe.
+                        </li>
+                        <li>
+                            <strong>Enjoy:</strong> Your custom item will be
+                            printed and shipped to you. Enjoy or gift it!
+                        </li>
+                    </ol>
+                </div>
             </div>
         </>
     );

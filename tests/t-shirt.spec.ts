@@ -20,7 +20,7 @@ test("should allow user to switch between products", async ({ page }) => {
     // in test env we will already have "test" in the input field and that is mocked
     const input = await page.getByRole("textbox");
     await input.fill("test prompt");
-    const generateButton = await page.getByText("Generate");
+    const generateButton = await page.getByTestId("Generate Image Button");
     await generateButton.click();
     await expect(page).toHaveURL(/\/product/);
 

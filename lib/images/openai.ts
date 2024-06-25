@@ -2,8 +2,8 @@ import OpenAI from "openai";
 import { envServer } from "../env/server";
 
 export const generateOpenAiImageUrl = async (prompt: string) => {
-    const isTestPrompt = prompt === "test";
-    if (isTestPrompt && envServer.CI) {
+    const isTestPrompt = prompt === "test prompt";
+    if (isTestPrompt) {
         console.log(
             "Test prompt detected. Returning test image. (Saving costs).",
         );

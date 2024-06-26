@@ -3,6 +3,13 @@ import { Button } from "@/components/ui/button";
 import { ProductType } from "@/components/Products";
 import { RefreshCw, ChevronLeft } from "lucide-react";
 import Link from "next/link";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "./ui/select";
 
 export const ProductSwitcher = ({
     selectedProductType,
@@ -13,6 +20,12 @@ export const ProductSwitcher = ({
     setSelectedProductType: (productType: ProductType) => void;
     prompt: string;
 }) => {
+    const productsMap = new Map([
+        [ProductType.TShirt, "T Shirt"],
+        [ProductType.Hoodie, "Hoodie"],
+        [ProductType.Mug, "Mug"],
+    ]);
+
     return (
         <div
             id="links-to-products-container"
@@ -23,10 +36,26 @@ export const ProductSwitcher = ({
                     <ChevronLeft className="h-4 w-4" />
                 </Button>
             </Link>
-            <div
-                id="product-links"
-                className="flex flex-col space-y-2 md:flex-row md:space-x-4 md:space-y-0"
-            >
+            <div id="product-links" className="dark flex md:hidden">
+                <Select
+                    onValueChange={(value: ProductType) =>
+                        setSelectedProductType(value)
+                    }
+                    value={selectedProductType}
+                >
+                    <SelectTrigger className="w-[180px]">
+                        <SelectValue placeholder={selectedProductType} />
+                    </SelectTrigger>
+                    <SelectContent>
+                        {Array.from(productsMap).map(([productType, title]) => (
+                            <SelectItem key={productType} value={productType}>
+                                {title}
+                            </SelectItem>
+                        ))}
+                    </SelectContent>
+                </Select>
+            </div>
+            <div id="product-links-md" className="hidden space-x-2 md:flex">
                 <Button
                     className={
                         selectedProductType === ProductType.TShirt

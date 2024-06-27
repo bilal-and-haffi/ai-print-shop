@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import {
+    ProductImage,
     ProductVariant,
     RetrieveProductResponse,
 } from "@/interfaces/PrintifyTypes";
@@ -29,9 +30,6 @@ export function ProductDetails({
     priceInGbp: number;
 }) {
     const [checkoutLoading, setCheckoutLoading] = useState(false);
-
-    const colourOptions: Options[] = retrievedProduct.options[0].values;
-    const sizeOptions: Options[] = retrievedProduct.options[1].values;
     const { images } = retrievedProduct;
 
     const [selectedSizeId, setSelectedSizeId] = useState(
@@ -45,7 +43,7 @@ export function ProductDetails({
         selectedSizeId,
         selectedColorId,
         retrievedProduct,
-    ) as ProductVariant; // hack
+    );
 
     const [selectedVariant, setSelectedVariant] = useState<ProductVariant>(
         initialSelectedVariant,
@@ -57,7 +55,7 @@ export function ProductDetails({
                 selectedSizeId,
                 selectedColorId,
                 retrievedProduct,
-            ) || initialSelectedVariant, // hacky fix for when the new selected variant is not in the list
+            ),
         );
     }, [
         selectedSizeId,
@@ -76,8 +74,17 @@ export function ProductDetails({
         [selectedVariant, images],
     );
 
-    const productType = retrievedProduct.tags[1];
-    console.log(productType);
+    const filteredSizeOptionsForColorId = useMemo(
+        () =>
+            getFilteredSizeOptionsForColorId(selectedColorId, retrievedProduct),
+        [selectedColorId, retrievedProduct],
+    );
+
+    const filteredColourOptionsForSizeId = useMemo(
+        () =>
+            getFilteredColorOptionsForSizeId(selectedSizeId, retrievedProduct),
+        [retrievedProduct, selectedSizeId],
+    );
 
     return (
         <div className="flex w-5/6 flex-col items-center justify-center space-y-4 text-center lg:w-1/3">
@@ -89,8 +96,8 @@ export function ProductDetails({
             )}
             <div className="flex flex-col justify-center space-y-4">
                 <SizeAndColorSelector
-                    sizes={sizeOptions}
-                    colours={colourOptions}
+                    sizes={filteredSizeOptionsForColorId}
+                    colours={filteredColourOptionsForSizeId}
                     selectedSizeId={selectedSizeId}
                     selectedColorId={selectedColorId}
                     setSelectedSizeId={setSelectedSizeId}
@@ -111,7 +118,7 @@ export function ProductDetails({
                             },
                             body: JSON.stringify({
                                 productId: retrievedProduct.id,
-                                productType: productType,
+                                productType: retrievedProduct.tags[1],
                                 order_title: retrievedProduct.title,
                                 order_variant_label: selectedVariant.title,
                                 orderVariantId: selectedVariant.id,
@@ -154,9 +161,53 @@ function findSelectedVariant(
     colorId: string,
     retrievedProduct: RetrieveProductResponse,
 ) {
-    return retrievedProduct.variants.find(
+    const selectedVariant = retrievedProduct.variants.find(
         (variant) =>
             variant.options[0] == Number(colorId) &&
             variant.options[1] == Number(sizeId),
     );
+
+    if (!selectedVariant) {
+        throw new Error("No selected variant");
+    }
+
+    return selectedVariant;
+}
+
+function getFilteredSizeOptionsForColorId(
+    colorId: string,
+    retrievedProduct: RetrieveProductResponse,
+) {
+    const filteredVariants = retrievedProduct.variants.filter(
+        (variant) => variant.options[0] == Number(colorId),
+    );
+    const filteredSizeIds = filteredVariants.map(
+        (variant) => variant.options[1],
+    );
+
+    const sizeOptions = retrievedProduct.options[1].values.filter((option) =>
+        filteredSizeIds.includes(option.id),
+    );
+
+    return sizeOptions;
+}
+
+function getFilteredColorOptionsForSizeId(
+    sizeId: string,
+    retrievedProduct: RetrieveProductResponse,
+) {
+    console.log("called");
+    const filteredVariants = retrievedProduct.variants.filter(
+        (variant) => variant.options[1] == Number(sizeId),
+    );
+    const filteredColorIds = filteredVariants.map(
+        (variant) => variant.options[0],
+    );
+
+    const filteredColorOptions = retrievedProduct.options[0].values.filter(
+        (option) => filteredColorIds.includes(option.id),
+    );
+
+    console.log({ filteredVariants, filteredColorIds, filteredColorOptions });
+    return filteredColorOptions;
 }

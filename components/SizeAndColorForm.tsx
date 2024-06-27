@@ -1,5 +1,4 @@
 "use client";
-import { useState } from "react";
 import { Options } from "./ProductDetails";
 import {
     Select,

@@ -11,7 +11,7 @@ import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import { GenerateImageLinks } from "./GenerateImageLinks";
 import { SmallLoadingSpinner } from "./SmallLoadingSpinner";
-import { convertUSDToGBP } from "@/lib/currency/service";
+import { convertUSDToGBP } from "@/lib/currency/convertUSDToGBP";
 
 export interface Options {
     id: number;

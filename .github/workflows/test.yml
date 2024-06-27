@@ -5,7 +5,7 @@ on: [push]
 env:
     CI: true
     AI_GIFTS_API_URL: http://localhost:3000
-    CURRENCY_API_KEY: foo
+    CURRENCY_API_KEY: ${{ secrets.CURRENCY_API_KEY }}
     DATABASE_URL: postgres://postgres:password@localhost:5432/test
     DATABASE_URL_UNPOOLED: postgres://postgres:password@localhost:5432/test
     OPENAI_API_KEY: foo

@@ -123,7 +123,7 @@ export function ProductDetails({
                                 setCheckoutLoading(false);
                             });
                     }}
-                    className="focus:shadow-outline flex w-2/3 flex-row self-center rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-700 focus:outline-none"
+                    className="focus:shadow-outline flex w-2/3 flex-row self-center rounded px-4 py-2 focus:outline-none"
                 >
                     {checkoutLoading ? (
                         <div className="flex flex-row items-center">

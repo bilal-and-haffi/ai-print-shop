@@ -1,6 +1,9 @@
+import { RetrieveProductResponse } from "@/interfaces/PrintifyTypes";
 import { createPrintifyProduct } from "../service";
 
-export async function createPrintifyHoodieProduct(printifyImageId: string) {
+export async function createPrintifyHoodieProduct(
+    printifyImageId: string,
+): Promise<RetrieveProductResponse> {
     const printCleverId = 72;
     const unisexHeavyBlendHoodedSweatshirtBlueprintId = 77;
     const printifyProduct = await createPrintifyProduct({

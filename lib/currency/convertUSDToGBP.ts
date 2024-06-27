@@ -1,3 +1,4 @@
+"use server";
 import { envServer } from "@/lib/env/server";
 
 export async function convertUSDToGBP(usd: number) {

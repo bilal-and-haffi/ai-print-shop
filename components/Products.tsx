@@ -32,7 +32,7 @@ export const Products = ({
                         retrievedProduct={tShirtProduct}
                         initialSizeId={16} // large
                         initialColorId={418} // black
-                        priceInGbp={25}
+                        priceInGbp={20}
                     />
                 );
             case ProductType.Hoodie:
@@ -50,7 +50,7 @@ export const Products = ({
                         retrievedProduct={mugProduct}
                         initialSizeId={1189}
                         initialColorId={2621}
-                        priceInGbp={20}
+                        priceInGbp={15}
                     />
                 );
         }

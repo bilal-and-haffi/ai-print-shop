@@ -11,7 +11,7 @@ import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import { GenerateImageLinks } from "./GenerateImageLinks";
 import { SmallLoadingSpinner } from "./SmallLoadingSpinner";
-import { convertUSDToGBP } from "@/lib/currency/convertUSDToGBP";
+import { isPriceOkay } from "../lib/pricing/isPriceOkay";
 
 export interface Options {
     id: number;
@@ -86,33 +86,6 @@ export function ProductDetails({
         [retrievedProduct, selectedSizeId],
     );
 
-    async function isPriceOkay() {
-        const printifyProductCostInUsd = selectedVariant.cost / 100;
-        const printifyShippingCostToUkInUsd = 3.99; // replace me with /v1/catalog/blueprints/{blueprint_id}/print_providers/{print_provider_id}/shipping.json
-        const VATMultiplier = 1.2;
-        const totalPrintifyCostInUsd =
-            (printifyProductCostInUsd + printifyShippingCostToUkInUsd) *
-            VATMultiplier;
-        const totalPrintifyCostInGbp = await convertUSDToGBP(
-            totalPrintifyCostInUsd,
-        );
-        const minimumProfitInGbp = 5;
-        const profitInGbp = priceInGbp - totalPrintifyCostInGbp;
-        const isPriceOkay = profitInGbp > minimumProfitInGbp;
-        console.log({
-            printifyProductCostInUsd,
-            printifyShippingCostToUkInUsd,
-            VATMultiplier,
-            totalPrintifyCostInUsd,
-            totalPrintifyCostInGbp,
-            minimumProfitInGbp,
-            profitInGbp,
-            isPriceOkay,
-        });
-
-        return isPriceOkay;
-    }
-
     return (
         <div className="flex w-5/6 flex-col items-center justify-center space-y-4 text-center lg:w-1/3">
             <GenerateImageLinks prompt={retrievedProduct.title} />
@@ -137,9 +110,8 @@ export function ProductDetails({
             >
                 <Button
                     onClick={async () => {
-                        if (!(await isPriceOkay())) {
-                            console.log("Pricing issue.");
-                            throw new Error("Pricing issue");
+                        if (!(await isPriceOkay(selectedVariant, priceInGbp))) {
+                            throw new Error("Something went wrong");
                         }
                         setCheckoutLoading(true);
                         fetch("/checkout", {

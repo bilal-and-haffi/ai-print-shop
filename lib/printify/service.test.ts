@@ -1,4 +1,5 @@
-import { fetchProductVariants, mapProductDetails } from "./service";
+import { mapProductDetails } from "./service";
+import { fetchProductVariants } from "./fetchProductVariants";
 import printCleverTShirtFixture from "../../fixtures/print-clever-t-shirt.json";
 
 describe("fetchProductVariants", () => {

@@ -263,10 +263,3 @@ export interface Options {
     color: string;
     size: string;
 }
-
-export interface Variant {
-    id: number;
-    title: string;
-    options: Options;
-    placeholders: Placeholder[];
-}

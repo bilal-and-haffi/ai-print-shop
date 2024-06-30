@@ -11,24 +11,24 @@ import {
 export const SizeAndColorSelector = ({
     sizes,
     colours,
-    selectedSizeId,
-    selectedColorId,
-    setSelectedSizeId,
-    setSelectedColorId,
+    selectedSize: selectedSizeId,
+    selectedColor: selectedColorId,
+    setSelectedSize: setSelectedSize,
+    setSelectedColor: setSelectedColor,
 }: {
-    sizes: Options[];
-    colours: Options[];
-    selectedSizeId: string;
-    selectedColorId: string;
-    setSelectedSizeId: (sizeId: string) => void;
-    setSelectedColorId: (colorId: string) => void;
+    sizes: string[];
+    colours: string[];
+    selectedSize: string;
+    selectedColor: string;
+    setSelectedSize: (size: string) => void;
+    setSelectedColor: (color: string) => void;
 }) => {
     function onSizeChange(value: string) {
-        setSelectedSizeId(value);
+        setSelectedSize(value);
     }
 
     function onColorChange(value: string) {
-        setSelectedColorId(value);
+        setSelectedColor(value);
     }
 
     return (
@@ -45,8 +45,8 @@ export const SizeAndColorSelector = ({
                 </SelectTrigger>
                 <SelectContent>
                     {sizes.map((size) => (
-                        <SelectItem key={size.id} value={size.id.toString()}>
-                            {size.title}
+                        <SelectItem key={size} value={size}>
+                            {size}
                         </SelectItem>
                     ))}
                 </SelectContent>
@@ -61,11 +61,8 @@ export const SizeAndColorSelector = ({
                 </SelectTrigger>
                 <SelectContent>
                     {colours.map((colour) => (
-                        <SelectItem
-                            key={colour.id}
-                            value={colour.id.toString()}
-                        >
-                            {colour.title}
+                        <SelectItem key={colour} value={colour}>
+                            {colour}
                         </SelectItem>
                     ))}
                 </SelectContent>

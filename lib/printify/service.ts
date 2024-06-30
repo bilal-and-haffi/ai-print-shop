@@ -9,11 +9,11 @@ import {
     PrintifyOrderResponse,
     PrintifyProductRequest,
     RetrieveProductResponse,
-    Variant,
 } from "@/interfaces/PrintifyTypes";
 import { envServer } from "@/lib/env/server";
 import { getPromptFromImageId } from "@/db/image";
 import { fetchProductVariants } from "./fetchProductVariants";
+import { Variant } from "@/interfaces/Printify/Variant";
 
 async function constructPrintifyProductRequest({
     printifyImageId,
@@ -194,6 +194,7 @@ export async function createPrintifyProduct({
         printProviderId,
         blueprintId,
     });
+
     const productRequest: PrintifyProductRequest = {
         blueprint_id,
         description,

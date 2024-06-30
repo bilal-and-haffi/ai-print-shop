@@ -12,6 +12,7 @@ import { useEffect, useMemo, useState } from "react";
 import { GenerateImageLinks } from "./GenerateImageLinks";
 import { SmallLoadingSpinner } from "./SmallLoadingSpinner";
 import { isPriceOkay } from "../lib/pricing/isPriceOkay";
+import { Variant } from "@/interfaces/Printify/Variant";
 
 export interface Options {
     id: number;
@@ -20,49 +21,38 @@ export interface Options {
 
 export function ProductDetails({
     retrievedProduct,
-    initialSizeId,
-    initialColorId,
+    initialSize,
+    initialColor,
     priceInGbp,
+    variants,
 }: {
     retrievedProduct: RetrieveProductResponse;
-    initialSizeId: number;
-    initialColorId: number;
+    initialSize: string;
+    initialColor: string;
     priceInGbp: number;
+    variants: Variant[];
 }) {
     const [checkoutLoading, setCheckoutLoading] = useState(false);
     const { images } = retrievedProduct;
 
-    const [selectedSizeId, setSelectedSizeId] = useState(
-        initialSizeId.toString(),
-    );
-    const [selectedColorId, setSelectedColorId] = useState(
-        initialColorId.toString(),
-    );
+    const [selectedSize, setSelectedSize] = useState(initialSize);
+    const [selectedColor, setSelectedColor] = useState(initialColor);
 
     const initialSelectedVariant = findSelectedVariant(
-        selectedSizeId,
-        selectedColorId,
-        retrievedProduct,
+        selectedSize,
+        selectedColor,
+        variants,
     );
 
-    const [selectedVariant, setSelectedVariant] = useState<ProductVariant>(
+    const [selectedVariant, setSelectedVariant] = useState<Variant>(
         initialSelectedVariant,
     );
 
     useEffect(() => {
         setSelectedVariant(
-            findSelectedVariant(
-                selectedSizeId,
-                selectedColorId,
-                retrievedProduct,
-            ),
+            findSelectedVariant(selectedSize, selectedColor, variants),
         );
-    }, [
-        selectedSizeId,
-        selectedColorId,
-        retrievedProduct,
-        initialSelectedVariant,
-    ]);
+    }, [selectedSize, selectedColor, retrievedProduct, variants]);
 
     const filteredImages = useMemo(
         () =>
@@ -75,16 +65,20 @@ export function ProductDetails({
     );
 
     const filteredSizeOptionsForColorId = useMemo(
-        () =>
-            getFilteredSizeOptionsForColorId(selectedColorId, retrievedProduct),
-        [selectedColorId, retrievedProduct],
+        () => getFilteredSizesForColor(selectedColor, variants),
+        [selectedColor, variants],
     );
 
     const filteredColourOptionsForSizeId = useMemo(
-        () =>
-            getFilteredColorOptionsForSizeId(selectedSizeId, retrievedProduct),
-        [retrievedProduct, selectedSizeId],
+        () => getFilteredColorsForSize(selectedSize, variants),
+        [selectedSize, variants],
     );
+
+    const selectedProductVariant = useMemo(() => {
+        return retrievedProduct.variants.find(
+            (variants) => variants.id === selectedVariant.id,
+        ) as ProductVariant;
+    }, [selectedVariant, retrievedProduct.variants]);
 
     return (
         <div className="flex w-5/6 flex-col items-center justify-center space-y-4 text-center lg:w-1/3">
@@ -98,10 +92,10 @@ export function ProductDetails({
                 <SizeAndColorSelector
                     sizes={filteredSizeOptionsForColorId}
                     colours={filteredColourOptionsForSizeId}
-                    selectedSizeId={selectedSizeId}
-                    selectedColorId={selectedColorId}
-                    setSelectedSizeId={setSelectedSizeId}
-                    setSelectedColorId={setSelectedColorId}
+                    selectedSize={selectedSize}
+                    selectedColor={selectedColor}
+                    setSelectedSize={setSelectedSize}
+                    setSelectedColor={setSelectedColor}
                 />
             </div>
             <div
@@ -110,7 +104,12 @@ export function ProductDetails({
             >
                 <Button
                     onClick={async () => {
-                        if (!(await isPriceOkay(selectedVariant, priceInGbp))) {
+                        if (
+                            !(await isPriceOkay(
+                                selectedProductVariant,
+                                priceInGbp,
+                            ))
+                        ) {
                             throw new Error("Something went wrong");
                         }
                         setCheckoutLoading(true);
@@ -125,7 +124,7 @@ export function ProductDetails({
                                 order_title: retrievedProduct.title,
                                 order_variant_label: selectedVariant.title,
                                 orderVariantId: selectedVariant.id,
-                                order_preview: retrievedProduct.images[0].src,
+                                order_preview: filteredImages[0].src,
                                 price: priceInGbp * 100,
                             }),
                         })
@@ -159,15 +158,10 @@ export function ProductDetails({
     );
 }
 
-function findSelectedVariant(
-    sizeId: string,
-    colorId: string,
-    retrievedProduct: RetrieveProductResponse,
-) {
-    const selectedVariant = retrievedProduct.variants.find(
+function findSelectedVariant(size: string, color: string, variants: Variant[]) {
+    const selectedVariant = variants.find(
         (variant) =>
-            variant.options[0] == Number(colorId) &&
-            variant.options[1] == Number(sizeId),
+            variant.options.color == color && variant.options.size == size,
     );
 
     if (!selectedVariant) {
@@ -177,38 +171,23 @@ function findSelectedVariant(
     return selectedVariant;
 }
 
-function getFilteredSizeOptionsForColorId(
-    colorId: string,
-    retrievedProduct: RetrieveProductResponse,
-) {
-    const filteredVariants = retrievedProduct.variants.filter(
-        (variant) => variant.options[0] == Number(colorId),
+function getFilteredSizesForColor(color: string, variants: Variant[]) {
+    const filteredVariants = variants.filter(
+        (variant) => variant.options.color == color,
     );
-    const filteredSizeIds = filteredVariants.map(
-        (variant) => variant.options[1],
+    const filteredSizes = filteredVariants.map(
+        (variant) => variant.options.size,
     );
-
-    const sizeOptions = retrievedProduct.options[1].values.filter((option) =>
-        filteredSizeIds.includes(option.id),
-    );
-
-    return sizeOptions;
+    return filteredSizes;
 }
 
-function getFilteredColorOptionsForSizeId(
-    sizeId: string,
-    retrievedProduct: RetrieveProductResponse,
-) {
-    const filteredVariants = retrievedProduct.variants.filter(
-        (variant) => variant.options[1] == Number(sizeId),
+function getFilteredColorsForSize(size: string, variants: Variant[]) {
+    const filteredVariants = variants.filter(
+        (variant) => variant.options.size === size,
     );
-    const filteredColorIds = filteredVariants.map(
-        (variant) => variant.options[0],
+    const filteredColors = filteredVariants.map(
+        (variant) => variant.options.color,
     );
 
-    const filteredColorOptions = retrievedProduct.options[0].values.filter(
-        (option) => filteredColorIds.includes(option.id),
-    );
-
-    return filteredColorOptions;
+    return filteredColors;
 }

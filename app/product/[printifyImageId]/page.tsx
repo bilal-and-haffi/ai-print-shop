@@ -10,17 +10,24 @@ export default async function ProductPage({
     params: { printifyImageId: string };
 }) {
     const { printifyImageId } = params;
-    const [tShirtProduct, hoodieProduct, mugProduct] = await Promise.all([
-        createPrintifyTshirtProduct(printifyImageId),
-        createPrintifyHoodieProduct(printifyImageId),
-        createPrintifyMugProduct(printifyImageId),
-    ]);
+
     const printCleverId = 72;
     const tShirtBlueprintId = 6;
     const hoodieBlueprintId = 77;
     const mugBlueprintId = 1302;
-    // The variants below are fetched because they reflect what is in stock whereas the ProductVariant on the product respones to not reflect what is in stock
-    const [tShirtVariants, hoodieVariants, mugVariants] = await Promise.all([
+
+    const [
+        tShirtProduct,
+        hoodieProduct,
+        mugProduct,
+        tShirtVariants,
+        hoodieVariants,
+        mugVariants,
+    ] = await Promise.all([
+        createPrintifyTshirtProduct(printifyImageId),
+        createPrintifyHoodieProduct(printifyImageId),
+        createPrintifyMugProduct(printifyImageId),
+        // The variants below are fetched because they reflect what is in stock whereas the ProductVariant on the product respones to not reflect what is in stock
         fetchProductVariants(tShirtBlueprintId, printCleverId),
         fetchProductVariants(hoodieBlueprintId, printCleverId),
         fetchProductVariants(mugBlueprintId, printCleverId),

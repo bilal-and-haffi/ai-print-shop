@@ -8,7 +8,7 @@ export async function createPrintifyTshirtProduct(
     const printifyProduct = await createPrintifyProduct({
         printifyImageId: printifyImageId,
         printProviderId: printCleverId,
-        blueprintId: 6, // unisexHeavyCottonTeeBlueprintId
+        blueprintId: 6,
     });
 
     return printifyProduct;

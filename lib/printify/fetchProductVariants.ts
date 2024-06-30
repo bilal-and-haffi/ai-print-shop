@@ -1,5 +1,6 @@
+"use server";
 import { PRINTIFY_BASE_URL } from "@/app/data/consts";
-import { Variant } from "@/interfaces/PrintifyTypes";
+import { Variant } from "@/interfaces/Printify/Variant";
 import { envServer } from "@/lib/env/server";
 
 export async function fetchProductVariants(

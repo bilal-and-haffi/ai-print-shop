@@ -4,6 +4,7 @@ import { useState } from "react";
 import { ProductDetails } from "./ProductDetails";
 import { ProductSwitcher } from "./LinksToProducts";
 import { RetrieveProductResponse } from "@/interfaces/PrintifyTypes";
+import { Variant } from "@/interfaces/Printify/Variant";
 
 export const enum ProductType {
     TShirt = "tshirt",
@@ -15,10 +16,16 @@ export const Products = ({
     tShirtProduct,
     hoodieProduct,
     mugProduct,
+    tShirtVariants,
+    hoodieVariants,
+    mugVariants,
 }: {
     tShirtProduct: RetrieveProductResponse;
     hoodieProduct: RetrieveProductResponse;
     mugProduct: RetrieveProductResponse;
+    tShirtVariants: Variant[];
+    hoodieVariants: Variant[];
+    mugVariants: Variant[];
 }) => {
     const [selectedProductType, setSelectedProductType] = useState<ProductType>(
         ProductType.TShirt,
@@ -30,27 +37,30 @@ export const Products = ({
                 return (
                     <ProductDetails
                         retrievedProduct={tShirtProduct}
-                        initialSizeId={16} // large
-                        initialColorId={418} // black
+                        initialSize="L"
+                        initialColor="Black"
                         priceInGbp={20}
+                        variants={tShirtVariants}
                     />
                 );
             case ProductType.Hoodie:
                 return (
                     <ProductDetails
                         retrievedProduct={hoodieProduct}
-                        initialSizeId={16} // large
-                        initialColorId={418} // black
+                        initialSize="L"
+                        initialColor="Black"
                         priceInGbp={40}
+                        variants={hoodieVariants}
                     />
                 );
             case ProductType.Mug:
                 return (
                     <ProductDetails
                         retrievedProduct={mugProduct}
-                        initialSizeId={1189}
-                        initialColorId={2621}
+                        initialSize="11oz"
+                        initialColor="Black"
                         priceInGbp={15}
+                        variants={mugVariants}
                     />
                 );
         }

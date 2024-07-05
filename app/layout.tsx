@@ -15,7 +15,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-    title: "AI Personalised Gift Shop",
+    title: "AI Print Shop",
     description: "Hoodies, T-shirts, Mugs, and more!",
 };
 
@@ -31,9 +31,7 @@ export default function RootLayout({
             >
                 <main className="flex flex-1 flex-col items-center space-y-4 py-8 lg:justify-center lg:py-16">
                     <div id="heading">
-                        <h1 className="text-2xl font-bold">
-                            AI Personalised Gift Shop
-                        </h1>
+                        <h1 className="text-2xl font-bold">AI Print Shop</h1>
                     </div>
                     {children}
                 </main>
@@ -41,10 +39,10 @@ export default function RootLayout({
                     <CardFooter className="p-0">
                         <Button
                             asChild
-                            className="focus:shadow-outline w-full rounded rounded-none bg-blue-500 px-4 py-2 text-white hover:bg-blue-700 focus:outline-none"
+                            className="focus:shadow-outline w-full rounded-none bg-blue-500 px-4 py-2 text-white hover:bg-blue-700 focus:outline-none"
                         >
-                            <Link href="mailto:ai-personalised-gifts@mail.com">
-                                Contact us at ai-personalised-gifts@mail.com
+                            <Link href="mailto:ai-print-shop@mail.com">
+                                Contact us at ai-print-shop@mail.com
                             </Link>
                         </Button>
                     </CardFooter>

@@ -1,3 +1,4 @@
+import { bigint } from "drizzle-orm/mysql-core";
 import {
     pgTable,
     bigserial,
@@ -30,6 +31,7 @@ export const orderTable = pgTable(
         createdAt: timestamp("created_at", { mode: "date" })
             .defaultNow()
             .notNull(),
+        emailId: varchar("email_id"),
     },
     (orders) => {
         return {

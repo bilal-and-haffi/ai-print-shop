@@ -34,7 +34,7 @@ export async function POST(request: NextRequest) {
         {
             first_name: shipping.name.split(" ")[0],
             last_name: shipping.name.split(" ")[1],
-            email: shipping.email,
+            email: eventData.object.receipt_email,
             phone: shipping.phone,
             country: shipping.address.country,
             region:

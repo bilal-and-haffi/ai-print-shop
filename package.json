@@ -43,6 +43,7 @@
         "react-dom": "^18",
         "react-hook-form": "^7.51.2",
         "replicate": "^0.29.1",
+        "resend": "^3.4.0",
         "stripe": "^14.18.0",
         "tailwind-merge": "^2.2.2",
         "tailwindcss-animate": "^1.0.7"

@@ -1,5 +1,4 @@
 import * as React from "react";
-import { Button } from "./ui/button";
 
 interface OrderConfirmationEmailTemplateProps {
     firstName: string;
@@ -12,21 +11,23 @@ export const OrderConfirmationEmailTemplate: React.FC<
     <div className="flex flex-col items-center space-y-5">
         <p>Hi {firstName},</p>
         <p>Your order has been confirmed!</p>
+        <p>Thank you for shopping with AI Print Shop :)</p>
+
         <p>
-            <a href={printifyConnectUrl}>
-                <Button>Track order</Button>
-            </a>
-        </p>
-        <p>
-            <a href="https://www.ai-print-shop.com/">
-                <Button>Continue shopping</Button>
-            </a>
-        </p>
-        <p>
-            Contact us at{": "}
-            <a href="mailto:ai-print-shop@mail.com">
-                <Button>ai-print-shop@mail.com</Button>
-            </a>
+            Links:
+            <ul>
+                <li>
+                    <a href="https://www.ai-print-shop.com/">
+                        Continue shopping
+                    </a>
+                </li>
+                <li>
+                    <a href={printifyConnectUrl}>Track order</a>
+                </li>
+                <li>
+                    <a href="mailto:ai-print-shop@mail.com">Email Us</a>
+                </li>
+            </ul>
         </p>
     </div>
 );

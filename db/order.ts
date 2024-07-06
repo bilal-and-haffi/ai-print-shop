@@ -37,6 +37,32 @@ export async function updateOrderStatus(
         .where(eq(orderTable.id, internalOrderId));
 }
 
+export async function getEmailIdFromOrderTable({
+    internalOrderId,
+}: {
+    internalOrderId: number;
+}) {
+    return (
+        await dbClient
+            .select({ emailId: orderTable.emailId })
+            .from(orderTable)
+            .where(eq(orderTable.id, internalOrderId))
+    )[0];
+}
+
+export async function addEmailIdToOrderTable({
+    internalOrderId,
+    emailId,
+}: {
+    internalOrderId: number;
+    emailId: string;
+}) {
+    return await dbClient
+        .update(orderTable)
+        .set({ emailId })
+        .where(eq(orderTable.id, internalOrderId));
+}
+
 export async function updateOrderSessionId(
     internalOrderId: number,
     stripeSessionId: string,

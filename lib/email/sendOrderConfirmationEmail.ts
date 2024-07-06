@@ -42,6 +42,13 @@ export async function sendOrderConfirmationEmail(
             reply_to: "ai-print-shop@mail.com",
         });
         console.log({ data, error });
+
+        if (!data || !data.id) {
+            console.error("Missing data");
+            throw new Error("Missing data");
+        }
+
+        return data.id;
     } catch (error) {
         console.error({ error });
         throw error;

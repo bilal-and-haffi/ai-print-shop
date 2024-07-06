@@ -1,5 +1,9 @@
 import { Button } from "@/components/ui/button";
-import { getOrderById } from "@/db/order";
+import {
+    addEmailIdToOrderTable,
+    getEmailIdFromOrderTable,
+    getOrderById,
+} from "@/db/order";
 import { getOrderDetails } from "@/lib/printify/service";
 import Link from "next/link";
 import { Suspense } from "react";
@@ -46,11 +50,21 @@ export default async function Page(params: {
 
     const printifyOrder = await pollForPrintifyOrder(printifyOrderId);
 
-    sendOrderConfirmationEmail(
-        printifyOrder.address_to.email,
-        printifyOrder.address_to.first_name,
-        printifyOrder.printify_connect.url,
-    );
+    const emailId = await getEmailIdFromOrderTable({ internalOrderId });
+
+    console.log({ emailId });
+    if (!emailId) {
+        const emailId = await sendOrderConfirmationEmail(
+            printifyOrder.address_to.email,
+            printifyOrder.address_to.first_name,
+            printifyOrder.printify_connect.url,
+        );
+        addEmailIdToOrderTable({ internalOrderId, emailId });
+    } else {
+        console.log(
+            "Email id already exists in order table so skipping email sending",
+        );
+    }
 
     return (
         <div className="flex flex-col items-center space-y-5">

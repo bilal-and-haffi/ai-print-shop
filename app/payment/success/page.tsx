@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Suspense } from "react";
 import { type PrintifyOrderResponse } from "@/interfaces/PrintifyTypes";
 import { type OrderRow } from "@/db/order";
+import { sendOrderConfirmationEmail } from "@/lib/email/sendOrderConfirmationEmail";
 
 export const dynamic = "force-dynamic";
 
@@ -44,6 +45,12 @@ export default async function Page(params: {
     }
 
     const printifyOrder = await pollForPrintifyOrder(printifyOrderId);
+
+    sendOrderConfirmationEmail(
+        printifyOrder.address_to.email,
+        printifyOrder.address_to.first_name,
+        printifyOrder.printify_connect.url,
+    );
 
     return (
         <div className="flex flex-col items-center space-y-5">

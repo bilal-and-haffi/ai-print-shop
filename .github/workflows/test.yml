@@ -13,6 +13,7 @@ env:
     PRINTIFY_API_TOKEN: foo
     SHOP_ID: foo
     STRIPE_SECRET_KEY: foo
+    RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
 
 jobs:
     checks:

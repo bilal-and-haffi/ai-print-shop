@@ -39,6 +39,7 @@ export async function sendOrderConfirmationEmail(
                 printifyConnectUrl,
             }),
             text: "",
+            reply_to: "ai-print-shop@mail.com",
         });
         console.log({ data, error });
     } catch (error) {

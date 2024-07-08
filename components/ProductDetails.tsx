@@ -6,7 +6,7 @@ import {
     RetrieveProductResponse,
 } from "@/interfaces/PrintifyTypes";
 import { ImagesCarousel } from "./ImageCarousel";
-import { SizeAndColorSelector } from "./SizeAndColorForm";
+import { Size, SizeAndColorSelector } from "./SizeAndColorForm";
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import { GenerateImageLinks } from "./GenerateImageLinks";
@@ -90,7 +90,7 @@ export function ProductDetails({
             )}
             <div className="flex flex-col justify-center space-y-4">
                 <SizeAndColorSelector
-                    sizes={filteredSizeOptionsForColorId}
+                    sizes={filteredSizeOptionsForColorId as Size[]}
                     colours={filteredColourOptionsForSizeId}
                     selectedSize={selectedSize}
                     selectedColor={selectedColor}

@@ -8,6 +8,8 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 
+export type Size = "S" | "M" | "L" | "XL" | "2XL" | "3XL" | "4XL" | "5XL";
+
 export const SizeAndColorSelector = ({
     sizes,
     colours,
@@ -16,7 +18,7 @@ export const SizeAndColorSelector = ({
     setSelectedSize: setSelectedSize,
     setSelectedColor: setSelectedColor,
 }: {
-    sizes: string[];
+    sizes: Size[];
     colours: string[];
     selectedSize: string;
     selectedColor: string;
@@ -31,6 +33,17 @@ export const SizeAndColorSelector = ({
         setSelectedColor(value);
     }
 
+    const weights = new Map<Size, number>([
+        ["S", 1],
+        ["M", 2],
+        ["L", 3],
+        ["XL", 4],
+        ["2XL", 5],
+        ["3XL", 6],
+        ["4XL", 7],
+        ["5XL", 8],
+    ]);
+
     return (
         <div
             id="selectContainer"
@@ -44,11 +57,16 @@ export const SizeAndColorSelector = ({
                     <SelectValue placeholder="Size" />
                 </SelectTrigger>
                 <SelectContent>
-                    {sizes.map((size) => (
-                        <SelectItem key={size} value={size}>
-                            {size}
-                        </SelectItem>
-                    ))}
+                    {sizes
+                        .sort(
+                            (a: Size, b: Size) =>
+                                weights.get(a)! - weights.get(b)!,
+                        )
+                        .map((size) => (
+                            <SelectItem key={size} value={size}>
+                                {size}
+                            </SelectItem>
+                        ))}
                 </SelectContent>
             </Select>
 
@@ -60,7 +78,7 @@ export const SizeAndColorSelector = ({
                     <SelectValue placeholder="Color" />
                 </SelectTrigger>
                 <SelectContent>
-                    {colours.map((colour) => (
+                    {colours.sort().map((colour) => (
                         <SelectItem key={colour} value={colour}>
                             {colour}
                         </SelectItem>

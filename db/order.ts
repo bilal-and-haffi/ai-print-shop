@@ -47,7 +47,7 @@ export async function getEmailIdFromOrderTable({
             .select({ emailId: orderTable.emailId })
             .from(orderTable)
             .where(eq(orderTable.id, internalOrderId))
-    )[0];
+    )[0].emailId;
 }
 
 export async function addEmailIdToOrderTable({

@@ -10,6 +10,7 @@ import { Suspense } from "react";
 import { type PrintifyOrderResponse } from "@/interfaces/PrintifyTypes";
 import { type OrderRow } from "@/db/order";
 import { sendOrderConfirmationEmail } from "@/lib/email/sendOrderConfirmationEmail";
+import { sendAnExistingOrderToProduction } from "@/lib/printify/sendAnExistingOrderToProduction";
 
 export const dynamic = "force-dynamic";
 
@@ -50,10 +51,12 @@ export default async function Page(params: {
 
     const printifyOrder = await pollForPrintifyOrder(printifyOrderId);
 
-    const emailId = await getEmailIdFromOrderTable({ internalOrderId });
+    const existingEmailId = await getEmailIdFromOrderTable({ internalOrderId });
+    const hasSentEmailAlready = Boolean(existingEmailId);
+    const hasOrderAlreadyBeenProcessed = hasSentEmailAlready;
 
-    console.log({ emailId });
-    if (!emailId) {
+    console.log({ emailId: existingEmailId, hasSentEmailAlready });
+    if (!hasSentEmailAlready) {
         const emailId = await sendOrderConfirmationEmail(
             printifyOrder.address_to.email,
             printifyOrder.address_to.first_name,
@@ -61,9 +64,13 @@ export default async function Page(params: {
         );
         addEmailIdToOrderTable({ internalOrderId, emailId });
     } else {
-        console.log(
-            "Email id already exists in order table so skipping email sending",
-        );
+        console.log("Email has already been sent so skipping email sending");
+    }
+
+    if (!hasOrderAlreadyBeenProcessed) {
+        await sendAnExistingOrderToProduction(printifyOrderId);
+    } else {
+        console.log("Order has already been processed skipping email sending");
     }
 
     return (

@@ -25,10 +25,10 @@ export async function sendOrderConfirmationEmail(
         });
 
         console.log({
+            msg: "sendOrderConfirmationEmail",
             emailAddress,
             firstName,
             printifyConnectUrl,
-            msg: "sendOrderConfirmationEmail",
         });
         const { data, error } = await resend.emails.send({
             from: "AI Print Shop <no-reply@ai-print-shop.com>",

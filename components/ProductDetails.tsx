@@ -80,13 +80,13 @@ export function ProductDetails({
     }, [selectedVariant, retrievedProduct.variants]);
 
     return (
-        <div className="flex w-5/6 flex-col items-center justify-center space-y-4 text-center lg:w-1/3">
+        <div className="flex w-5/6 flex-col items-center justify-center text-center lg:w-1/3">
             {images ? (
                 <ImagesCarousel images={filteredImages} />
             ) : (
                 <div>Product Not Available</div>
             )}
-            <div className="flex flex-col justify-center space-y-4">
+            <div className="mt-4 flex flex-col gap-2">
                 <SizeAndColorSelector
                     sizes={filteredSizeOptionsForColorId as Size[]}
                     colours={filteredColourOptionsForSizeId}
@@ -95,11 +95,7 @@ export function ProductDetails({
                     setSelectedSize={setSelectedSize}
                     setSelectedColor={setSelectedColor}
                 />
-            </div>
-            <div
-                id="linkContainer"
-                className="flex w-full flex-col space-y-3 self-center"
-            >
+
                 <Button
                     onClick={async () => {
                         if (
@@ -132,25 +128,25 @@ export function ProductDetails({
                                 setCheckoutLoading(false);
                             });
                     }}
-                    className="focus:shadow-outline flex w-2/3 flex-row self-center rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-700 focus:outline-none"
+                    className="dark"
                 >
                     {checkoutLoading ? (
                         <div className="flex flex-row items-center">
                             <SmallLoadingSpinner className="fill-white" />
                         </div>
                     ) : (
-                        <p>Buy now for £{priceInGbp}</p>
+                        <>Buy now for £{priceInGbp}</>
                     )}
                 </Button>
-                <div className="flex flex-row items-center self-center rounded py-2 pl-3">
-                    Powered by
-                    <Image
-                        src="/stripe.svg"
-                        alt="Stripe"
-                        width={100}
-                        height={100}
-                    />
-                </div>
+            </div>
+            <div className="flex flex-row items-center self-center rounded py-2 pl-3">
+                Powered by
+                <Image
+                    src="/stripe.svg"
+                    alt="Stripe"
+                    width={100}
+                    height={100}
+                />
             </div>
         </div>
     );

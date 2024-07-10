@@ -36,7 +36,7 @@ export const ProductSwitcher = ({
                     <ChevronLeft className="h-4 w-4" />
                 </Button>
             </Link>
-            <div id="product-links" className="flex md:hidden">
+            <div id="product-links" className="dark flex md:hidden">
                 <Select
                     onValueChange={(value: ProductType) =>
                         setSelectedProductType(value)

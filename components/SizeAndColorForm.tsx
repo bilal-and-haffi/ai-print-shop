@@ -47,7 +47,7 @@ export const SizeAndColorSelector = ({
     return (
         <div
             id="selectContainer"
-            className="dark flex w-full flex-col items-center space-y-2"
+            className="flex w-full flex-col items-center space-y-2 text-black"
         >
             <Select
                 onValueChange={(value) => onSizeChange(value)}

@@ -113,6 +113,7 @@ export function TextAreaAndButton() {
                 <Button
                     onClick={submitGenerateText}
                     data-testid="Generate Image Button"
+                    variant="secondary"
                 >
                     Generate Image
                 </Button>

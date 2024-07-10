@@ -32,7 +32,11 @@ export const ProductSwitcher = ({
             className="flex w-5/6 items-center justify-between space-x-4 lg:w-1/3"
         >
             <Link href={`/`}>
-                <Button data-testid="Go back">
+                <Button
+                    data-testid="Go back"
+                    variant="outline"
+                    className="dark"
+                >
                     <ChevronLeft className="h-4 w-4" />
                 </Button>
             </Link>
@@ -55,7 +59,10 @@ export const ProductSwitcher = ({
                     </SelectContent>
                 </Select>
             </div>
-            <div id="product-links-md" className="hidden space-x-2 md:flex">
+            <div
+                id="product-links-md"
+                className="dark hidden space-x-2 md:flex"
+            >
                 <Button
                     className={
                         selectedProductType === ProductType.TShirt
@@ -63,6 +70,7 @@ export const ProductSwitcher = ({
                             : ""
                     }
                     onClick={() => setSelectedProductType(ProductType.TShirt)}
+                    variant="outline"
                 >
                     T Shirt
                 </Button>
@@ -73,6 +81,7 @@ export const ProductSwitcher = ({
                             : ""
                     }
                     onClick={() => setSelectedProductType(ProductType.Hoodie)}
+                    variant="outline"
                 >
                     Hoodie
                 </Button>
@@ -83,13 +92,18 @@ export const ProductSwitcher = ({
                             : ""
                     }
                     onClick={() => setSelectedProductType(ProductType.Mug)}
+                    variant="outline"
                 >
                     Mug
                 </Button>
             </div>
             {/* needs to be an a because otherwise causes bugs */}
             <a href={`/image/${prompt}?model=openai`}>
-                <Button data-testid="Generate new image with same prompt button">
+                <Button
+                    data-testid="Generate new image with same prompt button"
+                    className="dark"
+                    variant="outline"
+                >
                     <RefreshCw className="h-4 w-4" />
                 </Button>
             </a>

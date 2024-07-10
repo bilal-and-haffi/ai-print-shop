@@ -50,6 +50,21 @@ export const SizeAndColorSelector = ({
             className="flex w-full flex-col items-center space-y-2 text-black"
         >
             <Select
+                onValueChange={(value) => onColorChange(value)}
+                value={selectedColorId}
+            >
+                <SelectTrigger className="w-[180px]">
+                    <SelectValue placeholder="Color" />
+                </SelectTrigger>
+                <SelectContent>
+                    {colours.sort().map((colour) => (
+                        <SelectItem key={colour} value={colour}>
+                            {colour}
+                        </SelectItem>
+                    ))}
+                </SelectContent>
+            </Select>
+            <Select
                 onValueChange={(value) => onSizeChange(value)}
                 value={selectedSizeId}
             >
@@ -67,22 +82,6 @@ export const SizeAndColorSelector = ({
                                 {size}
                             </SelectItem>
                         ))}
-                </SelectContent>
-            </Select>
-
-            <Select
-                onValueChange={(value) => onColorChange(value)}
-                value={selectedColorId}
-            >
-                <SelectTrigger className="w-[180px]">
-                    <SelectValue placeholder="Color" />
-                </SelectTrigger>
-                <SelectContent>
-                    {colours.sort().map((colour) => (
-                        <SelectItem key={colour} value={colour}>
-                            {colour}
-                        </SelectItem>
-                    ))}
                 </SelectContent>
             </Select>
         </div>

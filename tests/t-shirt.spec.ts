@@ -25,8 +25,8 @@ test("should allow user to switch between products", async ({ page }) => {
     await expect(page).toHaveURL(/\/product/);
 
     // get buttons
-    const tShirtButton = await page.getByText("T Shirt");
-    const hoodieButton = await page.getByText("Hoodie");
+    const tShirtButton = await page.getByRole("button", { name: "T Shirt" });
+    const hoodieButton = await page.getByRole("button", { name: "Hoodie" });
     const mugButton = await page.getByRole("button", { name: "Mug" });
 
     // Check if the product buttons are visible

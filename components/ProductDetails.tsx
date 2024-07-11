@@ -122,7 +122,7 @@ export function ProductDetails({
                 <div>Product Not Available</div>
             )}
             <div className="mt-8 flex w-full gap-4">
-                <Card className="dark w-1/2 border-2">
+                <Card className="dark w-1/2">
                     <CardHeader>
                         <CardTitle>£{priceInGbp}</CardTitle>
                         <CardDescription>Free shipping</CardDescription>

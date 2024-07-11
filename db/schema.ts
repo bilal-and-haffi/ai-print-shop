@@ -1,4 +1,3 @@
-import { bigint } from "drizzle-orm/mysql-core";
 import {
     pgTable,
     bigserial,
@@ -6,15 +5,18 @@ import {
     varchar,
     timestamp,
     uniqueIndex,
+    bigint,
 } from "drizzle-orm/pg-core";
+
+export const promptTable = pgTable("prompt", {
+    id: bigserial("id", { mode: "number" }).primaryKey(),
+    prompt: varchar("prompt").notNull(),
+});
 
 export const imageTable = pgTable("image", {
     id: bigserial("id", { mode: "number" }).primaryKey(),
-    prompt: varchar("prompt").notNull(),
-    printifyImageId: varchar("printify_image_id").notNull(),
-    printifyImageUrl: varchar("printify_image_url").notNull(),
-    printifyProductId: varchar("printify_product_id"),
-    createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
+    promptId: integer("prompt_id").references(() => promptTable.id),
+    imageUrl: varchar("image_url").notNull(),
 });
 
 export const orderTable = pgTable(

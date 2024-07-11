@@ -1,8 +1,8 @@
-import { RedirectType, redirect } from "next/navigation";
-import { postImageToPrintify } from "@/lib/printify/service";
-import { addToImageTable } from "@/db/image";
+import { redirect } from "next/navigation";
 import { generateStableDiffusionImageUrl } from "@/lib/images/replicate";
 import { generateOpenAiImageUrls } from "@/lib/images/generateOpenAiImageUrl";
+import { addToImageTable } from "@/db/image";
+import { addToPromptTable } from "@/db/prompt";
 
 export const maxDuration = 300;
 
@@ -23,33 +23,27 @@ export default async function GenerateImagePage(params: {
 
     const { model } = params.searchParams;
 
-    let generatedImageUrl: string;
+    let generatedImageUrls: string[];
     if (model === ModelsEnum[0]) {
-        generatedImageUrl = (
-            await generateOpenAiImageUrls({
-                prompt: decodedPrompt,
-                numberOfImages: 1,
-                style: "vivid",
-            })
-        )[0];
+        generatedImageUrls = await generateOpenAiImageUrls({
+            prompt: decodedPrompt,
+            numberOfImages: 4,
+            style: "vivid",
+        });
     } else if (model === ModelsEnum[1]) {
-        generatedImageUrl =
-            await generateStableDiffusionImageUrl(decodedPrompt);
+        generatedImageUrls = [
+            await generateStableDiffusionImageUrl(decodedPrompt),
+        ];
     } else {
         console.error("Invalid model", { model });
         return <div>Invalid model</div>;
     }
 
-    const { id: printifyImageId } = await postImageToPrintify(
-        generatedImageUrl,
-        "generatedImage.png",
-    );
+    const promptId = await addToPromptTable({ prompt: decodedPrompt });
 
-    await addToImageTable({
-        prompt: decodedPrompt,
-        printifyImageId: printifyImageId,
-        printifyImageUrl: generatedImageUrl,
-    });
+    for (const imageUrl of generatedImageUrls) {
+        await addToImageTable({ imageUrl, promptId });
+    }
 
-    redirect(`/product/${printifyImageId}`, RedirectType.replace);
+    redirect(`/select/${promptId}`);
 }

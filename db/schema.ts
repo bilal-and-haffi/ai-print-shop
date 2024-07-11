@@ -1,4 +1,3 @@
-import { bigint } from "drizzle-orm/mysql-core";
 import {
     pgTable,
     bigserial,

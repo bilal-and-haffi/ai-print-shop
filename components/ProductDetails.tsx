@@ -12,6 +12,14 @@ import { useEffect, useMemo, useState } from "react";
 import { SmallLoadingSpinner } from "./SmallLoadingSpinner";
 import { isPriceOkay } from "../lib/pricing/isPriceOkay";
 import { Variant } from "@/interfaces/Printify/Variant";
+import {
+    Card,
+    CardHeader,
+    CardTitle,
+    CardDescription,
+    CardContent,
+    CardFooter,
+} from "./ui/card";
 
 export interface Options {
     id: number;
@@ -79,6 +87,33 @@ export function ProductDetails({
         ) as ProductVariant;
     }, [selectedVariant, retrievedProduct.variants]);
 
+    const onClick = async () => {
+        if (!(await isPriceOkay(selectedProductVariant, priceInGbp))) {
+            throw new Error("Something went wrong");
+        }
+        setCheckoutLoading(true);
+        fetch("/checkout", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                productId: retrievedProduct.id,
+                productType: retrievedProduct.tags[1],
+                order_title: retrievedProduct.title,
+                order_variant_label: selectedVariant.title,
+                orderVariantId: selectedVariant.id,
+                order_preview: filteredImages[0].src,
+                price: priceInGbp * 100,
+            }),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                window.location.href = data.url;
+                setCheckoutLoading(false);
+            });
+    };
+
     return (
         <div className="flex w-5/6 flex-col items-center justify-center text-center lg:w-1/3">
             {images ? (
@@ -96,46 +131,23 @@ export function ProductDetails({
                     setSelectedColor={setSelectedColor}
                 />
 
+                <Card className="dark">
+                    <CardHeader>
+                        <CardTitle>£{priceInGbp}</CardTitle>
+                        <CardDescription>Inc. Shipping</CardDescription>
+                    </CardHeader>
+                </Card>
+
                 <Button
-                    onClick={async () => {
-                        if (
-                            !(await isPriceOkay(
-                                selectedProductVariant,
-                                priceInGbp,
-                            ))
-                        ) {
-                            throw new Error("Something went wrong");
-                        }
-                        setCheckoutLoading(true);
-                        fetch("/checkout", {
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/json",
-                            },
-                            body: JSON.stringify({
-                                productId: retrievedProduct.id,
-                                productType: retrievedProduct.tags[1],
-                                order_title: retrievedProduct.title,
-                                order_variant_label: selectedVariant.title,
-                                orderVariantId: selectedVariant.id,
-                                order_preview: filteredImages[0].src,
-                                price: priceInGbp * 100,
-                            }),
-                        })
-                            .then((res) => res.json())
-                            .then((data) => {
-                                window.location.href = data.url;
-                                setCheckoutLoading(false);
-                            });
-                    }}
-                    className="dark"
+                    onClick={onClick}
+                    className="bg-blue-500 hover:bg-blue-700"
                 >
                     {checkoutLoading ? (
                         <div className="flex flex-row items-center">
                             <SmallLoadingSpinner className="fill-white" />
                         </div>
                     ) : (
-                        <>Buy now for £{priceInGbp}</>
+                        <>Buy now</>
                     )}
                 </Button>
             </div>

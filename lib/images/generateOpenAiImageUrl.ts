@@ -1,8 +1,17 @@
 import OpenAI from "openai";
 import { envServer } from "../env/server";
 
-export const generateOpenAiImageUrl = async (prompt: string) => {
+export const generateOpenAiImageUrls = async ({
+    prompt,
+    numberOfImages,
+    style,
+}: {
+    prompt: string;
+    numberOfImages: number;
+    style: "natural" | "vivid";
+}): Promise<string[]> => {
     const isTestPrompt = prompt === "test prompt";
+
     if (isTestPrompt) {
         console.log(
             "Test prompt detected. Returning test image. (Saving costs).",
@@ -10,7 +19,7 @@ export const generateOpenAiImageUrl = async (prompt: string) => {
         const testImageUrl =
             "https://static.wikia.nocookie.net/dragonball/images/b/ba/Goku_anime_profile.png/revision/latest?cb=20220825041430";
 
-        return testImageUrl;
+        return new Array(numberOfImages).fill(testImageUrl);
     }
 
     const apiKey = envServer.OPENAI_API_KEY;
@@ -31,14 +40,16 @@ export const generateOpenAiImageUrl = async (prompt: string) => {
     const response = await openai.images.generate({
         prompt,
         model,
-        n: 1,
+        n: numberOfImages,
         quality: "hd",
         response_format: "url",
-        style: "natural",
+        style,
     });
 
-    const url = response.data[0].url!;
-    console.log("Generated image:", { url, model });
+    const { data } = response;
+    console.log({ data });
 
-    return url;
+    const urls = data.map((datum) => datum.url!); // the '!' is questionable
+
+    return urls;
 };

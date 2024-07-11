@@ -1,8 +1,8 @@
 import { RedirectType, redirect } from "next/navigation";
 import { postImageToPrintify } from "@/lib/printify/service";
 import { addToImageTable } from "@/db/image";
-import { generateOpenAiImageUrl } from "@/lib/images/openai";
 import { generateStableDiffusionImageUrl } from "@/lib/images/replicate";
+import { generateOpenAiImageUrls } from "@/lib/images/generateOpenAiImageUrl";
 
 export const maxDuration = 300;
 
@@ -25,7 +25,13 @@ export default async function GenerateImagePage(params: {
 
     let generatedImageUrl: string;
     if (model === ModelsEnum[0]) {
-        generatedImageUrl = await generateOpenAiImageUrl(decodedPrompt);
+        generatedImageUrl = (
+            await generateOpenAiImageUrls({
+                prompt: decodedPrompt,
+                numberOfImages: 1,
+                style: "vivid",
+            })
+        )[0];
     } else if (model === ModelsEnum[1]) {
         generatedImageUrl =
             await generateStableDiffusionImageUrl(decodedPrompt);

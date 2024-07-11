@@ -121,26 +121,31 @@ export function ProductDetails({
             ) : (
                 <div>Product Not Available</div>
             )}
-            <div className="mt-4 flex flex-col gap-2">
-                <SizeAndColorSelector
-                    sizes={filteredSizeOptionsForColorId as Size[]}
-                    colours={filteredColourOptionsForSizeId}
-                    selectedSize={selectedSize}
-                    selectedColor={selectedColor}
-                    setSelectedSize={setSelectedSize}
-                    setSelectedColor={setSelectedColor}
-                />
-
-                <Card className="dark">
+            <div className="mt-8 flex w-full gap-4">
+                <Card className="dark w-1/2 border-2">
                     <CardHeader>
                         <CardTitle>£{priceInGbp}</CardTitle>
-                        <CardDescription>Inc. Shipping</CardDescription>
+                        <CardDescription>Free shipping</CardDescription>
                     </CardHeader>
                 </Card>
-
+                <div
+                    id="selectContainer"
+                    className="flex w-1/2 flex-col justify-between text-black"
+                >
+                    <SizeAndColorSelector
+                        sizes={filteredSizeOptionsForColorId as Size[]}
+                        colours={filteredColourOptionsForSizeId}
+                        selectedSize={selectedSize}
+                        selectedColor={selectedColor}
+                        setSelectedSize={setSelectedSize}
+                        setSelectedColor={setSelectedColor}
+                    />
+                </div>
+            </div>
+            <div className="mt-8 flex w-full flex-col items-center">
                 <Button
                     onClick={onClick}
-                    className="bg-blue-500 hover:bg-blue-700"
+                    className="w-full bg-blue-500 hover:bg-blue-700"
                 >
                     {checkoutLoading ? (
                         <div className="flex flex-row items-center">
@@ -150,15 +155,15 @@ export function ProductDetails({
                         <>Buy now</>
                     )}
                 </Button>
-            </div>
-            <div className="flex flex-row items-center self-center rounded py-2 pl-3">
-                Powered by
-                <Image
-                    src="/stripe.svg"
-                    alt="Stripe"
-                    width={100}
-                    height={100}
-                />
+                <div className="mt-4">
+                    Powered by
+                    <Image
+                        src="/stripe.svg"
+                        alt="Stripe"
+                        width={100}
+                        height={100}
+                    />
+                </div>
             </div>
         </div>
     );

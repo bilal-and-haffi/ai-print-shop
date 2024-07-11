@@ -121,16 +121,10 @@ export function ProductDetails({
             ) : (
                 <div>Product Not Available</div>
             )}
-            <div className="mt-8 flex w-full gap-4">
-                <Card className="dark w-1/2">
-                    <CardHeader>
-                        <CardTitle>£{priceInGbp}</CardTitle>
-                        <CardDescription>Free shipping</CardDescription>
-                    </CardHeader>
-                </Card>
+            <div className="mt-4 flex w-2/3 flex-col gap-4">
                 <div
                     id="selectContainer"
-                    className="flex w-1/2 flex-col justify-between text-black"
+                    className="flex flex-col justify-between gap-2 text-black"
                 >
                     <SizeAndColorSelector
                         sizes={filteredSizeOptionsForColorId as Size[]}
@@ -141,8 +135,14 @@ export function ProductDetails({
                         setSelectedColor={setSelectedColor}
                     />
                 </div>
+                <Card className="dark">
+                    <CardHeader>
+                        <CardTitle>£{priceInGbp}</CardTitle>
+                        <CardDescription>Free shipping</CardDescription>
+                    </CardHeader>
+                </Card>
             </div>
-            <div className="mt-8 flex w-full flex-col items-center">
+            <div className="mt-4 flex w-full flex-col items-center">
                 <Button
                     onClick={onClick}
                     className="w-full bg-blue-500 hover:bg-blue-700"

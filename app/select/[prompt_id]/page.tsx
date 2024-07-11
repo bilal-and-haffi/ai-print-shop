@@ -1,5 +1,5 @@
 import { getAllImageUrlsForPromptId } from "@/db/image";
-import { postImageToPrintify } from "@/lib/printify/service";
+import { postImageToPrintify } from "@/lib/printify/postImageToPrintify";
 import Image from "next/image";
 
 export const maxDuration = 300;

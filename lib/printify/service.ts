@@ -4,14 +4,12 @@ import {
     AddressTo,
     EssentialProductDetails,
     LineItemBase,
-    PrintifyImageResponse,
     PrintifyOrderExistingProductRequest,
     PrintifyOrderResponse,
     PrintifyProductRequest,
     RetrieveProductResponse,
 } from "@/interfaces/PrintifyTypes";
 import { envServer } from "@/lib/env/server";
-import { getPromptFromImageId } from "@/db/image";
 import { fetchProductVariants } from "./fetchProductVariants";
 import { Variant } from "@/interfaces/Printify/Variant";
 
@@ -26,7 +24,7 @@ async function constructPrintifyProductRequest({
 }) {
     const variants = await fetchProductVariants(blueprintId, printProviderId);
     const variantIds = variants.map((variant) => variant.id);
-    const prompt = await getPromptFromImageId(printifyImageId);
+    const prompt = "x"; // FIXME: await getPromptFromImageId(printifyImageId);
 
     const productRequest: PrintifyProductRequest = {
         blueprint_id: blueprintId,
@@ -139,38 +137,6 @@ export async function publishPrintifyProduct(product_id: string) {
         },
         body,
     });
-}
-
-export async function postImageToPrintify(
-    url: string,
-    fileName: string,
-): Promise<PrintifyImageResponse> {
-    try {
-        const imageRequest = {
-            file_name: fileName,
-            url: url,
-        };
-        const imageRequestString = JSON.stringify(imageRequest);
-        const endpoint = `${PRINTIFY_BASE_URL}/v1/uploads/images.json`;
-
-        const imageResponse = await fetch(endpoint, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                authorization: `Bearer ${envServer.PRINTIFY_API_TOKEN}`,
-            },
-            body: imageRequestString,
-        });
-
-        const imageData: PrintifyImageResponse = await imageResponse.json();
-
-        console.log({ imageData });
-
-        return imageData;
-    } catch (error) {
-        console.error("Error posting image to Printify", error);
-        throw new Error("Error posting image to Printify");
-    }
 }
 
 export async function createPrintifyProduct({

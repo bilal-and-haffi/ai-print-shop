@@ -63,6 +63,11 @@ export function ProductDetails({
         [selectedVariant, images],
     );
 
+    const filteredImagesUrls = useMemo(
+        () => filteredImages.map((x) => x.src),
+        [filteredImages],
+    );
+
     const filteredSizeOptionsForColorId = useMemo(
         () => getFilteredSizesForColor(selectedColor, variants),
         [selectedColor, variants],
@@ -82,7 +87,7 @@ export function ProductDetails({
     return (
         <div className="flex w-5/6 flex-col items-center justify-center text-center lg:w-1/3">
             {images ? (
-                <ImagesCarousel images={filteredImages} />
+                <ImagesCarousel imageUrls={filteredImagesUrls} />
             ) : (
                 <div>Product Not Available</div>
             )}

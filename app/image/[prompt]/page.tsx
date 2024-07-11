@@ -3,6 +3,7 @@ import { generateStableDiffusionImageUrl } from "@/lib/images/replicate";
 import { generateOpenAiImageUrls } from "@/lib/images/generateOpenAiImageUrl";
 import { addToImageTable } from "@/db/image";
 import { addToPromptTable } from "@/db/prompt";
+import { ImageSelect } from "@/components/ImageSelect";
 
 export const maxDuration = 300;
 
@@ -45,5 +46,9 @@ export default async function GenerateImagePage(params: {
         await addToImageTable({ imageUrl, promptId });
     }
 
-    redirect(`/select/${promptId}`);
+    return (
+        <>
+            <ImageSelect urls={generatedImageUrls} />
+        </>
+    );
 }

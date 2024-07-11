@@ -1,6 +1,5 @@
 "use client";
 
-import { ProductImage } from "@/interfaces/PrintifyTypes";
 import {
     Carousel,
     CarouselContent,
@@ -12,15 +11,15 @@ import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 import { useState } from "react";
 
-export function ImagesCarousel(props: { images: ProductImage[] }) {
+export function ImagesCarousel(props: { imageUrls: string[] }) {
     const [imageLoaded, setImageLoaded] = useState(false);
 
-    const { images } = props;
+    const { imageUrls } = props;
 
     return (
         <Carousel className="flex w-full">
             <CarouselContent className="">
-                {images.map((image, index) => (
+                {imageUrls.map((imageUrl, index) => (
                     <CarouselItem key={index}>
                         <div
                             className={
@@ -32,7 +31,7 @@ export function ImagesCarousel(props: { images: ProductImage[] }) {
                             <Card>
                                 <CardContent>
                                     <Image
-                                        src={image.src}
+                                        src={imageUrl}
                                         alt="Product Image"
                                         width={1200}
                                         height={1200}

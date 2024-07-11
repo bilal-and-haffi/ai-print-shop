@@ -45,15 +45,12 @@ export const SizeAndColorSelector = ({
     ]);
 
     return (
-        <div
-            id="selectContainer"
-            className="flex w-full flex-col items-center gap-2 text-black"
-        >
+        <>
             <Select
                 onValueChange={(value) => onColorChange(value)}
                 value={selectedColorId}
             >
-                <SelectTrigger className="w-[180px]">
+                <SelectTrigger>
                     <SelectValue placeholder="Color" />
                 </SelectTrigger>
                 <SelectContent>
@@ -68,7 +65,7 @@ export const SizeAndColorSelector = ({
                 onValueChange={(value) => onSizeChange(value)}
                 value={selectedSizeId}
             >
-                <SelectTrigger className="w-[180px]">
+                <SelectTrigger>
                     <SelectValue placeholder="Size" />
                 </SelectTrigger>
                 <SelectContent>
@@ -84,6 +81,6 @@ export const SizeAndColorSelector = ({
                         ))}
                 </SelectContent>
             </Select>
-        </div>
+        </>
     );
 };

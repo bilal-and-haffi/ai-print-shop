@@ -38,7 +38,7 @@ export const generateOpenAiImageUrl = async (prompt: string) => {
     });
 
     const url = response.data[0].url!;
-    console.log("Generated image:", { url });
+    console.log("Generated image:", { url, model });
 
     return url;
 };

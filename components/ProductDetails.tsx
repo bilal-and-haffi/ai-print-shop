@@ -121,7 +121,7 @@ export function ProductDetails({
             ) : (
                 <div>Product Not Available</div>
             )}
-            <div className="mt-4 flex w-2/3 flex-col gap-4">
+            <div className="mt-4 flex w-2/3 flex-col gap-2">
                 <div
                     id="selectContainer"
                     className="flex flex-col justify-between gap-2"
@@ -155,7 +155,7 @@ export function ProductDetails({
                         <>Buy now</>
                     )}
                 </Button>
-                <div className="mt-4">
+                <div className="mt-4 text-sm">
                     Powered by
                     <Image
                         src="/stripe.svg"

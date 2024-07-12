@@ -45,8 +45,8 @@ export function ImagesCarousel(props: { images: ProductImage[] }) {
                     </CarouselItem>
                 ))}
             </CarouselContent>
-            <CarouselPrevious className="invisible bg-zinc-600 text-white outline-none md:visible" />
-            <CarouselNext className="invisible bg-zinc-600 text-white outline-none md:visible" />
+            <CarouselPrevious className="invisible outline-none md:visible" />
+            <CarouselNext className="invisible outline-none md:visible" />
         </Carousel>
     );
 }

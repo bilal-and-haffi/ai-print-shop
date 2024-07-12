@@ -32,11 +32,11 @@ export const ProductSwitcher = ({
             className="flex w-5/6 items-center justify-between space-x-4 lg:w-1/3"
         >
             <Link href={`/`}>
-                <Button data-testid="Go back">
+                <Button data-testid="Go back" variant={"outline"}>
                     <ChevronLeft className="h-4 w-4" />
                 </Button>
             </Link>
-            <div id="product-links" className="dark flex md:hidden">
+            <div id="product-links" className="flex md:hidden">
                 <Select
                     onValueChange={(value: ProductType) =>
                         setSelectedProductType(value)
@@ -89,7 +89,10 @@ export const ProductSwitcher = ({
             </div>
             {/* needs to be an a because otherwise causes bugs */}
             <a href={`/image/${prompt}?model=openai`}>
-                <Button data-testid="Generate new image with same prompt button">
+                <Button
+                    data-testid="Generate new image with same prompt button"
+                    variant={"outline"}
+                >
                     <RefreshCw className="h-4 w-4" />
                 </Button>
             </a>

@@ -23,6 +23,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { envClient } from "@/lib/env/client";
+import { Label } from "./ui/label";
 
 const FormSchema = z.object({
     modelProvider: z.string().default("openai"),
@@ -61,12 +62,9 @@ export function TextAreaAndButton() {
     return (
         <>
             <div
-                className="flex w-5/6 flex-col items-center space-y-4 lg:w-1/2"
+                className="flex w-5/6 flex-col space-y-4 lg:w-1/2"
                 id="form-container"
             >
-                <label htmlFor="prompt" className="text-lg">
-                    Enter your prompt
-                </label>
                 <Form {...form}>
                     <form className="w-full">
                         <FormField
@@ -104,6 +102,7 @@ export function TextAreaAndButton() {
                         />
                     </form>
                 </Form>
+                <Label htmlFor="prompt">Enter your prompt</Label>
                 <Textarea
                     ref={textAreaRef}
                     placeholder="Enter your prompt here!"

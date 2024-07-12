@@ -68,13 +68,13 @@ export function TextAreaAndButton() {
                     Enter your prompt
                 </label>
                 <Form {...form}>
-                    <form className="w-2/3 space-y-6">
+                    <form className="w-full">
                         <FormField
                             control={form.control}
                             name="modelProvider"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel></FormLabel>
+                                    <FormLabel>Image Generator</FormLabel>
                                     <Select
                                         onValueChange={(e) => {
                                             setModelProvider(e);
@@ -83,15 +83,18 @@ export function TextAreaAndButton() {
                                     >
                                         <FormControl>
                                             <SelectTrigger>
-                                                <SelectValue placeholder="Select model" />
+                                                <SelectValue
+                                                    placeholder="OpenAI - DALL-E 3"
+                                                    defaultValue="openai"
+                                                />
                                             </SelectTrigger>
                                         </FormControl>
                                         <SelectContent>
                                             <SelectItem value="openai">
-                                                OpenAI/dall-e-3
+                                                OpenAI - DALL-E 3
                                             </SelectItem>
                                             <SelectItem value="stable-diffusion">
-                                                Stability-ai/stable-diffusion
+                                                Stability-ai - Stable Diffusion
                                             </SelectItem>
                                         </SelectContent>
                                     </Select>
@@ -117,7 +120,7 @@ export function TextAreaAndButton() {
                     Generate Image
                 </Button>
 
-                <div className="instructions">
+                <div className="instructions w-full">
                     <h2 className="mb-2 text-lg font-bold">How It Works:</h2>
                     <ol className="list-inside list-decimal space-y-2 text-sm md:text-lg">
                         <li>

@@ -106,7 +106,7 @@ export function TextAreaAndButton() {
                     placeholder="Enter your prompt here!"
                     value={prompt}
                     onChange={onInputChanged}
-                    className="dark h-48 resize-none rounded-lg"
+                    className="h-48 resize-none rounded-lg"
                     onKeyDown={onKeyDown}
                     autoFocus
                 />

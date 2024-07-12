@@ -124,7 +124,7 @@ export function ProductDetails({
             <div className="mt-4 flex w-2/3 flex-col gap-4">
                 <div
                     id="selectContainer"
-                    className="flex flex-col justify-between gap-2 text-black"
+                    className="flex flex-col justify-between gap-2"
                 >
                     <SizeAndColorSelector
                         sizes={filteredSizeOptionsForColorId as Size[]}
@@ -135,7 +135,7 @@ export function ProductDetails({
                         setSelectedColor={setSelectedColor}
                     />
                 </div>
-                <Card className="dark">
+                <Card>
                     <CardHeader>
                         <CardTitle>£{priceInGbp}</CardTitle>
                         <CardDescription>Free shipping</CardDescription>
@@ -145,7 +145,7 @@ export function ProductDetails({
             <div className="mt-4 flex w-full flex-col items-center">
                 <Button
                     onClick={onClick}
-                    className="w-full bg-blue-500 hover:bg-blue-700"
+                    className="w-full bg-blue-500 text-white hover:bg-blue-700"
                 >
                     {checkoutLoading ? (
                         <div className="flex flex-row items-center">

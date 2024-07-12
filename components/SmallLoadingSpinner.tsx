@@ -4,7 +4,7 @@ export const SmallLoadingSpinner = ({ className }: { className?: string }) => (
     <svg
         aria-hidden="true"
         className={cn(
-            "h-4 w-4 animate-spin fill-blue-600 text-gray-200 dark:text-gray-600",
+            "h-4 w-4 animate-spin fill-blue-600 text-gray-200",
             className,
         )}
         viewBox="0 0 100 101"

@@ -30,7 +30,7 @@ export function ImagesCarousel(props: { images: ProductImage[] }) {
                             }
                         >
                             <Card>
-                                <CardContent>
+                                <CardContent className="p-0">
                                     <Image
                                         src={image.src}
                                         alt="Product Image"
@@ -38,6 +38,7 @@ export function ImagesCarousel(props: { images: ProductImage[] }) {
                                         height={1200}
                                         priority
                                         onLoad={() => setImageLoaded(true)}
+                                        className="rounded-lg"
                                     />
                                 </CardContent>
                             </Card>

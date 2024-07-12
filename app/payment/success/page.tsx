@@ -70,7 +70,9 @@ export default async function Page(params: {
     if (!hasOrderAlreadyBeenProcessed) {
         await sendAnExistingOrderToProduction(printifyOrderId);
     } else {
-        console.log("Order has already been processed skipping email sending");
+        console.log(
+            "Order has already been processed skipping sending to production",
+        );
     }
 
     return (

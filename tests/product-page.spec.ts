@@ -1,17 +1,6 @@
 import { test, expect } from "@playwright/test";
 
-test("has title", async ({ page }) => {
-    await page.goto("/");
-    await expect(page).toHaveTitle(/AI Print Shop/);
-});
-
-test("shows email address", async ({ page }) => {
-    await page.goto("/");
-    const emailButton = await page.getByText("ai-print-shop@mail.com");
-    await expect(emailButton).toBeVisible();
-});
-
-test("should allow user to switch between products", async ({ page }) => {
+test.beforeEach(async ({ page }) => {
     await page.goto("/");
 
     // select model
@@ -22,8 +11,13 @@ test("should allow user to switch between products", async ({ page }) => {
     await input.fill("test prompt");
     const generateButton = await page.getByTestId("Generate Image Button");
     await generateButton.click();
-    await expect(page).toHaveURL(/\/product/);
+});
 
+test('should have url "/product"', async ({ page }) => {
+    await expect(page).toHaveURL(/\/product/);
+});
+
+test("should allow user to switch between products", async ({ page }) => {
     // get buttons
     const tShirtButton = await page.getByRole("button", { name: "T Shirt" });
     const hoodieButton = await page.getByRole("button", { name: "Hoodie" });

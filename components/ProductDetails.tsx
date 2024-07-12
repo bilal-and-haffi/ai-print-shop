@@ -12,14 +12,7 @@ import { useEffect, useMemo, useState } from "react";
 import { SmallLoadingSpinner } from "./SmallLoadingSpinner";
 import { isPriceOkay } from "../lib/pricing/isPriceOkay";
 import { Variant } from "@/interfaces/Printify/Variant";
-import {
-    Card,
-    CardHeader,
-    CardTitle,
-    CardDescription,
-    CardContent,
-    CardFooter,
-} from "./ui/card";
+import { Card, CardHeader, CardTitle, CardDescription } from "./ui/card";
 
 export interface Options {
     id: number;

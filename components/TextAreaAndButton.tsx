@@ -68,7 +68,7 @@ export function TextAreaAndButton() {
                     Enter your prompt
                 </label>
                 <Form {...form}>
-                    <form className="w-2/3 space-y-6 text-black">
+                    <form className="w-2/3 space-y-6">
                         <FormField
                             control={form.control}
                             name="modelProvider"
@@ -106,14 +106,13 @@ export function TextAreaAndButton() {
                     placeholder="Enter your prompt here!"
                     value={prompt}
                     onChange={onInputChanged}
-                    className="h-48 resize-none rounded-lg bg-slate-600 p-4 text-white placeholder:text-white/50"
+                    className="dark h-48 resize-none rounded-lg"
                     onKeyDown={onKeyDown}
                     autoFocus
                 />
                 <Button
                     onClick={submitGenerateText}
                     data-testid="Generate Image Button"
-                    variant="secondary"
                 >
                     Generate Image
                 </Button>

@@ -5,6 +5,8 @@ import { CardFooter } from "@/components/ui/card";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ThemeProvider } from "@/components/theme-provider";
+import { SiteHeader } from "@/components/SiteHeader";
+import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -32,10 +34,9 @@ export default function RootLayout({
             suppressHydrationWarning
         >
             <body className={`${inter.className} flex h-full flex-col`}>
+                <Toaster />
+                <SiteHeader />
                 <main className="flex flex-1 flex-col items-center space-y-4 py-8 lg:justify-center lg:py-16">
-                    <div id="heading">
-                        <h1 className="text-2xl font-bold">AI Print Shop</h1>
-                    </div>
                     <ThemeProvider
                         attribute="class"
                         defaultTheme="dark"

@@ -36,7 +36,7 @@ export default function RootLayout({
             <body className={`${inter.className} flex h-full flex-col`}>
                 <Toaster />
                 <SiteHeader />
-                <main className="flex flex-col items-center justify-center space-y-4 py-8 lg:py-16">
+                <main className="flex flex-1 flex-col items-center justify-center space-y-4 py-8 lg:justify-center lg:py-16">
                     <ThemeProvider
                         attribute="class"
                         defaultTheme="dark"

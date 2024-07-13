@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -38,7 +37,6 @@ export default function SupportPage() {
         },
     });
 
-    // 2. Define a submit handler.
     function onSubmit(values: z.infer<typeof formSchema>) {
         // Do something with the form values.
         // ✅ This will be type-safe and validated.
@@ -71,6 +69,7 @@ export default function SupportPage() {
                                 <Textarea
                                     placeholder="Enter your message here..."
                                     {...field}
+                                    className="h-48 resize-none rounded-lg"
                                 />
                             </FormControl>
                             <FormMessage />
@@ -80,11 +79,13 @@ export default function SupportPage() {
                         </FormItem>
                     )}
                 />
-                <Button type="submit">Submit</Button>
+                <Button className="w-full" type="submit">
+                    Submit
+                </Button>
 
                 <Button
-                    asChild
-                    className="focus:shadow-outline w-full rounded-none focus:outline-none"
+                    // asChild
+                    className="w-full "
                     onClick={() => {
                         copyToClipboardWithMeta("ai-print-shop@mail.com");
                         toast({
@@ -93,7 +94,7 @@ export default function SupportPage() {
                         });
                     }}
                 >
-                    <p>or contact us at ai-print-shop@mail.com</p>
+                    <p>Copy Email: ai-print-shop@mail.com</p>
                 </Button>
             </form>
         </Form>

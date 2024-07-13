@@ -62,6 +62,7 @@ export const ProductSwitcher = ({
                             ? "ring-1 ring-white"
                             : ""
                     }
+                    variant={"outline"}
                     onClick={() => setSelectedProductType(ProductType.TShirt)}
                 >
                     T Shirt
@@ -72,6 +73,7 @@ export const ProductSwitcher = ({
                             ? "ring-1 ring-white"
                             : ""
                     }
+                    variant={"outline"}
                     onClick={() => setSelectedProductType(ProductType.Hoodie)}
                 >
                     Hoodie
@@ -82,6 +84,7 @@ export const ProductSwitcher = ({
                             ? "ring-1 ring-white"
                             : ""
                     }
+                    variant={"outline"}
                     onClick={() => setSelectedProductType(ProductType.Mug)}
                 >
                     Mug

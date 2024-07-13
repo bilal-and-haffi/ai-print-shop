@@ -24,6 +24,8 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { envClient } from "@/lib/env/client";
 import { Label } from "./ui/label";
+import { checkPromptForCopyRight } from "@/lib/openai/copyrightCheck";
+import { PromptConfirmationDialog } from "./PromptConfirmationDialog";
 
 const FormSchema = z.object({
     modelProvider: z.string().default("openai"),
@@ -34,13 +36,32 @@ export function TextAreaAndButton() {
         envClient.NEXT_PUBLIC_ENV === "development" ? "test" : "";
     const [prompt, setPrompt] = useState<string>(initalPrompt);
     const [modelProvider, setModelProvider] = useState<string>("openai");
+    const [showConfirmationDialog, setShowConfirmationDialog] =
+        useState<boolean>(false);
+    const [alertReason, setAlertReason] = useState<string>("");
 
     const textAreaRef = useRef<HTMLTextAreaElement>(null);
     const router = useRouter();
+
+    const continueToNextStep = () => {
+        router.push(`/image/${prompt}?model=${modelProvider}`);
+    };
+
     const submitGenerateText = async () => {
         if (prompt.trim() === "") return;
 
-        router.push(`/image/${prompt}?model=${modelProvider}`);
+        const response = await checkPromptForCopyRight(prompt);
+
+        console.log(response);
+
+        if (response === "NO") {
+            continueToNextStep();
+        } else {
+            // response = "YES,8 - Reasoning...."
+            const parsedReason = response.split("- ")[1];
+            setAlertReason(parsedReason);
+            setShowConfirmationDialog(true);
+        }
     };
 
     const onInputChanged = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -65,6 +86,14 @@ export function TextAreaAndButton() {
                 className="flex w-5/6 flex-col space-y-4 lg:w-1/2"
                 id="form-container"
             >
+                {showConfirmationDialog && (
+                    <PromptConfirmationDialog
+                        showConfirmationDialog={showConfirmationDialog}
+                        setShowConfirmationDialog={setShowConfirmationDialog}
+                        continueToNextStep={continueToNextStep}
+                        alertReason={alertReason}
+                    />
+                )}
                 <Form {...form}>
                     <form className="w-full">
                         <FormField
@@ -118,7 +147,6 @@ export function TextAreaAndButton() {
                 >
                     Generate Image
                 </Button>
-
                 <div className="instructions w-full">
                     <h2 className="mb-2 text-lg font-bold">How It Works:</h2>
                     <ol className="list-inside list-decimal space-y-2 text-sm md:text-lg">

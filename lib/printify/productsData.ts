@@ -29,10 +29,11 @@ export const products: Record<string, PrintifyProducts> = {
     disabledTShirt: {
         name: "Unisex Heavy T Shirt Gildan 5000",
         blueprintId: 6,
-        printProviderId: printProviderIds.printClever,
+        printProviderId: printProviderIds.tShirtAndSons,
     },
 
-    disabledTShirt2: { // TRY ME!
+    disabledTShirt2: {
+        // TRY ME!
         name: "Unisex Jersey Short Sleeve Tee Bella+Canvas 3001",
         blueprintId: 12,
         printProviderId: printProviderIds.tShirtAndSons,

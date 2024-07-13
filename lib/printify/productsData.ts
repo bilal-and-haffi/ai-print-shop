@@ -7,7 +7,7 @@ interface PrintifyProducts {
 
 const PRINT_CLEVER_PRINT_PROVIDED_ID = 72;
 
-export const products = {
+export const products: Record<string, PrintifyProducts> = {
     tShirt: {
         name: "Unisex Heavy T Shirt Gildan 5000",
         enabled: true,

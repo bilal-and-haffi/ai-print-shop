@@ -3,7 +3,7 @@
 import * as React from "react";
 import { Progress } from "@/components/ui/progress";
 
-const MAX_PROGRESS = 90;
+const MAX_PROGRESS = 99;
 
 export function ProgressBar({
     estimatedTimeInMs,
@@ -24,7 +24,7 @@ function useProgressUpdater(
     const progressRef = React.useRef(0);
 
     React.useEffect(() => {
-        const incrementPercentage = 10;
+        const incrementPercentage = 1;
         const interval = estimatedTimeInMs / (100 / incrementPercentage);
 
         const timer = setInterval(() => {

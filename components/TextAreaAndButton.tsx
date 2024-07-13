@@ -28,14 +28,15 @@ import { checkPromptForCopyRight } from "@/lib/openai/copyrightCheck";
 import { PromptConfirmationDialog } from "./PromptConfirmationDialog";
 
 const FormSchema = z.object({
-    modelProvider: z.string().default("openai"),
+    modelProvider: z.string().default("stable-diffusion"),
 });
 
 export function TextAreaAndButton() {
     const initalPrompt =
         envClient.NEXT_PUBLIC_ENV === "development" ? "test" : "";
     const [prompt, setPrompt] = useState<string>(initalPrompt);
-    const [modelProvider, setModelProvider] = useState<string>("openai");
+    const [modelProvider, setModelProvider] =
+        useState<string>("stable-diffusion");
     const [showConfirmationDialog, setShowConfirmationDialog] =
         useState<boolean>(false);
     const [alertReason, setAlertReason] = useState<string>("");
@@ -44,6 +45,7 @@ export function TextAreaAndButton() {
     const router = useRouter();
 
     const continueToNextStep = () => {
+        console.log(modelProvider);
         router.push(`/image/${prompt}?model=${modelProvider}`);
     };
 
@@ -51,8 +53,6 @@ export function TextAreaAndButton() {
         if (prompt.trim() === "") return;
 
         const response = await checkPromptForCopyRight(prompt);
-
-        console.log(response);
 
         if (response === "NO") {
             continueToNextStep();
@@ -111,8 +111,8 @@ export function TextAreaAndButton() {
                                         <FormControl>
                                             <SelectTrigger>
                                                 <SelectValue
-                                                    placeholder="OpenAI - DALL-E 3"
-                                                    defaultValue="openai"
+                                                    placeholder="Stability-ai - Stable Diffusion"
+                                                    defaultValue="stable-diffusion"
                                                 />
                                             </SelectTrigger>
                                         </FormControl>

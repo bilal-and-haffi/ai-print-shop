@@ -1,7 +1,7 @@
 import { Products } from "@/components/Products";
 import { createPrintifyProduct } from "@/lib/printify/createPrintifyProduct";
 import { fetchProductVariants } from "@/lib/printify/fetchProductVariants";
-import { products } from "@/lib/printify/products/products";
+import { products } from "@/lib/printify/productsData";
 
 export default async function ProductPage({
     params,

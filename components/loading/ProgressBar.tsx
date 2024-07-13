@@ -28,7 +28,6 @@ function useProgressUpdater(
         const interval = estimatedTimeInMs / (100 / incrementPercentage);
 
         const timer = setInterval(() => {
-            console.log(progressRef.current);
             if (progressRef.current > MAX_PROGRESS) {
                 clearInterval(timer);
                 return;
@@ -44,7 +43,10 @@ function useProgressUpdater(
             }
         }, interval);
 
-        return () => clearInterval(timer);
+        // Clean up the interval on component unmount
+        return () => {
+            clearInterval(timer);
+        };
     }, [estimatedTimeInMs, setProgress]);
 }
 

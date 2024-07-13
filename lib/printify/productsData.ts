@@ -1,29 +1,40 @@
 interface PrintifyProducts {
     name: string;
-    enabled: boolean;
     blueprintId: number;
     printProviderId: number;
 }
 
-const PRINT_CLEVER_PRINT_PROVIDED_ID = 72;
+const printProviderIds = {
+    printClever: 72,
+    tShirtAndSons: 6,
+};
 
 export const products: Record<string, PrintifyProducts> = {
     tShirt: {
-        name: "Unisex Heavy T Shirt Gildan 5000",
-        enabled: true,
-        blueprintId: 6,
-        printProviderId: PRINT_CLEVER_PRINT_PROVIDED_ID,
+        name: "Gildan 64000 Unisex Softstyle Shirt",
+        blueprintId: 145,
+        printProviderId: printProviderIds.tShirtAndSons,
     },
     hoodie: {
         name: "Unisex Heavy Blend Hooded Sweatshirt",
-        enabled: true,
         blueprintId: 77,
-        printProviderId: PRINT_CLEVER_PRINT_PROVIDED_ID,
+        printProviderId: printProviderIds.printClever,
     },
     mug: {
         name: "Mug",
-        enabled: false,
-        printProviderId: PRINT_CLEVER_PRINT_PROVIDED_ID,
+        printProviderId: printProviderIds.printClever,
         blueprintId: 1302,
+    },
+
+    disabledTShirt: {
+        name: "Unisex Heavy T Shirt Gildan 5000",
+        blueprintId: 6,
+        printProviderId: printProviderIds.printClever,
+    },
+
+    disabledTShirt2: { // TRY ME!
+        name: "Unisex Jersey Short Sleeve Tee Bella+Canvas 3001",
+        blueprintId: 12,
+        printProviderId: printProviderIds.tShirtAndSons,
     },
 };

@@ -1,11 +1,8 @@
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
     Sheet,
     SheetClose,
     SheetContent,
-    SheetDescription,
     SheetFooter,
     SheetHeader,
     SheetTitle,
@@ -21,22 +18,26 @@ export function TipsSheet() {
             <SheetContent>
                 <SheetHeader>
                     <SheetTitle>Tips for generating images</SheetTitle>
-                    <SheetDescription>
-                        Learn how to generate creative images with the best
-                        quality.
-                    </SheetDescription>
                 </SheetHeader>
-                <div className="p-2">
-                    <ul className="list-disc space-y-2">
+                <div className="mt-4 p-2">
+                    <ul className="list-disc space-y-2 text-sm">
+                        <li>Be specific about your subject and details.</li>
+                        <li>Use descriptive adjectives for clarity.</li>
+                        <li>Specify the desired art style or medium.</li>
                         <li>
-                            Use genAI model such as ChatGPT to curate prompts
-                            for image creation.
+                            Provide context with relevant background details.
+                        </li>
+                        <li>
+                            Ensure your instructions are clear and avoid content
+                            that could infringe on copyright laws.
                         </li>
                     </ul>
                 </div>
                 <SheetFooter>
                     <SheetClose asChild>
-                        <Button type="submit">Close</Button>
+                        <Button type="submit" className="mt-8 w-full">
+                            Close
+                        </Button>
                     </SheetClose>
                 </SheetFooter>
             </SheetContent>

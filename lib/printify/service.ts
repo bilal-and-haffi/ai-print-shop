@@ -15,7 +15,7 @@ import { getPromptFromImageId } from "@/db/image";
 import { fetchProductVariants } from "./fetchProductVariants";
 import { Variant } from "@/interfaces/Printify/Variant";
 
-async function constructPrintifyProductRequest({
+export async function constructPrintifyProductRequest({
     printifyImageId,
     printProviderId,
     blueprintId,
@@ -171,53 +171,6 @@ export async function postImageToPrintify(
         console.error("Error posting image to Printify", error);
         throw new Error("Error posting image to Printify");
     }
-}
-
-export async function createPrintifyProduct({
-    printifyImageId,
-    printProviderId,
-    blueprintId,
-}: {
-    printifyImageId: string;
-    printProviderId: number;
-    blueprintId: number;
-}) {
-    const {
-        blueprint_id,
-        description,
-        print_areas,
-        print_provider_id,
-        title,
-        variants,
-    } = await constructPrintifyProductRequest({
-        printifyImageId,
-        printProviderId,
-        blueprintId,
-    });
-
-    const productRequest: PrintifyProductRequest = {
-        blueprint_id,
-        description,
-        print_areas,
-        print_provider_id,
-        title,
-        variants,
-    };
-    const productRequestString = JSON.stringify(productRequest);
-
-    const productResponse: any = await fetch(
-        `${PRINTIFY_BASE_URL}/v1/shops/${envServer.SHOP_ID}/products.json`,
-        {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${envServer.PRINTIFY_API_TOKEN}`,
-            },
-            body: productRequestString,
-        },
-    );
-    const productData = await productResponse.json();
-    return productData;
 }
 
 export function mapProductDetails(variant: Variant): EssentialProductDetails {

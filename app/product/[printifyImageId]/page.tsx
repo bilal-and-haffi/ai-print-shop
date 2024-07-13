@@ -10,11 +10,6 @@ export default async function ProductPage({
 }) {
     const { printifyImageId } = params;
 
-    const printCleverId = 72;
-    const tShirtBlueprintId = 6;
-    const hoodieBlueprintId = 77;
-    const mugBlueprintId = 1302;
-
     const [
         tShirtProduct,
         hoodieProduct,
@@ -39,9 +34,18 @@ export default async function ProductPage({
             blueprintId: products.mug.blueprintId,
         }),
         // The variants below are fetched because they reflect what is in stock whereas the ProductVariant on the product respones to not reflect what is in stock
-        fetchProductVariants(tShirtBlueprintId, printCleverId),
-        fetchProductVariants(hoodieBlueprintId, printCleverId),
-        fetchProductVariants(mugBlueprintId, printCleverId),
+        fetchProductVariants(
+            products.tShirt.blueprintId,
+            products.tShirt.printProviderId,
+        ),
+        fetchProductVariants(
+            products.hoodie.blueprintId,
+            products.hoodie.printProviderId,
+        ),
+        fetchProductVariants(
+            products.mug.blueprintId,
+            products.mug.printProviderId,
+        ),
     ]);
 
     return (

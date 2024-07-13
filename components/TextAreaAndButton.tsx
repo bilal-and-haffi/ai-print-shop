@@ -82,8 +82,8 @@ export function TextAreaAndButton() {
                                         <FormControl>
                                             <SelectTrigger>
                                                 <SelectValue
-                                                    placeholder="OpenAI - DALL-E 3"
-                                                    defaultValue="openai"
+                                                    placeholder="Stability-ai - Stable Diffusion"
+                                                    defaultValue="stable-diffusion"
                                                 />
                                             </SelectTrigger>
                                         </FormControl>

@@ -33,7 +33,9 @@ export default function RootLayout({
             className="h-full overflow-x-hidden"
             suppressHydrationWarning
         >
-            <body className={`${inter.className} flex h-full flex-col`}>
+            <body
+                className={`${inter.className} flex h-full flex-col overflow-x-hidden`}
+            >
                 <Toaster />
                 <SiteHeader />
                 <main className="flex flex-col items-center justify-center space-y-4 py-8 lg:py-16">

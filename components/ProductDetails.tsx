@@ -9,7 +9,7 @@ import { ImagesCarousel } from "./ImageCarousel";
 import { Size, SizeAndColorSelector } from "./SizeAndColorForm";
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
-import { SmallLoadingSpinner } from "./loading/SmallLoadingSpinner";
+import { SmallLoadingSpinner } from "./SmallLoadingSpinner";
 import { isPriceOkay } from "../lib/pricing/isPriceOkay";
 import { Variant } from "@/interfaces/Printify/Variant";
 import { Card, CardHeader, CardTitle, CardDescription } from "./ui/card";

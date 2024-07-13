@@ -85,6 +85,7 @@ export default function SupportPage() {
 
                 <Button
                     // asChild
+                    type="button"
                     className="w-full "
                     onClick={() => {
                         copyToClipboardWithMeta("ai-print-shop@mail.com");

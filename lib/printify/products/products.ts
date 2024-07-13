@@ -17,7 +17,7 @@ export const products = {
     hoodie: {
         name: "Unisex Heavy Blend Hooded Sweatshirt",
         enabled: true,
-        blueprintId: 6,
+        blueprintId: 77,
         printProviderId: PRINT_CLEVER_PRINT_PROVIDED_ID,
     },
     mug: {

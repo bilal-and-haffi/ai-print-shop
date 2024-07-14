@@ -25,7 +25,9 @@ export const OrderConfirmationEmailTemplate: React.FC<
                     <a href={printifyConnectUrl}>Track order</a>
                 </li>
                 <li>
-                    <a href="mailto:ai-print-shop@mail.com">Email Us</a>
+                    <a href="mailto:customer-service@ai-print-shop.com">
+                        Email Us
+                    </a>
                 </li>
             </ul>
         </p>

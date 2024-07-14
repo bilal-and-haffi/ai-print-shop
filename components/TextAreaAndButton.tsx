@@ -68,14 +68,6 @@ export function TextAreaAndButton() {
         setPrompt(e.target.value);
     };
 
-    const onKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
-        if (e.key === "Enter") {
-            e.preventDefault();
-            submitGenerateText();
-            textAreaRef.current?.blur();
-        }
-    };
-
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
     });
@@ -138,7 +130,6 @@ export function TextAreaAndButton() {
                     value={prompt}
                     onChange={onInputChanged}
                     className="h-48 resize-none rounded-lg"
-                    onKeyDown={onKeyDown}
                     autoFocus
                 />
                 <Button

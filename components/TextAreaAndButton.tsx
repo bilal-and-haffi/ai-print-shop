@@ -26,6 +26,7 @@ import { envClient } from "@/lib/env/client";
 import { Label } from "./ui/label";
 import { checkPromptForCopyRight } from "@/lib/openai/copyrightCheck";
 import { PromptConfirmationDialog } from "./PromptConfirmationDialog";
+import { InstructionsDialog } from "./InstructionsDialog";
 
 const FormSchema = z.object({
     modelProvider: z.string().default("stable-diffusion"),
@@ -126,7 +127,7 @@ export function TextAreaAndButton() {
                 <Label htmlFor="prompt">Enter your prompt</Label>
                 <Textarea
                     ref={textAreaRef}
-                    placeholder="Enter your prompt here!"
+                    placeholder="Be as descriptive as possible. Mention any desired art style, key elements, colors, lighting, and any specific emotions or themes you want to convey."
                     value={prompt}
                     onChange={onInputChanged}
                     className="h-48 resize-none rounded-lg"
@@ -138,32 +139,7 @@ export function TextAreaAndButton() {
                 >
                     Generate Image
                 </Button>
-                <div className="instructions w-full">
-                    <h2 className="mb-2 text-lg font-bold">How It Works:</h2>
-                    <ol className="list-inside list-decimal space-y-2 text-sm md:text-lg">
-                        <li>
-                            <strong>Enter Your Prompt:</strong> Type your idea
-                            or description into the text box.
-                        </li>
-                        <li>
-                            <strong>Generate Your Image:</strong> Click
-                            'Generate Image'. AI will create an image based on
-                            your prompt.
-                        </li>
-                        <li>
-                            <strong>Choose Your Product:</strong> Select a
-                            T-shirt, mug, or hoodie to see your design on it.
-                        </li>
-                        <li>
-                            <strong>Purchase:</strong> Click 'Buy Now' and enter
-                            your details to complete the purchase with Stripe.
-                        </li>
-                        <li>
-                            <strong>Enjoy:</strong> Your custom item will be
-                            printed and shipped to you. Enjoy or gift it!
-                        </li>
-                    </ol>
-                </div>
+                <InstructionsDialog />
             </div>
         </>
     );

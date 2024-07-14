@@ -3,9 +3,6 @@ import { test, expect } from "@playwright/test";
 test.beforeEach(async ({ page }) => {
     await page.goto("/");
 
-    const closeButton = page.getByRole("button", { name: "Close" }).nth(1);
-    closeButton.click();
-
     await page.selectOption("#form-container > form > div > select", "openai");
 
     const input = await page.getByRole("textbox");

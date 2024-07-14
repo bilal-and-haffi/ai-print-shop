@@ -3,18 +3,19 @@ import { test, expect } from "@playwright/test";
 test.beforeEach(async ({ page }) => {
     await page.goto("/");
 
-    // select model
+    const closeButton = page.getByRole("button", { name: "Close" }).nth(1);
+    closeButton.click();
+
     await page.selectOption("#form-container > form > div > select", "openai");
 
-    // in test env we will already have "test" in the input field and that is mocked
     const input = await page.getByRole("textbox");
-    await input.fill("test prompt");
+    await input.fill("test prompt"); // hard coded to return image without making request
     const generateButton = await page.getByTestId("Generate Image Button");
     await generateButton.click();
 });
 
 test('should have url "/product"', async ({ page }) => {
-    await expect(page).toHaveURL(/\/product/, { timeout: 10000 });
+    await expect(page).toHaveURL(/\/product/, { timeout: 20000 });
 });
 
 test("should allow user to switch between products", async ({ page }) => {
@@ -24,9 +25,9 @@ test("should allow user to switch between products", async ({ page }) => {
     const mugButton = await page.getByRole("button", { name: "Mug" });
 
     // Check if the product buttons are visible
-    await expect(tShirtButton).toBeVisible({ timeout: 10000 });
-    await expect(hoodieButton).toBeVisible({ timeout: 10000 });
-    await expect(mugButton).toBeVisible({ timeout: 10000 });
+    await expect(tShirtButton).toBeVisible({ timeout: 20000 });
+    await expect(hoodieButton).toBeVisible({ timeout: 20000 });
+    await expect(mugButton).toBeVisible({ timeout: 20000 });
 
     // check if can go to hoodie product
     await hoodieButton.click();

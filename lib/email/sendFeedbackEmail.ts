@@ -1,7 +1,6 @@
 "use server";
 
 import { Resend } from "resend";
-import { OrderConfirmationEmailTemplate } from "@/components/OrderConfirmationEmailTemplate";
 import { z } from "zod";
 
 const resend = new Resend(process.env.RESEND_API_KEY);

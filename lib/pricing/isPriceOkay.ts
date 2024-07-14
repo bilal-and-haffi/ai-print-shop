@@ -16,7 +16,7 @@ export async function isPriceOkay(
     const totalPrintifyCostInGbp = await convertUSDToGBP(
         totalPrintifyCostInUsd,
     );
-    const minimumProfitInGbp = 5;
+    const minimumProfitInGbp = 2;
     const profitInGbp = priceInGbp - totalPrintifyCostInGbp;
     const isPriceOkay = profitInGbp > minimumProfitInGbp;
     console.log({

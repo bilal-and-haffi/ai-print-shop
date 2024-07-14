@@ -10,7 +10,7 @@ import {
 
 export function InstructionsDialog() {
     return (
-        <Dialog defaultOpen={true}>
+        <Dialog>
             <DialogTrigger asChild>
                 <Button variant="outline">Help</Button>
             </DialogTrigger>

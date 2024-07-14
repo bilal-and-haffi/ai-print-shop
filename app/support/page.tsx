@@ -16,6 +16,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
+import { sendFeedbackEmail } from "@/lib/email/sendFeedbackEmailToBilal";
 
 const formSchema = z.object({
     email: z.string().email(),
@@ -29,19 +30,25 @@ async function copyToClipboardWithMeta(value: string) {
 export default function SupportPage() {
     const { toast } = useToast();
 
-    // 1. Define your form.
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
             email: "",
+            message: "",
         },
     });
 
-    function onSubmit(values: z.infer<typeof formSchema>) {
-        // Do something with the form values.
-        // ✅ This will be type-safe and validated.
-        console.log("Sending feedback email...");
-        console.log({ values });
+    async function onSubmit(values: z.infer<typeof formSchema>) {
+        const { email, message } = values;
+
+        await sendFeedbackEmail(email, message);
+
+        toast({
+            title: "Feedback sent :)",
+            duration: 1000,
+        });
+
+        form.reset();
     }
 
     return (
@@ -88,14 +95,20 @@ export default function SupportPage() {
                     type="button"
                     className="w-full "
                     onClick={() => {
-                        copyToClipboardWithMeta("ai-print-shop@mail.com");
+                        copyToClipboardWithMeta(
+                            "customer-service@ai-print-shop.com",
+                        );
                         toast({
                             title: "Copied email to clipboard",
                             duration: 1000,
                         });
                     }}
+                    variant={"link"}
                 >
-                    <p>Copy Email: ai-print-shop@mail.com</p>
+                    <p>
+                        Alternatively, email us at:
+                        customer-service@ai-print-shop.com (click to copy)
+                    </p>
                 </Button>
             </form>
         </Form>

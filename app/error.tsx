@@ -11,8 +11,8 @@ export default function ErrorPage() {
             <br />
             <p>
                 Contact us at:{" "}
-                <Link href="mailto:ai-print-shop@mail.com">
-                    ai-print-shop@mail.com
+                <Link href="mailto:customer-service@ai-print-shop.com">
+                    customer-service@ai-print-shop.com
                 </Link>
             </p>
         </div>

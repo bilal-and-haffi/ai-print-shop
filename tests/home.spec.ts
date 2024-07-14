@@ -9,6 +9,8 @@ test("has title", async ({ page }) => {
 });
 
 test("shows email address", async ({ page }) => {
-    const emailButton = await page.getByText("ai-print-shop@mail.com");
+    const emailButton = await page.getByText(
+        "customer-service@ai-print-shop.com",
+    );
     await expect(emailButton).toBeVisible();
 });

@@ -52,8 +52,8 @@ export default function RootLayout({
                             asChild
                             className="focus:shadow-outline w-full rounded-none focus:outline-none"
                         >
-                            <Link href="mailto:ai-print-shop@mail.com">
-                                Contact us at ai-print-shop@mail.com
+                            <Link href="mailto:customer-service@ai-print-shop.com">
+                                Contact us at customer-service@ai-print-shop.com
                             </Link>
                         </Button>
                     </CardFooter>

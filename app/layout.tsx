@@ -33,11 +33,11 @@ export default function RootLayout({
             className="h-full overflow-x-hidden"
             suppressHydrationWarning
         >
-            <body className={`${inter.className} flex h-full flex-col `}>
+            <body className={`${inter.className} flex h-full w-full flex-col`}>
                 <Toaster />
 
                 <SiteHeader />
-                <main className="flex w-11/12 flex-col items-center justify-center space-y-4 self-center pb-4 text-center md:w-1/3 lg:py-20">
+                <main className="flex w-11/12 flex-col items-center justify-center space-y-4 self-center pb-4 text-center md:w-1/3 lg:py-16">
                     <ThemeProvider
                         attribute="class"
                         defaultTheme="dark"

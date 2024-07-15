@@ -17,6 +17,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { sendFeedbackEmail } from "@/lib/email/sendFeedbackEmail";
+import { Copy } from "lucide-react";
 
 const formSchema = z.object({
     email: z.string().email(),
@@ -45,72 +46,78 @@ export default function SupportPage() {
 
         toast({
             title: "Feedback sent :)",
-            duration: 1000,
+            duration: 1200,
         });
 
         form.reset();
     }
 
     return (
-        <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-                <FormLabel>Please enter your feedback below</FormLabel>
-                <FormField
-                    control={form.control}
-                    name="email"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormControl>
-                                <Input placeholder="Email" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                <FormField
-                    control={form.control}
-                    name="message"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormControl>
-                                <Textarea
-                                    placeholder="Enter your message here..."
-                                    {...field}
-                                    className="h-48 resize-none rounded-lg"
-                                />
-                            </FormControl>
-                            <FormMessage />
-                            <FormDescription>
-                                We appreciate any feedback you have for us.
-                            </FormDescription>
-                        </FormItem>
-                    )}
-                />
-                <Button className="w-full" type="submit">
-                    Submit
-                </Button>
-
-                <Button
-                    // asChild
-                    type="button"
-                    className="w-full "
-                    onClick={() => {
-                        copyToClipboardWithMeta(
-                            "customer-service@ai-print-shop.com",
-                        );
-                        toast({
-                            title: "Copied email to clipboard",
-                            duration: 1000,
-                        });
-                    }}
-                    variant={"link"}
+        <div className="w-full">
+            <Form {...form}>
+                <form
+                    onSubmit={form.handleSubmit(onSubmit)}
+                    className="space-y-8"
                 >
-                    <p>
-                        Alternatively, email us at:
-                        customer-service@ai-print-shop.com (click to copy)
-                    </p>
-                </Button>
-            </form>
-        </Form>
+                    <FormLabel>Please enter your feedback below</FormLabel>
+                    <FormField
+                        control={form.control}
+                        name="email"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormControl>
+                                    <Input placeholder="Email" {...field} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="message"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormControl>
+                                    <Textarea
+                                        placeholder="Enter your message here..."
+                                        {...field}
+                                        className="h-60 resize-none rounded-lg"
+                                    />
+                                </FormControl>
+                                <FormMessage />
+                                <FormDescription>
+                                    We appreciate any feedback you have for us.
+                                </FormDescription>
+                            </FormItem>
+                        )}
+                    />
+                    <Button className="w-full" type="submit">
+                        Submit
+                    </Button>
+
+                    <Button
+                        // asChild
+                        type="button"
+                        className="w-full "
+                        onClick={() => {
+                            copyToClipboardWithMeta(
+                                "customer-service@ai-print-shop.com",
+                            );
+                            toast({
+                                title: "Copied email to clipboard",
+                                duration: 1200,
+                            });
+                        }}
+                        variant={"secondary"}
+                    >
+                        <Copy className="h-4 w-4" />
+                        <p className="w-full text-wrap">
+                            customer-service@ai-print-shop.com
+                        </p>
+                        <Copy className="h-4 w-4" />
+                    </Button>
+                </form>
+            </Form>
+        </div>
     );
 }

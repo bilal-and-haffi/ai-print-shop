@@ -29,7 +29,7 @@ export const ProductSwitcher = ({
     return (
         <div
             id="links-to-products-container"
-            className="flex w-5/6 items-center justify-between space-x-4 lg:w-1/3"
+            className="flex w-full items-center justify-between space-x-4"
         >
             <Link href={`/`}>
                 <Button data-testid="Go back" variant={"outline"}>

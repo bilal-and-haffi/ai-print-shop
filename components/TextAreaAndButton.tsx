@@ -75,10 +75,7 @@ export function TextAreaAndButton() {
 
     return (
         <>
-            <div
-                className="flex w-5/6 flex-col space-y-4 lg:w-1/2"
-                id="form-container"
-            >
+            <div className="flex w-full flex-col space-y-4" id="form-container">
                 {showConfirmationDialog && (
                     <PromptConfirmationDialog
                         showConfirmationDialog={showConfirmationDialog}
@@ -130,7 +127,7 @@ export function TextAreaAndButton() {
                     placeholder="Be as descriptive as possible. Mention any desired art style, key elements, colors, lighting, and any specific emotions or themes you want to convey."
                     value={prompt}
                     onChange={onInputChanged}
-                    className="h-48 resize-none rounded-lg"
+                    className="h-60 resize-none rounded-lg"
                     autoFocus
                 />
                 <Button

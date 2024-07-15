@@ -108,7 +108,7 @@ export function ProductDetails({
     };
 
     return (
-        <div className="flex w-5/6 flex-col items-center justify-center text-center lg:w-1/3">
+        <div className="flex w-full flex-col items-center justify-center text-center">
             {images ? (
                 <ImagesCarousel images={filteredImages} />
             ) : (
@@ -155,6 +155,7 @@ export function ProductDetails({
                         alt="Stripe"
                         width={100}
                         height={100}
+                        priority
                     />
                 </div>
             </div>

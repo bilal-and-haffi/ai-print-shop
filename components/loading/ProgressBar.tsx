@@ -14,7 +14,7 @@ export function ProgressBar({
 
     useProgressUpdater(setProgress, estimatedTimeInMs);
 
-    return <Progress value={progress} className="w-[60%]" />;
+    return <Progress value={progress} className="w-[80%]" />;
 }
 
 function useProgressUpdater(
@@ -24,7 +24,7 @@ function useProgressUpdater(
     const progressRef = React.useRef(0);
 
     React.useEffect(() => {
-        const incrementPercentage = 1;
+        const incrementPercentage = 0.01;
         const interval = estimatedTimeInMs / (100 / incrementPercentage);
 
         const timer = setInterval(() => {

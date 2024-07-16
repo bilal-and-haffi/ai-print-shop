@@ -30,10 +30,12 @@ export default function RootLayout({
     return (
         <html
             lang="en"
-            className="h-full overflow-x-hidden"
+            className="h-full w-screen overflow-x-hidden"
             suppressHydrationWarning
         >
-            <body className={`${inter.className} flex h-full flex-col `}>
+            <body
+                className={`${inter.className} flex h-full w-screen flex-col`}
+            >
                 <Toaster />
 
                 <SiteHeader />

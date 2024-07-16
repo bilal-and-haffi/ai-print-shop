@@ -24,7 +24,7 @@ function useProgressUpdater(
     const progressRef = React.useRef(0);
 
     React.useEffect(() => {
-        const incrementPercentage = 0.01;
+        const incrementPercentage = 1;
         const interval = estimatedTimeInMs / (100 / incrementPercentage);
 
         const timer = setInterval(() => {

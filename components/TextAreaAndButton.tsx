@@ -126,7 +126,7 @@ export function TextAreaAndButton() {
                 placeholder="Be as descriptive as possible. Mention any desired art style, key elements, colors, lighting, and any specific emotions or themes you want to convey."
                 value={prompt}
                 onChange={onInputChanged}
-                className="h-72 resize-none rounded-lg"
+                className="h-60 resize-none rounded-lg"
                 autoFocus
             />
             <Button

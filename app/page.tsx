@@ -1,11 +1,5 @@
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardTitle,
-} from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { TextAreaAndButton } from "../components/TextAreaAndButton";
-import Image from "next/image";
 
 export default function Home() {
     return (

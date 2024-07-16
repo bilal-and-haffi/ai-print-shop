@@ -8,12 +8,15 @@ import {
     SheetTitle,
     SheetTrigger,
 } from "@/components/ui/sheet";
+import { Info } from "lucide-react";
 
 export function TipsSheet() {
     return (
         <Sheet>
             <SheetTrigger asChild>
-                <p className="hover:cursor-pointer hover:text-zinc-200">Tips</p>
+                <p className="hover:cursor-pointer hover:text-zinc-200">
+                    <Info />
+                </p>
             </SheetTrigger>
             <SheetContent>
                 <SheetHeader>

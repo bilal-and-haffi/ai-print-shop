@@ -75,69 +75,67 @@ export function TextAreaAndButton() {
 
     return (
         <>
-            <div className="flex w-full flex-col space-y-4" id="form-container">
-                {showConfirmationDialog && (
-                    <PromptConfirmationDialog
-                        showConfirmationDialog={showConfirmationDialog}
-                        setShowConfirmationDialog={setShowConfirmationDialog}
-                        continueToNextStep={continueToNextStep}
-                        alertReason={alertReason}
-                    />
-                )}
-                <Form {...form}>
-                    <form className="w-full">
-                        <FormField
-                            control={form.control}
-                            name="modelProvider"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Image Generator</FormLabel>
-                                    <Select
-                                        onValueChange={(e) => {
-                                            setModelProvider(e);
-                                        }}
-                                        defaultValue={field.value}
-                                    >
-                                        <FormControl>
-                                            <SelectTrigger>
-                                                <SelectValue
-                                                    placeholder="Stability-ai - Stable Diffusion"
-                                                    defaultValue="stable-diffusion"
-                                                />
-                                            </SelectTrigger>
-                                        </FormControl>
-                                        <SelectContent>
-                                            <SelectItem value="openai">
-                                                OpenAI - DALL-E 3
-                                            </SelectItem>
-                                            <SelectItem value="stable-diffusion">
-                                                Stability-ai - Stable Diffusion
-                                            </SelectItem>
-                                        </SelectContent>
-                                    </Select>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                    </form>
-                </Form>
-                <Label htmlFor="prompt">Enter your prompt</Label>
-                <Textarea
-                    ref={textAreaRef}
-                    placeholder="Be as descriptive as possible. Mention any desired art style, key elements, colors, lighting, and any specific emotions or themes you want to convey."
-                    value={prompt}
-                    onChange={onInputChanged}
-                    className="h-60 resize-none rounded-lg"
-                    autoFocus
+            {showConfirmationDialog && (
+                <PromptConfirmationDialog
+                    showConfirmationDialog={showConfirmationDialog}
+                    setShowConfirmationDialog={setShowConfirmationDialog}
+                    continueToNextStep={continueToNextStep}
+                    alertReason={alertReason}
                 />
-                <Button
-                    onClick={submitGenerateText}
-                    data-testid="Generate Image Button"
-                >
-                    Generate Image
-                </Button>
-                <InstructionsDialog />
-            </div>
+            )}
+            <Form {...form}>
+                <form className="w-full">
+                    <FormField
+                        control={form.control}
+                        name="modelProvider"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Image Generator</FormLabel>
+                                <Select
+                                    onValueChange={(e) => {
+                                        setModelProvider(e);
+                                    }}
+                                    defaultValue={field.value}
+                                >
+                                    <FormControl>
+                                        <SelectTrigger>
+                                            <SelectValue
+                                                placeholder="Stability-ai - Stable Diffusion"
+                                                defaultValue="stable-diffusion"
+                                            />
+                                        </SelectTrigger>
+                                    </FormControl>
+                                    <SelectContent>
+                                        <SelectItem value="openai">
+                                            OpenAI - DALL-E 3
+                                        </SelectItem>
+                                        <SelectItem value="stable-diffusion">
+                                            Stability-ai - Stable Diffusion
+                                        </SelectItem>
+                                    </SelectContent>
+                                </Select>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                </form>
+            </Form>
+            <Label htmlFor="prompt">Enter your prompt</Label>
+            <Textarea
+                ref={textAreaRef}
+                placeholder="Be as descriptive as possible. Mention any desired art style, key elements, colors, lighting, and any specific emotions or themes you want to convey."
+                value={prompt}
+                onChange={onInputChanged}
+                className="h-72 resize-none rounded-lg"
+                autoFocus
+            />
+            <Button
+                onClick={submitGenerateText}
+                data-testid="Generate Image Button"
+            >
+                Generate Image
+            </Button>
+            <InstructionsDialog />
         </>
     );
 }

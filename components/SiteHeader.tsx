@@ -10,13 +10,6 @@ export function SiteHeader() {
                 <Link className="hover:text-zinc-200" href="/support">
                     <MessageSquareMore />
                 </Link>
-                {/* <Link
-                    className="hidden hover:text-zinc-200 md:block"
-                    href="/support"
-                >
-                    Support
-                </Link> */}
-
                 <Link className="flex space-x-2" href="/">
                     <span className="font-bold">AI Print Shop</span>
                 </Link>

@@ -20,7 +20,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
     title: "AI Print Shop",
     description:
-        "Create personalized custom clothes with AI-generated images. Easy to order, print-on-demand T-shirts and apparel. ",
+        "Create personalized custom clothes with AI-generated images. Easy to order, print-on-demand T-shirts and apparel.",
     keywords: ["AI", "image", "print", "T-shirt", "clothes"],
 };
 

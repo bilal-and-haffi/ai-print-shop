@@ -6,7 +6,8 @@ export default function Home() {
         <div className="flex w-full flex-col space-y-4 md:space-y-8">
             <Card className="p-4">
                 <p>
-                    Create personalized custom clothes with AI-generated images!
+                    Create custom clothes with AI images, order easily and print
+                    on demand!
                 </p>
             </Card>
             <TextAreaAndButton />

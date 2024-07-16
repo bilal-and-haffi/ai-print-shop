@@ -3,7 +3,7 @@ import { test, expect } from "@playwright/test";
 test.beforeEach(async ({ page }) => {
     await page.goto("/");
 
-    await page.selectOption("#form-container > form > div > select", "openai");
+    await page.selectOption("form > div > select", "openai");
 
     const input = await page.getByRole("textbox");
     await input.fill("test prompt"); // hard coded to return image without making request
@@ -22,9 +22,9 @@ test.skip("should allow user to switch between products", async ({ page }) => {
     const mugButton = page.getByRole("button", { name: "Mug" });
 
     // Check if the product buttons are visible
-    await expect(tShirtButton).toBeVisible({ timeout: 30000 });
-    await expect(hoodieButton).toBeVisible({ timeout: 30000 });
-    await expect(mugButton).toBeVisible({ timeout: 30000 });
+    await expect(tShirtButton).toBeVisible({ timeout: 10000 });
+    await expect(hoodieButton).toBeVisible({ timeout: 10000 });
+    await expect(mugButton).toBeVisible({ timeout: 10000 });
 
     // check if can go to hoodie product
     await hoodieButton.click();

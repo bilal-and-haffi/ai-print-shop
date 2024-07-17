@@ -113,10 +113,10 @@ export function ImageGenerationForm() {
             <Label htmlFor="prompt">Enter your prompt</Label>
             <Textarea
                 ref={textAreaRef}
-                placeholder="Be as descriptive as possible. Mention any desired art style, key elements, colors, lighting, and any specific emotions or themes you want to convey."
+                placeholder="Enter your prompt :)"
                 value={prompt}
                 onChange={onInputChanged}
-                className="h-60 resize-none rounded-lg"
+                className="h-48 resize-none rounded-lg"
                 autoFocus
             />
             <Form {...form}>

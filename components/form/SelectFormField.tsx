@@ -30,6 +30,7 @@ export function SelectFormField({
                         onValueChange={(value) => {
                             setFieldValue(value);
                         }}
+                        defaultValue={field.value}
                     >
                         <FormControl>
                             <SelectTrigger>

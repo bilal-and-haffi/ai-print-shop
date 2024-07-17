@@ -91,6 +91,7 @@ export const ProductSwitcher = ({
                 </Button>
             </div>
             {/* needs to be an a because otherwise causes bugs */}
+            {/* TODO: need to add other search params */}
             <a href={`/image/${prompt}?model=openai`}>
                 <Button
                     data-testid="Generate new image with same prompt button"

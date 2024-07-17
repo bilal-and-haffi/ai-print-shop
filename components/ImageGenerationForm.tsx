@@ -110,10 +110,10 @@ export function ImageGenerationForm() {
                     alertReason={alertReason}
                 />
             )}
-            <Label htmlFor="prompt">Enter your prompt</Label>
+            <Label htmlFor="prompt">Enter your idea!</Label>
             <Textarea
                 ref={textAreaRef}
-                placeholder="Enter your prompt :)"
+                placeholder="Example: An astronaut playing on an old arcade machine."
                 value={prompt}
                 onChange={onInputChanged}
                 className="h-48 resize-none rounded-lg"

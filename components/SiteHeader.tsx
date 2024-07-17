@@ -11,7 +11,7 @@ export function SiteHeader() {
                     <MessageSquareMore />
                 </Link>
                 <Link className="flex space-x-2" href="/">
-                    <span className="font-bold">AI Print Shop</span>
+                    <span>AI Print Shop</span>
                 </Link>
                 <TipsSheet />
             </div>

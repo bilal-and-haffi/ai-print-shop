@@ -1,6 +1,13 @@
 /* eslint-disable react/no-unescaped-entities */
 "use client";
-import { ChangeEvent, useState, KeyboardEvent, useRef } from "react";
+import {
+    ChangeEvent,
+    useState,
+    KeyboardEvent,
+    useRef,
+    Dispatch,
+    SetStateAction,
+} from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -134,41 +141,9 @@ export function ImageForm() {
                             </FormItem>
                         )}
                     />
-                    <FormField
-                        control={form.control}
-                        name={"style"}
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Style</FormLabel>
-                                <Select
-                                    onValueChange={(value) => {
-                                        setImageStyle(value);
-                                    }}
-                                    // defaultValue={field.value}
-                                >
-                                    <FormControl>
-                                        <SelectTrigger>
-                                            <SelectValue
-                                                placeholder={
-                                                    "Choose a style (optional)"
-                                                }
-                                                // defaultValue={imageStyles[0]}
-                                            />
-                                        </SelectTrigger>
-                                    </FormControl>
-                                    <SelectContent>
-                                        {imageStyles.map((style) => (
-                                            <SelectItem
-                                                key={style}
-                                                value={style}
-                                            >
-                                                {style}
-                                            </SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </Select>
-                            </FormItem>
-                        )}
+                    <SelectFormField
+                        form={form}
+                        setFieldValue={setImageStyle}
                     />
                 </form>
             </Form>
@@ -189,5 +164,45 @@ export function ImageForm() {
             </Button>
             <InstructionsDialog />
         </>
+    );
+}
+
+function SelectFormField({
+    form,
+    setFieldValue,
+}: {
+    form: any;
+    setFieldValue: Dispatch<SetStateAction<string | undefined>>;
+}) {
+    return (
+        <FormField
+            control={form.control}
+            name={"style"}
+            render={() => (
+                <FormItem>
+                    <FormLabel>Style</FormLabel>
+                    <Select
+                        onValueChange={(value) => {
+                            setFieldValue(value);
+                        }}
+                    >
+                        <FormControl>
+                            <SelectTrigger>
+                                <SelectValue
+                                    placeholder={"Choose a style (optional)"}
+                                />
+                            </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                            {imageStyles.map((style) => (
+                                <SelectItem key={style} value={style}>
+                                    {style}
+                                </SelectItem>
+                            ))}
+                        </SelectContent>
+                    </Select>
+                </FormItem>
+            )}
+        />
     );
 }

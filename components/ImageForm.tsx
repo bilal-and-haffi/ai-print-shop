@@ -1,13 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 "use client";
-import {
-    ChangeEvent,
-    useState,
-    KeyboardEvent,
-    useRef,
-    Dispatch,
-    SetStateAction,
-} from "react";
+import { ChangeEvent, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -35,7 +28,6 @@ import { checkPromptForCopyRight } from "@/lib/openai/copyrightCheck";
 import { PromptConfirmationDialog } from "./PromptConfirmationDialog";
 import { SelectFormField } from "./form/SelectFormField";
 
-export const ModelsEnum = ["openai", "stable-diffusion"] as const;
 
 const styleOptions = [
     "Anime",

@@ -35,7 +35,7 @@ import { checkPromptForCopyRight } from "@/lib/openai/copyrightCheck";
 import { PromptConfirmationDialog } from "./PromptConfirmationDialog";
 import { SelectFormField } from "./form/SelectFormField";
 
-const imageStyles = [
+const imageStyleOptions = [
     "Anime",
     "Abstract",
     "Cartoon",
@@ -46,27 +46,46 @@ const imageStyles = [
     "Watercolor",
 ] as const;
 
+const locationOptions = [
+    "Indoors",
+    "Outdoors",
+    "Urban",
+    "Rural",
+    "Underwater",
+    "Outer Space",
+    "Fantasy Land",
+] as const;
+
 const FormSchema = z.object({
     modelProvider: z.string().default("stable-diffusion"),
-    style: z.enum(imageStyles).optional(),
+    style: z.enum(imageStyleOptions).optional(),
+    locationOptions: z.enum(locationOptions).optional(),
 });
 
 export function ImageForm() {
     const initalPrompt =
         envClient.NEXT_PUBLIC_ENV === "development" ? "test" : "";
     const [prompt, setPrompt] = useState<string>(initalPrompt);
-    const [modelProvider, setModelProvider] =
-        useState<string>("stable-diffusion");
+
     const [showConfirmationDialog, setShowConfirmationDialog] =
         useState<boolean>(false);
     const [alertReason, setAlertReason] = useState<string>("");
+
+    const [modelProvider, setModelProvider] =
+        useState<string>("stable-diffusion");
     const [imageStyle, setImageStyle] = useState<string>();
+    const [location, setLocation] = useState<string>();
 
     const formFields = [
         {
             name: "Style",
-            options: imageStyles,
+            options: imageStyleOptions,
             set: setImageStyle,
+        },
+        {
+            name: "Location",
+            options: locationOptions,
+            set: setLocation,
         },
     ];
 
@@ -74,10 +93,10 @@ export function ImageForm() {
     const router = useRouter();
 
     const continueToNextStep = () => {
-        console.log({ modelProvider });
-        console.log({ imageStyle });
+        console.log({ modelProvider, imageStyle, location });
+
         router.push(
-            `/image/${prompt}?model=${modelProvider}&imageStyle=${imageStyle}`,
+            `/image/${prompt}?model=${modelProvider}&imageStyle=${imageStyle}&location=${location}`,
         );
     };
 

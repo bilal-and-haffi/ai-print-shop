@@ -13,18 +13,20 @@ export function SelectFormField({
     form,
     setFieldValue,
     options,
+    name,
 }: {
     form: any;
     setFieldValue: Dispatch<SetStateAction<string | undefined>>;
     options: any[];
+    name: string;
 }) {
     return (
         <FormField
             control={form.control}
-            name={"style"}
+            name={name}
             render={() => (
                 <FormItem>
-                    <FormLabel>Style</FormLabel>
+                    <FormLabel>{name}</FormLabel>
                     <Select
                         onValueChange={(value) => {
                             setFieldValue(value);
@@ -33,7 +35,7 @@ export function SelectFormField({
                         <FormControl>
                             <SelectTrigger>
                                 <SelectValue
-                                    placeholder={"Choose a style (optional)"}
+                                    placeholder={`${name} (optional)`}
                                 />
                             </SelectTrigger>
                         </FormControl>

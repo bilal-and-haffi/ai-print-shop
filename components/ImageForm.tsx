@@ -41,7 +41,7 @@ const imageStyles = [
 
 const FormSchema = z.object({
     modelProvider: z.string().default("stable-diffusion"),
-    style: z.enum(imageStyles),
+    style: z.enum(imageStyles).optional(),
 });
 
 export function ImageForm() {
@@ -53,7 +53,7 @@ export function ImageForm() {
     const [showConfirmationDialog, setShowConfirmationDialog] =
         useState<boolean>(false);
     const [alertReason, setAlertReason] = useState<string>("");
-    const [imageStyle, setImageStyle] = useState<string>(imageStyles[0]);
+    const [imageStyle, setImageStyle] = useState<string>();
 
     const textAreaRef = useRef<HTMLTextAreaElement>(null);
     const router = useRouter();
@@ -144,13 +144,15 @@ export function ImageForm() {
                                     onValueChange={(value) => {
                                         setImageStyle(value);
                                     }}
-                                    defaultValue={field.value}
+                                    // defaultValue={field.value}
                                 >
                                     <FormControl>
                                         <SelectTrigger>
                                             <SelectValue
-                                                placeholder={imageStyles[0]}
-                                                defaultValue={imageStyles[0]}
+                                                placeholder={
+                                                    "Choose a style (optional)"
+                                                }
+                                                // defaultValue={imageStyles[0]}
                                             />
                                         </SelectTrigger>
                                     </FormControl>

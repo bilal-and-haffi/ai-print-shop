@@ -42,10 +42,11 @@ export function SelectFormField({
                         <SelectContent>
                             {options.map((option) => (
                                 <SelectItem key={option} value={option}>
-                                    <span className="text-muted-foreground">
+                                    {/* <span className="text-muted-foreground">
                                         {name}
                                     </span>
-                                    : {option}
+                                    :  */}
+                                    {option}
                                 </SelectItem>
                             ))}
                         </SelectContent>

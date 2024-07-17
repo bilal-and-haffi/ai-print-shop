@@ -11,8 +11,13 @@ test.beforeEach(async ({ page }) => {
     await generateButton.click();
 });
 
+test("should not have invalid model text", async ({ page }) => {
+    await page.waitForTimeout(1000);
+    await expect(page.getByText("Invalid model")).not.toBeVisible({});
+});
+
 test('should have url "/product"', async ({ page }) => {
-    await expect(page).toHaveURL(/\/product/, { timeout: 20000 });
+    await expect(page).toHaveURL(/\/product/, { timeout: 15000 });
 });
 
 test.skip("should allow user to switch between products", async ({ page }) => {

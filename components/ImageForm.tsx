@@ -62,6 +62,14 @@ export function ImageForm() {
     const [alertReason, setAlertReason] = useState<string>("");
     const [imageStyle, setImageStyle] = useState<string>();
 
+    const formFields = [
+        {
+            name: "Style",
+            options: imageStyles,
+            set: setImageStyle,
+        },
+    ];
+
     const textAreaRef = useRef<HTMLTextAreaElement>(null);
     const router = useRouter();
 
@@ -141,11 +149,18 @@ export function ImageForm() {
                             </FormItem>
                         )}
                     />
-                    <SelectFormField
-                        form={form}
-                        setFieldValue={setImageStyle}
-                        options={imageStyles as unknown as string[]}
-                    />
+                    {formFields.map((x) => {
+                        const { name, options, set } = x;
+                        return (
+                            <SelectFormField
+                                key={x.name}
+                                form={form}
+                                setFieldValue={set}
+                                options={options as unknown as string[]}
+                                name={name}
+                            />
+                        );
+                    })}
                 </form>
             </Form>
             <Label htmlFor="prompt">Enter your prompt</Label>

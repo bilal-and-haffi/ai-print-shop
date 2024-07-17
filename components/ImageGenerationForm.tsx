@@ -4,21 +4,7 @@ import { ChangeEvent, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select";
-import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-} from "@/components/ui/form";
+import { Form } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -27,25 +13,26 @@ import { Label } from "./ui/label";
 import { checkPromptForCopyRight } from "@/lib/openai/copyrightCheck";
 import { PromptConfirmationDialog } from "./PromptConfirmationDialog";
 import { SelectFormField } from "./form/SelectFormField";
+import { modelOptions } from "../app/data/modelOptions";
 
-const styleOptions = ["Anime", "Cartoon", "Futuristic", "Photograph"] as const;
+const styleOptions = ["Photograph", "Anime", "Cartoon", "Futuristic"] as const;
 
 const locationOptions = [
+    "Space",
     "Dessert",
     "Fantasy Land",
     "Indoors",
     "Mars",
     "Outdoors",
     "Rural",
-    "Space",
     "Underwater",
     "Urban",
 ] as const;
 
 const FormSchema = z.object({
-    modelProvider: z.string().default("stable-diffusion"),
-    style: z.enum(styleOptions).optional(),
-    locationOptions: z.enum(locationOptions).optional(),
+    style: z.enum(styleOptions).default(styleOptions[0]),
+    locationOptions: z.enum(locationOptions).default(locationOptions[0]),
+    modelOptions: z.enum(modelOptions).default(modelOptions[0]),
 });
 
 export function ImageGenerationForm() {
@@ -57,12 +44,16 @@ export function ImageGenerationForm() {
         useState<boolean>(false);
     const [alertReason, setAlertReason] = useState<string>("");
 
-    const [modelProvider, setModelProvider] =
-        useState<string>("stable-diffusion");
-    const [style, setStyle] = useState<string>();
-    const [location, setLocation] = useState<string>();
+    const [modelOption, setModelOptions] = useState<string>(modelOptions[0]);
+    const [style, setStyle] = useState<string>(styleOptions[0]);
+    const [location, setLocation] = useState<string>(locationOptions[0]);
 
     const formFields = [
+        {
+            name: "Model",
+            options: modelOptions,
+            set: setModelOptions,
+        },
         {
             name: "Style",
             options: styleOptions,
@@ -79,10 +70,10 @@ export function ImageGenerationForm() {
     const router = useRouter();
 
     const continueToNextStep = () => {
-        console.log({ modelProvider, style, location });
+        console.log({ modelOption, style, location });
 
         router.push(
-            `/image/${prompt}?model=${modelProvider}&style=${style}&location=${location}`,
+            `/image/${prompt}?model=${modelOption}&style=${style}&location=${location}`,
         );
     };
 
@@ -130,38 +121,6 @@ export function ImageGenerationForm() {
             />
             <Form {...form}>
                 <form className="w-full space-y-4">
-                    <FormField
-                        control={form.control}
-                        name="modelProvider"
-                        render={({ field }) => (
-                            <FormItem>
-                                <Select
-                                    onValueChange={(e) => {
-                                        setModelProvider(e);
-                                    }}
-                                    defaultValue={field.value}
-                                >
-                                    <FormControl>
-                                        <SelectTrigger>
-                                            <SelectValue
-                                                placeholder="Generate image with: DALL-E 3"
-                                                defaultValue="openai"
-                                            />
-                                        </SelectTrigger>
-                                    </FormControl>
-                                    <SelectContent>
-                                        <SelectItem value="openai">
-                                            OpenAI - DALL-E 3
-                                        </SelectItem>
-                                        <SelectItem value="stable-diffusion">
-                                            Stability-ai - Stable Diffusion
-                                        </SelectItem>
-                                    </SelectContent>
-                                </Select>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
                     {formFields.map((x) => {
                         const { name, options, set } = x;
                         return (

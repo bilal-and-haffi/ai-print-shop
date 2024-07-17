@@ -3,9 +3,9 @@ import { postImageToPrintify } from "@/lib/printify/service";
 import { addToImageTable } from "@/db/image";
 import { generateOpenAiImageUrl } from "@/lib/images/openai";
 import { generateStableDiffusionImageUrl } from "@/lib/images/replicate";
+import { modelOptions } from "@/app/data/modelOptions";
 
 export const maxDuration = 300;
-const ModelsEnum = ["openai", "stable-diffusion"] as const;
 
 export default async function GenerateImagePage(params: {
     params: { prompt: string };
@@ -35,11 +35,11 @@ export default async function GenerateImagePage(params: {
     console.log({ concatenatedPrompt });
 
     let generatedImageUrl: string;
-    console.log({ ModelsEnum });
+    console.log({ modelOptions });
 
-    if (model === ModelsEnum[0]) {
+    if (model === modelOptions[0]) {
         generatedImageUrl = await generateOpenAiImageUrl(concatenatedPrompt);
-    } else if (model === ModelsEnum[1]) {
+    } else if (model === modelOptions[1]) {
         generatedImageUrl =
             await generateStableDiffusionImageUrl(concatenatedPrompt);
     } else {

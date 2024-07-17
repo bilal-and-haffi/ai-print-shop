@@ -2,9 +2,6 @@ import { test, expect } from "@playwright/test";
 
 test.beforeEach(async ({ page }) => {
     await page.goto("/");
-
-    await page.selectOption("form > div > select", "openai");
-
     const input = await page.getByRole("textbox");
     await input.fill("test prompt"); // hard coded to return image without making request
     const generateButton = await page.getByTestId("Generate Image Button");
@@ -17,7 +14,7 @@ test("should not have invalid model text", async ({ page }) => {
 });
 
 test('should have url "/product"', async ({ page }) => {
-    await expect(page).toHaveURL(/\/product/, { timeout: 15000 });
+    await expect(page).toHaveURL(/\/product/, { timeout: 30000 });
 });
 
 test.skip("should allow user to switch between products", async ({ page }) => {

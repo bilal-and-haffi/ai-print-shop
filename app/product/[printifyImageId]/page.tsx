@@ -1,7 +1,9 @@
 import { Products } from "@/components/Products";
+import { Variant } from "@/interfaces/Printify/Variant";
 import { createPrintifyProduct } from "@/lib/printify/createPrintifyProduct";
 import { fetchProductVariants } from "@/lib/printify/fetchProductVariants";
 import { products } from "@/lib/printify/productsData";
+import { ProductType } from "@/types/ProductType";
 
 export default async function ProductPage({
     params,
@@ -49,16 +51,39 @@ export default async function ProductPage({
         ),
     ]);
 
+    const productAndVariants: Map<
+        ProductType,
+        {
+            product: any;
+            variants: Variant[];
+        }
+    > = new Map([
+        [
+            ProductType.TShirt,
+            {
+                product: tShirtProduct,
+                variants: tShirtVariants,
+            },
+        ],
+        [
+            ProductType.Hoodie,
+            {
+                product: hoodieProduct,
+                variants: hoodieVariants,
+            },
+        ],
+        [
+            ProductType.Mug,
+            {
+                product: mugProduct,
+                variants: mugVariants,
+            },
+        ],
+    ]);
+
     return (
         <>
-            <Products
-                tShirtProduct={tShirtProduct}
-                hoodieProduct={hoodieProduct}
-                mugProduct={mugProduct}
-                tShirtVariants={tShirtVariants}
-                hoodieVariants={hoodieVariants}
-                mugVariants={mugVariants}
-            />
+            <Products productsAndVariants={productAndVariants} />
         </>
     );
 }

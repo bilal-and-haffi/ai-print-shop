@@ -2,15 +2,9 @@
 
 import { useState } from "react";
 import { ProductDetails } from "./ProductDetails";
-import { RetrieveProductResponse } from "@/interfaces/PrintifyTypes";
 import { Variant } from "@/interfaces/Printify/Variant";
 import { ProductSwitcher } from "./ProductSwitcher";
-
-export const enum ProductType {
-    TShirt = "tshirt",
-    Hoodie = "hoodie",
-    Mug = "mug",
-}
+import { ProductType } from "../types/ProductType";
 
 const productsMap = new Map([
     [ProductType.TShirt, "T Shirt"],
@@ -19,23 +13,30 @@ const productsMap = new Map([
 ]);
 
 export const Products = ({
-    tShirtProduct,
-    hoodieProduct,
-    mugProduct,
-    tShirtVariants,
-    hoodieVariants,
-    mugVariants,
+    productsAndVariants,
 }: {
-    tShirtProduct: RetrieveProductResponse;
-    hoodieProduct: RetrieveProductResponse;
-    mugProduct: RetrieveProductResponse;
-    tShirtVariants: Variant[];
-    hoodieVariants: Variant[];
-    mugVariants: Variant[];
+    productsAndVariants: Map<
+        ProductType,
+        {
+            product: any;
+            variants: Variant[];
+        }
+    >;
 }) => {
     const [selectedProductType, setSelectedProductType] = useState<ProductType>(
         ProductType.TShirt,
     );
+
+    const tShirtProduct = productsAndVariants.get(ProductType.TShirt)!.product; // sketch
+    const tShirtVariants = productsAndVariants.get(
+        ProductType.TShirt,
+    )!.variants;
+    const hoodieProduct = productsAndVariants.get(ProductType.Hoodie)!.product;
+    const hoodieVariants = productsAndVariants.get(
+        ProductType.Hoodie,
+    )!.variants;
+    const mugProduct = productsAndVariants.get(ProductType.Mug)!.product;
+    const mugVariants = productsAndVariants.get(ProductType.Mug)!.variants;
 
     const CurrentProductDetails = () => {
         switch (selectedProductType) {

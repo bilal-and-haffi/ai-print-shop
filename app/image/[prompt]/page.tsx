@@ -23,7 +23,13 @@ export default async function GenerateImagePage(params: {
 
     const { model, imageStyle } = params.searchParams;
 
-    const concatenatedPrompt = `In this style: ${imageStyle}.` + decodedPrompt;
+    console.log({ imageStyle });
+
+    const styleString =
+        imageStyle !== "undefined" ? `In this style: ${imageStyle}.` : "";
+
+    const concatenatedPrompt = styleString + decodedPrompt;
+
     console.log({ concatenatedPrompt });
 
     let generatedImageUrl: string;

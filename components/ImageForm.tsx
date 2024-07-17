@@ -35,7 +35,7 @@ import { checkPromptForCopyRight } from "@/lib/openai/copyrightCheck";
 import { PromptConfirmationDialog } from "./PromptConfirmationDialog";
 import { SelectFormField } from "./form/SelectFormField";
 
-const imageStyleOptions = [
+const styleOptions = [
     "Anime",
     "Abstract",
     "Cartoon",
@@ -58,7 +58,7 @@ const locationOptions = [
 
 const FormSchema = z.object({
     modelProvider: z.string().default("stable-diffusion"),
-    style: z.enum(imageStyleOptions).optional(),
+    style: z.enum(styleOptions).optional(),
     locationOptions: z.enum(locationOptions).optional(),
 });
 
@@ -73,14 +73,14 @@ export function ImageForm() {
 
     const [modelProvider, setModelProvider] =
         useState<string>("stable-diffusion");
-    const [imageStyle, setImageStyle] = useState<string>();
+    const [style, setStyle] = useState<string>();
     const [location, setLocation] = useState<string>();
 
     const formFields = [
         {
             name: "Style",
-            options: imageStyleOptions,
-            set: setImageStyle,
+            options: styleOptions,
+            set: setStyle,
         },
         {
             name: "Location",
@@ -93,10 +93,10 @@ export function ImageForm() {
     const router = useRouter();
 
     const continueToNextStep = () => {
-        console.log({ modelProvider, imageStyle, location });
+        console.log({ modelProvider, style, location });
 
         router.push(
-            `/image/${prompt}?model=${modelProvider}&imageStyle=${imageStyle}&location=${location}`,
+            `/image/${prompt}?model=${modelProvider}&style=${style}&location=${location}`,
         );
     };
 

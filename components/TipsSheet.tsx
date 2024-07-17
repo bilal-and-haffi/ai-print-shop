@@ -13,10 +13,13 @@ import { Info } from "lucide-react";
 export function TipsSheet() {
     return (
         <Sheet>
-            <SheetTrigger asChild>
+            <SheetTrigger asChild className="md:hidden">
                 <p className="hover:cursor-pointer hover:text-zinc-200">
                     <Info />
                 </p>
+            </SheetTrigger>
+            <SheetTrigger asChild className="hidden md:block">
+                <p className="hover:cursor-pointer hover:text-zinc-200">Tips</p>
             </SheetTrigger>
             <SheetContent>
                 <SheetHeader>

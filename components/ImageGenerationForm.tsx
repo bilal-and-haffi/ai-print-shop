@@ -28,25 +28,18 @@ import { checkPromptForCopyRight } from "@/lib/openai/copyrightCheck";
 import { PromptConfirmationDialog } from "./PromptConfirmationDialog";
 import { SelectFormField } from "./form/SelectFormField";
 
-const styleOptions = [
-    "Anime",
-    "Abstract",
-    "Cartoon",
-    "Vintage",
-    "Futuristic",
-    "Minimalist",
-    "Surreal",
-    "Watercolor",
-] as const;
+const styleOptions = ["Anime", "Cartoon", "Futuristic", "Photograph"] as const;
 
 const locationOptions = [
-    "Indoors",
-    "Outdoors",
-    "Urban",
-    "Rural",
-    "Underwater",
-    "Outer Space",
+    "Dessert",
     "Fantasy Land",
+    "Indoors",
+    "Mars",
+    "Outdoors",
+    "Rural",
+    "Space",
+    "Underwater",
+    "Urban",
 ] as const;
 
 const FormSchema = z.object({
@@ -55,7 +48,7 @@ const FormSchema = z.object({
     locationOptions: z.enum(locationOptions).optional(),
 });
 
-export function ImageForm() {
+export function ImageGenerationForm() {
     const initalPrompt =
         envClient.NEXT_PUBLIC_ENV === "development" ? "test" : "";
     const [prompt, setPrompt] = useState<string>(initalPrompt);
@@ -126,14 +119,22 @@ export function ImageForm() {
                     alertReason={alertReason}
                 />
             )}
+            <Label htmlFor="prompt">Enter your prompt</Label>
+            <Textarea
+                ref={textAreaRef}
+                placeholder="Be as descriptive as possible. Mention any desired art style, key elements, colors, lighting, and any specific emotions or themes you want to convey."
+                value={prompt}
+                onChange={onInputChanged}
+                className="h-60 resize-none rounded-lg"
+                autoFocus
+            />
             <Form {...form}>
-                <form className="w-full">
+                <form className="w-full space-y-4">
                     <FormField
                         control={form.control}
                         name="modelProvider"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Image Generator</FormLabel>
                                 <Select
                                     onValueChange={(e) => {
                                         setModelProvider(e);
@@ -143,8 +144,8 @@ export function ImageForm() {
                                     <FormControl>
                                         <SelectTrigger>
                                             <SelectValue
-                                                placeholder="Stability-ai - Stable Diffusion"
-                                                defaultValue="stable-diffusion"
+                                                placeholder="Generate image with: DALL-E 3"
+                                                defaultValue="openai"
                                             />
                                         </SelectTrigger>
                                     </FormControl>
@@ -175,15 +176,6 @@ export function ImageForm() {
                     })}
                 </form>
             </Form>
-            <Label htmlFor="prompt">Enter your prompt</Label>
-            <Textarea
-                ref={textAreaRef}
-                placeholder="Be as descriptive as possible. Mention any desired art style, key elements, colors, lighting, and any specific emotions or themes you want to convey."
-                value={prompt}
-                onChange={onInputChanged}
-                className="h-60 resize-none rounded-lg"
-                autoFocus
-            />
             <Button onClick={generateImage} data-testid="Generate Image Button">
                 Generate Image
             </Button>

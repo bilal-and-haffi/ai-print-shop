@@ -6,7 +6,7 @@ import { Bot, MessageSquareMore } from "lucide-react";
 export function SiteHeader() {
     return (
         <header className="sticky top-0 z-50 w-full  border-b-white bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-            <div className="container mx-auto flex max-w-screen-2xl items-center justify-between p-4 align-middle md:p-0 md:py-4">
+            <div className="container mx-auto flex max-w-screen-2xl items-center justify-between p-4 align-middle">
                 <Link className="flex space-x-2" href="/">
                     <Bot />
                     <span>AI Print Shop</span>

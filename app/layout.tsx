@@ -23,10 +23,6 @@ export const metadata: Metadata = {
     description:
         "Create personalized custom clothes with AI-generated images. Easy to order, print-on-demand T-shirts and apparel.",
     keywords: ["AI", "image", "print", "T-shirt", "clothes"],
-    icons: {
-        icon: "bot.svg",
-        apple: "bot.svg",
-    },
 };
 
 export default function RootLayout({

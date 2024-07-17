@@ -17,6 +17,7 @@ export const addToImageTable = async ({
 };
 
 export const getPromptFromImageId = async (printifyImageId: string) => {
+    console.log({ msg: "Getting prompt from image id", printifyImageId });
     const selectResult = await dbClient
         .select()
         .from(imageTable)

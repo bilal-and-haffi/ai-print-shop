@@ -9,6 +9,7 @@ export default async function ProductPage({
     params: { printifyImageId: string };
 }) {
     const { printifyImageId } = params;
+    console.log({ printifyImageId });
 
     const [
         tShirtProduct,

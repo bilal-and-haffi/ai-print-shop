@@ -3,10 +3,9 @@ import { postImageToPrintify } from "@/lib/printify/service";
 import { addToImageTable } from "@/db/image";
 import { generateOpenAiImageUrl } from "@/lib/images/openai";
 import { generateStableDiffusionImageUrl } from "@/lib/images/replicate";
+import { ModelsEnum } from "@/components/ImageForm";
 
 export const maxDuration = 300;
-
-export const ModelsEnum = ["openai", "stable-diffusion"] as const;
 
 export default async function GenerateImagePage(params: {
     params: { prompt: string };

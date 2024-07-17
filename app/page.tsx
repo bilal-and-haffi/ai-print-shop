@@ -1,5 +1,5 @@
 import { Card } from "@/components/ui/card";
-import { TextAreaAndButton } from "../components/TextAreaAndButton";
+import { ImageForm } from "../components/ImageForm";
 
 export default function Home() {
     return (
@@ -10,7 +10,8 @@ export default function Home() {
                     on demand!
                 </p>
             </Card>
-            <TextAreaAndButton />
+
+            <ImageForm />
         </div>
     );
 }

@@ -28,11 +28,25 @@ import { checkPromptForCopyRight } from "@/lib/openai/copyrightCheck";
 import { PromptConfirmationDialog } from "./PromptConfirmationDialog";
 import { InstructionsDialog } from "./InstructionsDialog";
 
+const imageStyles = [
+    "Realistic",
+    "Abstract",
+    "Cartoon",
+    "Vintage",
+    "Futuristic",
+    "Minimalist",
+    "Surreal",
+    "Watercolor",
+    "Pop Art",
+    "Impressionist",
+] as const;
+
 const FormSchema = z.object({
     modelProvider: z.string().default("stable-diffusion"),
+    style: z.enum(imageStyles),
 });
 
-export function TextAreaAndButton() {
+export function ImageForm() {
     const initalPrompt =
         envClient.NEXT_PUBLIC_ENV === "development" ? "test" : "";
     const [prompt, setPrompt] = useState<string>(initalPrompt);
@@ -41,6 +55,7 @@ export function TextAreaAndButton() {
     const [showConfirmationDialog, setShowConfirmationDialog] =
         useState<boolean>(false);
     const [alertReason, setAlertReason] = useState<string>("");
+    const [imageStyle, setImageStyle] = useState<string>(imageStyles[0]);
 
     const textAreaRef = useRef<HTMLTextAreaElement>(null);
     const router = useRouter();
@@ -115,6 +130,40 @@ export function TextAreaAndButton() {
                                     </SelectContent>
                                 </Select>
                                 <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name={"style"}
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Style</FormLabel>
+                                <Select
+                                    onValueChange={(value) => {
+                                        setImageStyle(value);
+                                    }}
+                                    defaultValue={field.value}
+                                >
+                                    <FormControl>
+                                        <SelectTrigger>
+                                            <SelectValue
+                                                placeholder={imageStyles[0]}
+                                                defaultValue={imageStyles[0]}
+                                            />
+                                        </SelectTrigger>
+                                    </FormControl>
+                                    <SelectContent>
+                                        {imageStyles.map((style) => (
+                                            <SelectItem
+                                                key={style}
+                                                value={style}
+                                            >
+                                                {style}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
                             </FormItem>
                         )}
                     />

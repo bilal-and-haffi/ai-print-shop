@@ -20,6 +20,8 @@ export default async function GenerateImagePage(params: {
         return <div>Text is required</div>;
     }
 
+    const isTestPrompt = decodedPrompt === "test prompt";
+
     const { model, style, location } = params.searchParams;
 
     console.log({ model, style, location });
@@ -37,7 +39,14 @@ export default async function GenerateImagePage(params: {
     let generatedImageUrl: string;
     console.log({ modelOptions });
 
-    if (model === modelOptions[0]) {
+    if (isTestPrompt) {
+        console.log(
+            "Test prompt detected. Returning test image. (Saving costs).",
+        );
+        const testImageUrl =
+            "https://static.wikia.nocookie.net/dragonball/images/b/ba/Goku_anime_profile.png/revision/latest?cb=20220825041430";
+        generatedImageUrl = testImageUrl;
+    } else if (model === modelOptions[0]) {
         generatedImageUrl = await generateOpenAiImageUrl(concatenatedPrompt);
     } else if (model === modelOptions[1]) {
         generatedImageUrl =

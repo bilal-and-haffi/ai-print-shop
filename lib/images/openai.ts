@@ -2,17 +2,6 @@ import OpenAI from "openai";
 import { envServer } from "../env/server";
 
 export const generateOpenAiImageUrl = async (prompt: string) => {
-    const isTestPrompt = prompt === "test prompt";
-    if (isTestPrompt) {
-        console.log(
-            "Test prompt detected. Returning test image. (Saving costs).",
-        );
-        const testImageUrl =
-            "https://static.wikia.nocookie.net/dragonball/images/b/ba/Goku_anime_profile.png/revision/latest?cb=20220825041430";
-
-        return testImageUrl;
-    }
-
     const apiKey = envServer.OPENAI_API_KEY;
     if (!apiKey) {
         console.error(

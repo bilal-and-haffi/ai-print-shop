@@ -35,14 +35,17 @@ export function SelectFormField({
                         <FormControl>
                             <SelectTrigger>
                                 <SelectValue
-                                    placeholder={`${name} (optional)`}
+                                    placeholder={`Select a ${name.toLowerCase()} (optional)`}
                                 />
                             </SelectTrigger>
                         </FormControl>
                         <SelectContent>
                             {options.map((option) => (
                                 <SelectItem key={option} value={option}>
-                                    {option}
+                                    <span className="text-muted-foreground">
+                                        {name}
+                                    </span>
+                                    : {option}
                                 </SelectItem>
                             ))}
                         </SelectContent>

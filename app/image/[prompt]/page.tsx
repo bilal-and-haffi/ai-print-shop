@@ -10,7 +10,7 @@ export const ModelsEnum = ["openai", "stable-diffusion"] as const;
 
 export default async function GenerateImagePage(params: {
     params: { prompt: string };
-    searchParams: { model: string; imageStyle: string; location: string };
+    searchParams: { model: string; style: string; location: string };
 }) {
     const { prompt: encodedPrompt } = params.params;
     const decodedPrompt = decodeURIComponent(encodedPrompt);
@@ -21,12 +21,12 @@ export default async function GenerateImagePage(params: {
         return <div>Text is required</div>;
     }
 
-    const { model, imageStyle, location } = params.searchParams;
+    const { model, style, location } = params.searchParams;
 
-    console.log({ model, imageStyle, location });
+    console.log({ model, style, location });
 
     const styleString =
-        imageStyle !== "undefined" ? `In this style: ${imageStyle}. ` : "";
+        style !== "undefined" ? `In this style: ${style}. ` : "";
 
     const locationString =
         location !== undefined ? `In this location: ${location}. ` : "";

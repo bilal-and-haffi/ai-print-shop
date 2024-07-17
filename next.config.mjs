@@ -11,6 +11,7 @@ const nextConfig = {
                 hostname: "images-api.printify.com",
             },
         ],
+        unoptimized: true,
     },
 };
 

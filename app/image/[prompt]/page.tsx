@@ -26,8 +26,7 @@ export default async function GenerateImagePage(params: {
 
     console.log({ model, style, location });
 
-    const styleString =
-        style !== "undefined" ? `In this style: ${style}. ` : "";
+    const styleString = style !== undefined ? `In this style: ${style}. ` : "";
 
     const locationString =
         location !== undefined ? `In this location: ${location}. ` : "";
@@ -41,7 +40,7 @@ export default async function GenerateImagePage(params: {
 
     if (isTestPrompt) {
         console.log(
-            "Test prompt detected. Returning test image. (Saving costs).",
+            "Test prompt detected. Setting imageurl to test image. (Saving costs).",
         );
         const testImageUrl =
             "https://static.wikia.nocookie.net/dragonball/images/b/ba/Goku_anime_profile.png/revision/latest?cb=20220825041430";

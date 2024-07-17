@@ -28,7 +28,6 @@ import { checkPromptForCopyRight } from "@/lib/openai/copyrightCheck";
 import { PromptConfirmationDialog } from "./PromptConfirmationDialog";
 import { SelectFormField } from "./form/SelectFormField";
 
-
 const styleOptions = [
     "Anime",
     "Abstract",

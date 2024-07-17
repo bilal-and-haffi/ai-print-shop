@@ -35,6 +35,8 @@ import { checkPromptForCopyRight } from "@/lib/openai/copyrightCheck";
 import { PromptConfirmationDialog } from "./PromptConfirmationDialog";
 import { SelectFormField } from "./form/SelectFormField";
 
+export const ModelsEnum = ["openai", "stable-diffusion"] as const;
+
 const styleOptions = [
     "Anime",
     "Abstract",

@@ -1,5 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { ImageForm } from "../components/ImageForm";
+import { InstructionsDialog } from "@/components/InstructionsDialog";
 
 export default function Home() {
     return (
@@ -12,6 +13,7 @@ export default function Home() {
             </Card>
 
             <ImageForm />
+            <InstructionsDialog />
         </div>
     );
 }

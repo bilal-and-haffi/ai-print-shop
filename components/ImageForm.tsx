@@ -73,7 +73,7 @@ export function ImageForm() {
         );
     };
 
-    const submitGenerateText = async () => {
+    const generateImage = async () => {
         if (prompt.trim() === "") return;
 
         const response = await checkPromptForCopyRight(prompt);
@@ -156,13 +156,9 @@ export function ImageForm() {
                 className="h-60 resize-none rounded-lg"
                 autoFocus
             />
-            <Button
-                onClick={submitGenerateText}
-                data-testid="Generate Image Button"
-            >
+            <Button onClick={generateImage} data-testid="Generate Image Button">
                 Generate Image
             </Button>
-            <InstructionsDialog />
         </>
     );
 }

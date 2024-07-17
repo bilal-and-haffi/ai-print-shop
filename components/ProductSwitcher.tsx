@@ -10,6 +10,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "./ui/select";
+import { JSX } from "react";
 
 export const ProductSwitcher = ({
     selectedProductType,
@@ -25,6 +26,24 @@ export const ProductSwitcher = ({
         [ProductType.Hoodie, "Hoodie"],
         [ProductType.Mug, "Mug"],
     ]);
+
+    const ProductButtons: JSX.IntrinsicAttributes | JSX.Element[] = [];
+
+    productsMap.forEach((name, productType) => {
+        ProductButtons.push(
+            <Button
+                className={
+                    selectedProductType === productType
+                        ? "ring-1 ring-white"
+                        : ""
+                }
+                variant={"outline"}
+                onClick={() => setSelectedProductType(productType)}
+            >
+                {name}
+            </Button>,
+        );
+    });
 
     return (
         <div
@@ -56,41 +75,9 @@ export const ProductSwitcher = ({
                 </Select>
             </div>
             <div id="product-links-md" className="hidden space-x-2 md:flex">
-                <Button
-                    className={
-                        selectedProductType === ProductType.TShirt
-                            ? "ring-1 ring-white"
-                            : ""
-                    }
-                    variant={"outline"}
-                    onClick={() => setSelectedProductType(ProductType.TShirt)}
-                >
-                    T Shirt
-                </Button>
-                <Button
-                    className={
-                        selectedProductType === ProductType.Hoodie
-                            ? "ring-1 ring-white"
-                            : ""
-                    }
-                    variant={"outline"}
-                    onClick={() => setSelectedProductType(ProductType.Hoodie)}
-                >
-                    Hoodie
-                </Button>
-                <Button
-                    className={
-                        selectedProductType === ProductType.Mug
-                            ? "ring-1 ring-white"
-                            : ""
-                    }
-                    variant={"outline"}
-                    onClick={() => setSelectedProductType(ProductType.Mug)}
-                >
-                    Mug
-                </Button>
+                {ProductButtons}
             </div>
-            {/* needs to be an a because otherwise causes bugs */}
+            {/* needs to be an <a> because otherwise causes bugs */}
             <a href={`/image/${prompt}?model=DALL-E%203`}>
                 <Button
                     data-testid="Generate new image with same prompt button"

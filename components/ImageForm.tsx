@@ -33,7 +33,7 @@ import { envClient } from "@/lib/env/client";
 import { Label } from "./ui/label";
 import { checkPromptForCopyRight } from "@/lib/openai/copyrightCheck";
 import { PromptConfirmationDialog } from "./PromptConfirmationDialog";
-import { InstructionsDialog } from "./InstructionsDialog";
+import { SelectFormField } from "./form/SelectFormField";
 
 const imageStyles = [
     "Anime",
@@ -144,6 +144,7 @@ export function ImageForm() {
                     <SelectFormField
                         form={form}
                         setFieldValue={setImageStyle}
+                        options={imageStyles as unknown as string[]}
                     />
                 </form>
             </Form>
@@ -160,45 +161,5 @@ export function ImageForm() {
                 Generate Image
             </Button>
         </>
-    );
-}
-
-function SelectFormField({
-    form,
-    setFieldValue,
-}: {
-    form: any;
-    setFieldValue: Dispatch<SetStateAction<string | undefined>>;
-}) {
-    return (
-        <FormField
-            control={form.control}
-            name={"style"}
-            render={() => (
-                <FormItem>
-                    <FormLabel>Style</FormLabel>
-                    <Select
-                        onValueChange={(value) => {
-                            setFieldValue(value);
-                        }}
-                    >
-                        <FormControl>
-                            <SelectTrigger>
-                                <SelectValue
-                                    placeholder={"Choose a style (optional)"}
-                                />
-                            </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                            {imageStyles.map((style) => (
-                                <SelectItem key={style} value={style}>
-                                    {style}
-                                </SelectItem>
-                            ))}
-                        </SelectContent>
-                    </Select>
-                </FormItem>
-            )}
-        />
     );
 }

@@ -26,7 +26,7 @@ export default async function GenerateImagePage(params: {
     console.log({ imageStyle });
 
     const styleString =
-        imageStyle !== "undefined" ? `In this style: ${imageStyle}.` : "";
+        imageStyle !== "undefined" ? `In this style: ${imageStyle}. ` : "";
 
     const concatenatedPrompt = styleString + decodedPrompt;
 

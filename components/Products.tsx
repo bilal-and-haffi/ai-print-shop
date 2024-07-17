@@ -12,6 +12,12 @@ export const enum ProductType {
     Mug = "mug",
 }
 
+const productsMap = new Map([
+    [ProductType.TShirt, "T Shirt"],
+    [ProductType.Hoodie, "Hoodie"],
+    [ProductType.Mug, "Mug"],
+]);
+
 export const Products = ({
     tShirtProduct,
     hoodieProduct,
@@ -72,6 +78,7 @@ export const Products = ({
                 selectedProductType={selectedProductType}
                 setSelectedProductType={setSelectedProductType}
                 prompt={tShirtProduct.title}
+                productsMap={productsMap}
             />
             <CurrentProductDetails />
         </>

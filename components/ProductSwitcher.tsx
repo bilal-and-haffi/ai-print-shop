@@ -16,17 +16,13 @@ export const ProductSwitcher = ({
     selectedProductType,
     setSelectedProductType,
     prompt,
+    productsMap,
 }: {
     selectedProductType: ProductType;
     setSelectedProductType: (productType: ProductType) => void;
     prompt: string;
+    productsMap: Map<ProductType, string>;
 }) => {
-    const productsMap = new Map([
-        [ProductType.TShirt, "T Shirt"],
-        [ProductType.Hoodie, "Hoodie"],
-        [ProductType.Mug, "Mug"],
-    ]);
-
     const ProductButtons: JSX.IntrinsicAttributes | JSX.Element[] = [];
 
     productsMap.forEach((name, productType) => {
@@ -39,6 +35,7 @@ export const ProductSwitcher = ({
                 }
                 variant={"outline"}
                 onClick={() => setSelectedProductType(productType)}
+                key={name}
             >
                 {name}
             </Button>,

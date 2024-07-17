@@ -34,7 +34,7 @@ export const generateOpenAiImageUrl = async (prompt: string) => {
         n: 1,
         quality: "hd",
         response_format: "url",
-        style: "natural",
+        style: "vivid",
     });
 
     const url = response.data[0].url!;

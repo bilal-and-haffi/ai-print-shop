@@ -6,11 +6,11 @@ import { generateStableDiffusionImageUrl } from "@/lib/images/replicate";
 
 export const maxDuration = 300;
 
-const ModelsEnum = ["openai", "stable-diffusion"] as const;
+export const ModelsEnum = ["openai", "stable-diffusion"] as const;
 
 export default async function GenerateImagePage(params: {
     params: { prompt: string };
-    searchParams: { model: string };
+    searchParams: { model: string; imageStyle: string };
 }) {
     const { prompt: encodedPrompt } = params.params;
     const decodedPrompt = decodeURIComponent(encodedPrompt);
@@ -21,14 +21,18 @@ export default async function GenerateImagePage(params: {
         return <div>Text is required</div>;
     }
 
-    const { model } = params.searchParams;
+    const { model, imageStyle } = params.searchParams;
+
+    const concatenatedPrompt = `In this style: ${imageStyle}.` + decodedPrompt;
+    console.log({ concatenatedPrompt });
 
     let generatedImageUrl: string;
+
     if (model === ModelsEnum[0]) {
-        generatedImageUrl = await generateOpenAiImageUrl(decodedPrompt);
+        generatedImageUrl = await generateOpenAiImageUrl(concatenatedPrompt);
     } else if (model === ModelsEnum[1]) {
         generatedImageUrl =
-            await generateStableDiffusionImageUrl(decodedPrompt);
+            await generateStableDiffusionImageUrl(concatenatedPrompt);
     } else {
         console.error("Invalid model", { model });
         return <div>Invalid model</div>;
@@ -40,7 +44,7 @@ export default async function GenerateImagePage(params: {
     );
 
     await addToImageTable({
-        prompt: decodedPrompt,
+        prompt: concatenatedPrompt,
         printifyImageId: printifyImageId,
         printifyImageUrl: generatedImageUrl,
     });

@@ -29,7 +29,7 @@ import { PromptConfirmationDialog } from "./PromptConfirmationDialog";
 import { InstructionsDialog } from "./InstructionsDialog";
 
 const imageStyles = [
-    "Realistic",
+    "Anime",
     "Abstract",
     "Cartoon",
     "Vintage",
@@ -37,8 +37,6 @@ const imageStyles = [
     "Minimalist",
     "Surreal",
     "Watercolor",
-    "Pop Art",
-    "Impressionist",
 ] as const;
 
 const FormSchema = z.object({
@@ -61,8 +59,11 @@ export function ImageForm() {
     const router = useRouter();
 
     const continueToNextStep = () => {
-        console.log(modelProvider);
-        router.push(`/image/${prompt}?model=${modelProvider}`);
+        console.log({ modelProvider });
+        console.log({ imageStyle });
+        router.push(
+            `/image/${prompt}?model=${modelProvider}&imageStyle=${imageStyle}`,
+        );
     };
 
     const submitGenerateText = async () => {

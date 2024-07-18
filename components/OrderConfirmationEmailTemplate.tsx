@@ -17,12 +17,12 @@ export const OrderConfirmationEmailTemplate: React.FC<
             Links:
             <ul>
                 <li>
+                    <a href={printifyConnectUrl}>Track order</a>
+                </li>
+                <li>
                     <a href="https://www.ai-print-shop.com/">
                         Continue shopping
                     </a>
-                </li>
-                <li>
-                    <a href={printifyConnectUrl}>Track order</a>
                 </li>
                 <li>
                     <a href="mailto:customer-service@ai-print-shop.com">
@@ -31,8 +31,8 @@ export const OrderConfirmationEmailTemplate: React.FC<
                 </li>
                 <li>
                     <a href="https://www.ai-print-shop.com/feedback">
-                        Fill out our feedback form. Include anything you were
-                        happy or unhappy about. Let us know how we can improve.
+                        We value your feedback! Tell us what you enjoyed and how
+                        we can make your experience even better.
                     </a>
                 </li>
             </ul>

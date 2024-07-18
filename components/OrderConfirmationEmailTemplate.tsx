@@ -26,13 +26,12 @@ export const OrderConfirmationEmailTemplate: React.FC<
                 </li>
                 <li>
                     <a href="mailto:customer-service@ai-print-shop.com">
-                        Email Us. We are happy to help.
+                        Email us
                     </a>
                 </li>
                 <li>
-                    <a href="https://www.ai-print-shop.com/feedback">
-                        We value your feedback! Tell us what you enjoyed and how
-                        we can make your experience even better.
+                    <a href="https://www.ai-print-shop.com/support">
+                        Leave feedback
                     </a>
                 </li>
             </ul>

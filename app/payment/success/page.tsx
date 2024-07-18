@@ -11,6 +11,13 @@ import { type PrintifyOrderResponse } from "@/interfaces/PrintifyTypes";
 import { type OrderRow } from "@/db/order";
 import { sendOrderConfirmationEmail } from "@/lib/email/sendOrderConfirmationEmail";
 import { sendAnExistingOrderToProduction } from "@/lib/printify/sendAnExistingOrderToProduction";
+import {
+    Card,
+    CardContent,
+    CardFooter,
+    CardHeader,
+    CardTitle,
+} from "@/components/ui/card";
 
 export const dynamic = "force-dynamic";
 
@@ -76,20 +83,31 @@ export default async function Page(params: {
     }
 
     return (
-        <div className="flex flex-col items-center space-y-5">
-            <p>Your payment has been successfully processed.</p>
-            <Link href="/">
-                <Button>Continue shopping</Button>
-            </Link>
-            <Suspense fallback={<div>Loading...</div>}>
-                <Link href={printifyOrder.printify_connect.url}>
-                    <Button>Track order</Button>
+        <Card>
+            <CardHeader>
+                <CardTitle>Your order has been confirmed!</CardTitle>
+            </CardHeader>
+            <CardContent>
+                <p>A confirmation has been sent to your email</p>
+                <p>Thank you for shopping with us. </p>
+                <p>We hope you love your product!</p>
+            </CardContent>
+            <CardFooter className="flex flex-col gap-4 md:flex-row md:justify-normal">
+                <Link className="w-full" href="/">
+                    <Button className="w-full">Continue shopping</Button>
                 </Link>
-            </Suspense>
-            <Link href="/feedback">
-                We value your feedback! Tell us what you enjoyed and how we can
-                make your experience even better.
-            </Link>
-        </div>
+                <Suspense fallback={<div>Loading...</div>}>
+                    <Link
+                        className="w-full"
+                        href={printifyOrder.printify_connect.url}
+                    >
+                        <Button className="w-full">Track order</Button>
+                    </Link>
+                </Suspense>
+                <Link className="w-full" href="/support">
+                    <Button className="w-full">Leave feedback</Button>
+                </Link>
+            </CardFooter>
+        </Card>
     );
 }

@@ -1,4 +1,4 @@
-import type { Metadata, Viewport } from "next";
+import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { CardFooter } from "@/components/ui/card";
@@ -9,13 +9,6 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
-
-export const viewport: Viewport = {
-    initialScale: 1,
-    width: "device-width",
-    maximumScale: 1,
-    userScalable: false,
-};
 
 export const metadata: Metadata = {
     title: "AI Print Shop",

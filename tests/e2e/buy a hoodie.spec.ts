@@ -1,12 +1,13 @@
 import { test, expect } from "@playwright/test";
 
-test("buy a t shirt", async ({ page }) => {
+test("buy a hoodie", async ({ page }) => {
     await page.goto("/");
     await page.getByPlaceholder("Example: An astronaut playing").click();
     await page
         .getByPlaceholder("Example: An astronaut playing")
         .fill("test prompt");
     await page.getByTestId("Generate Image Button").click();
+    await page.getByRole("button", { name: "Hoodie" }).click();
     await page.getByRole("button", { name: "Buy now" }).click();
     await page.getByLabel("Email").click();
     await page.getByLabel("Email").fill("bilalm354@gmail.com");

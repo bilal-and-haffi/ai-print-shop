@@ -60,6 +60,8 @@ export default async function GenerateImagePage(params: {
         "generatedImage.png",
     );
 
+    console.log({ printifyImageId });
+
     await addToImageTable({
         prompt: concatenatedPrompt,
         printifyImageId: printifyImageId,

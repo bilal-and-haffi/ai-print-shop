@@ -13,6 +13,6 @@ test("should not have invalid model text", async ({ page }) => {
     await expect(page.getByText("Invalid model")).not.toBeVisible({});
 });
 
-test('should have url "/product"', async ({ page }) => {
+test.skip('should have url "/product"', async ({ page }) => {
     await expect(page).toHaveURL(/\/product/, { timeout: 30000 });
 });

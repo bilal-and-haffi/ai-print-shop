@@ -36,7 +36,7 @@ export default function RootLayout({
             className="h-full overflow-x-hidden"
             suppressHydrationWarning
         >
-            <body className={`${inter.className} flex flex-col w-full overflow-x-hidden`}>
+            <body className={`${inter.className} flex flex-col h-full w-full overflow-x-hidden`}>
                 <Toaster />
 
                 <SiteHeader />

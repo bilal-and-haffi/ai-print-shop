@@ -63,7 +63,7 @@ export async function createCheckoutSession(params: checkOutSessionParams) {
                 price_data: {
                     currency: "gbp",
                     product_data: {
-                        name: `${productType} - ${orderVariantLabel}`, // TODO: Figure out dynamically
+                        name: `${productType} - ${orderVariantLabel}`,
                         description: orderTitle,
                         images: [orderPreview],
                     },

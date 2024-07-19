@@ -40,7 +40,7 @@ export default function RootLayout({
                 <Toaster />
 
                 <SiteHeader />
-                <main className="flex w-11/12 max-w-screen-md flex-col items-center justify-center space-y-4 self-center pb-4 text-center md:w-full ">
+                <main className="flex w-full max-w-screen-md flex-col items-center justify-center space-y-4 self-center pb-4 text-center md:w-full overflow-x-hidden">
                     <ThemeProvider
                         attribute="class"
                         defaultTheme="dark"

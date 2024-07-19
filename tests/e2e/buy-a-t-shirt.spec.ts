@@ -20,7 +20,7 @@ test("buy a t shirt", async ({ page }) => {
     await page
         .getByTestId("hosted-payment-submit-button")
         .click({ force: true });
-    await page.waitForTimeout(10000);
+    await page.waitForURL(/success/);
     await expect(
         page.getByRole("heading", { name: "Your order has been confirmed!" }),
     ).toBeVisible({ timeout: 10000 });

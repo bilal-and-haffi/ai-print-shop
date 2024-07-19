@@ -4,6 +4,7 @@ import { imageTable } from "@/db/schema";
 import { eq } from "drizzle-orm";
 
 type ImageInsert = typeof imageTable.$inferInsert;
+
 export const addToImageTable = async ({
     prompt,
     printifyImageId,

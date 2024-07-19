@@ -7,58 +7,10 @@ import {
     PrintifyImageResponse,
     PrintifyOrderExistingProductRequest,
     PrintifyOrderResponse,
-    PrintifyProductRequest,
     RetrieveProductResponse,
 } from "@/interfaces/PrintifyTypes";
 import { envServer } from "@/lib/env/server";
-import { getPromptFromImageId } from "@/db/image";
-import { fetchProductVariants } from "./fetchProductVariants";
 import { Variant } from "@/interfaces/Printify/Variant";
-
-export async function constructPrintifyProductRequest({
-    printifyImageId,
-    printProviderId,
-    blueprintId,
-}: {
-    printifyImageId: string;
-    printProviderId: number;
-    blueprintId: number;
-}) {
-    const variants = await fetchProductVariants(blueprintId, printProviderId);
-    const variantIds = variants.map((variant) => variant.id);
-    const prompt = await getPromptFromImageId(printifyImageId);
-
-    const productRequest: PrintifyProductRequest = {
-        blueprint_id: blueprintId,
-        description: "",
-        print_areas: [
-            {
-                variant_ids: variantIds,
-                placeholders: [
-                    {
-                        position: "front",
-                        images: [
-                            {
-                                id: printifyImageId,
-                                x: 0.5,
-                                y: 0.5,
-                                scale: 1,
-                                angle: 0,
-                            },
-                        ],
-                    },
-                ],
-            },
-        ],
-        print_provider_id: printProviderId,
-        title: prompt,
-        variants: variantIds.map((variantId) => ({
-            id: variantId,
-            price: 1, // ???
-        })),
-    };
-    return productRequest;
-}
 
 export async function createPrintifyOrderForExistingProduct(
     line_items: LineItemBase[],

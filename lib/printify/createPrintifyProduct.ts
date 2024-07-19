@@ -1,7 +1,7 @@
 import { PRINTIFY_BASE_URL } from "@/app/data/consts";
 import { PrintifyProductRequest } from "@/interfaces/PrintifyTypes";
 import { envServer } from "../env/server";
-import { constructPrintifyProductRequest } from "./service";
+import { constructPrintifyProductRequest } from "./constructPrintifyProductRequest";
 
 export async function createPrintifyProduct({
     printifyImageId,

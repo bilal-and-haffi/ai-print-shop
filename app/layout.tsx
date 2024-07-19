@@ -36,11 +36,11 @@ export default function RootLayout({
             className="h-full overflow-x-hidden"
             suppressHydrationWarning
         >
-            <body className={`${inter.className} flex h-full flex-col `}>
+            <body className={`${inter.className} flex h-full flex-col`}>
                 <Toaster />
 
                 <SiteHeader />
-                <main className="flex w-full max-w-screen-md flex-col items-center justify-center space-y-4 self-center pb-4 text-center md:w-full overflow-x-hidden">
+                <main className="flex w-11/12 max-w-screen-md flex-col items-center justify-center space-y-4 self-center pb-4 text-center md:w-full overflow-x-hidden">
                     <ThemeProvider
                         attribute="class"
                         defaultTheme="dark"

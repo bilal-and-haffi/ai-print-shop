@@ -33,14 +33,14 @@ export default function RootLayout({
     return (
         <html
             lang="en"
-            className="h-full overflow-x-hidden"
+            className="h-full overflow-x-hidden border border-yellow"
             suppressHydrationWarning
         >
-            <body className={`${inter.className} flex h-full flex-col `}>
+            <body className={`${inter.className} flex h-full flex-col border border-white`}>
                 <Toaster />
 
                 <SiteHeader />
-                <main className="flex w-11/12 max-w-screen-md flex-col items-center justify-center space-y-4 self-center pb-4 text-center md:w-full ">
+                <main className="flex w-11/12 max-w-screen-md flex-col items-center justify-center space-y-4 self-center pb-4 text-center md:w-full border boder-amber">
                     <ThemeProvider
                         attribute="class"
                         defaultTheme="dark"
@@ -50,7 +50,7 @@ export default function RootLayout({
                         {children}
                     </ThemeProvider>
                 </main>
-                <footer className="mt-auto w-full">
+                <footer className="mt-auto w-full border border-green">
                     <CardFooter className="p-0">
                         <Button
                             asChild

@@ -7,9 +7,9 @@ dotEnvConfig({
 
 const envSchema = z.object({
     AI_GIFTS_API_URL: z.string().url(),
-    CURRENCY_API_KEY: z.string(),
     DATABASE_URL: z.string().url(),
     DATABASE_URL_UNPOOLED: z.string().url(),
+    FREE_CURRENCY_API_KEY: z.string(),
     OPENAI_API_KEY: z.string(),
     OPENAI_ORG_ID: z.string(),
     PRINTIFY_API_TOKEN: z.string(),

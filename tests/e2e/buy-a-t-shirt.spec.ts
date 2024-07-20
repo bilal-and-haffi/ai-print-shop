@@ -9,7 +9,7 @@ test("buy a t shirt", async ({ page }) => {
     await page.getByTestId("Generate Image Button").click();
     await page.getByRole("button", { name: "Buy now" }).click();
     await page.getByLabel("Email").click();
-    await page.getByLabel("Email").fill("bilalm354@gmail.com");
+    await page.getByLabel("Email").fill("do-not-send@ai-print-shop.com");
     await page.getByTestId("sms-code-input-0").fill("0");
     await page.getByTestId("sms-code-input-1").fill("0");
     await page.getByTestId("sms-code-input-2").fill("0");

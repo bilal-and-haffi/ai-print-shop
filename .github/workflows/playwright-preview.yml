@@ -9,6 +9,7 @@ env:
     VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
     VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
     VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+    STRIPE_API_KEY: ${{ secrets.STRIPE_API_KEY }}
 
 jobs:
     test:
@@ -30,9 +31,13 @@ jobs:
             - name: Pull Vercel preview environment
               run: vercel env pull --yes .env.ci --environment=preview --git-branch=${{ github.head_ref }} --token=${{ secrets.VERCEL_TOKEN }}
             - name: Install Stripe CLI
-              run: brew install stripe/stripe-cli/stripe
+              run: |
+                  curl -s https://packages.stripe.dev/api/security/keypair/stripe-cli-gpg/public | gpg --dearmor | sudo tee /usr/share/keyrings/stripe.gpg
+                  echo "deb [signed-by=/usr/share/keyrings/stripe.gpg] https://packages.stripe.dev/stripe-cli-debian-local stable main" | sudo tee -a /etc/apt/sources.list.d/stripe.list
+                  sudo apt update
+                  sudo apt install stripe
             - name: Login to Stripe
-              run: stripe login
+              run: stripe login --api-key ${{ secrets.STRIPE_API_KEY }}
             # - name: Drizzle push to db branch
             #   run: npm run db:push
             # - name: Install Playwright Browsers

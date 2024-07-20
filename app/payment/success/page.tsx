@@ -64,9 +64,8 @@ export default async function Page(params: {
     const hasOrderAlreadyBeenProcessed = hasSentEmailAlready;
 
     console.log({ emailId: existingEmailId, hasSentEmailAlready });
-    if (envServer.CI) {
-        console.log("CI so not sending email");
-    } else if (hasSentEmailAlready) {
+    
+    if (hasSentEmailAlready) {
         console.log("Email has already been sent so skipping email sending");
     } else {
         const emailId = await sendOrderConfirmationEmail(

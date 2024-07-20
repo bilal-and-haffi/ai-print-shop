@@ -4,7 +4,7 @@ export async function getCurrentIpAddressCountry() {
     try {
         const x = await fetch("https://ipapi.co/json/");
         const { country } = await x.json();
- 
+
         return country;
     } catch (error) {
         console.error({ error });

@@ -9,7 +9,6 @@ env:
     VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
     VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
     VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-    STRIPE_API_KEY: ${{ secrets.STRIPE_API_KEY }}
 
 jobs:
     test:
@@ -37,7 +36,7 @@ jobs:
                   sudo apt update
                   sudo apt install stripe
             - name: Login to Stripe
-              run: stripe login --api-key ${{ secrets.STRIPE_API_KEY }}
+              run: stripe login
             # - name: Drizzle push to db branch
             #   run: npm run db:push
             # - name: Install Playwright Browsers

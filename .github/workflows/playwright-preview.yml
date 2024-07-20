@@ -36,11 +36,11 @@ jobs:
                   echo "deb [signed-by=/usr/share/keyrings/stripe.gpg] https://packages.stripe.dev/stripe-cli-debian-local stable main" | sudo tee -a /etc/apt/sources.list.d/stripe.list
                   sudo apt update
                   sudo apt install stripe
-            - name: Login to Stripe
-              run: stripe login --api-key ${{secrets.STRIPE_API_KEY}}
-            # - name: Drizzle push to db branch
-            #   run: npm run db:push
-            # - name: Install Playwright Browsers
-            #   run: npm run e2e:install
-            # - name: Run Playwright tests
-            #   run: npm run e2e:headless
+              # run: stripe login --api-key ${{secrets.STRIPE_API_KEY}}
+            # - name: Login to Stripe
+            - name: Drizzle push to db branch
+              run: npm run db:push
+            - name: Install Playwright Browsers
+              run: npm run e2e:install
+            - name: Run Playwright tests
+              run: npm run e2e:headless

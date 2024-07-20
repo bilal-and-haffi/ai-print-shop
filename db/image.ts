@@ -10,6 +10,9 @@ export const addToImageTable = async ({
     printifyImageId,
     printifyImageUrl,
 }: ImageInsert) => {
+    if (!printifyImageId) {
+        console.error({ printifyImageId, msg: "printify image id missing???" });
+    }
     const insertResult = await dbClient
         .insert(imageTable)
         .values({ prompt, printifyImageId, printifyImageUrl })

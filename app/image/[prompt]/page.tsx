@@ -43,7 +43,7 @@ export default async function GenerateImagePage(params: {
             "Test prompt detected. Setting imageurl to test image. (Saving costs).",
         );
         const testImageUrl =
-            "https://oaidalleapiprodscus.blob.core.windows.net/private/org-FLazZlTS0p7egMXaAKZzIe20/user-Z2REKmhVOXP6HYDZ7uA1smQ0/img-m55bSHBXCPoDrexVigKF1yMh.png?st=2024-07-18T12%3A44%3A35Z&se=2024-07-18T14%3A44%3A35Z&sp=r&sv=2023-11-03&sr=b&rscd=inline&rsct=image/png&skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2024-07-18T13%3A18%3A42Z&ske=2024-07-19T13%3A18%3A42Z&sks=b&skv=2023-11-03&sig=S71zzbz719wDUpd47631EFSbG2AHy8p4zmZYZvrBurg%3D";
+            "https://cdn.pixabay.com/photo/2014/06/03/19/38/test-361512_640.jpg";
         generatedImageUrl = testImageUrl;
     } else if (model === modelOptions[0]) {
         generatedImageUrl = await generateOpenAiImageUrl(concatenatedPrompt);

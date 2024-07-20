@@ -17,6 +17,10 @@ export async function sendOrderConfirmationEmail(
     firstName: string,
     printifyConnectUrl: string,
 ) {
+    if (emailAddress === "do-not-send@ai-print-shop.com") {
+        console.log({ msg: "Not sending email", emailAddress });
+        return;
+    }
     try {
         sendOrderConfirmationEmailParamsSchema.parse({
             emailAddress,

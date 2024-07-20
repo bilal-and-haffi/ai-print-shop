@@ -74,7 +74,9 @@ export default async function Page(params: {
             printifyOrder.address_to.first_name,
             printifyOrder.printify_connect.url,
         );
-        addEmailIdToOrderTable({ internalOrderId, emailId });
+        if (emailId) {
+            addEmailIdToOrderTable({ internalOrderId, emailId });
+        }
     }
 
     if (!hasOrderAlreadyBeenProcessed) {

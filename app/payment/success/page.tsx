@@ -18,6 +18,7 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
+import { envServer } from "@/lib/env/server";
 
 export const dynamic = "force-dynamic";
 
@@ -63,15 +64,17 @@ export default async function Page(params: {
     const hasOrderAlreadyBeenProcessed = hasSentEmailAlready;
 
     console.log({ emailId: existingEmailId, hasSentEmailAlready });
-    if (!hasSentEmailAlready) {
+    if (envServer.CI) {
+        console.log("CI so not sending email");
+    } else if (hasSentEmailAlready) {
+        console.log("Email has already been sent so skipping email sending");
+    } else {
         const emailId = await sendOrderConfirmationEmail(
             printifyOrder.address_to.email,
             printifyOrder.address_to.first_name,
             printifyOrder.printify_connect.url,
         );
         addEmailIdToOrderTable({ internalOrderId, emailId });
-    } else {
-        console.log("Email has already been sent so skipping email sending");
     }
 
     if (!hasOrderAlreadyBeenProcessed) {

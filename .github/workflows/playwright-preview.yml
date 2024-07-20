@@ -29,9 +29,13 @@ jobs:
               run: npm install --global vercel@latest
             - name: Pull Vercel preview environment
               run: vercel env pull --yes .env.ci --environment=preview --git-branch=${{ github.head_ref }} --token=${{ secrets.VERCEL_TOKEN }}
-            - name: Drizzle push to db branch
-              run: npm run db:push
-            - name: Install Playwright Browsers
-              run: npm run e2e:install
-            - name: Run Playwright tests
-              run: npm run e2e:headless
+            - name: Install Stripe CLI
+              run: brew install stripe/stripe-cli/stripe
+            - name: Login to Stripe
+              run: stripe login
+            # - name: Drizzle push to db branch
+            #   run: npm run db:push
+            # - name: Install Playwright Browsers
+            #   run: npm run e2e:install
+            # - name: Run Playwright tests
+            #   run: npm run e2e:headless

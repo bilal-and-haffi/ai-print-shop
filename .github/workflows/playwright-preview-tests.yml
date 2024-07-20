@@ -1,8 +1,6 @@
-name: Playwright tests
+name: Playwright preview tests
 on:
     pull_request:
-        branches: [main]
-    push:
         branches: [main]
 
 env:

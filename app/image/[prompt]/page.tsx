@@ -55,6 +55,7 @@ export default async function GenerateImagePage(params: {
         return <div>Invalid model</div>;
     }
 
+    console.error({ generatedImageUrl });
     const { id: printifyImageId } = await postImageToPrintify(
         generatedImageUrl,
         "generatedImage.png",

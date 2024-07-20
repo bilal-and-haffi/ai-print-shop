@@ -4,6 +4,7 @@ import { addToImageTable } from "@/db/image";
 import { generateOpenAiImageUrl } from "@/lib/images/openai";
 import { generateStableDiffusionImageUrl } from "@/lib/images/replicate";
 import { modelOptions } from "@/app/data/modelOptions";
+import { addOptionsToPrompt } from "./addOptionsToPrompt";
 
 export const maxDuration = 300;
 
@@ -24,16 +25,11 @@ export default async function GenerateImagePage(params: {
 
     const { model, style, location } = params.searchParams;
 
-    console.log({ model, style, location });
-
-    const styleString = style !== undefined ? `In this style: ${style}. ` : "";
-
-    const locationString =
-        location !== undefined ? `In this location: ${location}. ` : "";
-
-    const concatenatedPrompt = styleString + locationString + decodedPrompt;
-
-    console.log({ concatenatedPrompt });
+    const concatenatedPrompt = addOptionsToPrompt({
+        style,
+        location,
+        decodedPrompt,
+    });
 
     let generatedImageUrl: string;
     console.log({ modelOptions });

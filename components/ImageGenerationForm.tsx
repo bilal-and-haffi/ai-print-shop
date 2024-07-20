@@ -15,7 +15,13 @@ import { PromptConfirmationDialog } from "./PromptConfirmationDialog";
 import { SelectFormField } from "./form/SelectFormField";
 import { modelOptions } from "../app/data/modelOptions";
 
-const styleOptions = ["Photograph", "Anime", "Cartoon", "Futuristic"] as const;
+const styleOptions = [
+    "Photograph",
+    "Anime",
+    "Cartoon",
+    "Futuristic",
+    "None",
+] as const;
 
 const locationOptions = [
     "Space",
@@ -27,6 +33,7 @@ const locationOptions = [
     "Rural",
     "Underwater",
     "Urban",
+    "None",
 ] as const;
 
 const FormSchema = z.object({

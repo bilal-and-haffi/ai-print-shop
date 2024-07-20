@@ -41,4 +41,4 @@ jobs:
             - name: Install Playwright Browsers
               run: npm run e2e:install
             - name: Run Playwright tests
-              run: npm run e2e:headless
+              run: npm run e2e:ci

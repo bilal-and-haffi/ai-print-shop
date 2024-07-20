@@ -1,5 +1,7 @@
-name: Playwright main tests
+name: Playwright tests
 on:
+    pull_request:
+        branches: [main]
     push:
         branches: [main]
 
@@ -9,9 +11,10 @@ env:
     VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
     VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
     VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+    STRIPE_API_KEY: ${{secrets.STRIPE_API_KEY}}
 
 jobs:
-    test:
+    playwright-tests:
         timeout-minutes: 10
         runs-on: ubuntu-latest
         steps:
@@ -28,7 +31,13 @@ jobs:
             - name: Install vercel cli
               run: npm install --global vercel@latest
             - name: Pull Vercel preview environment
-              run: vercel env pull --yes .env.ci --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+              run: vercel env pull --yes .env.ci --environment=preview --git-branch=${{ github.head_ref }} --token=${{ secrets.VERCEL_TOKEN }}
+            - name: Install Stripe CLI
+              run: |
+                  curl -s https://packages.stripe.dev/api/security/keypair/stripe-cli-gpg/public | gpg --dearmor | sudo tee /usr/share/keyrings/stripe.gpg
+                  echo "deb [signed-by=/usr/share/keyrings/stripe.gpg] https://packages.stripe.dev/stripe-cli-debian-local stable main" | sudo tee -a /etc/apt/sources.list.d/stripe.list
+                  sudo apt update
+                  sudo apt install stripe
             - name: Drizzle push to db branch
               run: npm run db:push
             - name: Install Playwright Browsers

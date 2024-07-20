@@ -64,7 +64,7 @@ export default async function Page(params: {
     const hasOrderAlreadyBeenProcessed = hasSentEmailAlready;
 
     console.log({ emailId: existingEmailId, hasSentEmailAlready });
-    
+
     if (hasSentEmailAlready) {
         console.log("Email has already been sent so skipping email sending");
     } else {

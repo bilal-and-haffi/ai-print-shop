@@ -46,7 +46,7 @@ export const Products = ({
                         retrievedProduct={tShirtProduct}
                         initialSize="L"
                         initialColor="Black"
-                        priceInGbp={20}
+                        priceInGbp={25}
                         variants={tShirtVariants}
                     />
                 );

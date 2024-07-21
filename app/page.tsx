@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 export default function Home() {
     return (
         <div className="flex w-full flex-col items-center gap-16">
-            <div className="flex w-3/4 flex-col gap-16 pt-16 md:w-2/3">
+            <div className="flex w-3/4 flex-col gap-16 pt-16 md:w-3/5">
                 <h1 className="text-3xl md:text-4xl">
                     Create custom clothes with AI images
                 </h1>

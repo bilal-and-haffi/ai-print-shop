@@ -20,9 +20,9 @@ const blueprintIds = {
     ceramicMug: 478,
 };
 
-export const productData: Record<string, PrintifyProductsData> = {
+export const productData: PrintifyProductsData[] = [
     // UK
-    tShirt: {
+    {
         enabled: true,
         name: "Gildan 64000 Unisex Softstyle Shirt",
         displayName: "T Shirt",
@@ -30,7 +30,7 @@ export const productData: Record<string, PrintifyProductsData> = {
         printProviderId: printProviderIds.tShirtAndSons,
         country: "GB",
     },
-    hoodie: {
+    {
         enabled: true,
         name: "Unisex Heavy Blend Hooded Sweatshirt",
         displayName: "Hoodie",
@@ -38,7 +38,7 @@ export const productData: Record<string, PrintifyProductsData> = {
         printProviderId: printProviderIds.printClever,
         country: "GB",
     },
-    mug: {
+    {
         enabled: true,
         name: "Mug",
         displayName: "Mug",
@@ -46,7 +46,7 @@ export const productData: Record<string, PrintifyProductsData> = {
         blueprintId: 1302,
         country: "GB",
     },
-    baseballTee: {
+    {
         enabled: true,
         name: "Unisex 3\\4 Sleeve Baseball Tee",
         displayName: "Baseball Tee",
@@ -54,7 +54,7 @@ export const productData: Record<string, PrintifyProductsData> = {
         printProviderId: printProviderIds.tShirtAndSons,
         country: "GB",
     },
-    disabledTShirt: {
+    {
         enabled: false,
         name: "Unisex Heavy T Shirt Gildan 5000", // tried and was hard and print felt tacky. supplier was print clever for the order
         displayName: "T Shirt",
@@ -62,7 +62,7 @@ export const productData: Record<string, PrintifyProductsData> = {
         printProviderId: printProviderIds.tShirtAndSons,
         country: "GB",
     },
-    disabledTShirt2: {
+    {
         // TRY ME!
         enabled: false,
         name: "Unisex Jersey Short Sleeve Tee Bella+Canvas 3001",
@@ -73,7 +73,7 @@ export const productData: Record<string, PrintifyProductsData> = {
     },
 
     // US
-    usTShirt: {
+    {
         enabled: true,
         displayName: "T Shirt",
         printProviderId: printProviderIds.monsterDigital,
@@ -82,7 +82,7 @@ export const productData: Record<string, PrintifyProductsData> = {
         country: "US",
     },
 
-    usHoodie: {
+    {
         enabled: true,
         displayName: "Hoodie",
         printProviderId: printProviderIds.monsterDigital,
@@ -91,7 +91,7 @@ export const productData: Record<string, PrintifyProductsData> = {
         country: "US",
     },
 
-    usMug: {
+    {
         enabled: true,
         displayName: "Mug",
         printProviderId: printProviderIds.districtPhoto,
@@ -99,4 +99,4 @@ export const productData: Record<string, PrintifyProductsData> = {
         name: "Ceramic Mug",
         country: "US",
     },
-};
+];

@@ -37,7 +37,6 @@ export default async function GenerateImagePage(params: {
     });
 
     let generatedImageUrl: string;
-    console.log({ modelOptions });
 
     if (isTestPrompt) {
         console.log(

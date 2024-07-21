@@ -58,7 +58,6 @@ export function ImageGenerationForm() {
     useEffect(() => {
         const x = async () => {
             const country = await getCurrentIpAddressCountry();
-            console.log({ country });
             setUserCountry(country);
         };
         x();
@@ -86,8 +85,6 @@ export function ImageGenerationForm() {
     const router = useRouter();
 
     const continueToNextStep = () => {
-        console.log({ modelOption, style, location });
-
         router.push(
             `/image/${prompt}?model=${modelOption}&style=${style}&location=${location}&country=${userCountry}`,
         );

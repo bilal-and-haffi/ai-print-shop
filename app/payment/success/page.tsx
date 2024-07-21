@@ -87,7 +87,7 @@ export default async function Page(params: {
     }
 
     return (
-        <Card className="w-full p-4">
+        <Card className="w-full p-4 md:w-2/3">
             <CardHeader>
                 <CardTitle>Your order has been confirmed!</CardTitle>
             </CardHeader>

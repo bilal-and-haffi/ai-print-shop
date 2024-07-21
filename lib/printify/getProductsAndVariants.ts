@@ -9,10 +9,10 @@ export async function getProductsAndVariants({
     country,
 }: {
     printifyImageId: string;
-    country?: string;
+    country: string;
 }) {
     const products = productData.filter(
-        (product) => product.country === country,
+        (product) => product.country === country && product.enabled,
     );
 
     const tShirtProductInfo = products.find((p) => p.displayName === "T Shirt");
@@ -20,6 +20,14 @@ export async function getProductsAndVariants({
     const mugProductInfo = products.find((p) => p.displayName === "Mug");
 
     if (!tShirtProductInfo || !hoodieProductInfo || !mugProductInfo) {
+        console.error({
+            country,
+            printifyImageId,
+            products,
+            tShirtProductInfo,
+            hoodieProductInfo,
+            mugProductInfo,
+        });
         throw new Error("Missing Data");
     }
     const [

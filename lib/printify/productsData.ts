@@ -11,6 +11,13 @@ const printProviderIds = {
     printClever: 72,
     tShirtAndSons: 6,
     monsterDigital: 29,
+    districtPhoto: 28,
+};
+
+const blueprintIds = {
+    gildan64000UnisexSoftstyleShirt: 145,
+    gildan18500UnisexHeavyBlendHoodedSweatshirt: 77,
+    ceramicMug: 478,
 };
 
 export const products: Record<string, PrintifyProducts> = {
@@ -70,8 +77,26 @@ export const products: Record<string, PrintifyProducts> = {
         enabled: true,
         displayName: "T Shirt",
         printProviderId: printProviderIds.monsterDigital,
-        blueprintId: 145,
+        blueprintId: blueprintIds.gildan64000UnisexSoftstyleShirt,
         name: "Unisex Softstyle T-Shirt Gildan 64000",
+        country: "US",
+    },
+
+    usHoodie: {
+        enabled: true,
+        displayName: "Hoodie",
+        printProviderId: printProviderIds.monsterDigital,
+        blueprintId: blueprintIds.gildan18500UnisexHeavyBlendHoodedSweatshirt,
+        name: "Unisex Heavy Blend Hooded Sweatshirt",
+        country: "US",
+    },
+
+    usMug: {
+        enabled: true,
+        displayName: "Mug",
+        printProviderId: printProviderIds.districtPhoto,
+        blueprintId: blueprintIds.ceramicMug,
+        name: "Ceramic Mug",
         country: "US",
     },
 };

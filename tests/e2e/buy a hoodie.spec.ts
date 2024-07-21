@@ -1,7 +1,8 @@
 import { test, expect } from "@playwright/test";
 
 test("buy a hoodie", async ({ page }) => {
-    await page.goto("/create");
+    await page.goto("/");
+    await page.getByRole("button", { name: "Get started" }).click();
     await page.getByPlaceholder("Example: An astronaut playing").click();
     await page
         .getByPlaceholder("Example: An astronaut playing")

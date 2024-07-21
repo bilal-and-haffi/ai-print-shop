@@ -108,7 +108,7 @@ export function ImageGenerationForm() {
     });
 
     return (
-        <div className="flex flex-col w-full items-center gap-4">
+        <div className="flex w-full flex-col items-center gap-4">
             <h1 className="text-2xl">Enter your idea</h1>
             {showConfirmationDialog && (
                 <PromptConfirmationDialog
@@ -142,7 +142,11 @@ export function ImageGenerationForm() {
                     })}
                 </form>
             </Form>
-            <Button className="w-full" onClick={generateImage} data-testid="Generate Image Button">
+            <Button
+                className="w-full"
+                onClick={generateImage}
+                data-testid="Generate Image Button"
+            >
                 Generate Image
             </Button>
         </div>

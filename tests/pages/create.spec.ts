@@ -1,18 +1,7 @@
-import { test, expect } from "@playwright/test";
+import { test } from "@playwright/test";
 
 test.beforeEach(async ({ page }) => {
-    await page.goto("/");
-});
-
-test("has title", async ({ page }) => {
-    await expect(page).toHaveTitle(/AI Print Shop/);
-});
-
-test("shows email address", async ({ page }) => {
-    const emailButton = await page.getByText(
-        "customer-service@ai-print-shop.com",
-    );
-    await expect(emailButton).toBeVisible();
+    await page.goto("/create");
 });
 
 test("User can select None for location and style and this should mean that the prompt is not concatenated", async ({

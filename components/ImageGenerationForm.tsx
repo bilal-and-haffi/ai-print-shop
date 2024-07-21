@@ -108,7 +108,7 @@ export function ImageGenerationForm() {
     });
 
     return (
-        <>
+        <div className="w-full flex flex-col items-center">
             <h1 className="text-2xl">Enter your idea</h1>
             {showConfirmationDialog && (
                 <PromptConfirmationDialog
@@ -127,7 +127,7 @@ export function ImageGenerationForm() {
                 autoFocus
             />
             <Form {...form}>
-                <form className="w-full items-center space-y-4">
+                <form className="w-2/3 space-y-4">
                     {formFields.map((x) => {
                         const { name, options, set } = x;
                         return (
@@ -137,7 +137,6 @@ export function ImageGenerationForm() {
                                 setFieldValue={set}
                                 options={options as unknown as string[]}
                                 name={name}
-                                className="w-2/3"
                             />
                         );
                     })}
@@ -146,6 +145,6 @@ export function ImageGenerationForm() {
             <Button onClick={generateImage} data-testid="Generate Image Button">
                 Generate Image
             </Button>
-        </>
+        </div>
     );
 }

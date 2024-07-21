@@ -109,7 +109,7 @@ export function ImageGenerationForm() {
 
     return (
         <>
-            <h1 className="text-3xl">Enter your idea</h1>
+            <h1 className="text-2xl">Enter your idea</h1>
             {showConfirmationDialog && (
                 <PromptConfirmationDialog
                     showConfirmationDialog={showConfirmationDialog}

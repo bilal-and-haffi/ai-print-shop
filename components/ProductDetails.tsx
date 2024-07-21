@@ -32,6 +32,8 @@ export function ProductDetails({
     priceInGbp: number;
     variants: Variant[];
 }) {
+    const { print_provider_id, blueprint_id } = retrievedProduct;
+    console.log({ print_provider_id, blueprint_id, variants });
     const [checkoutLoading, setCheckoutLoading] = useState(false);
     const { images } = retrievedProduct;
 

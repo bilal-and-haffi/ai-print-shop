@@ -126,8 +126,8 @@ export function ImageGenerationForm() {
                 className="h-72 resize-none rounded-lg"
                 autoFocus
             />
-            <Form {...form} className="w-full items-center">
-                <form className="w-2/3 space-y-4">
+            <Form {...form}>
+                <form className="w-full items-center space-y-4">
                     {formFields.map((x) => {
                         const { name, options, set } = x;
                         return (
@@ -137,6 +137,7 @@ export function ImageGenerationForm() {
                                 setFieldValue={set}
                                 options={options as unknown as string[]}
                                 name={name}
+                                className="w-2/3"
                             />
                         );
                     })}

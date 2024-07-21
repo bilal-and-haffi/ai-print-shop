@@ -109,6 +109,7 @@ export function ImageGenerationForm() {
 
     return (
         <>
+            <h1 className="text-3xl">Enter your idea</h1>
             {showConfirmationDialog && (
                 <PromptConfirmationDialog
                     showConfirmationDialog={showConfirmationDialog}
@@ -117,7 +118,6 @@ export function ImageGenerationForm() {
                     alertReason={alertReason}
                 />
             )}
-            <Label htmlFor="prompt">Enter your idea!</Label>
             <Textarea
                 ref={textAreaRef}
                 placeholder="Example: An astronaut playing on an old arcade machine."

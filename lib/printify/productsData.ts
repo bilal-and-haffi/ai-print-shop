@@ -1,6 +1,6 @@
 interface PrintifyProducts {
     enabled: boolean;
-    country: "UK" | "US";
+    country: "GB" | "US";
     name: string;
     displayName: string;
     blueprintId: number;
@@ -28,7 +28,7 @@ export const products: Record<string, PrintifyProducts> = {
         displayName: "T Shirt",
         blueprintId: 145,
         printProviderId: printProviderIds.tShirtAndSons,
-        country: "UK",
+        country: "GB",
     },
     hoodie: {
         enabled: true,
@@ -36,7 +36,7 @@ export const products: Record<string, PrintifyProducts> = {
         displayName: "Hoodie",
         blueprintId: 77,
         printProviderId: printProviderIds.printClever,
-        country: "UK",
+        country: "GB",
     },
     mug: {
         enabled: true,
@@ -44,7 +44,7 @@ export const products: Record<string, PrintifyProducts> = {
         displayName: "Mug",
         printProviderId: printProviderIds.printClever,
         blueprintId: 1302,
-        country: "UK",
+        country: "GB",
     },
     baseballTee: {
         enabled: true,
@@ -52,7 +52,7 @@ export const products: Record<string, PrintifyProducts> = {
         displayName: "Baseball Tee",
         blueprintId: 79,
         printProviderId: printProviderIds.tShirtAndSons,
-        country: "UK",
+        country: "GB",
     },
     disabledTShirt: {
         enabled: false,
@@ -60,7 +60,7 @@ export const products: Record<string, PrintifyProducts> = {
         displayName: "T Shirt",
         blueprintId: 6,
         printProviderId: printProviderIds.tShirtAndSons,
-        country: "UK",
+        country: "GB",
     },
     disabledTShirt2: {
         // TRY ME!
@@ -69,7 +69,7 @@ export const products: Record<string, PrintifyProducts> = {
         displayName: "T Shirt",
         blueprintId: 12,
         printProviderId: printProviderIds.tShirtAndSons,
-        country: "UK",
+        country: "GB",
     },
 
     // US

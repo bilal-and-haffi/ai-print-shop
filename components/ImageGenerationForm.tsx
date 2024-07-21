@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 "use client";
-import { ChangeEvent, useState, useRef } from "react";
+import { ChangeEvent, useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -9,11 +9,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { envClient } from "@/lib/env/client";
-import { Label } from "./ui/label";
 import { checkPromptForCopyRight } from "@/lib/openai/copyrightCheck";
 import { PromptConfirmationDialog } from "./PromptConfirmationDialog";
 import { SelectFormField } from "./form/SelectFormField";
 import { modelOptions } from "../app/data/modelOptions";
+import { getCurrentIpAddressCountry } from "@/lib/getCurrentIpAddressCountry";
 
 const styleOptions = [
     "Photograph",
@@ -54,6 +54,15 @@ export function ImageGenerationForm() {
     const [modelOption, setModelOptions] = useState<string>(modelOptions[0]);
     const [style, setStyle] = useState<string>(styleOptions[0]);
     const [location, setLocation] = useState<string>(locationOptions[0]);
+    const [userCountry, setUserCountry] = useState();
+    useEffect(() => {
+        const x = async () => {
+            const country = await getCurrentIpAddressCountry();
+            console.log({ country });
+            setUserCountry(country);
+        };
+        x();
+    }, []);
 
     const formFields = [
         {
@@ -80,7 +89,7 @@ export function ImageGenerationForm() {
         console.log({ modelOption, style, location });
 
         router.push(
-            `/image/${prompt}?model=${modelOption}&style=${style}&location=${location}`,
+            `/image/${prompt}?model=${modelOption}&style=${style}&location=${location}&country=${userCountry}`,
         );
     };
 

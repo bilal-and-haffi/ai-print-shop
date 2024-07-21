@@ -6,8 +6,6 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
-import { ImageGenerationForm } from "../components/ImageGenerationForm";
-import { InstructionsDialog } from "@/components/InstructionsDialog";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";

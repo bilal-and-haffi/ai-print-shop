@@ -1,6 +1,6 @@
 interface PrintifyProducts {
     enabled: boolean;
-    country: string;
+    country: "UK" | "US";
     name: string;
     displayName: string;
     blueprintId: number;
@@ -10,9 +10,11 @@ interface PrintifyProducts {
 const printProviderIds = {
     printClever: 72,
     tShirtAndSons: 6,
+    monsterDigital: 29,
 };
 
 export const products: Record<string, PrintifyProducts> = {
+    // UK
     tShirt: {
         enabled: true,
         name: "Gildan 64000 Unisex Softstyle Shirt",
@@ -45,7 +47,6 @@ export const products: Record<string, PrintifyProducts> = {
         printProviderId: printProviderIds.tShirtAndSons,
         country: "UK",
     },
-
     disabledTShirt: {
         enabled: false,
         name: "Unisex Heavy T Shirt Gildan 5000", // tried and was hard and print felt tacky. supplier was print clever for the order
@@ -54,7 +55,6 @@ export const products: Record<string, PrintifyProducts> = {
         printProviderId: printProviderIds.tShirtAndSons,
         country: "UK",
     },
-
     disabledTShirt2: {
         // TRY ME!
         enabled: false,
@@ -63,5 +63,15 @@ export const products: Record<string, PrintifyProducts> = {
         blueprintId: 12,
         printProviderId: printProviderIds.tShirtAndSons,
         country: "UK",
+    },
+
+    // US
+    usTShirt: {
+        enabled: true,
+        displayName: "T Shirt",
+        printProviderId: printProviderIds.monsterDigital,
+        blueprintId: 145,
+        name: "Unisex Softstyle T-Shirt Gildan 64000",
+        country: "US",
     },
 };

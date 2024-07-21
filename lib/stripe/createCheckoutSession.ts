@@ -33,7 +33,7 @@ export async function createCheckoutSession(params: checkOutSessionParams) {
         customer_creation: "always",
         billing_address_collection: "required",
         shipping_address_collection: {
-            allowed_countries: ["GB"],
+            allowed_countries: ["GB"], // TODO: make me dynamic
         },
         shipping_options: [
             {

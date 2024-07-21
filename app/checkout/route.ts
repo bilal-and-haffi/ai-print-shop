@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createCheckoutSession } from "@/lib/stripe/service";
+import { createCheckoutSession } from "@/lib/stripe/createCheckoutSession";
 import { addNewOrder, updateOrderSessionId } from "@/db/order";
 
 export async function POST(request: NextRequest) {

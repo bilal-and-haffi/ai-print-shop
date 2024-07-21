@@ -127,7 +127,7 @@ export function ImageGenerationForm() {
                 autoFocus
             />
             <Form {...form}>
-                <form className="w-full space-y-4">
+                <form className="w-2/3 space-y-4">
                     {formFields.map((x) => {
                         const { name, options, set } = x;
                         return (

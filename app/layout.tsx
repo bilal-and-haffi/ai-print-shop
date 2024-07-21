@@ -42,7 +42,7 @@ export default function RootLayout({
                 <Toaster />
 
                 <SiteHeader />
-                <main className="flex w-11/12 max-w-screen-md flex-col items-center justify-center space-y-4 self-center pb-8 text-center">
+                <main className="flex w-11/12 flex-col items-center justify-center space-y-4 self-center pb-8 text-center">
                     <ThemeProvider
                         attribute="class"
                         defaultTheme="dark"

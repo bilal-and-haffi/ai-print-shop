@@ -93,7 +93,9 @@ export default async function Page(params: {
             </CardHeader>
             <CardContent>
                 <p>A confirmation has been sent to your email</p>
+                <br />
                 <p>Thank you for shopping with us. </p>
+                <br />
                 <p>We hope you love your product!</p>
             </CardContent>
             <CardFooter className="flex flex-col gap-4 md:flex-row md:justify-normal">

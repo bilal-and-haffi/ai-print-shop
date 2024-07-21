@@ -12,40 +12,42 @@ import { Button } from "@/components/ui/button";
 
 export default function Home() {
     return (
-        <div className="flex w-full flex-col gap-8">
-            <h1 className="text-3xl md:text-4xl">
-                Create custom clothes with AI images, order easily and print on
-                demand!
-            </h1>
+        <div className="flex w-full flex-col items-center gap-16">
+            <div className="flex w-3/4 flex-col gap-16 pt-16 md:w-2/3">
+                <h1 className="text-3xl md:text-4xl">
+                    Create custom clothes with AI images
+                </h1>
 
-            <h2 className="text-xl text-muted-foreground">
-                Generate your image. See products. Order the ones you like, try
-                again or save for later. Enjoy!
-            </h2>
+                <h2 className="text-xl text-muted-foreground">
+                    Enter a prompt to generate your image. Order easily and
+                    print on demand!
+                </h2>
 
-            <Link href="/create">
-                <Button className="w-full">Get started</Button>
-            </Link>
+                <Link href="/create">
+                    <Button className="w-full">Get started</Button>
+                </Link>
+            </div>
 
-            <h2 className="text-3xl">Examples</h2>
-            {examples.map(
-                ({
-                    productType,
-                    prompt,
-                    imageSrc,
-                    imageAlt,
-                    printifyImageId,
-                }) => (
-                    <ExampleCard
-                        productType={productType}
-                        prompt={prompt}
-                        imageSrc={imageSrc}
-                        imageAlt={imageAlt}
-                        key={imageSrc}
-                        printifyImageId={printifyImageId}
-                    />
-                ),
-            )}
+            <div className="flex flex-col gap-8 md:flex-row">
+                {examples.map(
+                    ({
+                        productType,
+                        prompt,
+                        imageSrc,
+                        imageAlt,
+                        printifyImageId,
+                    }) => (
+                        <ExampleCard
+                            productType={productType}
+                            prompt={prompt}
+                            imageSrc={imageSrc}
+                            imageAlt={imageAlt}
+                            key={imageSrc}
+                            printifyImageId={printifyImageId}
+                        />
+                    ),
+                )}
+            </div>
         </div>
     );
 }
@@ -58,8 +60,8 @@ const examples: {
     printifyImageId: string;
 }[] = [
     {
-        productType: "T Shirt",
-        prompt: "In this style: Anime. In this location: Outdoors. A ninja making lemonade",
+        productType: "T Shirts",
+        prompt: "A ninja making lemonade outdoors, in the style of anime.",
         imageSrc:
             "in-this-style-anime-in-this-location-outdoors-a-ninja-making-lemonade.jpg",
         imageAlt:
@@ -67,7 +69,7 @@ const examples: {
         printifyImageId: "66981c740068169fdbc86e96",
     },
     {
-        productType: "Hoodie",
+        productType: "Hoodies",
         prompt: "An astronaut playing on an old arcade game in space",
         imageSrc: "astronaut-playing-arcade-hoodie.jpeg",
         imageAlt:
@@ -93,7 +95,7 @@ function ExampleCard({
         <Card>
             <CardHeader>
                 <CardTitle>{productType}</CardTitle>
-                <CardDescription>Prompt: {prompt}</CardDescription>
+                <CardDescription>User prompt: {prompt}</CardDescription>
             </CardHeader>
             <CardContent>
                 <Image

@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 export default function Home() {
     return (
         <div className="flex w-full flex-col gap-8">
-            <h1 className="pt-8 text-3xl md:text-4xl">
+            <h1 className="text-3xl md:text-4xl">
                 Create custom clothes with AI images, order easily and print on
                 demand!
             </h1>
@@ -22,6 +22,10 @@ export default function Home() {
                 Generate your image. See products. Order the ones you like, try
                 again or save for later. Enjoy!
             </h2>
+
+            <Link href="/create">
+                <Button className="w-full">Get started</Button>
+            </Link>
 
             <h2 className="text-3xl">Examples</h2>
             {examples.map(
@@ -43,9 +47,6 @@ export default function Home() {
                 ),
             )}
 
-            <Link href="/create">
-                <Button className="w-full">Create your own</Button>
-            </Link>
         </div>
     );
 }

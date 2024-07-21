@@ -13,7 +13,8 @@ import { SmallLoadingSpinner } from "./loading/SmallLoadingSpinner";
 import { isPriceOkay } from "../lib/pricing/isPriceOkay";
 import { Variant } from "@/interfaces/Printify/Variant";
 import { Card, CardHeader, CardTitle, CardDescription } from "./ui/card";
-import { getCurrentIpAddressCountry } from "@/lib/getCurrentIpAddressCountry";
+import { isValidCountry } from "@/lib/country/isValidCountry";
+import { getCurrentIpAddressCountry } from "@/lib/country/getCurrentIpAddressCountry";
 
 export interface Options {
     id: number;
@@ -38,10 +39,10 @@ export function ProductDetails({
 
     const [selectedSize, setSelectedSize] = useState(initialSize);
     const [selectedColor, setSelectedColor] = useState(initialColor);
-    const [userCountry, setUserCountry] = useState();
+    const [userCountry, setUserCountry] = useState("");
     useEffect(() => {
         const x = async () => {
-            const country = await getCurrentIpAddressCountry();
+            const country: string = await getCurrentIpAddressCountry();
             setUserCountry(country);
         };
         x();
@@ -107,7 +108,7 @@ export function ProductDetails({
                 orderVariantId: selectedVariant.id,
                 order_preview: filteredImages[0].src,
                 price: priceInGbp * 100,
-                country: userCountry,
+                country: isValidCountry(userCountry) ? userCountry : "GB",
             }),
         })
             .then((res) => res.json())

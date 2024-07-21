@@ -1,5 +1,6 @@
 import { Products } from "@/components/Products";
 import { getProductsAndVariants } from "../../../lib/printify/getProductsAndVariants";
+import { isValidCountry } from "../../../lib/country/isValidCountry";
 
 export default async function ProductPage({
     params,
@@ -12,7 +13,7 @@ export default async function ProductPage({
     const { country } = searchParams;
     const productAndVariants = await getProductsAndVariants({
         printifyImageId,
-        country: country ?? "GB",
+        country: isValidCountry(country) ? country : "GB",
     });
 
     return (

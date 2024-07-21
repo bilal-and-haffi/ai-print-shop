@@ -18,7 +18,6 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
-import { envServer } from "@/lib/env/server";
 
 export const dynamic = "force-dynamic";
 

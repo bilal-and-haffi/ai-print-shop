@@ -13,7 +13,7 @@ import { checkPromptForCopyRight } from "@/lib/openai/copyrightCheck";
 import { PromptConfirmationDialog } from "./PromptConfirmationDialog";
 import { SelectFormField } from "./form/SelectFormField";
 import { modelOptions } from "../app/data/modelOptions";
-import { getCurrentIpAddressCountry } from "@/lib/getCurrentIpAddressCountry";
+import { getCurrentIpAddressCountry } from "@/lib/country/getCurrentIpAddressCountry";
 
 const styleOptions = [
     "Photograph",

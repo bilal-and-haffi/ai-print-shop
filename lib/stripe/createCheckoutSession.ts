@@ -12,6 +12,7 @@ interface checkOutSessionParams {
     productType: string;
     orderVariantId: string;
     internalOrderId: number;
+    country: string;
 }
 
 export async function createCheckoutSession(params: checkOutSessionParams) {
@@ -27,13 +28,14 @@ export async function createCheckoutSession(params: checkOutSessionParams) {
         productType,
         orderVariantId,
         internalOrderId,
+        country,
     } = params;
 
     return await stripeServerClient.checkout.sessions.create({
         customer_creation: "always",
         billing_address_collection: "required",
         shipping_address_collection: {
-            allowed_countries: ["GB"], // TODO: make me dynamic
+            allowed_countries: [country as "US" | "GB"],
         },
         shipping_options: [
             {

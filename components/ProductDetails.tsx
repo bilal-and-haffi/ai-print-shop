@@ -13,6 +13,7 @@ import { SmallLoadingSpinner } from "./loading/SmallLoadingSpinner";
 import { isPriceOkay } from "../lib/pricing/isPriceOkay";
 import { Variant } from "@/interfaces/Printify/Variant";
 import { Card, CardHeader, CardTitle, CardDescription } from "./ui/card";
+import { getCurrentIpAddressCountry } from "@/lib/getCurrentIpAddressCountry";
 
 export interface Options {
     id: number;
@@ -39,6 +40,15 @@ export function ProductDetails({
 
     const [selectedSize, setSelectedSize] = useState(initialSize);
     const [selectedColor, setSelectedColor] = useState(initialColor);
+    const [userCountry, setUserCountry] = useState();
+    useEffect(() => {
+        const x = async () => {
+            const country = await getCurrentIpAddressCountry();
+            console.log({ country });
+            setUserCountry(country);
+        };
+        x();
+    }, []);
 
     const initialSelectedVariant = findSelectedVariant(
         selectedSize,
@@ -100,6 +110,7 @@ export function ProductDetails({
                 orderVariantId: selectedVariant.id,
                 order_preview: filteredImages[0].src,
                 price: priceInGbp * 100,
+                country: userCountry,
             }),
         })
             .then((res) => res.json())

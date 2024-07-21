@@ -123,7 +123,7 @@ export function ImageGenerationForm() {
                 placeholder="Example: An astronaut playing on an old arcade machine."
                 value={prompt}
                 onChange={onInputChanged}
-                className="h-48 resize-none rounded-lg"
+                className="h-72 resize-none rounded-lg"
                 autoFocus
             />
             <Form {...form}>

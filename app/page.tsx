@@ -25,11 +25,7 @@ export default function Home() {
                 again or save for later. Enjoy!
             </h2>
 
-            <Link href="/create">
-                <Button className="w-full">Get Started (Quick)</Button>
-            </Link>
-
-            <h2 className="text-3xl">Previous creations</h2>
+            <h2 className="text-3xl">Examples</h2>
             {examples.map(
                 ({
                     productType,
@@ -50,7 +46,7 @@ export default function Home() {
             )}
 
             <Link href="/create">
-                <Button className="w-full">Create your own (Quick)</Button>
+                <Button className="w-full">Create your own</Button>
             </Link>
         </div>
     );

@@ -27,6 +27,7 @@ export async function POST(request: NextRequest) {
     ];
 
     const shipping_method = 1; // make me dynamic
+    console.log({ shipping });
 
     const orderResponse = await createPrintifyOrderForExistingProduct(
         line_items,

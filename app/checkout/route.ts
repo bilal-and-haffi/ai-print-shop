@@ -28,6 +28,7 @@ export async function POST(request: NextRequest) {
         productType: req.productType,
         orderVariantId: req.orderVariantId,
         internalOrderId,
+        country: req.country,
     });
 
     await updateOrderSessionId(internalOrderId, session.id);

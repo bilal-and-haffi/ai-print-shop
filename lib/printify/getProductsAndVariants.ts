@@ -11,6 +11,23 @@ export async function getProductsAndVariants({
     printifyImageId: string;
     country?: string;
 }) {
+    const gbProducts = productData.filter(
+        (product) => product.country === "GB",
+    );
+
+    const tShirtProductInfo = gbProducts.find(
+        (p) => p.displayName === "T Shirt",
+    );
+
+    const hoodieProductInfo = gbProducts.find(
+        (p) => p.displayName === "Hoodie",
+    );
+
+    const mugProductInfo = gbProducts.find((p) => p.displayName === "Mug");
+
+    if (!tShirtProductInfo || !hoodieProductInfo || !mugProductInfo) {
+        throw new Error("Missing Data");
+    }
     const [
         tShirtProduct,
         tShirtVariants,
@@ -21,30 +38,30 @@ export async function getProductsAndVariants({
     ] = await Promise.all([
         createPrintifyProduct({
             printifyImageId,
-            printProviderId: productData.tShirt.printProviderId,
-            blueprintId: productData.tShirt.blueprintId,
+            printProviderId: tShirtProductInfo.printProviderId,
+            blueprintId: tShirtProductInfo.blueprintId,
         }),
         fetchProductVariants(
-            productData.tShirt.blueprintId,
-            productData.tShirt.printProviderId,
+            tShirtProductInfo.blueprintId,
+            tShirtProductInfo.printProviderId,
         ),
         createPrintifyProduct({
             printifyImageId,
-            printProviderId: productData.hoodie.printProviderId,
-            blueprintId: productData.hoodie.blueprintId,
+            printProviderId: hoodieProductInfo.printProviderId,
+            blueprintId: hoodieProductInfo.blueprintId,
         }),
         fetchProductVariants(
-            productData.hoodie.blueprintId,
-            productData.hoodie.printProviderId,
+            hoodieProductInfo.blueprintId,
+            hoodieProductInfo.printProviderId,
         ),
         createPrintifyProduct({
             printifyImageId,
-            printProviderId: productData.mug.printProviderId,
-            blueprintId: productData.mug.blueprintId,
+            printProviderId: mugProductInfo.printProviderId,
+            blueprintId: mugProductInfo.blueprintId,
         }),
         fetchProductVariants(
-            productData.mug.blueprintId,
-            productData.mug.printProviderId,
+            mugProductInfo.blueprintId,
+            mugProductInfo.printProviderId,
         ),
     ]);
 

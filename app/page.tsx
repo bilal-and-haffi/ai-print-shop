@@ -15,7 +15,7 @@ import { Button } from "@/components/ui/button";
 export default function Home() {
     return (
         <div className="flex w-full flex-col gap-8">
-            <h1 className="pt-12 text-3xl md:text-4xl">
+            <h1 className="pt-8 text-3xl md:text-4xl">
                 Create custom clothes with AI images, order easily and print on
                 demand!
             </h1>
@@ -109,7 +109,7 @@ function ExampleCard({
             <CardFooter>
                 <Link className="w-full" href={`/product/${printifyImageId}`}>
                     <Button className="w-full" variant={"secondary"}>
-                        Buy this
+                        Browse products with this image
                     </Button>
                 </Link>
             </CardFooter>

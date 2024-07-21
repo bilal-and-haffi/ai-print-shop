@@ -12,7 +12,7 @@ export default async function ProductPage({
     const { country } = searchParams;
     const productAndVariants = await getProductsAndVariants({
         printifyImageId,
-        country,
+        country: country ?? "GB",
     });
 
     return (

@@ -11,19 +11,13 @@ export async function getProductsAndVariants({
     printifyImageId: string;
     country?: string;
 }) {
-    const gbProducts = productData.filter(
-        (product) => product.country === "GB",
+    const products = productData.filter(
+        (product) => product.country === country,
     );
 
-    const tShirtProductInfo = gbProducts.find(
-        (p) => p.displayName === "T Shirt",
-    );
-
-    const hoodieProductInfo = gbProducts.find(
-        (p) => p.displayName === "Hoodie",
-    );
-
-    const mugProductInfo = gbProducts.find((p) => p.displayName === "Mug");
+    const tShirtProductInfo = products.find((p) => p.displayName === "T Shirt");
+    const hoodieProductInfo = products.find((p) => p.displayName === "Hoodie");
+    const mugProductInfo = products.find((p) => p.displayName === "Mug");
 
     if (!tShirtProductInfo || !hoodieProductInfo || !mugProductInfo) {
         throw new Error("Missing Data");

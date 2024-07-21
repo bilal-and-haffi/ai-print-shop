@@ -17,7 +17,7 @@ const printProviderIds = {
 const blueprintIds = {
     gildan64000UnisexSoftstyleShirt: 145,
     gildan18500UnisexHeavyBlendHoodedSweatshirt: 77,
-    ceramicMug: 478,
+    ceramicMug: 635, // https://printify.com/app/products/635/generic-brand/accent-coffee-mug-11-15oz
 };
 
 export const productData: PrintifyProductsData[] = [

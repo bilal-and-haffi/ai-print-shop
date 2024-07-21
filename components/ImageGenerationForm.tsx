@@ -126,7 +126,7 @@ export function ImageGenerationForm() {
                 className="h-72 resize-none rounded-lg"
                 autoFocus
             />
-            <Form {...form}>
+            <Form {...form} className="w-full items-center">
                 <form className="w-2/3 space-y-4">
                     {formFields.map((x) => {
                         const { name, options, set } = x;

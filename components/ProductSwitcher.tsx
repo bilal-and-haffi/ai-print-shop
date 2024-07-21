@@ -47,7 +47,7 @@ export const ProductSwitcher = ({
             id="links-to-products-container"
             className="flex w-full items-center justify-between space-x-4"
         >
-            <Link href={`/`}>
+            <Link href={`/create`}>
                 <Button data-testid="Go back" variant={"outline"}>
                     <ChevronLeft className="h-4 w-4" />
                 </Button>

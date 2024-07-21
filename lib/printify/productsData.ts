@@ -1,4 +1,4 @@
-interface PrintifyProducts {
+interface PrintifyProductsData {
     enabled: boolean;
     country: "GB" | "US";
     name: string;
@@ -20,7 +20,7 @@ const blueprintIds = {
     ceramicMug: 478,
 };
 
-export const products: Record<string, PrintifyProducts> = {
+export const productData: Record<string, PrintifyProductsData> = {
     // UK
     tShirt: {
         enabled: true,

@@ -10,7 +10,12 @@ export const maxDuration = 300;
 
 export default async function GenerateImagePage(params: {
     params: { prompt: string };
-    searchParams: { model: string; style: string; location: string };
+    searchParams: {
+        model: string;
+        style: string;
+        location: string;
+        country: string;
+    };
 }) {
     const { prompt: encodedPrompt } = params.params;
     const decodedPrompt = decodeURIComponent(encodedPrompt);
@@ -23,7 +28,7 @@ export default async function GenerateImagePage(params: {
 
     const isTestPrompt = decodedPrompt === "test prompt";
 
-    const { model, style, location } = params.searchParams;
+    const { model, style, location, country } = params.searchParams;
 
     const concatenatedPrompt = addOptionsToPrompt({
         style,
@@ -52,6 +57,7 @@ export default async function GenerateImagePage(params: {
     }
 
     console.error({ generatedImageUrl });
+
     const { id: printifyImageId } = await postImageToPrintify(
         generatedImageUrl,
         "generatedImage.png",
@@ -65,5 +71,8 @@ export default async function GenerateImagePage(params: {
         printifyImageUrl: generatedImageUrl,
     });
 
-    redirect(`/product/${printifyImageId}`, RedirectType.replace);
+    redirect(
+        `/product/${printifyImageId}?country=${country}`,
+        RedirectType.replace,
+    );
 }

@@ -142,7 +142,7 @@ export function ImageGenerationForm() {
                     })}
                 </form>
             </Form>
-            <Button onClick={generateImage} data-testid="Generate Image Button">
+            <Button className="w-full" onClick={generateImage} data-testid="Generate Image Button">
                 Generate Image
             </Button>
         </div>

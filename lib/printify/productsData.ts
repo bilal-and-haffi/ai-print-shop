@@ -1,5 +1,6 @@
 interface PrintifyProducts {
     enabled: boolean;
+    country: string;
     name: string;
     displayName: string;
     blueprintId: number;
@@ -18,6 +19,7 @@ export const products: Record<string, PrintifyProducts> = {
         displayName: "T Shirt",
         blueprintId: 145,
         printProviderId: printProviderIds.tShirtAndSons,
+        country: "UK",
     },
     hoodie: {
         enabled: true,
@@ -25,6 +27,7 @@ export const products: Record<string, PrintifyProducts> = {
         displayName: "Hoodie",
         blueprintId: 77,
         printProviderId: printProviderIds.printClever,
+        country: "UK",
     },
     mug: {
         enabled: true,
@@ -32,6 +35,7 @@ export const products: Record<string, PrintifyProducts> = {
         displayName: "Mug",
         printProviderId: printProviderIds.printClever,
         blueprintId: 1302,
+        country: "UK",
     },
     baseballTee: {
         enabled: true,
@@ -39,6 +43,7 @@ export const products: Record<string, PrintifyProducts> = {
         displayName: "Baseball Tee",
         blueprintId: 79,
         printProviderId: printProviderIds.tShirtAndSons,
+        country: "UK",
     },
 
     disabledTShirt: {
@@ -47,6 +52,7 @@ export const products: Record<string, PrintifyProducts> = {
         displayName: "T Shirt",
         blueprintId: 6,
         printProviderId: printProviderIds.tShirtAndSons,
+        country: "UK",
     },
 
     disabledTShirt2: {
@@ -56,5 +62,6 @@ export const products: Record<string, PrintifyProducts> = {
         displayName: "T Shirt",
         blueprintId: 12,
         printProviderId: printProviderIds.tShirtAndSons,
+        country: "UK",
     },
 };

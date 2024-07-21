@@ -2,6 +2,7 @@ import {
     Card,
     CardContent,
     CardDescription,
+    CardFooter,
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
@@ -18,18 +19,44 @@ export default function Home() {
                     on demand!
                 </p>
             </Card>
-            <ExampleCard
-                productType="Hoodie"
-                prompt="An astronaut playing on an old arcade game in space"
-                imageSrc="astronaut-playing-arcade-hoodie.jpeg"
-                imageAlt="astronaut"
-            />
+            {examples.map(({ productType, prompt, imageSrc, imageAlt }) => (
+                <ExampleCard
+                    productType={productType}
+                    prompt={prompt}
+                    imageSrc={imageSrc}
+                    imageAlt={imageAlt}
+                    key={imageSrc}
+                />
+            ))}
 
             <ImageGenerationForm />
             <InstructionsDialog />
         </div>
     );
 }
+
+const examples: {
+    productType: string;
+    prompt: string;
+    imageSrc: string;
+    imageAlt: string;
+}[] = [
+    {
+        productType: "T shirt",
+        prompt: "In this style: Anime. In this location: Outdoors. A ninja making lemonade",
+        imageSrc:
+            "in-this-style-anime-in-this-location-outdoors-a-ninja-making-lemonade.jpg",
+        imageAlt:
+            "A T shirt with a printed image of: In this style: Anime. In this location: Outdoors. A ninja making lemonade",
+    },
+    {
+        productType: "Hoodie",
+        prompt: "An astronaut playing on an old arcade game in space",
+        imageSrc: "astronaut-playing-arcade-hoodie.jpeg",
+        imageAlt:
+            "A hoodie with a printed image of: An astronaut playing on an old arcade game in space.",
+    },
+];
 
 function ExampleCard({
     productType,
@@ -57,6 +84,7 @@ function ExampleCard({
                     priority
                 />
             </CardContent>
+            <CardFooter></CardFooter>
         </Card>
     );
 }

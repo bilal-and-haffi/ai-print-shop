@@ -55,6 +55,7 @@ export function ImageGenerationForm() {
     const [style, setStyle] = useState<string>(styleOptions[0]);
     const [location, setLocation] = useState<string>(locationOptions[0]);
     const [userCountry, setUserCountry] = useState();
+
     useEffect(() => {
         const x = async () => {
             const country = await getCountryFromIpAddress();

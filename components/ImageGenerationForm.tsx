@@ -13,7 +13,7 @@ import { checkPromptForCopyRight } from "@/lib/openai/copyrightCheck";
 import { PromptConfirmationDialog } from "./PromptConfirmationDialog";
 import { SelectFormField } from "./form/SelectFormField";
 import { modelOptions } from "../app/data/modelOptions";
-import { getCurrentIpAddressCountry } from "@/lib/country/getCurrentIpAddressCountry";
+import { getCountryFromIpAddress } from "@/lib/country/getCountryFromIpAddress";
 
 const styleOptions = [
     "Photograph",
@@ -57,7 +57,7 @@ export function ImageGenerationForm() {
     const [userCountry, setUserCountry] = useState();
     useEffect(() => {
         const x = async () => {
-            const country = await getCurrentIpAddressCountry();
+            const country = await getCountryFromIpAddress();
             setUserCountry(country);
         };
         x();

@@ -1,13 +1,25 @@
 "use server";
 import { ProductVariant } from "@/interfaces/PrintifyTypes";
 import { convertUSDToGBP } from "@/lib/currency/convertUSDToGBP";
+import { getUkShippingCostInCents } from "../printify/shipping/getShippingCosts";
 
-export async function isPriceOkay(
-    selectedVariant: ProductVariant,
-    priceInGbp: number,
-) {
+export async function isPriceOkay({
+    selectedVariant,
+    priceInGbp,
+    print_provider_id,
+    blueprint_id,
+}: {
+    selectedVariant: ProductVariant;
+    priceInGbp: number;
+    print_provider_id: number;
+    blueprint_id: number;
+}) {
     const printifyProductCostInUsd = selectedVariant.cost / 100;
-    const printifyShippingCostToUkInUsd = 3.99; // replace me with /v1/catalog/blueprints/{blueprint_id}/print_providers/{print_provider_id}/shipping.json
+    const printifyShippingCostToUkInUsd =
+        (await getUkShippingCostInCents({
+            print_provider_id,
+            blueprint_id,
+        })) / 100;
     const VATMultiplier = 1.2;
     const totalPrintifyCostInUsd =
         (printifyProductCostInUsd + printifyShippingCostToUkInUsd) *
@@ -16,7 +28,7 @@ export async function isPriceOkay(
         totalPrintifyCostInUsd,
     );
     const minimumProfitInGbp = 2;
-    const profitInGbp = priceInGbp - totalPrintifyCostInGbp;
+    const profitInGbp = priceInGbp - totalPrintifyCostInGbp;git 
     const isPriceOkay = profitInGbp > minimumProfitInGbp;
     console.log({
         printifyProductCostInUsd,

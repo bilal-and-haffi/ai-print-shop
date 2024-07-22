@@ -12,7 +12,7 @@ interface checkOutSessionParams {
     productType: string;
     orderVariantId: string;
     internalOrderId: number;
-    country: string;
+    country: "US" | "GB";
 }
 
 export async function createCheckoutSession(params: checkOutSessionParams) {
@@ -35,12 +35,11 @@ export async function createCheckoutSession(params: checkOutSessionParams) {
         customer_creation: "always",
         billing_address_collection: "required",
         shipping_address_collection: {
-            allowed_countries: [country as "US" | "GB"],
+            allowed_countries: [country],
         },
         shipping_options: [
             {
                 shipping_rate_data: {
-                    // TODO: Figure out dynamically for other shipping options
                     type: "fixed_amount",
                     fixed_amount: {
                         currency: "gbp",

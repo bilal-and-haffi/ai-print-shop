@@ -9,10 +9,6 @@ export async function getCountryFromIpAddress() {
 
         return country;
     } catch (error) {
-        console.error({
-            error,
-            msg: "Error getting current country, returning GB",
-        });
         return "GB";
     }
 }

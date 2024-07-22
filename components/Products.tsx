@@ -50,7 +50,7 @@ export const Products = ({
                         retrievedProduct={tShirtProduct}
                         initialSize="L"
                         initialColor="Black"
-                        priceInGbp={25}
+                        // priceInGbp={25}
                         variants={tShirtVariants}
                     />
                 );
@@ -60,7 +60,7 @@ export const Products = ({
                         retrievedProduct={hoodieProduct}
                         initialSize="L"
                         initialColor="Black"
-                        priceInGbp={40}
+                        // priceInGbp={40}
                         variants={hoodieVariants}
                     />
                 );
@@ -70,7 +70,7 @@ export const Products = ({
                         retrievedProduct={mugProduct}
                         initialSize="11oz"
                         initialColor="Black"
-                        priceInGbp={15}
+                        // priceInGbp={15}
                         variants={mugVariants}
                     />
                 );

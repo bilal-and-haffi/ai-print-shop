@@ -17,6 +17,8 @@ import { isValidCountry } from "@/lib/country/isValidCountry";
 import { getCurrentIpAddressCountry } from "@/lib/country/getCurrentIpAddressCountry";
 import { CountryCodeContext } from "./Products";
 import { getCurrencyFromCountry } from "@/lib/currency/getCurrencyFromCountry";
+import { generateUnroundedPriceInUsd } from "@/lib/pricing/generateUnroundedPriceInUsd";
+import { convertUSDToGBP } from "@/lib/currency/convertUSDToGBP";
 
 export interface Options {
     id: number;
@@ -27,13 +29,13 @@ export function ProductDetails({
     retrievedProduct,
     initialSize,
     initialColor,
-    priceInGbp,
+    // priceInGbp,
     variants,
 }: {
     retrievedProduct: RetrieveProductResponse;
     initialSize: string;
     initialColor: string;
-    priceInGbp: number;
+    // priceInGbp: number;
     variants: Variant[];
 }) {
     const [checkoutLoading, setCheckoutLoading] = useState(false);
@@ -43,13 +45,15 @@ export function ProductDetails({
     const [selectedSize, setSelectedSize] = useState(initialSize);
     const [selectedColor, setSelectedColor] = useState(initialColor);
     const [userCountry, setUserCountry] = useState("");
+    const [priceInGbp, setPriceInGbp] = useState<number | undefined>();
+
     useEffect(() => {
         const x = async () => {
             const country: string = await getCurrentIpAddressCountry();
             setUserCountry(country);
         };
         x();
-    }, []);
+    }, []); // potentially annoying if someone wants to order in a different country
 
     const initialSelectedVariant = findSelectedVariant(
         selectedSize,
@@ -93,7 +97,42 @@ export function ProductDetails({
         ) as ProductVariant;
     }, [selectedVariant, retrievedProduct.variants]);
 
+    useEffect(() => {
+        const x = async () => {
+            const generatedUnroundedPriceInUsd = generateUnroundedPriceInUsd({
+                selectedVariant: selectedProductVariant,
+                shippingCostsInCents: 349,
+            });
+
+            const generatedUnroundedPriceInGbp = await convertUSDToGBP(
+                generatedUnroundedPriceInUsd,
+            );
+
+            const generatedPriceInGbp = roundUpToNearestMultipleOf5(
+                generatedUnroundedPriceInGbp,
+            );
+
+            setPriceInGbp(generatedPriceInGbp);
+        };
+        x();
+    }, [selectedProductVariant]);
+
     const onClick = async () => {
+        const generatedUnroundedPriceInUsd = generateUnroundedPriceInUsd({
+            selectedVariant: selectedProductVariant,
+            shippingCostsInCents: 349,
+        });
+
+        const generatedUnroundedPriceInGbp = await convertUSDToGBP(
+            generatedUnroundedPriceInUsd,
+        );
+
+        const priceInGbp = roundUpToNearestMultipleOf5(
+            generatedUnroundedPriceInGbp,
+        );
+
+        console.log({ priceInGbp });
+
         if (
             !(await isPriceOkay({
                 selectedVariant: selectedProductVariant,
@@ -216,4 +255,7 @@ function getFilteredColorsForSize(size: string, variants: Variant[]) {
     );
 
     return filteredColors;
+}
+function roundUpToNearestMultipleOf5(x: number) {
+    return Math.ceil(x / 5) * 5;
 }

@@ -1,17 +1,19 @@
-"use server";
 import { ProductVariant } from "@/interfaces/PrintifyTypes";
 
 const MARK_UP_IN_USD = 10;
+const UK_TAX_MULTIPLIER = 1.2;
 
-export function generateUnroundedPriceInUsd(
-    selectedVariant: ProductVariant,
-    shippingCostsInCents: number,
-): number {
+export function generateUnroundedPriceInUsd({
+    selectedVariant,
+    shippingCostsInCents,
+}: {
+    selectedVariant: ProductVariant;
+    shippingCostsInCents: number;
+}): number {
     const totalCostInCentsWithoutTax =
-        selectedVariant.cost + shippingCostsInCents; // in cents
-    const ukTaxMultiplier = 1.2; // this is for UK only and stripe will add US one by itself
+        selectedVariant.cost + shippingCostsInCents;
     const totalCostInCentsWithTax =
-        totalCostInCentsWithoutTax * ukTaxMultiplier;
+        totalCostInCentsWithoutTax * UK_TAX_MULTIPLIER;
 
     const totalCostInUsd = totalCostInCentsWithTax / 100;
 

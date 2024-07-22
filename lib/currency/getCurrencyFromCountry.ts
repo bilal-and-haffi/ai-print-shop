@@ -1,4 +1,6 @@
-function getCurrencyFromCountry(country: "US" | "GB") {
+import { CountryCode } from "../stripe/createCheckoutSession";
+
+function getCurrencyFromCountry(country: CountryCode) {
     if (country === "US") {
         return "usd";
     } else if (country === "GB") {

@@ -14,11 +14,11 @@ import { isPriceOkay } from "../lib/pricing/isPriceOkay";
 import { Variant } from "@/interfaces/Printify/Variant";
 import { Card, CardHeader, CardTitle, CardDescription } from "./ui/card";
 import { isValidCountry } from "@/lib/country/isValidCountry";
-import { getCurrentIpAddressCountry } from "@/lib/country/getCurrentIpAddressCountry";
 import { CountryCodeContext } from "./Products";
 import { getCurrencyFromCountry } from "@/lib/currency/getCurrencyFromCountry";
 import { generateUnroundedPriceInUsd } from "@/lib/pricing/generateUnroundedPriceInUsd";
 import { convertUSDToGBP } from "@/lib/currency/convertUSDToGBP";
+import { getCountryFromIpAddress } from "@/lib/country/getCountryFromIpAddress";
 
 export interface Options {
     id: number;
@@ -49,7 +49,7 @@ export function ProductDetails({
 
     useEffect(() => {
         const x = async () => {
-            const country: string = await getCurrentIpAddressCountry();
+            const country: string = await getCountryFromIpAddress();
             setUserCountry(country);
         };
         x();

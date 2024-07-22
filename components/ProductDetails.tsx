@@ -37,7 +37,7 @@ export function ProductDetails({
     variants: Variant[];
 }) {
     const [checkoutLoading, setCheckoutLoading] = useState(false);
-    const { images } = retrievedProduct;
+    const { images, print_provider_id, blueprint_id } = retrievedProduct;
     const country = useContext(CountryCodeContext);
     const currency = getCurrencyFromCountry(country);
     const [selectedSize, setSelectedSize] = useState(initialSize);
@@ -94,7 +94,14 @@ export function ProductDetails({
     }, [selectedVariant, retrievedProduct.variants]);
 
     const onClick = async () => {
-        if (!(await isPriceOkay(selectedProductVariant, priceInGbp))) {
+        if (
+            !(await isPriceOkay({
+                selectedVariant: selectedProductVariant,
+                priceInGbp,
+                blueprint_id,
+                print_provider_id,
+            }))
+        ) {
             throw new Error("Something went wrong");
         }
         setCheckoutLoading(true);

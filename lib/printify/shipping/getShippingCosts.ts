@@ -1,5 +1,3 @@
-// replace me with /v1/catalog/blueprints/{blueprint_id}/print_providers/{print_provider_id}/shipping.json
-
 import { PRINTIFY_BASE_URL } from "@/app/data/consts";
 import { envServer } from "@/lib/env/server";
 

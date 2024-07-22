@@ -18,7 +18,6 @@ import { CountryCodeContext } from "./Products";
 import { generateUnroundedPriceInUsd } from "@/lib/pricing/generateUnroundedPriceInUsd";
 import { convertUSDToGBP } from "@/lib/currency/convertUSDToGBP";
 import { getCountryFromIpAddress } from "@/lib/country/getCountryFromIpAddress";
-import { Skeleton } from "@/components/ui/skeleton";
 
 export interface Options {
     id: number;
@@ -41,17 +40,8 @@ export function ProductDetails({
     const country = useContext(CountryCodeContext);
     const [selectedSize, setSelectedSize] = useState(initialSize);
     const [selectedColor, setSelectedColor] = useState(initialColor);
-    const [userCountry, setUserCountry] = useState("");
     const [priceInLocalCurrency, setPriceInLocalCurrency] =
         useState<number>(25);
-
-    useEffect(() => {
-        const x = async () => {
-            const country: string = await getCountryFromIpAddress();
-            setUserCountry(country);
-        };
-        x();
-    }, []); // potentially annoying if someone wants to order in a different country
 
     const initialSelectedVariant = findSelectedVariant(
         selectedSize,
@@ -137,6 +127,7 @@ export function ProductDetails({
                 priceInLocalCurrency: priceInGbp,
                 blueprint_id,
                 print_provider_id,
+                country,
             }))
         ) {
             throw new Error("Something went wrong");
@@ -155,7 +146,7 @@ export function ProductDetails({
                 orderVariantId: selectedVariant.id,
                 order_preview: filteredImages[0].src,
                 price: priceInGbp * 100,
-                country: isValidCountry(userCountry) ? userCountry : "GB",
+                country,
             }),
         })
             .then((res) => res.json())

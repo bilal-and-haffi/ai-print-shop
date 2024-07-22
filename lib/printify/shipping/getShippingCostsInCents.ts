@@ -15,11 +15,13 @@ export async function getShippingCostInCents({
         print_provider_id,
     });
     const { profiles } = shippingData;
+    console.log({ profiles });
     const countryProfile = profiles.find((profile: any) =>
         profile.countries.some(
             (country: string) => country === deliveryCountry,
         ),
     );
+    console.log({ countryProfile });
     const countryFirstItem = countryProfile.first_item; // called first item becuase when ordering more that one there is a lower charge call additional item
     const costInCents = countryFirstItem.cost;
 

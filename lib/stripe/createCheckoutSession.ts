@@ -1,3 +1,4 @@
+import { getCurrencyFromCountry } from "../currency/getCurrencyFromCountry";
 import { stripeServerClient } from "./client";
 
 export type CountryCode = "US" | "GB";
@@ -64,7 +65,7 @@ export async function createCheckoutSession(params: checkOutSessionParams) {
         line_items: [
             {
                 price_data: {
-                    currency: "gbp",
+                    currency: getCurrencyFromCountry(country),
                     product_data: {
                         name: `${productType} - ${orderVariantLabel}`,
                         description: orderTitle,

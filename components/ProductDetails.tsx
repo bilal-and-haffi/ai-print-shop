@@ -10,15 +10,15 @@ import { Size, SizeAndColorSelector } from "./SizeAndColorForm";
 import Image from "next/image";
 import { useContext, useEffect, useMemo, useState } from "react";
 import { SmallLoadingSpinner } from "./loading/SmallLoadingSpinner";
-import { isPriceOkay } from "../lib/pricing/isPriceOkay";
+import { isSellingPriceProfitable } from "../lib/pricing/isPriceOkay";
 import { Variant } from "@/interfaces/Printify/Variant";
 import { Card, CardHeader, CardTitle, CardDescription } from "./ui/card";
 import { isValidCountry } from "@/lib/country/isValidCountry";
 import { CountryCodeContext } from "./Products";
-import { getCurrencyFromCountry } from "@/lib/currency/getCurrencyFromCountry";
 import { generateUnroundedPriceInUsd } from "@/lib/pricing/generateUnroundedPriceInUsd";
 import { convertUSDToGBP } from "@/lib/currency/convertUSDToGBP";
 import { getCountryFromIpAddress } from "@/lib/country/getCountryFromIpAddress";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export interface Options {
     id: number;
@@ -29,23 +29,21 @@ export function ProductDetails({
     retrievedProduct,
     initialSize,
     initialColor,
-    // priceInGbp,
     variants,
 }: {
     retrievedProduct: RetrieveProductResponse;
     initialSize: string;
     initialColor: string;
-    // priceInGbp: number;
     variants: Variant[];
 }) {
     const [checkoutLoading, setCheckoutLoading] = useState(false);
     const { images, print_provider_id, blueprint_id } = retrievedProduct;
     const country = useContext(CountryCodeContext);
-    const currency = getCurrencyFromCountry(country);
     const [selectedSize, setSelectedSize] = useState(initialSize);
     const [selectedColor, setSelectedColor] = useState(initialColor);
     const [userCountry, setUserCountry] = useState("");
-    const [priceInGbp, setPriceInGbp] = useState<number | undefined>();
+    const [priceInLocalCurrency, setPriceInLocalCurrency] =
+        useState<number>(25);
 
     useEffect(() => {
         const x = async () => {
@@ -98,7 +96,7 @@ export function ProductDetails({
     }, [selectedVariant, retrievedProduct.variants]);
 
     useEffect(() => {
-        const x = async () => {
+        const handlePricing = async () => {
             const generatedUnroundedPriceInUsd = generateUnroundedPriceInUsd({
                 selectedVariant: selectedProductVariant,
                 shippingCostsInCents: 349,
@@ -108,14 +106,16 @@ export function ProductDetails({
                 generatedUnroundedPriceInUsd,
             );
 
-            const generatedPriceInGbp = roundUpToNearestMultipleOf5(
-                generatedUnroundedPriceInGbp,
+            const sellingPriceInLocalCurrency = roundUpToNearestMultipleOf5(
+                country === "GB"
+                    ? generatedUnroundedPriceInGbp
+                    : generatedUnroundedPriceInUsd,
             );
 
-            setPriceInGbp(generatedPriceInGbp);
+            setPriceInLocalCurrency(sellingPriceInLocalCurrency);
         };
-        x();
-    }, [selectedProductVariant]);
+        handlePricing();
+    }, [selectedProductVariant, country]);
 
     const onClick = async () => {
         const generatedUnroundedPriceInUsd = generateUnroundedPriceInUsd({
@@ -132,9 +132,9 @@ export function ProductDetails({
         );
 
         if (
-            !(await isPriceOkay({
+            !(await isSellingPriceProfitable({
                 selectedVariant: selectedProductVariant,
-                priceInGbp,
+                priceInLocalCurrency: priceInGbp,
                 blueprint_id,
                 print_provider_id,
             }))
@@ -165,6 +165,11 @@ export function ProductDetails({
             });
     };
 
+    const priceString =
+        country === "GB"
+            ? `£${priceInLocalCurrency}`
+            : `$${priceInLocalCurrency}`; // needs use memo?
+
     return (
         <div className="flex w-full flex-col items-center justify-center text-center">
             {images ? (
@@ -188,7 +193,7 @@ export function ProductDetails({
                 </div>
                 <Card>
                     <CardHeader>
-                        <CardTitle>£{priceInGbp}</CardTitle>
+                        <CardTitle>{priceString}</CardTitle>
                         <CardDescription>Free shipping</CardDescription>
                     </CardHeader>
                 </Card>

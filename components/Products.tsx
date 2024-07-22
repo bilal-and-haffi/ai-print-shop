@@ -1,20 +1,24 @@
 "use client";
 
-import { useState } from "react";
+import { createContext, useState } from "react";
 import { ProductDetails } from "./ProductDetails";
 import { Variant } from "@/interfaces/Printify/Variant";
 import { ProductSwitcher } from "./ProductSwitcher";
 import { ProductType } from "../types/ProductType";
+import { CountryCode } from "@/lib/stripe/createCheckoutSession";
 
 const productsMap = new Map([
     [ProductType.TShirt, "T Shirt"],
     [ProductType.Hoodie, "Hoodie"],
     [ProductType.Mug, "Mug"],
 ]);
+export const CountryCodeContext = createContext<CountryCode>("GB");
 
 export const Products = ({
+    countryCode,
     productsAndVariants,
 }: {
+    countryCode: CountryCode;
     productsAndVariants: Map<
         ProductType,
         {
@@ -75,13 +79,15 @@ export const Products = ({
 
     return (
         <>
-            <ProductSwitcher
-                selectedProductType={selectedProductType}
-                setSelectedProductType={setSelectedProductType}
-                prompt={tShirtProduct.title}
-                productsMap={productsMap}
-            />
-            <CurrentProductDetails />
+            <CountryCodeContext.Provider value={countryCode}>
+                <ProductSwitcher
+                    selectedProductType={selectedProductType}
+                    setSelectedProductType={setSelectedProductType}
+                    prompt={tShirtProduct.title}
+                    productsMap={productsMap}
+                />
+                <CurrentProductDetails />
+            </CountryCodeContext.Provider>
         </>
     );
 };

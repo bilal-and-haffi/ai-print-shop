@@ -1,7 +1,7 @@
 "use server";
 import { ProductVariant } from "@/interfaces/PrintifyTypes";
 import { convertUSDToGBP } from "@/lib/currency/convertUSDToGBP";
-import { getUkShippingCostInCents } from "../printify/shipping/getShippingCosts";
+import { getUkShippingCostInCents } from "../printify/shipping/getUkShippingCostsInCents";
 
 export async function isPriceOkay({
     selectedVariant,
@@ -28,7 +28,7 @@ export async function isPriceOkay({
         totalPrintifyCostInUsd,
     );
     const minimumProfitInGbp = 2;
-    const profitInGbp = priceInGbp - totalPrintifyCostInGbp;git 
+    const profitInGbp = priceInGbp - totalPrintifyCostInGbp;
     const isPriceOkay = profitInGbp > minimumProfitInGbp;
     console.log({
         printifyProductCostInUsd,

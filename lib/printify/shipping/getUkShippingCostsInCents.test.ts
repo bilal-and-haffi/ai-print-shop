@@ -1,4 +1,4 @@
-import { getUkShippingCostInCents } from "./getShippingCosts";
+import { getUkShippingCostInCents } from "./getUkShippingCostsInCents";
 
 describe("getUkShippingCostInCents", () => {
     it("should return 349 for t shirt from t shirt and sons", async () => {

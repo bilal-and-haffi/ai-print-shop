@@ -1,5 +1,7 @@
 import { stripeServerClient } from "./client";
 
+export type CountryCode = "US" | "GB";
+
 interface checkOutSessionParams {
     referer: string;
     origin: string;
@@ -12,7 +14,7 @@ interface checkOutSessionParams {
     productType: string;
     orderVariantId: string;
     internalOrderId: number;
-    country: "US" | "GB";
+    country: CountryCode;
 }
 
 export async function createCheckoutSession(params: checkOutSessionParams) {

@@ -9,6 +9,7 @@ export async function getCountryFromIpAddress() {
 
         return country;
     } catch (error) {
+        // not logging because don't want to log to client
         return "GB";
     }
 }

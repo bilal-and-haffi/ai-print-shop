@@ -1,6 +1,7 @@
 import { Products } from "@/components/Products";
 import { getProductsAndVariants } from "../../../lib/printify/getProductsAndVariants";
 import { isValidCountry } from "../../../lib/country/isValidCountry";
+import { CountryCode } from "@/lib/stripe/createCheckoutSession";
 
 export default async function ProductPage({
     params,
@@ -11,14 +12,20 @@ export default async function ProductPage({
 }) {
     const { printifyImageId } = params;
     const { country } = searchParams;
+    const userCountry: CountryCode = isValidCountry(country)
+        ? (country as CountryCode)
+        : "GB";
     const productAndVariants = await getProductsAndVariants({
         printifyImageId,
-        country: isValidCountry(country) ? country : "GB",
+        country: userCountry,
     });
 
     return (
         <div className="flex flex-col gap-4 md:w-1/2">
-            <Products productsAndVariants={productAndVariants} />
+            <Products
+                productsAndVariants={productAndVariants}
+                countryCode={userCountry}
+            />
         </div>
     );
 }

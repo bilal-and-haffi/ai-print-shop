@@ -8,13 +8,15 @@ import {
 import { ImagesCarousel } from "./ImageCarousel";
 import { Size, SizeAndColorSelector } from "./SizeAndColorForm";
 import Image from "next/image";
-import { useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { SmallLoadingSpinner } from "./loading/SmallLoadingSpinner";
 import { isPriceOkay } from "../lib/pricing/isPriceOkay";
 import { Variant } from "@/interfaces/Printify/Variant";
 import { Card, CardHeader, CardTitle, CardDescription } from "./ui/card";
 import { isValidCountry } from "@/lib/country/isValidCountry";
 import { getCurrentIpAddressCountry } from "@/lib/country/getCurrentIpAddressCountry";
+import { CountryCodeContext } from "./Products";
+import { getCurrencyFromCountry } from "@/lib/currency/getCurrencyFromCountry";
 
 export interface Options {
     id: number;
@@ -36,7 +38,8 @@ export function ProductDetails({
 }) {
     const [checkoutLoading, setCheckoutLoading] = useState(false);
     const { images } = retrievedProduct;
-
+    const country = useContext(CountryCodeContext);
+    const currency = getCurrencyFromCountry(country);
     const [selectedSize, setSelectedSize] = useState(initialSize);
     const [selectedColor, setSelectedColor] = useState(initialColor);
     const [userCountry, setUserCountry] = useState("");

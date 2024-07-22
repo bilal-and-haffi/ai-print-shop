@@ -131,8 +131,6 @@ export function ProductDetails({
             generatedUnroundedPriceInGbp,
         );
 
-        console.log({ priceInGbp });
-
         if (
             !(await isPriceOkay({
                 selectedVariant: selectedProductVariant,

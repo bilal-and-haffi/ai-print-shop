@@ -12,6 +12,7 @@ import { envClient } from "@/lib/env/client";
 import { checkPromptForCopyRight } from "@/lib/openai/copyrightCheck";
 import { PromptConfirmationDialog } from "./PromptConfirmationDialog";
 import { SelectFormField } from "./form/SelectFormField";
+import { CountryCode } from "@/lib/stripe/createCheckoutSession";
 
 const styleOptions = [
     "None",
@@ -39,7 +40,7 @@ const FormSchema = z.object({
     locationOptions: z.enum(locationOptions).default(locationOptions[0]),
 });
 
-export function ImageGenerationForm() {
+export function ImageGenerationForm({ country }: { country: CountryCode }) {
     const initalPrompt =
         envClient.NEXT_PUBLIC_ENV === "development" ? "test" : "";
     const [prompt, setPrompt] = useState<string>(initalPrompt);
@@ -68,7 +69,9 @@ export function ImageGenerationForm() {
     const router = useRouter();
 
     const continueToNextStep = () => {
-        router.push(`/image/${prompt}?&style=${style}&location=${location}`);
+        router.push(
+            `/image/${prompt}?&style=${style}&location=${location}&country=${country}`,
+        );
     };
 
     const generateImage = async () => {

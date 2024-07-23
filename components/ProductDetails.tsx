@@ -180,20 +180,19 @@ export function ProductDetails({
                 </Card>
             </div>
             <div className="mt-4 flex w-full flex-col items-center">
-                {sellingPriceInLocalCurrency && (
-                    <Button
-                        onClick={onClick}
-                        className="w-full bg-blue-500 text-white hover:bg-blue-700"
-                    >
-                        {checkoutLoading ? (
-                            <div className="flex flex-row items-center">
-                                <SmallLoadingSpinner className="fill-white" />
-                            </div>
-                        ) : (
-                            <>Buy now</>
-                        )}
-                    </Button>
-                )}
+                <Button
+                    onClick={onClick}
+                    className="w-full bg-blue-500 text-white hover:bg-blue-700"
+                    disabled={!sellingPriceInLocalCurrency}
+                >
+                    {checkoutLoading ? (
+                        <div className="flex flex-row items-center">
+                            <SmallLoadingSpinner className="fill-white" />
+                        </div>
+                    ) : (
+                        <>Buy now</>
+                    )}
+                </Button>
                 <div className="mt-4 text-sm">
                     Powered by
                     <Image

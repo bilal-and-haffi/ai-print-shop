@@ -4,6 +4,7 @@ import { addToImageTable } from "@/db/image";
 import { generateOpenAiImageUrl } from "@/lib/images/openai";
 import { generateStableDiffusionImageUrl } from "@/lib/images/replicate";
 import { addOptionsToPrompt } from "./addOptionsToPrompt";
+import { CountryCode } from "@/lib/stripe/createCheckoutSession";
 
 export const maxDuration = 300;
 
@@ -12,6 +13,7 @@ export default async function GenerateImagePage(params: {
     searchParams: {
         style: string;
         location: string;
+        country: CountryCode;
     };
 }) {
     const { prompt: encodedPrompt } = params.params;
@@ -25,7 +27,7 @@ export default async function GenerateImagePage(params: {
 
     const isTestPrompt = decodedPrompt === "test prompt";
 
-    const { style, location } = params.searchParams;
+    const { style, location, country } = params.searchParams;
 
     const concatenatedPrompt = addOptionsToPrompt({
         style,
@@ -67,5 +69,8 @@ export default async function GenerateImagePage(params: {
         printifyImageUrl: generatedImageUrl,
     });
 
-    redirect(`/product/${printifyImageId}`, RedirectType.replace);
+    redirect(
+        `/product/${printifyImageId}?country=${country}`,
+        RedirectType.replace,
+    );
 }

@@ -1,6 +1,5 @@
 import { Products } from "@/components/Products";
 import { getProductsAndVariants } from "../../../lib/printify/getProductsAndVariants";
-import { isValidCountry } from "../../../lib/country/isValidCountry";
 import { CountryCode } from "@/lib/stripe/createCheckoutSession";
 
 export default async function ProductPage({
@@ -8,16 +7,14 @@ export default async function ProductPage({
     searchParams,
 }: {
     params: { printifyImageId: string };
-    searchParams: { country: string };
+    searchParams: { country: CountryCode };
 }) {
     const { printifyImageId } = params;
     const { country } = searchParams;
-    const userCountry: CountryCode = isValidCountry(country)
-        ? (country as CountryCode)
-        : "GB";
+    console.log({ country });
     const productAndVariants = await getProductsAndVariants({
         printifyImageId,
-        country: userCountry,
+        country,
     });
 
     return (

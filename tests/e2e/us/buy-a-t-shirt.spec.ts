@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 
-test("buy a t shirt", async ({ page }) => {
+test("US - buy a t shirt", async ({ page }) => {
     await page.route("https://ipapi.co/json/", async (route) => {
         const json = { country: "US" };
         await route.fulfill({ json });

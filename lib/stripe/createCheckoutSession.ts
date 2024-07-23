@@ -34,6 +34,8 @@ export async function createCheckoutSession(params: checkOutSessionParams) {
         country,
     } = params;
 
+    const currency = getCurrencyFromCountry(country);
+
     return await stripeServerClient.checkout.sessions.create({
         customer_creation: "always",
         billing_address_collection: "required",
@@ -41,11 +43,12 @@ export async function createCheckoutSession(params: checkOutSessionParams) {
             allowed_countries: [country],
         },
         shipping_options: [
+            // make me dynamic
             {
                 shipping_rate_data: {
                     type: "fixed_amount",
                     fixed_amount: {
-                        currency: "gbp",
+                        currency,
                         amount: totalShipping,
                     },
                     display_name: "Standard",
@@ -56,7 +59,7 @@ export async function createCheckoutSession(params: checkOutSessionParams) {
                         },
                         maximum: {
                             unit: "business_day",
-                            value: 5,
+                            value: 10,
                         },
                     },
                 },
@@ -65,13 +68,13 @@ export async function createCheckoutSession(params: checkOutSessionParams) {
         line_items: [
             {
                 price_data: {
-                    currency: getCurrencyFromCountry(country),
+                    currency,
                     product_data: {
                         name: `${productType} - ${orderVariantLabel}`,
                         description: orderTitle,
                         images: [orderPreview],
                     },
-                    unit_amount_decimal: totalStripePrice.toString(),
+                    unit_amount_decimal: totalStripePrice.toString(), // in cents -- why stripe?
                 },
                 quantity: 1,
             },

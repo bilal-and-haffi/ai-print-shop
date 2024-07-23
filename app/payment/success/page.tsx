@@ -10,7 +10,6 @@ import { Suspense } from "react";
 import { type PrintifyOrderResponse } from "@/interfaces/PrintifyTypes";
 import { type OrderRow } from "@/db/order";
 import { sendOrderConfirmationEmail } from "@/lib/email/sendOrderConfirmationEmail";
-import { sendAnExistingOrderToProduction } from "@/lib/printify/sendAnExistingOrderToProduction";
 import {
     Card,
     CardContent,
@@ -60,7 +59,6 @@ export default async function Page(params: {
 
     const existingEmailId = await getEmailIdFromOrderTable({ internalOrderId });
     const hasSentEmailAlready = Boolean(existingEmailId);
-    const hasOrderAlreadyBeenProcessed = hasSentEmailAlready;
 
     console.log({ emailId: existingEmailId, hasSentEmailAlready });
 
@@ -75,14 +73,6 @@ export default async function Page(params: {
         if (emailId) {
             addEmailIdToOrderTable({ internalOrderId, emailId });
         }
-    }
-
-    if (!hasOrderAlreadyBeenProcessed) {
-        await sendAnExistingOrderToProduction(printifyOrderId);
-    } else {
-        console.log(
-            "Order has already been processed skipping sending to production",
-        );
     }
 
     return (

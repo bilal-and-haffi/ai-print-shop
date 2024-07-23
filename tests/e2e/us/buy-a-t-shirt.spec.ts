@@ -2,11 +2,11 @@ import { test, expect } from "@playwright/test";
 
 // TODO: set up a link payment with another email address
 
-test.skip("US - buy a t shirt", async ({ page }) => {
+test("US - buy a t shirt", async ({ page }) => {
     await page.route("https://ipapi.co/json/", async (route) => {
         const json = { country: "US" };
         await route.fulfill({ json });
-    }); // mock because CI on github runs in US and the link delivery address is in uk so it fails
+    });
 
     await page.goto("/");
     await page.getByRole("button", { name: "Get started" }).click();
@@ -17,7 +17,7 @@ test.skip("US - buy a t shirt", async ({ page }) => {
     await page.getByTestId("Generate Image Button").click();
     await page.getByRole("button", { name: "Buy now" }).click();
     await page.getByLabel("Email").click();
-    await page.getByLabel("Email").fill("do-not-send@ai-print-shop.com");
+    await page.getByLabel("Email").fill("do-not-send-us@ai-print-shop.com");
     await page.getByTestId("sms-code-input-0").fill("0");
     await page.getByTestId("sms-code-input-1").fill("0");
     await page.getByTestId("sms-code-input-2").fill("0");

@@ -11,6 +11,9 @@ export async function getProductsAndVariants({
     printifyImageId: string;
     country: string;
 }) {
+    if (!country) {
+        console.error({ msg: "country is undefined", country });
+    }
     const products = productData.filter(
         (product) => product.country === country && product.enabled,
     );

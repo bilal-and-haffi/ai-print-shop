@@ -37,6 +37,7 @@ export function ProductDetails({
     const [checkoutLoading, setCheckoutLoading] = useState(false);
     const { images, print_provider_id, blueprint_id } = retrievedProduct;
     const country = useContext(CountryCodeContext);
+    console.log("country in product details", country);
     const [selectedSize, setSelectedSize] = useState(initialSize);
     const [selectedColor, setSelectedColor] = useState(initialColor);
     const [sellingPriceInLocalCurrency, setSellingPriceInLocalCurrency] =

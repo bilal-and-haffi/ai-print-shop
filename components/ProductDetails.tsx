@@ -145,10 +145,11 @@ export function ProductDetails({
             });
     };
 
-    const priceString =
-        country === "GB"
+    const priceString = sellingPriceInLocalCurrency
+        ? country === "GB"
             ? `£${sellingPriceInLocalCurrency}`
-            : `$${sellingPriceInLocalCurrency}`; // needs use memo?
+            : `$${sellingPriceInLocalCurrency}`
+        : "Calculating"; // needs use memo?
 
     return (
         <div className="flex w-full flex-col items-center justify-center text-center">
@@ -179,7 +180,7 @@ export function ProductDetails({
                 </Card>
             </div>
             <div className="mt-4 flex w-full flex-col items-center">
-                {sellingPriceInLocalCurrency ?? (
+                {sellingPriceInLocalCurrency && (
                     <Button
                         onClick={onClick}
                         className="w-full bg-blue-500 text-white hover:bg-blue-700"

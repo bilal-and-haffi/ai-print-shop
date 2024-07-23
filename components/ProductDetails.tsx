@@ -145,11 +145,15 @@ export function ProductDetails({
             });
     };
 
-    const priceString = sellingPriceInLocalCurrency
-        ? country === "GB"
-            ? `£${sellingPriceInLocalCurrency}`
-            : `$${sellingPriceInLocalCurrency}`
-        : "Calculating"; // needs use memo?
+    const priceCurrencyPrefix = country === "GB" ? `£` : `$`;
+
+    const priceString =
+        priceCurrencyPrefix +
+        (sellingPriceInLocalCurrency
+            ? country === "GB"
+                ? `${sellingPriceInLocalCurrency}`
+                : `${sellingPriceInLocalCurrency}`
+            : "");
 
     return (
         <div className="flex w-full flex-col items-center justify-center text-center">

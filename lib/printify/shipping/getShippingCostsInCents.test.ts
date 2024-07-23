@@ -9,4 +9,13 @@ describe("getUkShippingCostInCents", () => {
         });
         expect(shippingCost).toBe(349);
     });
+
+    it("should return value for us print provider delivering to US", async () => {
+        const shippingCost = await getShippingCostInCents({
+            blueprint_id: 145,
+            print_provider_id: 29,
+            deliveryCountry: "US",
+        });
+        expect(shippingCost).toBe(475);
+    });
 });

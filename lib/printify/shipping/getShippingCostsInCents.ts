@@ -10,6 +10,7 @@ export async function getShippingCostInCents({
     print_provider_id: number;
     deliveryCountry: CountryCode;
 }) {
+    console.log({ blueprint_id, print_provider_id, deliveryCountry });
     const shippingData = await getShippingData({
         blueprint_id,
         print_provider_id,

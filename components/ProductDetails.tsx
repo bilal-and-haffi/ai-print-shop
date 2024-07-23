@@ -153,7 +153,7 @@ export function ProductDetails({
             ? country === "GB"
                 ? `${sellingPriceInLocalCurrency}`
                 : `${sellingPriceInLocalCurrency}`
-            : "&nbsp;&nbsp;");
+            : "&nbsp&nbsp");
 
     return (
         <div className="flex w-full flex-col items-center justify-center text-center">

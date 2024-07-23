@@ -14,3 +14,10 @@ test("shows email address", async ({ page }) => {
     );
     await expect(emailButton).toBeVisible();
 });
+
+test("shows two browse products with this image buttons", async ({ page }) => {
+    const buttons = page.getByRole("button", {
+        name: "Browse products with this",
+    });
+    await expect(buttons).toHaveCount(2);
+});

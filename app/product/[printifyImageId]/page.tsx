@@ -14,7 +14,7 @@ export default async function ProductPage({
     const { country } = searchParams;
     const userCountry: CountryCode = isValidCountry(country)
         ? (country as CountryCode)
-        : "GB";
+        : ((await getCountryFromIpAdress()) ?? "GB");
     const productAndVariants = await getProductsAndVariants({
         printifyImageId,
         country: userCountry,

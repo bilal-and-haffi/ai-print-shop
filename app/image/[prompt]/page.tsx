@@ -14,7 +14,6 @@ export default async function GenerateImagePage(params: {
         model: string;
         style: string;
         location: string;
-        country: string;
     };
 }) {
     const { prompt: encodedPrompt } = params.params;
@@ -28,7 +27,7 @@ export default async function GenerateImagePage(params: {
 
     const isTestPrompt = decodedPrompt === "test prompt";
 
-    const { model, style, location, country } = params.searchParams;
+    const { model, style, location } = params.searchParams;
 
     const concatenatedPrompt = addOptionsToPrompt({
         style,
@@ -70,8 +69,5 @@ export default async function GenerateImagePage(params: {
         printifyImageUrl: generatedImageUrl,
     });
 
-    redirect(
-        `/product/${printifyImageId}?country=${country}`,
-        RedirectType.replace,
-    );
+    redirect(`/product/${printifyImageId}`, RedirectType.replace);
 }

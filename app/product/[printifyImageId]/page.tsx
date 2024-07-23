@@ -11,7 +11,7 @@ export default async function ProductPage({
 }) {
     const { printifyImageId } = params;
     const { country } = searchParams;
-    console.log({ country });
+    console.log({ country, msg: " ProductPage" });
     const productAndVariants = await getProductsAndVariants({
         printifyImageId,
         country,

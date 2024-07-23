@@ -29,6 +29,10 @@ export default async function GenerateImagePage(params: {
 
     const { style, location, country } = params.searchParams;
 
+    if (!country) {
+        console.error({ country, msg: "No country, GenerateImagePage" });
+    }
+
     const concatenatedPrompt = addOptionsToPrompt({
         style,
         location,

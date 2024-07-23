@@ -13,27 +13,25 @@ import { checkPromptForCopyRight } from "@/lib/openai/copyrightCheck";
 import { PromptConfirmationDialog } from "./PromptConfirmationDialog";
 import { SelectFormField } from "./form/SelectFormField";
 import { modelOptions } from "../app/data/modelOptions";
-import { getCountryFromIpAddress } from "@/lib/country/getCountryFromIpAddress";
 
 const styleOptions = [
-    "Photograph",
+    "None",
     "Anime",
     "Cartoon",
     "Futuristic",
-    "None",
+    "Photograph",
 ] as const;
 
 const locationOptions = [
-    "Space",
+    "None",
     "Dessert",
-    "Fantasy Land",
     "Indoors",
     "Mars",
     "Outdoors",
     "Rural",
+    "Space",
     "Underwater",
     "Urban",
-    "None",
 ] as const;
 
 const FormSchema = z.object({
@@ -54,15 +52,6 @@ export function ImageGenerationForm() {
     const [modelOption, setModelOptions] = useState<string>(modelOptions[0]);
     const [style, setStyle] = useState<string>(styleOptions[0]);
     const [location, setLocation] = useState<string>(locationOptions[0]);
-    const [userCountry, setUserCountry] = useState();
-
-    useEffect(() => {
-        const x = async () => {
-            const country = await getCountryFromIpAddress();
-            setUserCountry(country);
-        };
-        x();
-    }, []);
 
     const formFields = [
         {
@@ -87,7 +76,7 @@ export function ImageGenerationForm() {
 
     const continueToNextStep = () => {
         router.push(
-            `/image/${prompt}?model=${modelOption}&style=${style}&location=${location}&country=${userCountry}`,
+            `/image/${prompt}?model=${modelOption}&style=${style}&location=${location}`,
         );
     };
 

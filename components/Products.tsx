@@ -1,11 +1,12 @@
 "use client";
 
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { ProductDetails } from "./ProductDetails";
 import { Variant } from "@/interfaces/Printify/Variant";
 import { ProductSwitcher } from "./ProductSwitcher";
 import { ProductType } from "../types/ProductType";
 import { CountryCode } from "@/lib/stripe/createCheckoutSession";
+import { getCountryFromIpAddress } from "@/lib/country/getCountryFromIpAddress";
 
 const productsMap = new Map([
     [ProductType.TShirt, "T Shirt"],
@@ -15,10 +16,8 @@ const productsMap = new Map([
 export const CountryCodeContext = createContext<CountryCode>("GB");
 
 export const Products = ({
-    countryCode,
     productsAndVariants,
 }: {
-    countryCode: CountryCode;
     productsAndVariants: Map<
         ProductType,
         {
@@ -27,6 +26,16 @@ export const Products = ({
         }
     >;
 }) => {
+    const [countryCode, setCountryCode] = useState();
+
+    useEffect(() => {
+        const fetchAndSetCountryCode = async () => {
+            const country = await getCountryFromIpAddress();
+            setCountryCode(country);
+        };
+        fetchAndSetCountryCode();
+    }, []);
+
     const [selectedProductType, setSelectedProductType] = useState<ProductType>(
         ProductType.TShirt,
     );
@@ -76,7 +85,7 @@ export const Products = ({
 
     return (
         <>
-            <CountryCodeContext.Provider value={countryCode}>
+            <CountryCodeContext.Provider value={countryCode ?? "GB"}>
                 <ProductSwitcher
                     selectedProductType={selectedProductType}
                     setSelectedProductType={setSelectedProductType}

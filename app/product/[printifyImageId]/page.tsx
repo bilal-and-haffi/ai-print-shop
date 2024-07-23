@@ -2,6 +2,7 @@ import { Products } from "@/components/Products";
 import { getProductsAndVariants } from "../../../lib/printify/getProductsAndVariants";
 import { isValidCountry } from "../../../lib/country/isValidCountry";
 import { CountryCode } from "@/lib/stripe/createCheckoutSession";
+import { getCountryFromIpAddress } from "@/lib/country/getCountryFromIpAddress";
 
 export default async function ProductPage({
     params,

@@ -3,7 +3,6 @@ import { postImageToPrintify } from "@/lib/printify/service";
 import { addToImageTable } from "@/db/image";
 import { generateOpenAiImageUrl } from "@/lib/images/openai";
 import { generateStableDiffusionImageUrl } from "@/lib/images/replicate";
-import { modelOptions } from "@/app/data/modelOptions";
 import { addOptionsToPrompt } from "./addOptionsToPrompt";
 
 export const maxDuration = 300;
@@ -11,7 +10,6 @@ export const maxDuration = 300;
 export default async function GenerateImagePage(params: {
     params: { prompt: string };
     searchParams: {
-        model: string;
         style: string;
         location: string;
     };
@@ -27,7 +25,7 @@ export default async function GenerateImagePage(params: {
 
     const isTestPrompt = decodedPrompt === "test prompt";
 
-    const { model, style, location } = params.searchParams;
+    const { style, location } = params.searchParams;
 
     const concatenatedPrompt = addOptionsToPrompt({
         style,
@@ -44,24 +42,24 @@ export default async function GenerateImagePage(params: {
         const testImageUrl =
             "https://cdn.pixabay.com/photo/2014/06/03/19/38/test-361512_640.jpg";
         generatedImageUrl = testImageUrl;
-    } else if (model === modelOptions[0]) {
-        generatedImageUrl = await generateOpenAiImageUrl(concatenatedPrompt);
-    } else if (model === modelOptions[1]) {
-        generatedImageUrl =
-            await generateStableDiffusionImageUrl(concatenatedPrompt);
     } else {
-        console.error("Invalid model", { model });
-        return <div>Invalid model</div>;
+        try {
+            generatedImageUrl =
+                await generateOpenAiImageUrl(concatenatedPrompt);
+        } catch (error) {
+            console.error({
+                error,
+                msg: "open ai gen failed so using stable diffusion",
+            });
+            generatedImageUrl =
+                await generateStableDiffusionImageUrl(concatenatedPrompt);
+        }
     }
-
-    console.error({ generatedImageUrl });
 
     const { id: printifyImageId } = await postImageToPrintify(
         generatedImageUrl,
         "generatedImage.png",
     );
-
-    console.error({ printifyImageId });
 
     await addToImageTable({
         prompt: concatenatedPrompt,

@@ -12,7 +12,6 @@ import { envClient } from "@/lib/env/client";
 import { checkPromptForCopyRight } from "@/lib/openai/copyrightCheck";
 import { PromptConfirmationDialog } from "./PromptConfirmationDialog";
 import { SelectFormField } from "./form/SelectFormField";
-import { modelOptions } from "../app/data/modelOptions";
 
 const styleOptions = [
     "None",
@@ -38,7 +37,6 @@ const locationOptions = [
 const FormSchema = z.object({
     style: z.enum(styleOptions).default(styleOptions[0]),
     locationOptions: z.enum(locationOptions).default(locationOptions[0]),
-    modelOptions: z.enum(modelOptions).default(modelOptions[0]),
 });
 
 export function ImageGenerationForm() {
@@ -50,16 +48,10 @@ export function ImageGenerationForm() {
         useState<boolean>(false);
     const [alertReason, setAlertReason] = useState<string>("");
 
-    const [modelOption, setModelOptions] = useState<string>(modelOptions[0]);
     const [style, setStyle] = useState<string>(styleOptions[0]);
     const [location, setLocation] = useState<string>(locationOptions[0]);
 
     const formFields = [
-        {
-            name: "Model",
-            options: modelOptions,
-            set: setModelOptions,
-        },
         {
             name: "Style",
             options: styleOptions,
@@ -76,9 +68,7 @@ export function ImageGenerationForm() {
     const router = useRouter();
 
     const continueToNextStep = () => {
-        router.push(
-            `/image/${prompt}?model=${modelOption}&style=${style}&location=${location}`,
-        );
+        router.push(`/image/${prompt}?&style=${style}&location=${location}`);
     };
 
     const generateImage = async () => {

@@ -20,6 +20,7 @@ const styleOptions = [
     "Cartoon",
     "Futuristic",
     "Photograph",
+    "Pixel Art",
 ] as const;
 
 const locationOptions = [

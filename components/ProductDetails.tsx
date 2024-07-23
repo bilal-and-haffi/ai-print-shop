@@ -10,14 +10,13 @@ import { Size, SizeAndColorSelector } from "./SizeAndColorForm";
 import Image from "next/image";
 import { useContext, useEffect, useMemo, useState } from "react";
 import { SmallLoadingSpinner } from "./loading/SmallLoadingSpinner";
-import { isSellingPriceProfitable } from "../lib/pricing/isPriceOkay";
+import { isSellingPriceProfitable } from "../lib/pricing/isSellingPriceProfitable";
 import { Variant } from "@/interfaces/Printify/Variant";
 import { Card, CardHeader, CardTitle, CardDescription } from "./ui/card";
-import { isValidCountry } from "@/lib/country/isValidCountry";
 import { CountryCodeContext } from "./Products";
 import { generateUnroundedPriceInUsd } from "@/lib/pricing/generateUnroundedPriceInUsd";
 import { convertUSDToGBP } from "@/lib/currency/convertUSDToGBP";
-import { getCountryFromIpAddress } from "@/lib/country/getCountryFromIpAddress";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export interface Options {
     id: number;
@@ -40,8 +39,8 @@ export function ProductDetails({
     const country = useContext(CountryCodeContext);
     const [selectedSize, setSelectedSize] = useState(initialSize);
     const [selectedColor, setSelectedColor] = useState(initialColor);
-    const [priceInLocalCurrency, setPriceInLocalCurrency] =
-        useState<number>(25);
+    const [sellingPriceInLocalCurrency, setSellingPriceInLocalCurrency] =
+        useState<number>();
 
     const initialSelectedVariant = findSelectedVariant(
         selectedSize,
@@ -102,29 +101,19 @@ export function ProductDetails({
                     : generatedUnroundedPriceInUsd,
             );
 
-            setPriceInLocalCurrency(sellingPriceInLocalCurrency);
+            setSellingPriceInLocalCurrency(sellingPriceInLocalCurrency);
         };
         handlePricing();
     }, [selectedProductVariant, country]);
 
     const onClick = async () => {
-        const generatedUnroundedPriceInUsd = generateUnroundedPriceInUsd({
-            selectedVariant: selectedProductVariant,
-            shippingCostsInCents: 349,
-        });
-
-        const generatedUnroundedPriceInGbp = await convertUSDToGBP(
-            generatedUnroundedPriceInUsd,
-        );
-
-        const priceInGbp = roundUpToNearestMultipleOf5(
-            generatedUnroundedPriceInGbp,
-        );
-
+        if (!sellingPriceInLocalCurrency) {
+            throw new Error("No selling price");
+        }
         if (
             !(await isSellingPriceProfitable({
                 selectedVariant: selectedProductVariant,
-                priceInLocalCurrency: priceInGbp,
+                sellingPriceInLocalCurrency,
                 blueprint_id,
                 print_provider_id,
                 country,
@@ -145,7 +134,7 @@ export function ProductDetails({
                 order_variant_label: selectedVariant.title,
                 orderVariantId: selectedVariant.id,
                 order_preview: filteredImages[0].src,
-                price: priceInGbp * 100,
+                price: sellingPriceInLocalCurrency * 100, // 100 is weird imo
                 country,
             }),
         })
@@ -158,8 +147,8 @@ export function ProductDetails({
 
     const priceString =
         country === "GB"
-            ? `£${priceInLocalCurrency}`
-            : `$${priceInLocalCurrency}`; // needs use memo?
+            ? `£${sellingPriceInLocalCurrency}`
+            : `$${sellingPriceInLocalCurrency}`; // needs use memo?
 
     return (
         <div className="flex w-full flex-col items-center justify-center text-center">
@@ -190,18 +179,20 @@ export function ProductDetails({
                 </Card>
             </div>
             <div className="mt-4 flex w-full flex-col items-center">
-                <Button
-                    onClick={onClick}
-                    className="w-full bg-blue-500 text-white hover:bg-blue-700"
-                >
-                    {checkoutLoading ? (
-                        <div className="flex flex-row items-center">
-                            <SmallLoadingSpinner className="fill-white" />
-                        </div>
-                    ) : (
-                        <>Buy now</>
-                    )}
-                </Button>
+                {sellingPriceInLocalCurrency ?? (
+                    <Button
+                        onClick={onClick}
+                        className="w-full bg-blue-500 text-white hover:bg-blue-700"
+                    >
+                        {checkoutLoading ? (
+                            <div className="flex flex-row items-center">
+                                <SmallLoadingSpinner className="fill-white" />
+                            </div>
+                        ) : (
+                            <>Buy now</>
+                        )}
+                    </Button>
+                )}
                 <div className="mt-4 text-sm">
                     Powered by
                     <Image

@@ -9,13 +9,13 @@ export type Currency = "gbp" | "usd";
 
 export async function isSellingPriceProfitable({
     selectedVariant,
-    priceInLocalCurrency,
+    sellingPriceInLocalCurrency,
     print_provider_id,
     blueprint_id,
     country,
 }: {
     selectedVariant: ProductVariant;
-    priceInLocalCurrency: number;
+    sellingPriceInLocalCurrency: number;
     print_provider_id: number;
     blueprint_id: number;
     country: CountryCode;
@@ -37,31 +37,25 @@ export async function isSellingPriceProfitable({
 
     const priceInUsd =
         country === "GB"
-            ? await convertGBPToUSD(priceInLocalCurrency)
-            : priceInLocalCurrency;
+            ? await convertGBPToUSD(sellingPriceInLocalCurrency)
+            : sellingPriceInLocalCurrency;
 
     const profitInUsd = priceInUsd - totalPrintifyCostInUsd;
 
     const isPriceOkay = profitInUsd > minimumProfitInUsd;
-    console.log({
-        printifyProductCostInUsd,
-        printifyShippingCostToUkInUsd: printifyShippingCostInUsd,
-        UK_VAT_MULTIPLIER,
-        totalPrintifyCostInUsd,
-        minimumProfitInUsd,
-        profitInUsd,
-        isPriceOkay,
-    });
 
     if (!isPriceOkay) {
         console.error({
             printifyProductCostInUsd,
-            printifyShippingCostToUkInUsd: printifyShippingCostInUsd,
+            printifyShippingCostInUsd,
             UK_VAT_MULTIPLIER,
             totalPrintifyCostInUsd,
             minimumProfitInUsd,
-            profitInGbp: profitInUsd,
+            profitInUsd,
+            priceInUsd,
             isPriceOkay,
+            country,
+            sellingPriceInLocalCurrency,
             msg: "Pricing issue!",
         });
     }

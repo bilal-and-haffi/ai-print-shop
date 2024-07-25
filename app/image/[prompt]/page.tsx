@@ -1,5 +1,5 @@
 import { RedirectType, redirect } from "next/navigation";
-import { postImageToPrintify } from "@/lib/printify/service";
+import { postImageToPrintify } from "@/lib/printify/postImageToPrintify";
 import { addToImageTable } from "@/db/image";
 import { generateOpenAiImageUrl } from "@/lib/images/openai";
 import { generateStableDiffusionImageUrl } from "@/lib/images/replicate";

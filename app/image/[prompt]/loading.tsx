@@ -1,4 +1,5 @@
 import { ProgressBar } from "@/components/loading/ProgressBar";
+import { ExamplesSection } from "@/components/sections/ExamplesSection";
 
 export default function Loading() {
     return (

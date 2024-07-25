@@ -54,6 +54,7 @@ export function ExampleCard({
                 <Link
                     className="w-full"
                     href={`/product/${printifyImageId}?country=${countryCode}`}
+                    target="_blank"
                 >
                     <Button className="w-full" variant={"secondary"}>
                         Browse products with this image

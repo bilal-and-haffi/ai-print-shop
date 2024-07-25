@@ -39,6 +39,7 @@ export function ImagesCarousel(props: { images: ProductImage[] }) {
                                         priority
                                         onLoad={() => setImageLoaded(true)}
                                         className="rounded-lg"
+                                        unoptimized
                                     />
                                 </CardContent>
                             </Card>

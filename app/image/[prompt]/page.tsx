@@ -1,10 +1,12 @@
-import { RedirectType, redirect } from "next/navigation";
 import { postImageToPrintify } from "@/lib/printify/postImageToPrintify";
 import { addToImageTable } from "@/db/image";
 import { generateOpenAiImageUrl } from "@/lib/images/openai";
 import { generateStableDiffusionImageUrl } from "@/lib/images/replicate";
-import { addOptionsToPrompt } from "./addOptionsToPrompt";
 import { CountryCode } from "@/lib/stripe/createCheckoutSession";
+import Link from "next/link";
+import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { addOptionsToPrompt } from "@/lib/addOptionsToPrompt";
 
 export const maxDuration = 300;
 
@@ -73,8 +75,27 @@ export default async function GenerateImagePage(params: {
         printifyImageUrl: generatedImageUrl,
     });
 
-    redirect(
-        `/product/${printifyImageId}?country=${country}`,
-        RedirectType.replace,
+    return (
+        <>
+            <Image
+                src={generatedImageUrl}
+                alt={"Generated Image"}
+                width={1000}
+                height={1000}
+            />
+            <Button>
+                <Link
+                    replace
+                    href={`/removeBackground?url=${encodeURIComponent(generatedImageUrl)}`}
+                >
+                    Remove background
+                </Link>
+            </Button>
+            <Button>
+                <Link href={`/product/${printifyImageId}?country=${country}`}>
+                    Go to product
+                </Link>
+            </Button>
+        </>
     );
 }

@@ -24,6 +24,7 @@ const envSchema = z.object({
             z.literal("production"),
         ])
         .default("development"),
+    REMOVE_BG_API_KEY: z.string(),
 });
 
 export const envServer = envSchema.parse(process.env);

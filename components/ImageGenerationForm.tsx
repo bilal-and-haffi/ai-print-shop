@@ -36,8 +36,8 @@ const locationOptions = [
 ] as const;
 
 const FormSchema = z.object({
-    style: z.enum(styleOptions).default(styleOptions[0]),
-    locationOptions: z.enum(locationOptions).default(locationOptions[0]),
+    style: z.enum(styleOptions),
+    locationOptions: z.enum(locationOptions),
 });
 
 export function ImageGenerationForm({ country }: { country: CountryCode }) {
@@ -49,8 +49,8 @@ export function ImageGenerationForm({ country }: { country: CountryCode }) {
         useState<boolean>(false);
     const [alertReason, setAlertReason] = useState<string>("");
 
-    const [style, setStyle] = useState<string>(styleOptions[0]);
-    const [location, setLocation] = useState<string>(locationOptions[0]);
+    const [style, setStyle] = useState<string | undefined>();
+    const [location, setLocation] = useState<string | undefined>();
 
     const formFields = [
         {
@@ -117,25 +117,24 @@ export function ImageGenerationForm({ country }: { country: CountryCode }) {
                 autoFocus
             />
             <Form {...form}>
-                <form className="w-2/3 space-y-4">
-                    {formFields.map((x) => {
-                        const { name, options, set } = x;
-                        return (
-                            <SelectFormField
-                                key={x.name}
-                                form={form}
-                                setFieldValue={set}
-                                options={options as unknown as string[]}
-                                name={name}
-                            />
-                        );
-                    })}
-                </form>
+                {formFields.map((x) => {
+                    const { name, options, set } = x;
+                    return (
+                        <SelectFormField
+                            key={x.name}
+                            form={form}
+                            setFieldValue={set}
+                            options={options as unknown as string[]}
+                            name={name}
+                        />
+                    );
+                })}
             </Form>
             <Button
                 className="w-full"
                 onClick={generateImage}
                 data-testid="Generate Image Button"
+                disabled={!prompt || !location || !style}
             >
                 Generate Image
             </Button>

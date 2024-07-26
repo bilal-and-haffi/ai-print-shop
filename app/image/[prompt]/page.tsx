@@ -69,5 +69,14 @@ export default async function GenerateImagePage(params: {
         "generatedImage.png",
     );
 
-    redirect(`/image/confirm/${printifyImageId}?url=${encodeURIComponent(generatedImageUrl)}&country=${country}`, RedirectType.replace)
+    await addToImageTable({
+        prompt: concatenatedPrompt,
+        printifyImageId: printifyImageId,
+        printifyImageUrl: generatedImageUrl,
+    });
+
+    redirect(
+        `/image/confirm/${printifyImageId}?url=${encodeURIComponent(generatedImageUrl)}&country=${country}`,
+        RedirectType.replace,
+    );
 }

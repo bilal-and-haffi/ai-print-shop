@@ -40,7 +40,7 @@ export function SelectFormField({
                         </FormControl>
                         <SelectContent>
                             {options.map((option) => (
-                                <SelectItem key={option} value={option}>
+                                <SelectItem key={option} value={option} onClick={(event) => event.stopPropagation() }>
                                     <span className="text-muted-foreground">
                                         {name}
                                     </span>

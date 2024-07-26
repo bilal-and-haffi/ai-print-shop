@@ -3,10 +3,8 @@ import { addToImageTable } from "@/db/image";
 import { generateOpenAiImageUrl } from "@/lib/images/openai";
 import { generateStableDiffusionImageUrl } from "@/lib/images/replicate";
 import { CountryCode } from "@/lib/stripe/createCheckoutSession";
-import Link from "next/link";
-import Image from "next/image";
-import { Button } from "@/components/ui/button";
 import { addOptionsToPrompt } from "@/lib/addOptionsToPrompt";
+import { redirect, RedirectType } from "next/navigation";
 
 export const maxDuration = 300;
 
@@ -71,34 +69,5 @@ export default async function GenerateImagePage(params: {
         "generatedImage.png",
     );
 
-    await addToImageTable({
-        prompt: concatenatedPrompt,
-        printifyImageId: printifyImageId,
-        printifyImageUrl: generatedImageUrl,
-    });
-
-    return (
-        <div className="md:1/3 flex flex-col items-center gap-4">
-            <Image
-                src={generatedImageUrl}
-                alt={"Generated Image"}
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                unoptimized
-                width={500}
-                height={500}
-            />
-            <Link
-                className="w-full md:w-3/5"
-                href={`/product/${printifyImageId}?country=${country}`}
-            >
-                <Button className="w-full">Go to product</Button>
-            </Link>
-            <Link
-                className="w-full md:w-3/5"
-                href={`/image/removeBackground?url=${encodeURIComponent(generatedImageUrl)}`}
-            >
-                <Button className="w-full" variant={"secondary"}>Remove background</Button>
-            </Link>
-        </div>
-    );
+    redirect(`/image/confirm/${printifyImageId}?url=${encodeURIComponent(generatedImageUrl)}&country=${country}`, RedirectType.replace)
 }

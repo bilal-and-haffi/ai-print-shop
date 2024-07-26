@@ -88,17 +88,17 @@ export default async function GenerateImagePage(params: {
                 height={500}
             />
             <Link
-                className="w-1/5"
+                className="w-2/5"
                 href={`/product/${printifyImageId}?country=${country}`}
             >
-                <Button>Go to product</Button>
+                <Button className="w-full">Go to product</Button>
             </Link>
             <Link
-                className="w-1/5"
+                className="w-2/5"
                 replace
                 href={`/removeBackground?url=${encodeURIComponent(generatedImageUrl)}`}
             >
-                <Button variant={"secondary"}>Remove background</Button>
+                <Button className="w-full" variant={"secondary"}>Remove background</Button>
             </Link>
         </div>
     );

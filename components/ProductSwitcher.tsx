@@ -10,7 +10,8 @@ import {
     SelectTrigger,
     SelectValue,
 } from "./ui/select";
-import { JSX } from "react";
+import { JSX, useContext } from "react";
+import { CountryCodeContext } from "./Products";
 
 export const ProductSwitcher = ({
     selectedProductType,
@@ -24,6 +25,7 @@ export const ProductSwitcher = ({
     productsMap: Map<ProductType, string>;
 }) => {
     const ProductButtons: JSX.IntrinsicAttributes | JSX.Element[] = [];
+    const countryCode = useContext(CountryCodeContext);
 
     productsMap.forEach((name, productType) => {
         ProductButtons.push(
@@ -47,7 +49,7 @@ export const ProductSwitcher = ({
             id="links-to-products-container"
             className="flex w-full items-center justify-between space-x-4"
         >
-            <Link href={`/create`}>
+            <Link href={`/create?country=${countryCode}`}>
                 <Button data-testid="Go back" variant={"outline"}>
                     <ChevronLeft className="h-4 w-4" />
                 </Button>

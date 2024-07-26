@@ -7,18 +7,18 @@ import Link from "next/link";
 import { removeBackgroundFromImageUrl } from "remove.bg";
 
 export default async function RemoveBackgroundPage({
-    params: {printifyImageId},
+    params: { printifyImageId },
     searchParams: { url, country },
 }: {
-    searchParams: { url: string; country: string },
-    params: {printifyImageId: string}
+    searchParams: { url: string; country: string };
+    params: { printifyImageId: string };
 }) {
     if (!url || !country) {
         throw new Error("Missing url or country");
     }
 
     const removedBackgroundImageUrl = await removeBackground(url);
-    
+
     const prompt = await getPromptFromImageId(printifyImageId);
 
     const { id: newPrintifyImageId } = await postImageToPrintify(
@@ -33,7 +33,7 @@ export default async function RemoveBackgroundPage({
     });
 
     return (
-        <>
+        <div className="flex flex-col items-center gap-4">
             <Image
                 alt="Removed background image"
                 src={removedBackgroundImageUrl}
@@ -46,9 +46,17 @@ export default async function RemoveBackgroundPage({
                 className="w-full md:w-3/5"
                 href={`/product/${printifyImageId}?country=${country}`}
             >
-                <Button className="w-full md:w-3/5">Go to product</Button>
+                <Button className="w-full md:w-3/5">See products!</Button>
             </Link>
-        </>
+            <Link
+                className="w-full"
+                href={`/image/confirm/${printifyImageId}?url=${encodeURIComponent(url)}&country=${country}`}
+            >
+                <Button className="w-full" variant={"secondary"}>
+                    Un Remove background
+                </Button>
+            </Link>
+        </div>
     );
 }
 

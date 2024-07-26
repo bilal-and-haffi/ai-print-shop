@@ -24,13 +24,13 @@ export default async function ConfirmPage({
                 height={500}
             />
             <Link
-                className="w-full md:w-3/5"
+                className="w-full"
                 href={`/product/${printifyImageId}?country=${country}`}
             >
-                <Button className="w-full">Go to product</Button>
+                <Button className="w-full">See products!</Button>
             </Link>
             <Link
-                className="w-full md:w-3/5"
+                className="w-full"
                 href={`/image/confirm/${printifyImageId}/removeBackground?url=${encodeURIComponent(url)}&country=${country}`}
             >
                 <Button className="w-full" variant={"secondary"}>

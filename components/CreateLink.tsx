@@ -16,11 +16,11 @@ export function CreateLink() {
         fetchAndSetCountryCode();
     }, []);
 
-
-
     return (
         <Link href={`/create?country=${countryCode}`}>
-            <Button className="w-full" disabled={!countryCode}>Get started</Button>
+            <Button className="w-full" disabled={!countryCode}>
+                Get started
+            </Button>
         </Link>
     );
 }

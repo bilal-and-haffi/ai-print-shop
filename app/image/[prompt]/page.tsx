@@ -78,7 +78,7 @@ export default async function GenerateImagePage(params: {
     });
 
     return (
-        <div className="md:1/3 container flex flex-col items-center gap-4">
+        <div className="md:1/3 flex flex-col items-center gap-4">
             <Image
                 src={generatedImageUrl}
                 alt={"Generated Image"}
@@ -88,15 +88,14 @@ export default async function GenerateImagePage(params: {
                 height={500}
             />
             <Link
-                className="w-2/5"
+                className="w-full md:w-3/5"
                 href={`/product/${printifyImageId}?country=${country}`}
             >
                 <Button className="w-full">Go to product</Button>
             </Link>
             <Link
-                className="w-2/5"
-                replace
-                href={`/removeBackground?url=${encodeURIComponent(generatedImageUrl)}`}
+                className="w-full md:w-3/5"
+                href={`/image/removeBackground?url=${encodeURIComponent(generatedImageUrl)}`}
             >
                 <Button className="w-full" variant={"secondary"}>Remove background</Button>
             </Link>

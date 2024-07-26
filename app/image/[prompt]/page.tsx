@@ -52,8 +52,10 @@ export default async function GenerateImagePage(params: {
         generatedImageUrl = testImageUrl;
     } else {
         try {
-            generatedImageUrl =
-                await generateOpenAiImageUrl(concatenatedPrompt);
+            generatedImageUrl = await generateOpenAiImageUrl({
+                prompt: concatenatedPrompt,
+                quality: "hd",
+            });
         } catch (error) {
             console.error({
                 error,
@@ -76,26 +78,26 @@ export default async function GenerateImagePage(params: {
     });
 
     return (
-        <>
+        <div className="md:1/3 container flex flex-col items-center gap-4">
             <Image
                 src={generatedImageUrl}
                 alt={"Generated Image"}
-                width={1000}
-                height={1000}
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                unoptimized
+                width={500}
+                height={500}
             />
-            <Button>
-                <Link
-                    replace
-                    href={`/removeBackground?url=${encodeURIComponent(generatedImageUrl)}`}
-                >
+            <Link href={`/product/${printifyImageId}?country=${country}`}>
+                <Button className="w-1/5">Go to product</Button>
+            </Link>
+            <Link
+                replace
+                href={`/removeBackground?url=${encodeURIComponent(generatedImageUrl)}`}
+            >
+                <Button className="w-1/5" variant={"secondary"}>
                     Remove background
-                </Link>
-            </Button>
-            <Button>
-                <Link href={`/product/${printifyImageId}?country=${country}`}>
-                    Go to product
-                </Link>
-            </Button>
-        </>
+                </Button>
+            </Link>
+        </div>
     );
 }

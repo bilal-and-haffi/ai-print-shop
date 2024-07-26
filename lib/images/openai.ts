@@ -1,7 +1,13 @@
 import OpenAI from "openai";
 import { envServer } from "../env/server";
 
-export const generateOpenAiImageUrl = async (prompt: string) => {
+export const generateOpenAiImageUrl = async ({
+    prompt,
+    quality,
+}: {
+    prompt: string;
+    quality: "hd" | "standard";
+}) => {
     const apiKey = envServer.OPENAI_API_KEY;
     if (!apiKey) {
         console.error(
@@ -21,7 +27,7 @@ export const generateOpenAiImageUrl = async (prompt: string) => {
         prompt,
         model,
         n: 1,
-        quality: "hd",
+        quality,
         response_format: "url",
         style: "vivid",
     });

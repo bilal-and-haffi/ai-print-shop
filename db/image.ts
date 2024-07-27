@@ -97,3 +97,21 @@ export const selectAllFromImageWhereRemovedBackgroundImageIdEquals = async (
         );
     return selectResult[0];
 };
+
+export const selectAllFromImageWhereImageIdOrRemovedBackgroundImageIdEquals =
+    async (imageId: string): Promise<ImageSelect> => {
+        console.log({
+            msg: "Selecting all from image where removedBackgroundImageId equals",
+            imageId,
+        });
+        const selectResult = await dbClient
+            .select()
+            .from(imageTable)
+            .where(
+                or(
+                    eq(imageTable.removedBackgroundPrintifyImageId, imageId),
+                    eq(imageTable.printifyImageId, imageId),
+                ),
+            );
+        return selectResult[0];
+    };

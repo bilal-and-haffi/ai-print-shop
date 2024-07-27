@@ -6,13 +6,14 @@ export default async function CreatePage({
 }: {
     searchParams: {
         country: CountryCode;
+        prompt?: string;
     };
 }) {
-    const { country } = searchParams;
+    const { country, prompt } = searchParams;
 
     return (
         <div className="flex w-full flex-col gap-4 md:w-2/3">
-            <ImageGenerationForm country={country} />
+            <ImageGenerationForm country={country} previousPrompt={prompt} />
         </div>
     );
 }

@@ -1,7 +1,7 @@
 "use server";
 import { dbClient } from "@/db/client";
 import { imageTable } from "@/db/schema";
-import { eq } from "drizzle-orm";
+import { eq, or } from "drizzle-orm";
 
 type ImageInsert = typeof imageTable.$inferInsert;
 type ImageSelect = typeof imageTable.$inferSelect;
@@ -21,12 +21,47 @@ export const addToImageTable = async ({
     return insertResult[0].id;
 };
 
-export const getPromptFromImageId = async (printifyImageId: string) => {
+export const updateImageTableWithRemovedBackgroundImage = async ({
+    printifyImageId,
+    removedBackgroundPrintifyImageId,
+    removedBackgroundPrintifyImageUrl,
+}: {
+    printifyImageId: string;
+    removedBackgroundPrintifyImageId: string;
+    removedBackgroundPrintifyImageUrl: string;
+}) => {
+    console.log({
+        msg: "Adding background image to image table",
+        printifyImageId,
+        removedBackgroundPrintifyImageId,
+        removedBackgroundPrintifyImageUrl,
+    });
+    const updateResult = await dbClient
+        .update(imageTable)
+        .set({
+            removedBackgroundPrintifyImageId,
+            removedBackgroundPrintifyImageUrl,
+        })
+        .where(eq(imageTable.printifyImageId, printifyImageId));
+    return updateResult;
+};
+
+export const getPromptFromImageIdOrRemovedBackgroundImageId = async (
+    printifyImageId: string,
+) => {
     console.log({ msg: "Getting prompt from image id", printifyImageId });
     const selectResult = await dbClient
         .select()
         .from(imageTable)
-        .where(eq(imageTable.printifyImageId, printifyImageId));
+        .where(
+            or(
+                eq(imageTable.printifyImageId, printifyImageId),
+                eq(
+                    imageTable.removedBackgroundPrintifyImageId,
+                    printifyImageId,
+                ),
+            ),
+        );
     return selectResult[0].prompt;
 };
 
@@ -41,5 +76,24 @@ export const selectAllFromImageWhereImageIdEquals = async (
         .select()
         .from(imageTable)
         .where(eq(imageTable.printifyImageId, printifyImageId));
+    return selectResult[0];
+};
+
+export const selectAllFromImageWhereRemovedBackgroundImageIdEquals = async (
+    removedBackgroundImageId: string,
+): Promise<ImageSelect> => {
+    console.log({
+        msg: "Selecting all from image where removedBackgroundImageId equals",
+        removedBackgroundImageId,
+    });
+    const selectResult = await dbClient
+        .select()
+        .from(imageTable)
+        .where(
+            eq(
+                imageTable.removedBackgroundPrintifyImageId,
+                removedBackgroundImageId,
+            ),
+        );
     return selectResult[0];
 };

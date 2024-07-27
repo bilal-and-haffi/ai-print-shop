@@ -1,8 +1,8 @@
 "use server";
 
 import {
-    addToImageTable,
     selectAllFromImageWhereImageIdEquals,
+    updateImageTableWithRemovedBackgroundImage,
 } from "@/db/image";
 import { removeBackgroundAndReturnBase64Image } from "./removeBackgroundAndReturnBase64Image";
 import { redirect } from "next/navigation";
@@ -18,20 +18,34 @@ export async function removeBackgroundButtonAction({
 }) {
     console.log("remove background button action");
 
-    const { prompt, printifyImageUrl } =
-        await selectAllFromImageWhereImageIdEquals(printifyImageId);
+    const {
+        printifyImageUrl,
+        removedBackgroundPrintifyImageId:
+            existingRemovedBackgroundPrintifyImageId,
+    } = await selectAllFromImageWhereImageIdEquals(printifyImageId);
+
+    if (existingRemovedBackgroundPrintifyImageId) {
+        redirect(
+            `/product/${existingRemovedBackgroundPrintifyImageId}?country=${country}`,
+        );
+    }
+
     const removedBackgroundImageBase64Contents =
         await removeBackgroundAndReturnBase64Image(printifyImageUrl);
-    const { id: newPrintifyImageId, preview_url } =
-        await postBase64ImageToPrintify(
-            removedBackgroundImageBase64Contents,
-            "generatedImage.png",
-        );
-    await addToImageTable({
-        prompt,
-        printifyImageId: newPrintifyImageId,
-        printifyImageUrl: preview_url,
+
+    const {
+        id: removedBackgroundPrintifyImageId,
+        preview_url: removedBackgroundPrintifyImageUrl,
+    } = await postBase64ImageToPrintify(
+        removedBackgroundImageBase64Contents,
+        "generatedImage.png",
+    );
+
+    await updateImageTableWithRemovedBackgroundImage({
+        printifyImageId,
+        removedBackgroundPrintifyImageId,
+        removedBackgroundPrintifyImageUrl,
     });
 
-    redirect(`/product/${newPrintifyImageId}?country=${country}`);
+    redirect(`/product/${removedBackgroundPrintifyImageId}?country=${country}`);
 }

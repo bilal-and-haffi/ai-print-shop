@@ -12,11 +12,15 @@ export const imageTable = pgTable("image", {
     prompt: varchar("prompt").notNull(),
     printifyImageId: varchar("printify_image_id").notNull(),
     printifyImageUrl: varchar("printify_image_url").notNull(),
+    removedBackgroundPrintifyImageId: varchar(
+        "removed_background_printify_image_id",
+    ),
+    removedBackgroundPrintifyImageUrl: varchar(
+        "removed_background_printify_image_url",
+    ),
     printifyProductId: varchar("printify_product_id"),
     createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
 });
-
-// TODO: add background image id and preview url to this table and use to let user switch between them without having to call remove background again
 
 export const orderTable = pgTable(
     "orders",

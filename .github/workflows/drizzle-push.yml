@@ -1,0 +1,39 @@
+name: Checks and unit tests
+on:
+    push:
+        branches: [main]
+
+env:
+    CI: true
+    AI_GIFTS_API_URL: http://localhost:3000
+    FREE_CURRENCY_API_KEY: ${{ secrets.FREE_CURRENCY_API_KEY }}
+    DATABASE_URL: postgres://postgres:password@localhost:5432/test
+    DATABASE_URL_UNPOOLED: postgres://postgres:password@localhost:5432/test
+    OPENAI_API_KEY: foo
+    OPENAI_ORG_ID: foo
+    PRINTIFY_API_TOKEN: ${{secrets.PRINTIFY_API_TOKEN}}
+    SHOP_ID: foo
+    STRIPE_SECRET_KEY: foo
+    REMOVE_BG_API_KEY: foo
+    RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+
+jobs:
+    drizzle-push:
+        timeout-minutes: 10
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+            - name: Setup Node.js environment
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 20.11
+                  cache: "npm"
+            - name: Install dependencies
+              run: npm install -D
+            - name: Install vercel cli
+              run: npm install --global vercel@latest
+            - name: Pull Vercel preview environment
+              run: vercel env pull --yes .env.ci --environment=preview --git-branch=${{ github.head_ref }} --token=${{ secrets.VERCEL_TOKEN }}
+            - name: Drizzle push to db branch
+              run: npm run db:push

@@ -18,7 +18,7 @@ export const CountryCodeContext = createContext<CountryCode>("GB");
 export const Products = ({
     productsAndVariants,
     country,
-    printifyImageId: string,
+    printifyImageId,
 }: {
     productsAndVariants: Map<
         ProductType,
@@ -66,6 +66,7 @@ export const Products = ({
                         initialSize="L"
                         initialColor="Black"
                         variants={tShirtVariants}
+                        printifyImageId={printifyImageId}
                     />
                 );
             case ProductType.Hoodie:
@@ -75,6 +76,7 @@ export const Products = ({
                         initialSize="L"
                         initialColor="Black"
                         variants={hoodieVariants}
+                        printifyImageId={printifyImageId}
                     />
                 );
             case ProductType.Mug:
@@ -84,6 +86,7 @@ export const Products = ({
                         initialSize="11oz"
                         initialColor="Black"
                         variants={mugVariants}
+                        printifyImageId={printifyImageId}
                     />
                 );
         }

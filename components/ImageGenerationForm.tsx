@@ -108,8 +108,7 @@ export function ImageGenerationForm({ country }: { country: CountryCode }) {
     });
 
     return (
-        <div className="flex w-full flex-col items-center gap-4">
-            <h1 className="text-2xl">Enter your idea</h1>
+        <div className="flex w-full flex-col gap-4">
             {showConfirmationDialog && (
                 <PromptConfirmationDialog
                     showConfirmationDialog={showConfirmationDialog}
@@ -118,12 +117,13 @@ export function ImageGenerationForm({ country }: { country: CountryCode }) {
                     alertReason={alertReason}
                 />
             )}
+            <h1 className="text-2xl">Enter your image prompt</h1>
             <Textarea
                 ref={textAreaRef}
                 placeholder="Example: An astronaut playing on an old arcade machine."
                 value={prompt}
                 onChange={onInputChanged}
-                className="h-72 resize-none rounded-lg"
+                className="h-96 resize-none rounded-lg"
                 autoFocus
             />
 

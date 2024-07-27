@@ -1,3 +1,4 @@
+import { testImageBase64 } from "@/app/data/consts";
 import { Button } from "@/components/ui/button";
 import { addToImageTable, getPromptFromImageId } from "@/db/image";
 import { envServer } from "@/lib/env/server";
@@ -17,7 +18,8 @@ export default async function RemoveBackgroundPage({
         throw new Error("Missing url or country");
     }
 
-    const removedBackgroundImageBase64Contents = await removeBackgroundAndReturnBase64Image(url);
+    const removedBackgroundImageBase64Contents =
+        await removeBackgroundAndReturnBase64Image(url);
 
     const prompt = await getPromptFromImageId(printifyImageId);
 
@@ -43,10 +45,10 @@ export default async function RemoveBackgroundPage({
                 height={500}
             />
             <Link
-                className="w-full md:w-3/5"
+                className="w-full"
                 href={`/product/${newPrintifyImageId}?country=${country}`}
             >
-                <Button className="w-full md:w-3/5">See products!</Button>
+                <Button className="w-full">See products!</Button>
             </Link>
             <Link
                 className="w-full"
@@ -60,13 +62,16 @@ export default async function RemoveBackgroundPage({
     );
 }
 
-async function removeBackgroundAndReturnBase64Image(url: string): Promise<string> {
-    // if (envServer.VERCEL_ENV !== "production") {
-    //     console.log(
-    //         "Not removing background because not production and we only have 50 free credits a month",
-    //     );
-    //     return url;
-    // }
+async function removeBackgroundAndReturnBase64Image(
+    url: string,
+): Promise<string> {
+    if (envServer.VERCEL_ENV !== "production") {
+        console.log(
+            "Not removing background because not production and we only have 50 free credits a month",
+        );
+        return testImageBase64;
+    }
+
     try {
         const result = await removeBackgroundFromImageUrl({
             url,

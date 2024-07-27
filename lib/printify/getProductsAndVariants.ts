@@ -3,13 +3,16 @@ import { createPrintifyProduct } from "@/lib/printify/createPrintifyProduct";
 import { fetchProductVariants } from "@/lib/printify/fetchProductVariants";
 import { productData } from "@/lib/printify/productsData";
 import { ProductType } from "@/types/ProductType";
+import { ImagePosition } from "./constructPrintifyProductRequest";
 
 export async function getProductsAndVariants({
     printifyImageId,
     country,
+    position,
 }: {
     printifyImageId: string;
     country: string;
+    position: ImagePosition;
 }) {
     if (!country) {
         console.error({ msg: "country is undefined", country });
@@ -45,6 +48,7 @@ export async function getProductsAndVariants({
             printifyImageId,
             printProviderId: tShirtProductInfo.printProviderId,
             blueprintId: tShirtProductInfo.blueprintId,
+            position,
         }),
         fetchProductVariants(
             tShirtProductInfo.blueprintId,
@@ -54,6 +58,7 @@ export async function getProductsAndVariants({
             printifyImageId,
             printProviderId: hoodieProductInfo.printProviderId,
             blueprintId: hoodieProductInfo.blueprintId,
+            position,
         }),
         fetchProductVariants(
             hoodieProductInfo.blueprintId,

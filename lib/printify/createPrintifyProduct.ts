@@ -7,10 +7,12 @@ export async function createPrintifyProduct({
     printifyImageId,
     printProviderId,
     blueprintId,
+    position,
 }: {
     printifyImageId: string;
     printProviderId: number;
     blueprintId: number;
+    position?: "front" | "back";
 }) {
     const {
         blueprint_id,
@@ -23,6 +25,7 @@ export async function createPrintifyProduct({
         printifyImageId,
         printProviderId,
         blueprintId,
+        position,
     });
 
     const productRequest: PrintifyProductRequest = {

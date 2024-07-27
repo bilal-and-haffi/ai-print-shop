@@ -14,9 +14,11 @@ export async function addBackgroundButtonAction({
     printifyImageId: string;
     country: CountryCode;
 }) {
-    const x = await selectAllFromImageWhereImageIdEquals(printifyImageId);
-    if (x) {
-        return;
+    const isImageIdForImageWithBackground = Boolean(
+        await selectAllFromImageWhereImageIdEquals(printifyImageId),
+    );
+    if (isImageIdForImageWithBackground) {
+        redirect(`/product/${printifyImageId}?country=${country}`);
     }
     const originalPrintifyImageId = (
         await selectAllFromImageWhereRemovedBackgroundImageIdEquals(

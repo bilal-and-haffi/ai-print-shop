@@ -13,7 +13,7 @@ export async function constructPrintifyProductRequest({
     printifyImageId: string;
     printProviderId: number;
     blueprintId: number;
-    position: ImagePosition;
+    position?: ImagePosition;
 }) {
     const variants = await fetchProductVariants(blueprintId, printProviderId);
     const variantIds = variants.map((variant) => variant.id);

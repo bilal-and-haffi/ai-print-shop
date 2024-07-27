@@ -25,6 +25,7 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog";
 import { removeBackgroundButtonAction } from "@/actions/removeBackgroundButtonAction";
+import { addBackgroundButtonAction } from "@/actions/addBackgroundButtonAction";
 
 export interface Options {
     id: number;
@@ -196,6 +197,17 @@ export function ProductDetails({
                                     Edit your image
                                 </DialogDescription>
                             </DialogHeader>
+                            <Button
+                                variant={"secondary"}
+                                onClick={async () => {
+                                    await addBackgroundButtonAction({
+                                        printifyImageId,
+                                        country,
+                                    }); // TODO: fixme
+                                }}
+                            >
+                                Add Background
+                            </Button>
                             <Button
                                 variant={"secondary"}
                                 onClick={async () => {

@@ -1,4 +1,4 @@
-import { getPromptFromImageId } from "@/db/image";
+import { getPromptFromImageIdOrRemovedBackgroundImageId } from "@/db/image";
 import { PrintifyProductRequest } from "@/interfaces/PrintifyTypes";
 import { fetchProductVariants } from "./fetchProductVariants";
 
@@ -13,7 +13,8 @@ export async function constructPrintifyProductRequest({
 }) {
     const variants = await fetchProductVariants(blueprintId, printProviderId);
     const variantIds = variants.map((variant) => variant.id);
-    const prompt = await getPromptFromImageId(printifyImageId);
+    const prompt =
+        await getPromptFromImageIdOrRemovedBackgroundImageId(printifyImageId);
 
     const productRequest: PrintifyProductRequest = {
         blueprint_id: blueprintId,

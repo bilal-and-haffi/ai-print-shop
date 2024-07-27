@@ -185,17 +185,30 @@ export function ProductDetails({
                         setSelectedSize={setSelectedSize}
                         setSelectedColor={setSelectedColor}
                     />
-                    <Button
-                        variant={"outline"}
-                        onClick={async () => {
-                            await toggleImageBackgroundButtonAction({
-                                currentImageId: printifyImageId,
-                                country,
-                            }); // TODO: fixme
-                        }}
-                    >
-                        Toggle Image Background
-                    </Button>
+                    <Dialog>
+                        <DialogTrigger asChild className="w-full">
+                            <Button variant={"outline"}>Customise Image</Button>
+                        </DialogTrigger>
+                        <DialogContent>
+                            <DialogHeader>
+                                <DialogTitle>Customise Image</DialogTitle>
+                                <DialogDescription>
+                                    Edit your image
+                                </DialogDescription>
+                            </DialogHeader>
+                            <Button
+                                variant={"secondary"}
+                                onClick={async () => {
+                                    await toggleImageBackgroundButtonAction({
+                                        currentImageId: printifyImageId,
+                                        country,
+                                    });
+                                }}
+                            >
+                                Toggle Image Background
+                            </Button>
+                        </DialogContent>
+                    </Dialog>
                 </div>
                 <Card>
                     <CardHeader>

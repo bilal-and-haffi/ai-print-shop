@@ -30,11 +30,16 @@ export const getPromptFromImageId = async (printifyImageId: string) => {
     return selectResult[0].prompt;
 };
 
-export const selectAllFromImageWhereImageIdEquals = async (printifyImageId: string): Promise<ImageSelect> => {
-    console.log({ msg: "Selecting all from image where image id equals", printifyImageId });
+export const selectAllFromImageWhereImageIdEquals = async (
+    printifyImageId: string,
+): Promise<ImageSelect> => {
+    console.log({
+        msg: "Selecting all from image where image id equals",
+        printifyImageId,
+    });
     const selectResult = await dbClient
         .select()
         .from(imageTable)
         .where(eq(imageTable.printifyImageId, printifyImageId));
     return selectResult[0];
-}
+};

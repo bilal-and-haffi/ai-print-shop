@@ -1,15 +1,14 @@
-'use server'
+"use server";
 import { testImageBase64 } from "@/app/data/consts";
 import { envServer } from "@/lib/env/server";
 import { removeBackgroundFromImageUrl } from "remove.bg";
 
-
 export async function removeBackgroundAndReturnBase64Image(
-    url: string
+    url: string,
 ): Promise<string> {
     if (envServer.VERCEL_ENV !== "production") {
         console.log(
-            "Not removing background because not production and we only have 50 free credits a month"
+            "Not removing background because not production and we only have 50 free credits a month",
         );
         return testImageBase64;
     }

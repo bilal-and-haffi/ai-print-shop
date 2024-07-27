@@ -19,6 +19,7 @@ test("buy a hoodie", async ({ page }) => {
         .click();
     await page.getByLabel("Location: Rural").click();
     await page.getByTestId("Generate Image Button").click();
+
     await page.getByRole("button", { name: "Hoodie" }).click();
     await page.getByRole("button", { name: "Buy now" }).click();
     await page.getByLabel("Email").click();

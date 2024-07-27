@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { addToImageTable, getPromptFromImageId } from "@/db/image";
 import { envServer } from "@/lib/env/server";
-import { postImageToPrintify } from "@/lib/printify/postImageToPrintify";
+import { postBase64ImageToPrintify } from "@/lib/printify/postBase64ImageToPrintify";
 import Image from "next/image";
 import Link from "next/link";
 import { removeBackgroundFromImageUrl } from "remove.bg";
@@ -17,12 +17,12 @@ export default async function RemoveBackgroundPage({
         throw new Error("Missing url or country");
     }
 
-    const removedBackgroundImageUrl = await removeBackground(url);
+    const removedBackgroundImageBase64Contents = await removeBackgroundAndReturnBase64Image(url);
 
     const prompt = await getPromptFromImageId(printifyImageId);
 
-    const { id: newPrintifyImageId } = await postImageToPrintify(
-        removedBackgroundImageUrl,
+    const { id: newPrintifyImageId } = await postBase64ImageToPrintify(
+        removedBackgroundImageBase64Contents,
         "generatedImage.png",
     );
 
@@ -36,7 +36,7 @@ export default async function RemoveBackgroundPage({
         <div className="flex flex-col items-center gap-4">
             <Image
                 alt="Removed background image"
-                src={removedBackgroundImageUrl}
+                src={`data:image/png;base64, ${removedBackgroundImageBase64Contents}`}
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 unoptimized
                 width={500}
@@ -44,7 +44,7 @@ export default async function RemoveBackgroundPage({
             />
             <Link
                 className="w-full md:w-3/5"
-                href={`/product/${printifyImageId}?country=${country}`}
+                href={`/product/${newPrintifyImageId}?country=${country}`}
             >
                 <Button className="w-full md:w-3/5">See products!</Button>
             </Link>
@@ -60,13 +60,13 @@ export default async function RemoveBackgroundPage({
     );
 }
 
-async function removeBackground(url: string): Promise<string> {
-    if (envServer.VERCEL_ENV !== "production") {
-        console.log(
-            "Not removing background because not production and we only have 50 free credits a month",
-        );
-        return url;
-    }
+async function removeBackgroundAndReturnBase64Image(url: string): Promise<string> {
+    // if (envServer.VERCEL_ENV !== "production") {
+    //     console.log(
+    //         "Not removing background because not production and we only have 50 free credits a month",
+    //     );
+    //     return url;
+    // }
     try {
         const result = await removeBackgroundFromImageUrl({
             url,
@@ -74,7 +74,11 @@ async function removeBackground(url: string): Promise<string> {
             size: "preview", // This limits to 500x500 quality. Need to buy credits for better quality
         });
 
-        return `data:image/png;base64, ${result.base64img}`;
+        console.log({ result });
+
+        console.log(result.base64img);
+
+        return `${result.base64img}`;
     } catch (error) {
         console.error({ error });
         throw new Error("Error removing background");

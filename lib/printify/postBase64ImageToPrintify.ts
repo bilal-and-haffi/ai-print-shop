@@ -2,17 +2,18 @@ import { PRINTIFY_BASE_URL } from "@/app/data/consts";
 import { PrintifyImageResponse } from "@/interfaces/PrintifyTypes";
 import { envServer } from "../env/server";
 
-export async function postUrlImageToPrintify(
-    url: string,
+export async function postBase64ImageToPrintify(
+    base64ImageContents: string,
     fileName: string,
 ): Promise<PrintifyImageResponse> {
     console.error({ msg: "postImageToPrintify" });
     try {
         const imageRequest = {
             file_name: fileName,
-            url: url,
+            contents: base64ImageContents,
         };
         const imageRequestString = JSON.stringify(imageRequest);
+        console.log({ imageRequestString });
         const endpoint = `${PRINTIFY_BASE_URL}/v1/uploads/images.json`;
 
         const imageResponse = await fetch(endpoint, {

@@ -12,13 +12,6 @@ test("US - buy a hoodie", async ({ page }) => {
     await page
         .getByPlaceholder("Example: An astronaut playing")
         .fill("test prompt");
-    await page.locator("button").filter({ hasText: "Choose a style" }).click();
-    await page.getByLabel("Style: Cartoon").click();
-    await page
-        .locator("button")
-        .filter({ hasText: "Choose a location" })
-        .click();
-    await page.getByLabel("Location: Rural").click();
     await page.getByTestId("Generate Image Button").click();
     await page.getByRole("button", { name: "See products!" }).click();
     await page.getByRole("button", { name: "Hoodie" }).click();

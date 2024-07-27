@@ -13,6 +13,14 @@ import { checkPromptForCopyRight } from "@/lib/openai/copyrightCheck";
 import { PromptConfirmationDialog } from "./PromptConfirmationDialog";
 import { SelectFormField } from "./form/SelectFormField";
 import { CountryCode } from "@/lib/stripe/createCheckoutSession";
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog";
 
 const styleOptions = [
     "None",
@@ -42,15 +50,15 @@ const FormSchema = z.object({
 
 export function ImageGenerationForm({ country }: { country: CountryCode }) {
     const initalPrompt =
-        envClient.NEXT_PUBLIC_ENV === "development" ? "test" : "";
+        envClient.NEXT_PUBLIC_ENV === "development" ? "test prompt" : "";
     const [prompt, setPrompt] = useState<string>(initalPrompt);
 
     const [showConfirmationDialog, setShowConfirmationDialog] =
         useState<boolean>(false);
     const [alertReason, setAlertReason] = useState<string>("");
 
-    const [style, setStyle] = useState<string | undefined>();
-    const [location, setLocation] = useState<string | undefined>();
+    const [style, setStyle] = useState<string>(styleOptions[0]);
+    const [location, setLocation] = useState<string>(locationOptions[0]);
 
     const formFields = [
         {
@@ -116,20 +124,7 @@ export function ImageGenerationForm({ country }: { country: CountryCode }) {
                 className="h-72 resize-none rounded-lg"
                 autoFocus
             />
-            <Form {...form}>
-                {formFields.map((x) => {
-                    const { name, options, set } = x;
-                    return (
-                        <SelectFormField
-                            key={x.name}
-                            form={form}
-                            setFieldValue={set}
-                            options={options as unknown as string[]}
-                            name={name}
-                        />
-                    );
-                })}
-            </Form>
+
             <Button
                 className="w-full"
                 onClick={generateImage}
@@ -138,6 +133,34 @@ export function ImageGenerationForm({ country }: { country: CountryCode }) {
             >
                 Generate Image
             </Button>
+
+            <Dialog>
+                <DialogTrigger asChild className="w-full">
+                    <Button variant={"secondary"}>Options</Button>
+                </DialogTrigger>
+                <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle>Options</DialogTitle>
+                        <DialogDescription>
+                            These options will help make better images
+                        </DialogDescription>
+                    </DialogHeader>
+                    <Form {...form}>
+                        {formFields.map((x) => {
+                            const { name, options, set } = x;
+                            return (
+                                <SelectFormField
+                                    key={x.name}
+                                    form={form}
+                                    setFieldValue={set}
+                                    options={options as unknown as string[]}
+                                    name={name}
+                                />
+                            );
+                        })}
+                    </Form>
+                </DialogContent>
+            </Dialog>
         </div>
     );
 }

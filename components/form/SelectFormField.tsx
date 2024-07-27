@@ -16,7 +16,7 @@ export function SelectFormField({
     name,
 }: {
     form: any;
-    setFieldValue: Dispatch<SetStateAction<string | undefined>>;
+    setFieldValue: Dispatch<SetStateAction<string>>;
     options: any[];
     name: string;
 }) {
@@ -24,12 +24,13 @@ export function SelectFormField({
         <FormField
             control={form.control}
             name={name}
-            render={() => (
+            render={({ field }) => (
                 <FormItem className="w-full">
                     <Select
                         onValueChange={(value) => {
                             setFieldValue(value);
                         }}
+                        defaultValue={field.value}
                     >
                         <FormControl>
                             <SelectTrigger>

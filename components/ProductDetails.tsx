@@ -219,9 +219,6 @@ export function ProductDetails({
                             >
                                 Remove Background
                             </Button>
-                            {/* <Button variant={"secondary"}>
-                                Change print area
-                            </Button> */}
                         </DialogContent>
                     </Dialog>
                 </div>

@@ -2,6 +2,7 @@
 
 import {
     selectAllFromImageWhereImageIdEquals,
+    selectAllFromImageWhereRemovedBackgroundImageIdEquals,
     updateImageTableWithRemovedBackgroundImage,
 } from "@/db/image";
 import { removeBackgroundAndReturnBase64Image } from "./removeBackgroundAndReturnBase64Image";
@@ -17,6 +18,14 @@ export async function removeBackgroundButtonAction({
     country: CountryCode;
 }) {
     console.log("remove background button action");
+    const isImageIdForImageWithRemovedBackground = Boolean(
+        await selectAllFromImageWhereRemovedBackgroundImageIdEquals(
+            printifyImageId,
+        ),
+    );
+    if (isImageIdForImageWithRemovedBackground) {
+        redirect(`/product/${printifyImageId}?country=${country}`);
+    }
 
     const {
         printifyImageUrl,

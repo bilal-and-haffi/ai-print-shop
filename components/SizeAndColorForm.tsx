@@ -1,5 +1,5 @@
 "use client";
-import { Options } from "./ProductDetails";
+
 import {
     Select,
     SelectContent,

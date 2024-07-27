@@ -177,9 +177,17 @@ export function ProductDetails({
                     id="selectContainer"
                     className="flex flex-col justify-between gap-2"
                 >
+                    <SizeAndColorSelector
+                        sizes={filteredSizeOptionsForColorId as Size[]}
+                        colours={filteredColourOptionsForSizeId}
+                        selectedSize={selectedSize}
+                        selectedColor={selectedColor}
+                        setSelectedSize={setSelectedSize}
+                        setSelectedColor={setSelectedColor}
+                    />
                     <Dialog>
                         <DialogTrigger asChild className="w-full">
-                            <Button variant={"secondary"}>Customise</Button>
+                            <Button variant={"outline"}>Customise</Button>
                         </DialogTrigger>
                         <DialogContent>
                             <DialogHeader>
@@ -189,6 +197,7 @@ export function ProductDetails({
                                 </DialogDescription>
                             </DialogHeader>
                             <Button
+                                variant={"secondary"}
                                 onClick={async () => {
                                     await removeBackgroundButtonAction({
                                         printifyImageId,
@@ -198,17 +207,11 @@ export function ProductDetails({
                             >
                                 Remove Background
                             </Button>
-                            <Button>Change print area</Button>
+                            {/* <Button variant={"secondary"}>
+                                Change print area
+                            </Button> */}
                         </DialogContent>
                     </Dialog>
-                    <SizeAndColorSelector
-                        sizes={filteredSizeOptionsForColorId as Size[]}
-                        colours={filteredColourOptionsForSizeId}
-                        selectedSize={selectedSize}
-                        selectedColor={selectedColor}
-                        setSelectedSize={setSelectedSize}
-                        setSelectedColor={setSelectedColor}
-                    />
                 </div>
                 <Card>
                     <CardHeader>

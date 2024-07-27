@@ -1,7 +1,5 @@
 import { test, expect } from "@playwright/test";
 
-// TODO: set up a link payment with another email address
-
 test("US - buy a t shirt", async ({ page }) => {
     await page.route("https://ipapi.co/json/", async (route) => {
         const json = { country: "US" };

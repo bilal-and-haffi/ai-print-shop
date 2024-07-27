@@ -2,14 +2,18 @@ import { getPromptFromImageIdOrRemovedBackgroundImageId } from "@/db/image";
 import { PrintifyProductRequest } from "@/interfaces/PrintifyTypes";
 import { fetchProductVariants } from "./fetchProductVariants";
 
+export type ImagePosition = "front" | "back";
+
 export async function constructPrintifyProductRequest({
     printifyImageId,
     printProviderId,
     blueprintId,
+    position = "front",
 }: {
     printifyImageId: string;
     printProviderId: number;
     blueprintId: number;
+    position: ImagePosition;
 }) {
     const variants = await fetchProductVariants(blueprintId, printProviderId);
     const variantIds = variants.map((variant) => variant.id);
@@ -24,7 +28,7 @@ export async function constructPrintifyProductRequest({
                 variant_ids: variantIds,
                 placeholders: [
                     {
-                        position: "front",
+                        position,
                         images: [
                             {
                                 id: printifyImageId,

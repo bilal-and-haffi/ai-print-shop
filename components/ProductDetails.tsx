@@ -25,6 +25,8 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog";
 import { toggleImageBackgroundButtonAction } from "@/actions/toggleImageBackgroundButtonAction";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 export interface Options {
     id: number;
@@ -67,6 +69,7 @@ export function ProductDetails({
             findSelectedVariant(selectedSize, selectedColor, variants),
         );
     }, [selectedSize, selectedColor, retrievedProduct, variants]);
+    const pathname = usePathname();
 
     const filteredImages = useMemo(
         () =>
@@ -207,6 +210,28 @@ export function ProductDetails({
                             >
                                 Toggle Image Background
                             </Button>
+                            <Link
+                                href={`${pathname}?country=${country}`}
+                                className="w-full"
+                            >
+                                <Button
+                                    variant={"secondary"}
+                                    className="w-full"
+                                >
+                                    Position Image on Front
+                                </Button>
+                            </Link>
+                            <Link
+                                href={`${pathname}?position=back&country=${country}`}
+                                className="w-full"
+                            >
+                                <Button
+                                    variant={"secondary"}
+                                    className="w-full"
+                                >
+                                    Position Image on Back
+                                </Button>
+                            </Link>
                         </DialogContent>
                     </Dialog>
                 </div>

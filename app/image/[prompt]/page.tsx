@@ -1,4 +1,4 @@
-import { postImageToPrintify } from "@/lib/printify/postImageToPrintify";
+import { postUrlImageToPrintify } from "@/lib/printify/postImageToPrintify";
 import { addToImageTable } from "@/db/image";
 import { generateOpenAiImageUrl } from "@/lib/images/openai";
 import { generateStableDiffusionImageUrl } from "@/lib/images/replicate";
@@ -64,7 +64,7 @@ export default async function GenerateImagePage(params: {
         }
     }
 
-    const { id: printifyImageId } = await postImageToPrintify(
+    const { id: printifyImageId } = await postUrlImageToPrintify(
         generatedImageUrl,
         "generatedImage.png",
     );

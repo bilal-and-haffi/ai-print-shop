@@ -1,4 +1,4 @@
-name: Playwright pull request tests
+name: E2E Tests on pull request to main
 on:
     pull_request:
         branches: [main]

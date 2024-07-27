@@ -27,5 +27,5 @@ jobs:
               run: npm install --global vercel@latest
             - name: Pull Vercel preview environment
               run: vercel env pull --yes .env.ci --environment=production --token=${{ secrets.VERCEL_TOKEN }}
-            - name: Drizzle push to db branch
+            - name: Drizzle push to main db!!!
               run: npm run db:push

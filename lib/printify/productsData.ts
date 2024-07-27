@@ -20,7 +20,7 @@ const blueprintIds = {
     ceramicMug: 635, // https://printify.com/app/products/635/generic-brand/accent-coffee-mug-11-15oz
 };
 
-// TODO: add these 
+// TODO: add these
 /* 
 https://printify.com/app/products/937/generic-brand/matte-canvas-stretched-075
 https://printify.com/app/products/421/generic-brand/tough-cases

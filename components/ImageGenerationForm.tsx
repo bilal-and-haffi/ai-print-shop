@@ -65,11 +65,13 @@ export function ImageGenerationForm({ country }: { country: CountryCode }) {
             name: "Style",
             options: styleOptions,
             set: setStyle,
+            value: style,
         },
         {
             name: "Location",
             options: locationOptions,
             set: setLocation,
+            value: location,
         },
     ];
 
@@ -147,7 +149,7 @@ export function ImageGenerationForm({ country }: { country: CountryCode }) {
                     </DialogHeader>
                     <Form {...form}>
                         {formFields.map((x) => {
-                            const { name, options, set } = x;
+                            const { name, options, set, value } = x;
                             return (
                                 <SelectFormField
                                     key={x.name}
@@ -155,6 +157,7 @@ export function ImageGenerationForm({ country }: { country: CountryCode }) {
                                     setFieldValue={set}
                                     options={options as unknown as string[]}
                                     name={name}
+                                    value={value}
                                 />
                             );
                         })}

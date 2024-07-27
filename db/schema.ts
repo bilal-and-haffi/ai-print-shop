@@ -16,6 +16,8 @@ export const imageTable = pgTable("image", {
     createdAt: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
 });
 
+// TODO: add background image id and preview url to this table and use to let user switch between them without having to call remove background again
+
 export const orderTable = pgTable(
     "orders",
     {

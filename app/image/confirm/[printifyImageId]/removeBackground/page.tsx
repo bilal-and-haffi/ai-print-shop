@@ -21,15 +21,16 @@ export default async function RemoveBackgroundPage({
 
     const prompt = await getPromptFromImageId(printifyImageId);
 
-    const { id: newPrintifyImageId } = await postBase64ImageToPrintify(
-        removedBackgroundImageBase64Contents,
-        "generatedImage.png",
-    );
+    const { id: newPrintifyImageId, preview_url } =
+        await postBase64ImageToPrintify(
+            removedBackgroundImageBase64Contents,
+            "generatedImage.png",
+        );
 
     await addToImageTable({
         prompt,
         printifyImageId: newPrintifyImageId,
-        printifyImageUrl: url,
+        printifyImageUrl: preview_url,
     });
 
     return (
@@ -59,5 +60,3 @@ export default async function RemoveBackgroundPage({
         </div>
     );
 }
-
-

@@ -36,11 +36,13 @@ export function ProductDetails({
     initialSize,
     initialColor,
     variants,
+    printifyImageId,
 }: {
     retrievedProduct: RetrieveProductResponse;
     initialSize: string;
     initialColor: string;
     variants: Variant[];
+    printifyImageId: string;
 }) {
     const [checkoutLoading, setCheckoutLoading] = useState(false);
     const { images, print_provider_id, blueprint_id } = retrievedProduct;
@@ -177,18 +179,21 @@ export function ProductDetails({
                 >
                     <Dialog>
                         <DialogTrigger asChild className="w-full">
-                            <Button variant={"secondary"}>Options</Button>
+                            <Button variant={"secondary"}>Customise</Button>
                         </DialogTrigger>
                         <DialogContent>
                             <DialogHeader>
-                                <DialogTitle>Options</DialogTitle>
+                                <DialogTitle>Customise</DialogTitle>
                                 <DialogDescription>
                                     Edit your image
                                 </DialogDescription>
                             </DialogHeader>
                             <Button
                                 onClick={async () => {
-                                    await removeBackgroundButtonAction({url: '', printifyImageId: '', country}); // TODO: fixme
+                                    await removeBackgroundButtonAction({
+                                        printifyImageId,
+                                        country,
+                                    }); // TODO: fixme
                                 }}
                             >
                                 Remove Background

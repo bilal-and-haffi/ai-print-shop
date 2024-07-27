@@ -53,7 +53,7 @@ const examples: {
         productType: "Mugs",
         prompt: "A child playing with fire in space in the style of photograph.",
         imageSrc:
-            "/in-this-style-photograph-in-this-location-space-a-child-playing-with-fire-on-a-white-background-2.jpg",
+            "/in-this-style-photograph-in-this-location-space-a-child-playing-with-fire-on-a-white-background-3.jpg",
         imageAlt:
             "A mug with a printed image of: In this style: Photograph. In this location: Space. A child playing with fire on a white background",
         printifyImageId: "669820bf5ee4247611d8757c",

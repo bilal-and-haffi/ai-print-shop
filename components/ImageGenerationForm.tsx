@@ -48,10 +48,17 @@ const FormSchema = z.object({
     locationOptions: z.enum(locationOptions),
 });
 
-export function ImageGenerationForm({ country }: { country: CountryCode }) {
+export function ImageGenerationForm({
+    country,
+    previousPrompt,
+}: {
+    country: CountryCode;
+    previousPrompt?: string;
+}) {
     const initalPrompt =
-        envClient.NEXT_PUBLIC_ENV === "development" ? "test prompt" : "";
-    const [prompt, setPrompt] = useState<string>(initalPrompt);
+        previousPrompt ??
+        (envClient.NEXT_PUBLIC_ENV === "development" ? "test prompt" : "");
+    const [promptValue, setPromptValue] = useState<string>(initalPrompt);
 
     const [showConfirmationDialog, setShowConfirmationDialog] =
         useState<boolean>(false);
@@ -80,14 +87,14 @@ export function ImageGenerationForm({ country }: { country: CountryCode }) {
 
     const continueToNextStep = () => {
         router.push(
-            `/image/${prompt}?&style=${style}&location=${location}&country=${country}`,
+            `/image/${promptValue}?&style=${style}&location=${location}&country=${country}`,
         );
     };
 
     const generateImage = async () => {
-        if (prompt.trim() === "") return;
+        if (promptValue.trim() === "") return;
 
-        const response = await checkPromptForCopyRight(prompt);
+        const response = await checkPromptForCopyRight(promptValue);
 
         if (response === "NO") {
             continueToNextStep();
@@ -100,7 +107,7 @@ export function ImageGenerationForm({ country }: { country: CountryCode }) {
     };
 
     const onInputChanged = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        setPrompt(e.target.value);
+        setPromptValue(e.target.value);
     };
 
     const form = useForm<z.infer<typeof FormSchema>>({
@@ -121,7 +128,7 @@ export function ImageGenerationForm({ country }: { country: CountryCode }) {
             <Textarea
                 ref={textAreaRef}
                 placeholder="Example: An astronaut playing on an old arcade machine."
-                value={prompt}
+                value={promptValue}
                 onChange={onInputChanged}
                 className="h-96 resize-none rounded-lg"
                 autoFocus
@@ -131,7 +138,7 @@ export function ImageGenerationForm({ country }: { country: CountryCode }) {
                 className="w-full"
                 onClick={generateImage}
                 data-testid="Generate Image Button"
-                disabled={!prompt || !location || !style}
+                disabled={!promptValue || !location || !style}
             >
                 Generate Image
             </Button>

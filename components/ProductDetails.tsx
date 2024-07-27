@@ -16,7 +16,15 @@ import { Card, CardHeader, CardTitle, CardDescription } from "./ui/card";
 import { CountryCodeContext } from "./Products";
 import { generateUnroundedPriceInUsd } from "@/lib/pricing/generateUnroundedPriceInUsd";
 import { convertUSDToGBP } from "@/lib/currency/convertUSDToGBP";
-import { Skeleton } from "@/components/ui/skeleton";
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog";
+import { removeBackgroundButtonAction } from "@/actions/removeBackgroundButtonAction";
 
 export interface Options {
     id: number;
@@ -37,7 +45,6 @@ export function ProductDetails({
     const [checkoutLoading, setCheckoutLoading] = useState(false);
     const { images, print_provider_id, blueprint_id } = retrievedProduct;
     const country = useContext(CountryCodeContext);
-    console.log("country in product details", country);
     const [selectedSize, setSelectedSize] = useState(initialSize);
     const [selectedColor, setSelectedColor] = useState(initialColor);
     const [sellingPriceInLocalCurrency, setSellingPriceInLocalCurrency] =
@@ -168,6 +175,27 @@ export function ProductDetails({
                     id="selectContainer"
                     className="flex flex-col justify-between gap-2"
                 >
+                    <Dialog>
+                        <DialogTrigger asChild className="w-full">
+                            <Button variant={"secondary"}>Options</Button>
+                        </DialogTrigger>
+                        <DialogContent>
+                            <DialogHeader>
+                                <DialogTitle>Options</DialogTitle>
+                                <DialogDescription>
+                                    Edit your image
+                                </DialogDescription>
+                            </DialogHeader>
+                            <Button
+                                onClick={async () => {
+                                    await removeBackgroundButtonAction({url: '', printifyImageId: '', country}); // TODO: fixme
+                                }}
+                            >
+                                Remove Background
+                            </Button>
+                            <Button>Change print area</Button>
+                        </DialogContent>
+                    </Dialog>
                     <SizeAndColorSelector
                         sizes={filteredSizeOptionsForColorId as Size[]}
                         colours={filteredColourOptionsForSizeId}
@@ -184,7 +212,7 @@ export function ProductDetails({
                     </CardHeader>
                 </Card>
             </div>
-            <div className="mt-4 flex w-full flex-col items-center">
+            <div className="mt-4 flex w-full flex-col items-center gap-4">
                 <Button
                     onClick={onClick}
                     className="w-full bg-blue-500 text-white hover:bg-blue-700"
@@ -198,6 +226,7 @@ export function ProductDetails({
                         <>Buy now</>
                     )}
                 </Button>
+
                 <div className="mt-4 text-sm">
                     Powered by
                     <Image

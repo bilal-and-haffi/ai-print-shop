@@ -19,7 +19,11 @@ export default async function ProductPage({
 
     return (
         <div className="flex flex-col gap-4 md:w-1/2">
-            <Products productsAndVariants={productAndVariants} />
+            <Products
+                productsAndVariants={productAndVariants}
+                country={country}
+                printifyImageId={printifyImageId}
+            />
         </div>
     );
 }

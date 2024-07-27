@@ -17,6 +17,8 @@ export const CountryCodeContext = createContext<CountryCode>("GB");
 
 export const Products = ({
     productsAndVariants,
+    country,
+    printifyImageId: string,
 }: {
     productsAndVariants: Map<
         ProductType,
@@ -25,16 +27,20 @@ export const Products = ({
             variants: Variant[];
         }
     >;
+    country: CountryCode;
+    printifyImageId: string;
 }) => {
-    const [countryCode, setCountryCode] = useState();
+    const [countryCode, setCountryCode] = useState(country);
 
     useEffect(() => {
-        const fetchAndSetCountryCode = async () => {
-            const country = await getCountryFromIpAddress();
-            setCountryCode(country);
-        };
-        fetchAndSetCountryCode();
-    }, []);
+        if (!country) {
+            const fetchAndSetCountryCode = async () => {
+                const country = await getCountryFromIpAddress();
+                setCountryCode(country);
+            };
+            fetchAndSetCountryCode();
+        }
+    }, [country]);
 
     const [selectedProductType, setSelectedProductType] = useState<ProductType>(
         ProductType.TShirt,

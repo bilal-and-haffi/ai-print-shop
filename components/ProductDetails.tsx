@@ -188,11 +188,11 @@ export function ProductDetails({
                     />
                     <Dialog>
                         <DialogTrigger asChild className="w-full">
-                            <Button variant={"outline"}>Customise</Button>
+                            <Button variant={"outline"}>Customise Image</Button>
                         </DialogTrigger>
                         <DialogContent>
                             <DialogHeader>
-                                <DialogTitle>Customise</DialogTitle>
+                                <DialogTitle>Customise Image</DialogTitle>
                                 <DialogDescription>
                                     Edit your image
                                 </DialogDescription>

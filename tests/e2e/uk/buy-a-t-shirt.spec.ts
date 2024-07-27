@@ -20,6 +20,7 @@ test("buy a t shirt", async ({ page }) => {
         .click();
     await page.getByLabel("Location: Rural").click();
     await page.getByTestId("Generate Image Button").click();
+    await page.getByRole("button", { name: "See products!" }).click();
     await page.getByRole("button", { name: "Buy now" }).click();
     await page.getByLabel("Email").click();
     await page.getByLabel("Email").fill("do-not-send@ai-print-shop.com");

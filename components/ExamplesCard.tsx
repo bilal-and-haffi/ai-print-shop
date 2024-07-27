@@ -39,7 +39,7 @@ export function ExampleCard({
         <Card>
             <CardHeader>
                 <CardTitle>{productType}</CardTitle>
-                <CardDescription>User prompt: {prompt}</CardDescription>
+                <CardDescription>Prompt: {prompt}</CardDescription>
             </CardHeader>
             <CardContent>
                 <Image

@@ -24,8 +24,7 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog";
-import { removeBackgroundButtonAction } from "@/actions/removeBackgroundButtonAction";
-import { addBackgroundButtonAction } from "@/actions/addBackgroundButtonAction";
+import { toggleImageBackgroundButtonAction } from "@/actions/toggleImageBackgroundButtonAction";
 
 export interface Options {
     id: number;
@@ -186,41 +185,17 @@ export function ProductDetails({
                         setSelectedSize={setSelectedSize}
                         setSelectedColor={setSelectedColor}
                     />
-                    <Dialog>
-                        <DialogTrigger asChild className="w-full">
-                            <Button variant={"outline"}>Customise Image</Button>
-                        </DialogTrigger>
-                        <DialogContent>
-                            <DialogHeader>
-                                <DialogTitle>Customise Image</DialogTitle>
-                                <DialogDescription>
-                                    Edit your image
-                                </DialogDescription>
-                            </DialogHeader>
-                            <Button
-                                variant={"secondary"}
-                                onClick={async () => {
-                                    await addBackgroundButtonAction({
-                                        printifyImageId,
-                                        country,
-                                    }); // TODO: fixme
-                                }}
-                            >
-                                Add Background
-                            </Button>
-                            <Button
-                                variant={"secondary"}
-                                onClick={async () => {
-                                    await removeBackgroundButtonAction({
-                                        printifyImageId,
-                                        country,
-                                    }); // TODO: fixme
-                                }}
-                            >
-                                Remove Background
-                            </Button>
-                        </DialogContent>
-                    </Dialog>
+                    <Button
+                        variant={"outline"}
+                        onClick={async () => {
+                            await toggleImageBackgroundButtonAction({
+                                currentImageId: printifyImageId,
+                                country,
+                            }); // TODO: fixme
+                        }}
+                    >
+                        Toggle Image Background
+                    </Button>
                 </div>
                 <Card>
                     <CardHeader>

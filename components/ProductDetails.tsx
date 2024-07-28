@@ -99,10 +99,13 @@ export function ProductDetails({
 
     useEffect(() => {
         const handlePricing = async () => {
-            const generatedUnroundedPriceInUsd = generateUnroundedPriceInUsd({
-                selectedVariant: selectedProductVariant,
-                shippingCostsInCents: 349, // todo: make me dynamic
-            });
+            const generatedUnroundedPriceInUsd =
+                await generateUnroundedPriceInUsd({
+                    selectedVariant: selectedProductVariant,
+                    blueprint_id,
+                    print_provider_id,
+                    country,
+                });
 
             const generatedUnroundedPriceInGbp = await convertUSDToGBP(
                 generatedUnroundedPriceInUsd,

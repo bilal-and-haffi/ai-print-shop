@@ -81,7 +81,8 @@ export default function SupportPage() {
                                     <Textarea
                                         placeholder="Enter your message here..."
                                         {...field}
-                                        className="h-60 resize-none rounded-lg"
+                                        className="h-72
+                                     resize-none rounded-lg"
                                     />
                                 </FormControl>
                                 <FormMessage />
@@ -110,7 +111,6 @@ export default function SupportPage() {
                         }}
                         variant={"secondary"}
                     >
-                        <Copy className="h-4 w-4" />
                         <p className="w-full text-wrap">
                             customer-service@ai-print-shop.com
                         </p>

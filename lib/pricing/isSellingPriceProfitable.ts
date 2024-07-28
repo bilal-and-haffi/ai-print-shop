@@ -1,7 +1,6 @@
 "use server";
 import { ProductVariant } from "@/interfaces/PrintifyTypes";
 import { getShippingCostInCents } from "../printify/shipping/getShippingCostsInCents";
-import { UK_VAT_MULTIPLIER } from "@/app/data/consts";
 import { convertGBPToUSD } from "../currency/convertGBPToUSD";
 import { CountryCode } from "../stripe/createCheckoutSession";
 
@@ -30,10 +29,9 @@ export async function isSellingPriceProfitable({
         })) / 100;
 
     const totalPrintifyCostInUsd =
-        (printifyProductCostInUsd + printifyShippingCostInUsd) *
-        UK_VAT_MULTIPLIER; // does not apply in US but used anyway for safety
+        (printifyProductCostInUsd + printifyShippingCostInUsd)
 
-    const minimumProfitInUsd = 5;
+    const minimumProfitInUsd = 3;
 
     const priceInUsd =
         country === "GB"
@@ -48,7 +46,6 @@ export async function isSellingPriceProfitable({
         console.error({
             printifyProductCostInUsd,
             printifyShippingCostInUsd,
-            UK_VAT_MULTIPLIER,
             totalPrintifyCostInUsd,
             minimumProfitInUsd,
             profitInUsd,

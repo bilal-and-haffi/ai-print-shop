@@ -1,23 +1,34 @@
 "use client";
 
-import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import {
+    Card,
+    CardContent,
+    CardFooter,
+    CardHeader,
+} from "@/components/ui/card";
 import Link from "next/link";
 
 export default function ErrorPage() {
     return (
         <Card>
-            <CardContent>
+            <CardHeader>
                 <p>Sorry, something went wrong.</p>
-                <br />
+            </CardHeader>
+            <CardContent>
                 <p>Please go back and try again.</p>
                 <br />
-                <p>
-                    Contact us at:{" "}
-                    <Link href="mailto:customer-service@ai-print-shop.com">
-                        customer-service@ai-print-shop.com
-                    </Link>
-                </p>
+                <p>You can tell us what happened below.</p>
+                <br />
+                <p> This will help us solve it as soon as possible.</p>
             </CardContent>
+            <CardFooter>
+                <Link href="/support" className="w-full">
+                    <Button variant={"secondary"} className="w-full">
+                        Tell us what happened
+                    </Button>
+                </Link>
+            </CardFooter>
         </Card>
     );
 }

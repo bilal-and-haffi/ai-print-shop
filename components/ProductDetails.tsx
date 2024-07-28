@@ -241,7 +241,13 @@ export function ProductDetails({
                         <CardDescription>Free shipping</CardDescription>
                     </CardHeader>
                 </Card>
+                <Link href="/support">
+                    <Button variant={"outline"} className="w-full">
+                        Something Wrong?
+                    </Button>
+                </Link>
             </div>
+
             <div className="mt-4 flex w-full flex-col items-center gap-4">
                 <Button
                     onClick={onClick}

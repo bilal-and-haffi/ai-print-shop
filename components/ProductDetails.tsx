@@ -101,7 +101,7 @@ export function ProductDetails({
         const handlePricing = async () => {
             const generatedUnroundedPriceInUsd = generateUnroundedPriceInUsd({
                 selectedVariant: selectedProductVariant,
-                shippingCostsInCents: 349,
+                shippingCostsInCents: 349, // todo: make me dynamic
             });
 
             const generatedUnroundedPriceInGbp = await convertUSDToGBP(

@@ -120,7 +120,7 @@ export function ProductDetails({
             setSellingPriceInLocalCurrency(sellingPriceInLocalCurrency);
         };
         handlePricing();
-    }, [selectedProductVariant, country]);
+    }, [selectedProductVariant, country, blueprint_id, print_provider_id]);
 
     const onClick = async () => {
         if (!sellingPriceInLocalCurrency) {

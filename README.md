@@ -1,4 +1,4 @@
-# Ai Print Shop
+# AI Print Shop
 
 ## Docs
 

@@ -1,7 +1,6 @@
 import { ProductVariant } from "@/interfaces/PrintifyTypes";
 
 const MARK_UP_IN_USD = 10;
-const UK_TAX_MULTIPLIER = 1.2;
 
 export function generateUnroundedPriceInUsd({
     selectedVariant,
@@ -13,7 +12,7 @@ export function generateUnroundedPriceInUsd({
     const totalCostInCentsWithoutTax =
         selectedVariant.cost + shippingCostsInCents;
     const totalCostInCentsWithTax =
-        totalCostInCentsWithoutTax * UK_TAX_MULTIPLIER;
+        totalCostInCentsWithoutTax
 
     const totalCostInUsd = totalCostInCentsWithTax / 100;
 

@@ -56,7 +56,11 @@ export function ExampleCard({
                     href={`/product/${printifyImageId}?country=${countryCode}`}
                     target="_blank"
                 >
-                    <Button className="w-full" variant={"secondary"}>
+                    <Button
+                        className="w-full"
+                        variant={"secondary"}
+                        disabled={!countryCode}
+                    >
                         Browse products with this image
                     </Button>
                 </Link>

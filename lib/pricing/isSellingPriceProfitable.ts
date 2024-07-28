@@ -29,7 +29,7 @@ export async function isSellingPriceProfitable({
         })) / 100;
 
     const totalPrintifyCostInUsd =
-        (printifyProductCostInUsd + printifyShippingCostInUsd)
+        printifyProductCostInUsd + printifyShippingCostInUsd;
 
     const minimumProfitInUsd = 3;
 

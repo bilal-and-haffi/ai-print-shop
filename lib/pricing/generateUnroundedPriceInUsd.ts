@@ -1,24 +1,32 @@
 import { ProductVariant } from "@/interfaces/PrintifyTypes";
+import { getShippingCostInCents } from "../printify/shipping/getShippingCostsInCents";
+import { CountryCode } from "../stripe/createCheckoutSession";
 
 const MARK_UP_IN_USD = 10;
-const UK_TAX_MULTIPLIER = 1.2;
 
-export function generateUnroundedPriceInUsd({
+export async function generateUnroundedPriceInUsd({
     selectedVariant,
-    shippingCostsInCents,
+    print_provider_id,
+    blueprint_id,
+    country,
 }: {
     selectedVariant: ProductVariant;
-    shippingCostsInCents: number;
-}): number {
-    const totalCostInCentsWithoutTax =
-        selectedVariant.cost + shippingCostsInCents;
-    const totalCostInCentsWithTax =
-        totalCostInCentsWithoutTax * UK_TAX_MULTIPLIER;
+    print_provider_id: number;
+    blueprint_id: number;
+    country: CountryCode;
+}): Promise<number> {
+    const printifyShippingCostInCents = await getShippingCostInCents({
+        print_provider_id,
+        blueprint_id,
+        deliveryCountry: country,
+    });
 
-    const totalCostInUsd = totalCostInCentsWithTax / 100;
+    const totalCostInCentsWithoutTax =
+        selectedVariant.cost + printifyShippingCostInCents;
+
+    const totalCostInUsd = totalCostInCentsWithoutTax / 100; // we don't need to pay VAT until we make 85k
 
     const unroundedPriceInUsd = totalCostInUsd + MARK_UP_IN_USD;
 
     return unroundedPriceInUsd;
 }
-// MAYBE TAX CAN BE FOUND ON PRINTIFY VARIANT

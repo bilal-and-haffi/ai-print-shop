@@ -11,8 +11,7 @@ export function generateUnroundedPriceInUsd({
 }): number {
     const totalCostInCentsWithoutTax =
         selectedVariant.cost + shippingCostsInCents;
-    const totalCostInCentsWithTax =
-        totalCostInCentsWithoutTax
+    const totalCostInCentsWithTax = totalCostInCentsWithoutTax;
 
     const totalCostInUsd = totalCostInCentsWithTax / 100;
 

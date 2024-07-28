@@ -17,6 +17,7 @@ export async function getProductsAndVariants({
     if (!country) {
         console.error({ msg: "country is undefined", country });
     }
+
     const products = productData.filter(
         (product) => product.country === country && product.enabled,
     );
@@ -34,7 +35,7 @@ export async function getProductsAndVariants({
             hoodieProductInfo,
             mugProductInfo,
         });
-        throw new Error("Missing Data");
+        throw new Error("Missing Data in product variants");
     }
     const [
         tShirtProduct,

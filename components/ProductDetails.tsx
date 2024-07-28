@@ -168,6 +168,47 @@ export function ProductDetails({
                 : `${sellingPriceInLocalCurrency}`
             : "");
 
+    const CustommiseDialog = () => (
+        <Dialog>
+            <DialogTrigger asChild className="w-full">
+                <Button variant={"outline"}>Customise</Button>
+            </DialogTrigger>
+            <DialogContent>
+                <DialogHeader>
+                    {/* <DialogTitle>Customise</DialogTitle> */}
+                    {/* <DialogDescription>Edit your image</DialogDescription> */}
+                </DialogHeader>
+                <Button
+                    variant={"secondary"}
+                    onClick={async () => {
+                        await toggleImageBackgroundButtonAction({
+                            currentImageId: printifyImageId,
+                            country,
+                        });
+                    }}
+                >
+                    Toggle Image Background
+                </Button>
+                <Link
+                    href={`${pathname}?country=${country}`}
+                    className="w-full"
+                >
+                    <Button variant={"secondary"} className="w-full">
+                        Position Image on Front
+                    </Button>
+                </Link>
+                <Link
+                    href={`${pathname}?position=back&country=${country}`}
+                    className="w-full"
+                >
+                    <Button variant={"secondary"} className="w-full">
+                        Position Image on Back
+                    </Button>
+                </Link>
+            </DialogContent>
+        </Dialog>
+    );
+
     return (
         <div className="flex w-full flex-col items-center justify-center text-center">
             {images ? (
@@ -175,10 +216,10 @@ export function ProductDetails({
             ) : (
                 <div>Product Not Available</div>
             )}
-            <div className="mt-4 flex w-2/3 flex-col gap-2">
+            <div className="mt-4 flex w-full flex-col gap-2">
                 <div
                     id="selectContainer"
-                    className="flex flex-col justify-between gap-2"
+                    className="flex justify-between gap-2"
                 >
                     <SizeAndColorSelector
                         sizes={filteredSizeOptionsForColorId as Size[]}
@@ -188,59 +229,16 @@ export function ProductDetails({
                         setSelectedSize={setSelectedSize}
                         setSelectedColor={setSelectedColor}
                     />
-                    <Dialog>
-                        <DialogTrigger asChild className="w-full">
-                            <Button variant={"outline"}>Customise Image</Button>
-                        </DialogTrigger>
-                        <DialogContent>
-                            <DialogHeader>
-                                <DialogTitle>Customise Image</DialogTitle>
-                                <DialogDescription>
-                                    Edit your image
-                                </DialogDescription>
-                            </DialogHeader>
-                            <Button
-                                variant={"secondary"}
-                                onClick={async () => {
-                                    await toggleImageBackgroundButtonAction({
-                                        currentImageId: printifyImageId,
-                                        country,
-                                    });
-                                }}
-                            >
-                                Toggle Image Background
-                            </Button>
-                            <Link
-                                href={`${pathname}?country=${country}`}
-                                className="w-full"
-                            >
-                                <Button
-                                    variant={"secondary"}
-                                    className="w-full"
-                                >
-                                    Position Image on Front
-                                </Button>
-                            </Link>
-                            <Link
-                                href={`${pathname}?position=back&country=${country}`}
-                                className="w-full"
-                            >
-                                <Button
-                                    variant={"secondary"}
-                                    className="w-full"
-                                >
-                                    Position Image on Back
-                                </Button>
-                            </Link>
-                        </DialogContent>
-                    </Dialog>
                 </div>
+                <CustommiseDialog />
+
                 <Card>
                     <CardHeader>
                         <CardTitle>{priceString}</CardTitle>
                         <CardDescription>Free shipping</CardDescription>
                     </CardHeader>
                 </Card>
+
                 <Link href="/support">
                     <Button variant={"outline"} className="w-full">
                         Something Wrong?

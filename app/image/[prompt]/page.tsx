@@ -30,7 +30,7 @@ export default async function GenerateImagePage(params: {
     const { style, location, country } = params.searchParams;
 
     if (!country) {
-        console.error({ country, msg: "No country, GenerateImagePage" });
+        console.error({ country, msg: "No country, GenerateImagePage. Will default to US when redirecting." });
     }
 
     const concatenatedPrompt = addOptionsToPrompt({
@@ -76,7 +76,7 @@ export default async function GenerateImagePage(params: {
     });
 
     redirect(
-        `/product/${printifyImageId}?country=${country}`,
+        `/product/${printifyImageId}?country=${country ?? "US"}`,
         RedirectType.replace,
     );
 }

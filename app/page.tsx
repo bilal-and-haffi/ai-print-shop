@@ -1,5 +1,7 @@
 import { CreateLink } from "@/components/CreateLink";
 import { ExamplesSection } from "@/components/sections/ExamplesSection";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function Home() {
     return (
@@ -14,7 +16,14 @@ export default function Home() {
                     print on demand!
                 </h2>
 
-                <CreateLink />
+                <div className="flex flex-col gap-4">
+                    <CreateLink />
+                    <Link href="/support">
+                        <Button variant={"outline"} className="w-full">
+                            Something Wrong?
+                        </Button>
+                    </Link>
+                </div>
             </div>
             <ExamplesSection />
         </div>

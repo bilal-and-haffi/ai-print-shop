@@ -1,3 +1,4 @@
+import { examples } from "@/components/sections/ExamplesSection";
 import { test, expect } from "@playwright/test";
 
 test.beforeEach(async ({ page }) => {
@@ -15,9 +16,11 @@ test("shows email address", async ({ page }) => {
     await expect(emailButton).toBeVisible();
 });
 
-test("shows 3 browse products with this image buttons", async ({ page }) => {
+test("shows example number of browse products with this image buttons", async ({
+    page,
+}) => {
     const buttons = page.getByRole("button", {
         name: "Browse products with this",
     });
-    await expect(buttons).toHaveCount(3);
+    await expect(buttons).toHaveCount(examples.length);
 });

@@ -25,7 +25,7 @@ export function ExamplesSection() {
     );
 }
 
-const examples: {
+export const examples: {
     productType: string;
     prompt: string;
     imageSrc: string;

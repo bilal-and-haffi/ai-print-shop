@@ -6,7 +6,6 @@ export async function postBase64ImageToPrintify(
     base64ImageContents: string,
     fileName: string,
 ): Promise<PrintifyImageResponse> {
-    console.error({ msg: "postImageToPrintify" });
     try {
         const imageRequest = {
             file_name: fileName,
@@ -26,8 +25,6 @@ export async function postBase64ImageToPrintify(
         });
 
         const imageData: PrintifyImageResponse = await imageResponse.json();
-
-        console.error({ imageData });
 
         return imageData;
     } catch (error) {

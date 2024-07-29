@@ -4,6 +4,7 @@ import { fetchProductVariants } from "@/lib/printify/fetchProductVariants";
 import { productData } from "@/lib/printify/productsData";
 import { ProductType } from "@/types/ProductType";
 import { ImagePosition } from "./constructPrintifyProductRequest";
+import { redirect } from "next/navigation";
 
 export async function getProductsAndVariants({
     printifyImageId,
@@ -15,9 +16,13 @@ export async function getProductsAndVariants({
     position: ImagePosition;
 }) {
     if (!country) {
-        console.error({ msg: "country is undefined", country });
+        console.error({
+            msg: "country is undefined, redirecting to US",
+            country,
+        }); // TODO: this will cause bugs for sure x
+        redirect(`/product/${printifyImageId}?country=US`);
     }
-
+ 
     const products = productData.filter(
         (product) => product.country === country && product.enabled,
     );

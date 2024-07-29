@@ -1,3 +1,4 @@
+"use server";
 import { PRINTIFY_BASE_URL } from "@/app/data/consts";
 import { envServer } from "@/lib/env/server";
 

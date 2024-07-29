@@ -6,7 +6,6 @@ export default function Loading() {
             <p>Please wait</p>
             <ProgressBar estimatedTimeInMs={20000} />
             <p>Your image is being generated!</p>
-            {/* Add which model they are using */}
         </>
     );
 }

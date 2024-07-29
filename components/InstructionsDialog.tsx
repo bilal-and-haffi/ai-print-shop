@@ -6,13 +6,14 @@ import {
     DialogHeader,
     DialogTitle,
     DialogTrigger,
+    DialogClose,
 } from "@/components/ui/dialog";
 
 export function InstructionsDialog() {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button variant={"secondary"}>Help</Button>
+                <Button variant={"outline"}>Help</Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
@@ -34,7 +35,9 @@ export function InstructionsDialog() {
                     </ol>
                 </div>
                 <DialogFooter>
-                    <Button type="submit">Close</Button>
+                    <DialogClose asChild>
+                        <Button type="button">Close</Button>
+                    </DialogClose>
                 </DialogFooter>
             </DialogContent>
         </Dialog>

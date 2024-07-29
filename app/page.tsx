@@ -1,19 +1,28 @@
-import { Card } from "@/components/ui/card";
-import { ImageGenerationForm } from "../components/ImageGenerationForm";
-import { InstructionsDialog } from "@/components/InstructionsDialog";
+import { SomethingWrongButton } from "@/components/buttons/SomethingWrongButton";
+import { CreateLink } from "@/components/CreateLink";
+import { ExamplesSection } from "@/components/sections/ExamplesSection";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function Home() {
     return (
-        <div className="flex w-full flex-col space-y-4 md:space-y-8">
-            <Card className="border border-muted p-4 text-sm md:text-base">
-                <p>
-                    Create custom clothes with AI images, order easily and print
-                    on demand!
-                </p>
-            </Card>
+        <div className="flex w-full flex-col items-center gap-20">
+            <div className="flex w-4/5 flex-col gap-20 pt-20 md:w-3/5">
+                <h1 className="text-4xl md:text-5xl">
+                    Create custom clothes with AI images
+                </h1>
 
-            <ImageGenerationForm />
-            <InstructionsDialog />
+                <h2 className="text-xl text-muted-foreground">
+                    Enter a prompt to generate your image. Order easily and
+                    print on demand!
+                </h2>
+
+                <div className="flex flex-col gap-4">
+                    <CreateLink />
+                    <SomethingWrongButton />
+                </div>
+            </div>
+            <ExamplesSection />
         </div>
     );
 }

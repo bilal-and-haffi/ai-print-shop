@@ -7,8 +7,6 @@ export function addOptionsToPrompt({
     location: string;
     decodedPrompt: string;
 }) {
-    console.log({ decodedPrompt, style, location });
-
     const styleString =
         style !== undefined && style !== "None"
             ? `In this style: ${style}. `
@@ -20,8 +18,6 @@ export function addOptionsToPrompt({
             : "";
 
     const concatenatedPrompt = styleString + locationString + decodedPrompt;
-
-    console.log({ concatenatedPrompt });
 
     return concatenatedPrompt;
 }

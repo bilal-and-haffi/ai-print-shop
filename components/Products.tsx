@@ -1,19 +1,24 @@
 "use client";
 
-import { useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { ProductDetails } from "./ProductDetails";
 import { Variant } from "@/interfaces/Printify/Variant";
 import { ProductSwitcher } from "./ProductSwitcher";
 import { ProductType } from "../types/ProductType";
+import { CountryCode } from "@/lib/stripe/createCheckoutSession";
+import { getCountryFromIpAddress } from "@/lib/country/getCountryFromIpAddress";
 
 const productsMap = new Map([
     [ProductType.TShirt, "T Shirt"],
     [ProductType.Hoodie, "Hoodie"],
     [ProductType.Mug, "Mug"],
 ]);
+export const CountryCodeContext = createContext<CountryCode>("GB");
 
 export const Products = ({
     productsAndVariants,
+    country,
+    printifyImageId,
 }: {
     productsAndVariants: Map<
         ProductType,
@@ -22,7 +27,21 @@ export const Products = ({
             variants: Variant[];
         }
     >;
+    country: CountryCode;
+    printifyImageId: string;
 }) => {
+    const [countryCode, setCountryCode] = useState(country);
+
+    useEffect(() => {
+        if (!country) {
+            const fetchAndSetCountryCode = async () => {
+                const country = await getCountryFromIpAddress();
+                setCountryCode(country);
+            };
+            fetchAndSetCountryCode();
+        }
+    }, [country]);
+
     const [selectedProductType, setSelectedProductType] = useState<ProductType>(
         ProductType.TShirt,
     );
@@ -46,8 +65,8 @@ export const Products = ({
                         retrievedProduct={tShirtProduct}
                         initialSize="L"
                         initialColor="Black"
-                        priceInGbp={20}
                         variants={tShirtVariants}
+                        printifyImageId={printifyImageId}
                     />
                 );
             case ProductType.Hoodie:
@@ -56,8 +75,8 @@ export const Products = ({
                         retrievedProduct={hoodieProduct}
                         initialSize="L"
                         initialColor="Black"
-                        priceInGbp={40}
                         variants={hoodieVariants}
+                        printifyImageId={printifyImageId}
                     />
                 );
             case ProductType.Mug:
@@ -66,8 +85,8 @@ export const Products = ({
                         retrievedProduct={mugProduct}
                         initialSize="11oz"
                         initialColor="Black"
-                        priceInGbp={15}
                         variants={mugVariants}
+                        printifyImageId={printifyImageId}
                     />
                 );
         }
@@ -75,13 +94,15 @@ export const Products = ({
 
     return (
         <>
-            <ProductSwitcher
-                selectedProductType={selectedProductType}
-                setSelectedProductType={setSelectedProductType}
-                prompt={tShirtProduct.title}
-                productsMap={productsMap}
-            />
-            <CurrentProductDetails />
+            <CountryCodeContext.Provider value={countryCode ?? "GB"}>
+                <ProductSwitcher
+                    selectedProductType={selectedProductType}
+                    setSelectedProductType={setSelectedProductType}
+                    prompt={tShirtProduct.title}
+                    productsMap={productsMap}
+                />
+                <CurrentProductDetails />
+            </CountryCodeContext.Provider>
         </>
     );
 };

@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { Analytics } from "@vercel/analytics/react";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { CardFooter } from "@/components/ui/card";
@@ -42,7 +43,7 @@ export default function RootLayout({
                 <Toaster />
 
                 <SiteHeader />
-                <main className="flex w-11/12 max-w-screen-md flex-col items-center justify-center space-y-4 self-center pb-8 text-center">
+                <main className="flex w-11/12 flex-col items-center justify-center space-y-4 self-center pb-8 text-center">
                     <ThemeProvider
                         attribute="class"
                         defaultTheme="dark"
@@ -50,6 +51,7 @@ export default function RootLayout({
                         disableTransitionOnChange
                     >
                         {children}
+                        <Analytics />
                     </ThemeProvider>
                 </main>
                 <footer className="mt-auto w-full">

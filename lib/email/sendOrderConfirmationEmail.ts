@@ -17,7 +17,10 @@ export async function sendOrderConfirmationEmail(
     firstName: string,
     printifyConnectUrl: string,
 ) {
-    if (emailAddress === "do-not-send@ai-print-shop.com") {
+    if (
+        emailAddress === "do-not-send@ai-print-shop.com" ||
+        emailAddress === "do-not-send-us@ai-print-shop.com"
+    ) {
         console.log({ msg: "Not sending email", emailAddress });
         return;
     }

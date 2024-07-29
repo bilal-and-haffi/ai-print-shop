@@ -1,4 +1,4 @@
-name: Checks and unit tests
+name: On pull request to main
 on:
     pull_request:
         branches: [main]
@@ -11,9 +11,10 @@ env:
     DATABASE_URL_UNPOOLED: postgres://postgres:password@localhost:5432/test
     OPENAI_API_KEY: foo
     OPENAI_ORG_ID: foo
-    PRINTIFY_API_TOKEN: foo
+    PRINTIFY_API_TOKEN: ${{secrets.PRINTIFY_API_TOKEN}}
     SHOP_ID: foo
     STRIPE_SECRET_KEY: foo
+    REMOVE_BG_API_KEY: foo
     RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
 
 jobs:

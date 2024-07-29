@@ -10,7 +10,8 @@ import {
     SelectTrigger,
     SelectValue,
 } from "./ui/select";
-import { JSX } from "react";
+import { JSX, useContext } from "react";
+import { CountryCodeContext } from "./Products";
 
 export const ProductSwitcher = ({
     selectedProductType,
@@ -24,6 +25,7 @@ export const ProductSwitcher = ({
     productsMap: Map<ProductType, string>;
 }) => {
     const ProductButtons: JSX.IntrinsicAttributes | JSX.Element[] = [];
+    const countryCode = useContext(CountryCodeContext);
 
     productsMap.forEach((name, productType) => {
         ProductButtons.push(
@@ -47,7 +49,7 @@ export const ProductSwitcher = ({
             id="links-to-products-container"
             className="flex w-full items-center justify-between space-x-4"
         >
-            <Link href={`/`}>
+            <Link href={`/create?country=${countryCode}&prompt=${prompt}`}>
                 <Button data-testid="Go back" variant={"outline"}>
                     <ChevronLeft className="h-4 w-4" />
                 </Button>
@@ -75,7 +77,7 @@ export const ProductSwitcher = ({
                 {ProductButtons}
             </div>
             {/* needs to be an <a> because otherwise causes bugs */}
-            <a href={`/image/${prompt}?model=DALL-E%203`}>
+            <a href={`/image/${prompt}`}>
                 <Button
                     data-testid="Generate new image with same prompt button"
                     variant={"outline"}

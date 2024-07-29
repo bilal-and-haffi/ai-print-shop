@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 "use client";
-import { ChangeEvent, useState, useRef } from "react";
+import { ChangeEvent, useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -9,67 +9,76 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { envClient } from "@/lib/env/client";
-import { Label } from "./ui/label";
 import { checkPromptForCopyRight } from "@/lib/openai/copyrightCheck";
 import { PromptConfirmationDialog } from "./PromptConfirmationDialog";
 import { SelectFormField } from "./form/SelectFormField";
-import { modelOptions } from "../app/data/modelOptions";
+import { CountryCode } from "@/lib/stripe/createCheckoutSession";
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog";
 
 const styleOptions = [
-    "Photograph",
+    "None",
     "Anime",
     "Cartoon",
     "Futuristic",
-    "None",
+    "Photograph",
+    "Pixel Art",
 ] as const;
 
 const locationOptions = [
-    "Space",
+    "None",
     "Dessert",
-    "Fantasy Land",
     "Indoors",
     "Mars",
     "Outdoors",
     "Rural",
+    "Space",
     "Underwater",
     "Urban",
-    "None",
 ] as const;
 
 const FormSchema = z.object({
-    style: z.enum(styleOptions).default(styleOptions[0]),
-    locationOptions: z.enum(locationOptions).default(locationOptions[0]),
-    modelOptions: z.enum(modelOptions).default(modelOptions[0]),
+    style: z.enum(styleOptions),
+    locationOptions: z.enum(locationOptions),
 });
 
-export function ImageGenerationForm() {
+export function ImageGenerationForm({
+    country,
+    previousPrompt,
+}: {
+    country: CountryCode;
+    previousPrompt?: string;
+}) {
     const initalPrompt =
-        envClient.NEXT_PUBLIC_ENV === "development" ? "test" : "";
-    const [prompt, setPrompt] = useState<string>(initalPrompt);
+        previousPrompt ??
+        (envClient.NEXT_PUBLIC_ENV === "development" ? "test prompt" : "");
+    const [promptValue, setPromptValue] = useState<string>(initalPrompt);
 
     const [showConfirmationDialog, setShowConfirmationDialog] =
         useState<boolean>(false);
     const [alertReason, setAlertReason] = useState<string>("");
 
-    const [modelOption, setModelOptions] = useState<string>(modelOptions[0]);
     const [style, setStyle] = useState<string>(styleOptions[0]);
     const [location, setLocation] = useState<string>(locationOptions[0]);
 
     const formFields = [
         {
-            name: "Model",
-            options: modelOptions,
-            set: setModelOptions,
-        },
-        {
             name: "Style",
             options: styleOptions,
             set: setStyle,
+            value: style,
         },
         {
             name: "Location",
             options: locationOptions,
             set: setLocation,
+            value: location,
         },
     ];
 
@@ -77,17 +86,15 @@ export function ImageGenerationForm() {
     const router = useRouter();
 
     const continueToNextStep = () => {
-        console.log({ modelOption, style, location });
-
         router.push(
-            `/image/${prompt}?model=${modelOption}&style=${style}&location=${location}`,
+            `/image/${promptValue}?&style=${style}&location=${location}&country=${country}`,
         );
     };
 
     const generateImage = async () => {
-        if (prompt.trim() === "") return;
+        if (promptValue.trim() === "") return;
 
-        const response = await checkPromptForCopyRight(prompt);
+        const response = await checkPromptForCopyRight(promptValue);
 
         if (response === "NO") {
             continueToNextStep();
@@ -100,7 +107,7 @@ export function ImageGenerationForm() {
     };
 
     const onInputChanged = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        setPrompt(e.target.value);
+        setPromptValue(e.target.value);
     };
 
     const form = useForm<z.infer<typeof FormSchema>>({
@@ -108,7 +115,7 @@ export function ImageGenerationForm() {
     });
 
     return (
-        <>
+        <div className="flex w-full flex-col gap-4">
             {showConfirmationDialog && (
                 <PromptConfirmationDialog
                     showConfirmationDialog={showConfirmationDialog}
@@ -117,34 +124,53 @@ export function ImageGenerationForm() {
                     alertReason={alertReason}
                 />
             )}
-            <Label htmlFor="prompt">Enter your idea!</Label>
+            <h1 className="text-2xl">Enter your image prompt</h1>
             <Textarea
                 ref={textAreaRef}
                 placeholder="Example: An astronaut playing on an old arcade machine."
-                value={prompt}
+                value={promptValue}
                 onChange={onInputChanged}
-                className="h-48 resize-none rounded-lg"
+                className="h-96 resize-none rounded-lg"
                 autoFocus
             />
-            <Form {...form}>
-                <form className="w-full space-y-4">
-                    {formFields.map((x) => {
-                        const { name, options, set } = x;
-                        return (
-                            <SelectFormField
-                                key={x.name}
-                                form={form}
-                                setFieldValue={set}
-                                options={options as unknown as string[]}
-                                name={name}
-                            />
-                        );
-                    })}
-                </form>
-            </Form>
-            <Button onClick={generateImage} data-testid="Generate Image Button">
+
+            <Button
+                className="w-full"
+                onClick={generateImage}
+                data-testid="Generate Image Button"
+                disabled={!promptValue || !location || !style}
+            >
                 Generate Image
             </Button>
-        </>
+
+            <Dialog>
+                <DialogTrigger asChild className="w-full">
+                    <Button variant={"secondary"}>Options</Button>
+                </DialogTrigger>
+                <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle>Options</DialogTitle>
+                        <DialogDescription>
+                            These options will help make better images
+                        </DialogDescription>
+                    </DialogHeader>
+                    <Form {...form}>
+                        {formFields.map((x) => {
+                            const { name, options, set, value } = x;
+                            return (
+                                <SelectFormField
+                                    key={x.name}
+                                    form={form}
+                                    setFieldValue={set}
+                                    options={options as unknown as string[]}
+                                    name={name}
+                                    value={value}
+                                />
+                            );
+                        })}
+                    </Form>
+                </DialogContent>
+            </Dialog>
+        </div>
     );
 }

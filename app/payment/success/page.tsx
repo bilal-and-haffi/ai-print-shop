@@ -10,7 +10,6 @@ import { Suspense } from "react";
 import { type PrintifyOrderResponse } from "@/interfaces/PrintifyTypes";
 import { type OrderRow } from "@/db/order";
 import { sendOrderConfirmationEmail } from "@/lib/email/sendOrderConfirmationEmail";
-import { sendAnExistingOrderToProduction } from "@/lib/printify/sendAnExistingOrderToProduction";
 import {
     Card,
     CardContent,
@@ -18,7 +17,6 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
-import { envServer } from "@/lib/env/server";
 
 export const dynamic = "force-dynamic";
 
@@ -61,7 +59,6 @@ export default async function Page(params: {
 
     const existingEmailId = await getEmailIdFromOrderTable({ internalOrderId });
     const hasSentEmailAlready = Boolean(existingEmailId);
-    const hasOrderAlreadyBeenProcessed = hasSentEmailAlready;
 
     console.log({ emailId: existingEmailId, hasSentEmailAlready });
 
@@ -78,22 +75,16 @@ export default async function Page(params: {
         }
     }
 
-    if (!hasOrderAlreadyBeenProcessed) {
-        await sendAnExistingOrderToProduction(printifyOrderId);
-    } else {
-        console.log(
-            "Order has already been processed skipping sending to production",
-        );
-    }
-
     return (
-        <Card className="w-full p-4">
+        <Card className="w-full p-4 md:w-2/3">
             <CardHeader>
                 <CardTitle>Your order has been confirmed!</CardTitle>
             </CardHeader>
             <CardContent>
                 <p>A confirmation has been sent to your email</p>
+                <br />
                 <p>Thank you for shopping with us. </p>
+                <br />
                 <p>We hope you love your product!</p>
             </CardContent>
             <CardFooter className="flex flex-col gap-4 md:flex-row md:justify-normal">

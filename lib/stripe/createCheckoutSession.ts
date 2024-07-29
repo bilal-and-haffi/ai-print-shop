@@ -1,4 +1,7 @@
+import { getCurrencyFromCountry } from "../currency/getCurrencyFromCountry";
 import { stripeServerClient } from "./client";
+
+export type CountryCode = "US" | "GB";
 
 interface checkOutSessionParams {
     referer: string;
@@ -12,6 +15,7 @@ interface checkOutSessionParams {
     productType: string;
     orderVariantId: string;
     internalOrderId: number;
+    country: CountryCode;
 }
 
 export async function createCheckoutSession(params: checkOutSessionParams) {
@@ -27,21 +31,24 @@ export async function createCheckoutSession(params: checkOutSessionParams) {
         productType,
         orderVariantId,
         internalOrderId,
+        country,
     } = params;
+
+    const currency = getCurrencyFromCountry(country);
 
     return await stripeServerClient.checkout.sessions.create({
         customer_creation: "always",
         billing_address_collection: "required",
         shipping_address_collection: {
-            allowed_countries: ["GB"],
+            allowed_countries: [country],
         },
         shipping_options: [
+            // make me dynamic
             {
                 shipping_rate_data: {
-                    // TODO: Figure out dynamically for other shipping options
                     type: "fixed_amount",
                     fixed_amount: {
-                        currency: "gbp",
+                        currency,
                         amount: totalShipping,
                     },
                     display_name: "Standard",
@@ -52,7 +59,7 @@ export async function createCheckoutSession(params: checkOutSessionParams) {
                         },
                         maximum: {
                             unit: "business_day",
-                            value: 5,
+                            value: 10,
                         },
                     },
                 },
@@ -61,13 +68,13 @@ export async function createCheckoutSession(params: checkOutSessionParams) {
         line_items: [
             {
                 price_data: {
-                    currency: "gbp",
+                    currency,
                     product_data: {
                         name: `${productType} - ${orderVariantLabel}`,
                         description: orderTitle,
                         images: [orderPreview],
                     },
-                    unit_amount_decimal: totalStripePrice.toString(),
+                    unit_amount_decimal: totalStripePrice.toString(), // in cents -- why stripe?
                 },
                 quantity: 1,
             },

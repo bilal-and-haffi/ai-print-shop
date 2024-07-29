@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createCheckoutSession } from "@/lib/stripe/service";
+import { createCheckoutSession } from "@/lib/stripe/createCheckoutSession";
 import { addNewOrder, updateOrderSessionId } from "@/db/order";
 
 export async function POST(request: NextRequest) {
@@ -28,6 +28,7 @@ export async function POST(request: NextRequest) {
         productType: req.productType,
         orderVariantId: req.orderVariantId,
         internalOrderId,
+        country: req.country,
     });
 
     await updateOrderSessionId(internalOrderId, session.id);

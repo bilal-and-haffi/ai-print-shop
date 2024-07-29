@@ -27,6 +27,7 @@ import {
 import { toggleImageBackgroundButtonAction } from "@/actions/toggleImageBackgroundButtonAction";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import { SomethingWrongButton } from "./buttons/SomethingWrongButton";
 
 export interface Options {
     id: number;
@@ -255,11 +256,7 @@ export function ProductDetails({
                     )}
                 </Button>
 
-                <Link href="/support" className="w-full">
-                    <Button variant={"secondary"} className="w-full">
-                        Something Wrong?
-                    </Button>
-                </Link>
+                <SomethingWrongButton />
                 {/* 
                 <div className="mt-4 text-sm">
                     Powered by

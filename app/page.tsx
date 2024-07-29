@@ -1,3 +1,4 @@
+import { SomethingWrongButton } from "@/components/buttons/SomethingWrongButton";
 import { CreateLink } from "@/components/CreateLink";
 import { ExamplesSection } from "@/components/sections/ExamplesSection";
 import { Button } from "@/components/ui/button";
@@ -18,11 +19,7 @@ export default function Home() {
 
                 <div className="flex flex-col gap-4">
                     <CreateLink />
-                    <Link href="/support">
-                        <Button variant={"outline"} className="w-full">
-                            Something Wrong?
-                        </Button>
-                    </Link>
+                    <SomethingWrongButton />
                 </div>
             </div>
             <ExamplesSection />

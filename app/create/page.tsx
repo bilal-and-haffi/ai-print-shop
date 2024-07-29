@@ -1,5 +1,6 @@
+import { SomethingWrongButton } from "@/components/buttons/SomethingWrongButton";
 import { ImageGenerationForm } from "@/components/ImageGenerationForm";
-import { InstructionsDialog } from "@/components/InstructionsDialog";
+// import { InstructionsDialog } from "@/components/InstructionsDialog";
 import { CountryCode } from "@/lib/stripe/createCheckoutSession";
 
 export default async function CreatePage({
@@ -16,6 +17,7 @@ export default async function CreatePage({
         <div className="flex w-full flex-col gap-4 md:w-2/3">
             <ImageGenerationForm country={country} previousPrompt={prompt} />
             {/* <InstructionsDialog /> */}
+            <SomethingWrongButton />
         </div>
     );
 }

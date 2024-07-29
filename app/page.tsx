@@ -19,7 +19,7 @@ export default function Home() {
                 <div className="flex flex-col gap-4">
                     <CreateLink />
                     <Link href="/support">
-                        <Button variant={"outline"} className="w-full">
+                        <Button variant={"secondary"} className="w-full">
                             Something Wrong?
                         </Button>
                     </Link>

@@ -58,4 +58,13 @@ const examples: {
             "A mug with a printed image of: In this style: Photograph. In this location: Space. A child playing with fire on a white background",
         printifyImageId: "669820bf5ee4247611d8757c",
     },
+    {
+        productType: "Many colours and sizes",
+        prompt: "A person with a hoodie on programming on a laptop in pixel art.",
+        imageSrc:
+            "/in-this-style-pixel-art-in-this-location-indoors-a-person-coding-on-his-laptop-with-his-hoodie-up.jpg",
+        imageAlt:
+            "A t shirt with a printed image of: A person with a hoodie on programming on a laptop in pixel art.",
+        printifyImageId: "66a58cec9c8dc8ddd562d7e9",
+    },
 ];

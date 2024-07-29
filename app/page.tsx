@@ -6,8 +6,8 @@ import Link from "next/link";
 
 export default function Home() {
     return (
-        <div className="flex w-full flex-col items-center gap-16">
-            <div className="flex w-4/5 flex-col gap-16 pt-16 md:w-3/5">
+        <div className="flex w-full flex-col items-center gap-20">
+            <div className="flex w-4/5 flex-col gap-20 pt-20 md:w-3/5">
                 <h1 className="text-4xl md:text-5xl">
                     Create custom clothes with AI images
                 </h1>

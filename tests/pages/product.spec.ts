@@ -21,6 +21,6 @@ test.describe("product page", () => {
             .getByTestId("Generate new image with same prompt button")
             .click();
         expect(await page.waitForURL(/test%20prompt/));
-        expect(await page.waitForURL(/product/))
+        expect(await page.waitForURL(/product/));
     });
 });

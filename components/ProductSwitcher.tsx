@@ -77,7 +77,7 @@ export const ProductSwitcher = ({
                 {ProductButtons}
             </div>
             {/* needs to be an <a> because otherwise causes bugs */}
-            <a href={`/image/${prompt}`}>
+            <a href={`/image/${prompt}?country=${countryCode}`}>
                 <Button
                     data-testid="Generate new image with same prompt button"
                     variant={"outline"}

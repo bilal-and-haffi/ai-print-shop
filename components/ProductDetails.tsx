@@ -177,10 +177,7 @@ export function ProductDetails({
                 <Button variant={"outline"}>Customise</Button>
             </DialogTrigger>
             <DialogContent>
-                <DialogHeader>
-                    {/* <DialogTitle>Customise</DialogTitle> */}
-                    {/* <DialogDescription>Edit your image</DialogDescription> */}
-                </DialogHeader>
+                <DialogHeader></DialogHeader>
                 <Button
                     variant={"secondary"}
                     onClick={async () => {
@@ -241,12 +238,6 @@ export function ProductDetails({
                         <CardDescription>Free shipping</CardDescription>
                     </CardHeader>
                 </Card>
-
-                <Link href="/support">
-                    <Button variant={"outline"} className="w-full">
-                        Something Wrong?
-                    </Button>
-                </Link>
             </div>
 
             <div className="mt-4 flex w-full flex-col items-center gap-4">
@@ -264,6 +255,12 @@ export function ProductDetails({
                     )}
                 </Button>
 
+                <Link href="/support" className="w-full">
+                    <Button variant={"secondary"} className="w-full">
+                        Something Wrong?
+                    </Button>
+                </Link>
+                {/* 
                 <div className="mt-4 text-sm">
                     Powered by
                     <Image
@@ -273,7 +270,7 @@ export function ProductDetails({
                         height={100}
                         priority
                     />
-                </div>
+                </div> */}
             </div>
         </div>
     );

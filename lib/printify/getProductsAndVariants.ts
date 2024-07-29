@@ -22,7 +22,7 @@ export async function getProductsAndVariants({
         }); // TODO: this will cause bugs for sure x
         redirect(`/product/${printifyImageId}?country=US`);
     }
- 
+
     const products = productData.filter(
         (product) => product.country === country && product.enabled,
     );

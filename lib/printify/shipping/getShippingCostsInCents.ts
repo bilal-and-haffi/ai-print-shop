@@ -33,7 +33,7 @@ export async function getShippingCostInCents({
             ukFirstItem: countryFirstItem,
             costInCents,
         });
-        throw new Error("Something wrong");
+        throw new Error("Expected printify cost to be in USD but it is not");
     }
 
     return costInCents;

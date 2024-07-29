@@ -179,7 +179,7 @@ export function ProductDetails({
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader></DialogHeader>
-                <Button
+                {/* <Button
                     variant={"secondary"}
                     onClick={async () => {
                         await toggleImageBackgroundButtonAction({
@@ -189,7 +189,7 @@ export function ProductDetails({
                     }}
                 >
                     Toggle Image Background
-                </Button>
+                </Button> */}
                 <Link
                     href={`${pathname}?country=${country}`}
                     className="w-full"

@@ -52,9 +52,9 @@ test.describe("Additional Options", () => {
 });
 
 test("User can randomise their prompt", async ({ page }) => {
-    expect(page.getByPlaceholder("Example: An astronaut playing")).toHaveText(
-        "test prompt",
-    );
+    await expect(
+        page.getByPlaceholder("Example: An astronaut playing"),
+    ).toHaveText("test prompt");
     await page.getByText("Randomise").click();
     await expect(
         page.getByPlaceholder("Example: An astronaut playing"),

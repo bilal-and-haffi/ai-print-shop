@@ -17,66 +17,58 @@ export async function toggleImageBackgroundButtonAction({
     country: CountryCode;
 }) {
     console.log("Removing background image");
-    try {
-        const {
-            printifyImageId: existingPrintifyImageId,
-            removedBackgroundPrintifyImageId:
-                existingRemovedBackgroundPrintifyImageId,
-            printifyImageUrl,
-        } = await selectAllFromImageWhereImageIdOrRemovedBackgroundImageIdEquals(
-            currentImageId,
-        );
-
-        console.log({
-            existingPrintifyImageId,
+    const {
+        printifyImageId: existingPrintifyImageId,
+        removedBackgroundPrintifyImageId:
             existingRemovedBackgroundPrintifyImageId,
-            printifyImageUrl,
-        });
+        printifyImageUrl,
+    } = await selectAllFromImageWhereImageIdOrRemovedBackgroundImageIdEquals(
+        currentImageId,
+    );
 
-        if (existingPrintifyImageId === currentImageId) {
-            console.log("existingPrintifyImageId === currentImageId");
-            if (existingRemovedBackgroundPrintifyImageId) {
-                console.log("existingRemovedBackgroundPrintifyImageId");
-                redirect(
-                    `/product?country=${country}&imageId=${existingRemovedBackgroundPrintifyImageId}`,
-                );
-            } else {
-                console.log("else A");
+    console.log({
+        existingPrintifyImageId,
+        existingRemovedBackgroundPrintifyImageId,
+        printifyImageUrl,
+    });
 
-                const removedBackgroundImageBase64Contents =
-                    await removeBackgroundAndReturnBase64Image(
-                        printifyImageUrl,
-                    );
-
-                const {
-                    id: removedBackgroundPrintifyImageId,
-                    preview_url: removedBackgroundPrintifyImageUrl,
-                } = await postBase64ImageToPrintify(
-                    removedBackgroundImageBase64Contents,
-                    "generatedImage.png",
-                );
-
-                await updateImageTableWithRemovedBackgroundImage({
-                    printifyImageId: existingPrintifyImageId,
-                    removedBackgroundPrintifyImageId,
-                    removedBackgroundPrintifyImageUrl,
-                });
-
-                redirect(
-                    `/product?country=${country}&imageId=${removedBackgroundPrintifyImageId}`,
-                );
-            }
-        } else if (
-            currentImageId === existingRemovedBackgroundPrintifyImageId
-        ) {
-            console.log(
-                "currentImageId === existingRemovedBackgroundPrintifyImageId",
-            );
+    if (existingPrintifyImageId === currentImageId) {
+        console.log("existingPrintifyImageId === currentImageId");
+        if (existingRemovedBackgroundPrintifyImageId) {
+            console.log("existingRemovedBackgroundPrintifyImageId");
             redirect(
-                `/product?country=${country}&imageId=${existingPrintifyImageId}`,
+                `/product?country=${country}&imageId=${existingRemovedBackgroundPrintifyImageId}`,
+            );
+        } else {
+            console.log("else A");
+
+            const removedBackgroundImageBase64Contents =
+                await removeBackgroundAndReturnBase64Image(printifyImageUrl);
+
+            const {
+                id: removedBackgroundPrintifyImageId,
+                preview_url: removedBackgroundPrintifyImageUrl,
+            } = await postBase64ImageToPrintify(
+                removedBackgroundImageBase64Contents,
+                "generatedImage.png",
+            );
+
+            await updateImageTableWithRemovedBackgroundImage({
+                printifyImageId: existingPrintifyImageId,
+                removedBackgroundPrintifyImageId,
+                removedBackgroundPrintifyImageUrl,
+            });
+
+            redirect(
+                `/product?country=${country}&imageId=${removedBackgroundPrintifyImageId}`,
             );
         }
-    } catch (error) {
-        console.error({ msg: "failed to remove background", error });
+    } else if (currentImageId === existingRemovedBackgroundPrintifyImageId) {
+        console.log(
+            "currentImageId === existingRemovedBackgroundPrintifyImageId",
+        );
+        redirect(
+            `/product?country=${country}&imageId=${existingPrintifyImageId}`,
+        );
     }
 }

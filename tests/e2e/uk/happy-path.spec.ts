@@ -13,6 +13,7 @@ test.describe("happy path uk", () => {
             .getByPlaceholder("Example: An astronaut playing")
             .fill("test prompt");
         await page.getByTestId("Generate Image Button").click();
+        await page.getByTestId("Continue Button").click();
     });
     test("buy a hoodie", async ({ page }) => {
         await page.getByRole("button", { name: "Hoodie" }).click();

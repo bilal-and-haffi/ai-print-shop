@@ -179,7 +179,7 @@ export function ImageGenerationForm({
                     <Button
                         className="w-full"
                         onClick={generateImage}
-                        data-testid="Generate Image Button"
+                        data-testid="Continue Button"
                         disabled={!promptValue}
                     >
                         Continue

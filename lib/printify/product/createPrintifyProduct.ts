@@ -1,40 +1,53 @@
 import { PRINTIFY_BASE_URL } from "@/app/data/consts";
 import { PrintifyProductRequest } from "@/interfaces/PrintifyTypes";
 import { envServer } from "../../env/server";
-import { constructPrintifyProductRequest } from "./constructPrintifyProductRequest";
+import { getPromptFromImageIdOrRemovedBackgroundImageId } from "@/db/image";
+import { fetchProductVariants } from "../fetchProductVariants";
 
 export async function createPrintifyProduct({
     printifyImageId,
     printProviderId,
     blueprintId,
-    position,
+    position = "front",
 }: {
     printifyImageId: string;
     printProviderId: number;
     blueprintId: number;
     position?: "front" | "back";
 }) {
-    const {
-        blueprint_id,
-        description,
-        print_areas,
-        print_provider_id,
-        title,
-        variants,
-    } = await constructPrintifyProductRequest({
-        printifyImageId,
-        printProviderId,
-        blueprintId,
-        position,
-    });
+    const variants = await fetchProductVariants(blueprintId, printProviderId);
+    const variantIds = variants.map((variant) => variant.id);
+    const prompt =
+        await getPromptFromImageIdOrRemovedBackgroundImageId(printifyImageId);
 
     const productRequest: PrintifyProductRequest = {
-        blueprint_id,
-        description,
-        print_areas,
-        print_provider_id,
-        title,
-        variants,
+        blueprint_id: blueprintId,
+        description: "",
+        print_areas: [
+            {
+                variant_ids: variantIds,
+                placeholders: [
+                    {
+                        position,
+                        images: [
+                            {
+                                id: printifyImageId,
+                                x: 0.5,
+                                y: 0.5,
+                                scale: 1,
+                                angle: 0,
+                            },
+                        ],
+                    },
+                ],
+            },
+        ],
+        print_provider_id: printProviderId,
+        title: prompt,
+        variants: variantIds.map((variantId) => ({
+            id: variantId,
+            price: 1, // Updated later in success webhook to the actual selling price which is dynamically
+        })),
     };
     const productRequestString = JSON.stringify(productRequest);
 

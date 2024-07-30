@@ -7,7 +7,6 @@ import {
 } from "@/interfaces/PrintifyTypes";
 import { ImagesCarousel } from "./ImageCarousel";
 import { Size, SizeAndColorSelector } from "./SizeAndColorForm";
-import Image from "next/image";
 import { useContext, useEffect, useMemo, useState } from "react";
 import { SmallLoadingSpinner } from "./loading/SmallLoadingSpinner";
 import { isSellingPriceProfitable } from "../lib/pricing/isSellingPriceProfitable";
@@ -19,9 +18,7 @@ import { convertUSDToGBP } from "@/lib/currency/convertUSDToGBP";
 import {
     Dialog,
     DialogContent,
-    DialogDescription,
     DialogHeader,
-    DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog";
 import { toggleImageBackgroundButtonAction } from "@/actions/toggleImageBackgroundButtonAction";

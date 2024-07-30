@@ -1,19 +1,21 @@
 import { Products } from "@/components/Products";
-import { getProductsAndVariants } from "../../../lib/printify/getProductsAndVariants";
+import { getProductsAndVariants } from "../../lib/printify/getProductsAndVariants";
 import { CountryCode } from "@/lib/stripe/createCheckoutSession";
 
 export default async function ProductPage({
-    params,
     searchParams,
 }: {
     params: { printifyImageId: string };
-    searchParams: { country: CountryCode; position: "front" | "back" };
+    searchParams: {
+        country: CountryCode;
+        position: "front" | "back";
+        imageId: string;
+    };
 }) {
-    const { printifyImageId } = params;
-    const { country, position } = searchParams;
-    console.log({ country, position, printifyImageId, msg: "ProductPage" });
+    const { country, position, imageId } = searchParams;
+    console.log({ country, position, imageId, msg: "ProductPage" });
     const productAndVariants = await getProductsAndVariants({
-        printifyImageId,
+        printifyImageId: imageId,
         country,
         position: position ?? "front",
     });
@@ -23,7 +25,7 @@ export default async function ProductPage({
             <Products
                 productsAndVariants={productAndVariants}
                 country={country}
-                printifyImageId={printifyImageId}
+                printifyImageId={imageId}
             />
         </div>
     );

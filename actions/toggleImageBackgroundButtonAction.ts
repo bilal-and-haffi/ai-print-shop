@@ -38,7 +38,7 @@ export async function toggleImageBackgroundButtonAction({
             if (existingRemovedBackgroundPrintifyImageId) {
                 console.log("existingRemovedBackgroundPrintifyImageId");
                 redirect(
-                    `/product/${existingRemovedBackgroundPrintifyImageId}?country=${country}`,
+                    `/product?country=${country}&imageId=${existingRemovedBackgroundPrintifyImageId}`,
                 );
             } else {
                 console.log("else A");
@@ -63,7 +63,7 @@ export async function toggleImageBackgroundButtonAction({
                 });
 
                 redirect(
-                    `/product/${removedBackgroundPrintifyImageId}?country=${country}`,
+                    `/product?country=${country}&imageId=${removedBackgroundPrintifyImageId}`,
                 );
             }
         } else if (
@@ -72,7 +72,9 @@ export async function toggleImageBackgroundButtonAction({
             console.log(
                 "currentImageId === existingRemovedBackgroundPrintifyImageId",
             );
-            redirect(`/product/${existingPrintifyImageId}?country=${country}`);
+            redirect(
+                `/product?country=${country}&imageId=${existingPrintifyImageId}`,
+            );
         }
     } catch (error) {
         console.error({ msg: "failed to remove background", error });

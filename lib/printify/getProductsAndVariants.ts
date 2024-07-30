@@ -19,7 +19,7 @@ export async function getProductsAndVariants({
             msg: "country is undefined, redirecting to US",
             country,
         }); // TODO: this will cause bugs for sure x
-        redirect(`/product/${printifyImageId}?country=US`);
+        redirect(`/product?country=US&imageId=${printifyImageId}`);
     }
 
     const products = productData.filter(

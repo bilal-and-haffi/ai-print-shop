@@ -112,7 +112,7 @@ export function ProductDetails({
                 generatedUnroundedPriceInUsd,
             );
 
-            const sellingPriceInLocalCurrency = roundUpToNearestMultipleOf5(
+            const sellingPriceInLocalCurrency = roundUpToNearestMultipleOf2(
                 country === "GB"
                     ? generatedUnroundedPriceInGbp
                     : generatedUnroundedPriceInUsd,
@@ -306,6 +306,6 @@ function getFilteredColorsForSize(size: string, variants: Variant[]) {
 
     return filteredColors;
 }
-function roundUpToNearestMultipleOf5(x: number) {
-    return Math.ceil(x / 5) * 5;
+function roundUpToNearestMultipleOf2(x: number) {
+    return Math.ceil(x / 2) * 2;
 }

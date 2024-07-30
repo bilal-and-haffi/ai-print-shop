@@ -51,7 +51,7 @@ test.describe("Additional Options", () => {
     });
 });
 
-test.skip("User can randomise their prompt", async ({ page }) => {
+test("User can randomise their prompt", async ({ page }) => {
     expect(page.getByPlaceholder("Example: An astronaut playing")).toHaveText(
         "test prompt",
     );

@@ -2,7 +2,6 @@ import { Variant } from "@/interfaces/Printify/Variant";
 import { fetchProductVariants } from "@/lib/printify/fetchProductVariants";
 import { productData } from "@/lib/printify/productsData";
 import { ProductType } from "@/types/ProductType";
-import { ImagePosition } from "./product/constructPrintifyProductRequest";
 import { redirect } from "next/navigation";
 import { createPrintifyProduct } from "./product/createPrintifyProduct";
 
@@ -13,7 +12,7 @@ export async function getProductsAndVariants({
 }: {
     printifyImageId: string;
     country: string;
-    position: ImagePosition;
+    position: "front" | "back";
 }) {
     if (!country) {
         console.error({

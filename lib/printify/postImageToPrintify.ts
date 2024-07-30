@@ -6,7 +6,6 @@ export async function postUrlImageToPrintify(
     url: string,
     fileName: string,
 ): Promise<PrintifyImageResponse> {
-    console.error({ msg: "postImageToPrintify" });
     try {
         const imageRequest = {
             file_name: fileName,

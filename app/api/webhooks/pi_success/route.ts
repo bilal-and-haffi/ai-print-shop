@@ -3,6 +3,9 @@ import { createPrintifyOrderForExistingProduct } from "@/lib/printify/service";
 import { LineItemBase } from "@/interfaces/PrintifyTypes";
 import { getCountry } from "@/lib/postcode/getCountry";
 import { updateOrderStatus } from "@/db/order";
+import { convertUSDToGBP } from "@/lib/currency/convertUSDToGBP";
+import { updatePrintifyProductAndVariantWithSellingPrice } from "@/lib/printify/product/updatePrintifyProductWithSellingPrice";
+import { convertGBPToUSD } from "@/lib/currency/convertGBPToUSD";
 
 export async function POST(request: NextRequest) {
     const req = await request.json();
@@ -10,6 +13,19 @@ export async function POST(request: NextRequest) {
     const shipping = eventData.object.shipping;
     const metaData = eventData.object.metadata;
     const stripeCustomerId = eventData.object.customer;
+    const { productId, orderVariantId: variantId } = metaData;
+    const { amount_received, currency } = eventData.object; // amount received i
+
+    const priceInCents =
+        currency === "usd"
+            ? amount_received
+            : await convertGBPToUSD(amount_received);
+
+    await updatePrintifyProductAndVariantWithSellingPrice({
+        priceInCents,
+        productId,
+        variantId: Number(variantId),
+    });
 
     // update order status to payment_received
     await updateOrderStatus({

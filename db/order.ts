@@ -29,12 +29,16 @@ interface UpdateOrderStatusParams {
 export async function updateOrderStatus(
     updateOrderStatusParams: UpdateOrderStatusParams,
 ) {
-    const { internalOrderId, status, stripeCustomerId, printifyOrderId } =
-        updateOrderStatusParams;
-    return await dbClient
-        .update(orderTable)
-        .set({ status, stripeCustomerId, printifyOrderId })
-        .where(eq(orderTable.id, internalOrderId));
+    try {
+        const { internalOrderId, status, stripeCustomerId, printifyOrderId } =
+            updateOrderStatusParams;
+        return await dbClient
+            .update(orderTable)
+            .set({ status, stripeCustomerId, printifyOrderId })
+            .where(eq(orderTable.id, internalOrderId));
+    } catch (error) {
+        console.error({ error, msg: "Failed to update order status" });
+    }
 }
 
 export async function getEmailIdFromOrderTable({

@@ -8,6 +8,7 @@ test.beforeEach(async ({ page }) => {
         .getByPlaceholder("Example: An astronaut playing")
         .fill("test prompt");
     await page.getByTestId("Generate Image Button").click();
+    await page.getByTestId("Continue Button").click();
 });
 
 test.describe("product page", () => {

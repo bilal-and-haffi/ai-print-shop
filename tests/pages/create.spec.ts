@@ -6,7 +6,7 @@ test.beforeEach(async ({ page }) => {
     await page.getByPlaceholder("Example: An astronaut playing").fill("bird");
 });
 
-test.skip("User can select None for location and style and this should mean that the prompt is not concatenated", async ({
+test("User can select None for location and style and this should mean that the prompt is not concatenated", async ({
     page,
 }) => {
     await page.locator("button").filter({ hasText: "Style: None" }).click();
@@ -14,10 +14,11 @@ test.skip("User can select None for location and style and this should mean that
     await page.locator("button").filter({ hasText: "Location: None" }).click();
     await page.getByLabel("Location: None").click();
     await page.getByTestId("Generate Image Button").click();
+    await page.getByTestId("Continue Button").click();
     await page.waitForURL(/product/);
 });
 
-test.skip("User can select pixel art for style and generate an image", async ({
+test("User can select pixel art for style and generate an image", async ({
     page,
 }) => {
     await page.locator("button").filter({ hasText: "Style: None" }).click();
@@ -25,5 +26,6 @@ test.skip("User can select pixel art for style and generate an image", async ({
     await page.locator("button").filter({ hasText: "Location: None" }).click();
     await page.getByLabel("Location: None").click();
     await page.getByTestId("Generate Image Button").click();
+    await page.getByTestId("Continue Button").click();
     await page.waitForURL(/product/);
 });

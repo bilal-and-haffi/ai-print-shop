@@ -13,6 +13,7 @@ test("US - buy a t shirt", async ({ page }) => {
         .getByPlaceholder("Example: An astronaut playing")
         .fill("test prompt");
     await page.getByTestId("Generate Image Button").click();
+    await page.getByTestId("Continue Button").click();
     await page.getByRole("button", { name: "Buy now" }).click();
     await page.getByLabel("Email").click();
     await page.getByLabel("Email").fill("do-not-send-us@ai-print-shop.com");

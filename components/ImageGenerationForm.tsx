@@ -58,9 +58,7 @@ export function ImageGenerationForm({
 }) {
     const initalPrompt =
         previousPrompt ??
-        (envClient.NEXT_PUBLIC_ENV === "development" || "preview"
-            ? "test prompt"
-            : "");
+        (envClient.NEXT_PUBLIC_ENV !== "production" ? "test prompt" : "");
     const [promptValue, setPromptValue] = useState<string>(initalPrompt);
 
     const [showConfirmationDialog, setShowConfirmationDialog] =

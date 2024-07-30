@@ -1,7 +1,8 @@
 import { test, expect } from "@playwright/test";
 
 test.beforeEach(async ({ page }) => {
-    await page.goto("/create");
+    await page.goto("/");
+    await page.getByRole("button", { name: "Get started" }).click();
 });
 
 test.describe("Additional Options", () => {

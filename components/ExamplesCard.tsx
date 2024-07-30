@@ -53,7 +53,7 @@ export function ExampleCard({
             <CardFooter>
                 <Link
                     className="w-full"
-                    href={`/product/${printifyImageId}?country=${countryCode}`}
+                    href={`/product?country=${countryCode}&imageId=${printifyImageId}`}
                     target="_blank"
                 >
                     <Button

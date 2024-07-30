@@ -76,7 +76,7 @@ export default async function GenerateImagePage(params: {
     });
 
     redirect(
-        `/product/${printifyImageId}?country=${country}`,
+        `/product?country=${country}&imageId=${printifyImageId}`,
         RedirectType.replace,
     );
 }

@@ -3,7 +3,6 @@ import { createPrintifyOrderForExistingProduct } from "@/lib/printify/service";
 import { LineItemBase } from "@/interfaces/PrintifyTypes";
 import { getCountry } from "@/lib/postcode/getCountry";
 import { updateOrderStatus } from "@/db/order";
-import { convertUSDToGBP } from "@/lib/currency/convertUSDToGBP";
 import { updatePrintifyProductAndVariantWithSellingPrice } from "@/lib/printify/product/updatePrintifyProductWithSellingPrice";
 import { convertGBPToUSD } from "@/lib/currency/convertGBPToUSD";
 
@@ -43,7 +42,6 @@ export async function POST(request: NextRequest) {
     ];
 
     const shipping_method = 1; // make me dynamic
-    console.log({ shipping });
 
     const orderResponse = await createPrintifyOrderForExistingProduct(
         line_items,

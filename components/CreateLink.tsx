@@ -12,6 +12,7 @@ export function CreateLink() {
         const fetchAndSetCountryCode = async () => {
             const country = await getCountryFromIpAddress();
             setCountryCode(country);
+            console.log({ msg: "Setting countryCode", country });
         };
         fetchAndSetCountryCode();
     }, []);

@@ -17,7 +17,9 @@ export default async function GenerateImagePage(params: {
     };
 }) {
     const { prompt: encodedPrompt } = params.params;
+    const { style, location, country } = params.searchParams;
     const decodedPrompt = decodeURIComponent(encodedPrompt);
+    console.log({ msg: "Image Page", decodedPrompt, style, location, country });
 
     if (!encodedPrompt) {
         console.error("Text is required", { params });
@@ -26,8 +28,6 @@ export default async function GenerateImagePage(params: {
     }
 
     const isTestPrompt = decodedPrompt === "test prompt";
-
-    const { style, location, country } = params.searchParams;
 
     if (!country) {
         console.error({ country, msg: "No country, GenerateImagePage" });

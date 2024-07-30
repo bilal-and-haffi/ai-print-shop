@@ -1,10 +1,9 @@
 import { SomethingWrongButton } from "@/components/buttons/SomethingWrongButton";
 import { CreateLink } from "@/components/CreateLink";
 import { ExamplesSection } from "@/components/sections/ExamplesSection";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
 
 export default function Home() {
+    console.log("home page");
     return (
         <div className="flex w-full flex-col items-center gap-20">
             <div className="flex w-4/5 flex-col gap-20 pt-20 md:w-3/5">

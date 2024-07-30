@@ -193,7 +193,7 @@ export function ImageGenerationForm({
                 data-testid="Randomise"
                 variant={"secondary"}
             >
-                Randomise Prompt
+                Randomise
             </Button>
         </div>
     );

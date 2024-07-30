@@ -144,33 +144,21 @@ export function ImageGenerationForm({
                 autoFocus
             />
 
-            <Button
-                className="w-full"
-                onClick={generateImage}
-                data-testid="Generate Image Button"
-                disabled={!promptValue}
-            >
-                Generate Image
-            </Button>
-
-            <Button
-                className="w-full"
-                onClick={randomisePrompt}
-                data-testid="Randomise"
-                variant={"secondary"}
-            >
-                Randomise Prompt
-            </Button>
-
             <Dialog>
                 <DialogTrigger asChild className="w-full">
-                    <Button variant={"secondary"}>Options</Button>
+                    <Button
+                        data-testid="Generate Image Button"
+                        disabled={!promptValue}
+                    >
+                        Generate Image
+                    </Button>
                 </DialogTrigger>
                 <DialogContent>
                     <DialogHeader>
-                        <DialogTitle>Options</DialogTitle>
+                        <DialogTitle>Additional details</DialogTitle>
                         <DialogDescription>
-                            These options will help make better images
+                            Optional details to help produce the best image
+                            possible!
                         </DialogDescription>
                     </DialogHeader>
                     <Form {...form}>
@@ -188,8 +176,25 @@ export function ImageGenerationForm({
                             );
                         })}
                     </Form>
+                    <Button
+                        className="w-full"
+                        onClick={generateImage}
+                        data-testid="Generate Image Button"
+                        disabled={!promptValue}
+                    >
+                        Continue
+                    </Button>
                 </DialogContent>
             </Dialog>
+
+            <Button
+                className="w-full"
+                onClick={randomisePrompt}
+                data-testid="Randomise"
+                variant={"secondary"}
+            >
+                Randomise Prompt
+            </Button>
         </div>
     );
 }

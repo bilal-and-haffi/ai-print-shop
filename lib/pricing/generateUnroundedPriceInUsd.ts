@@ -2,7 +2,7 @@ import { ProductVariant } from "@/interfaces/PrintifyTypes";
 import { getShippingCostInCents } from "../printify/shipping/getShippingCostsInCents";
 import { CountryCode } from "../stripe/createCheckoutSession";
 
-const MARK_UP_IN_USD = 10;
+const MARK_UP_IN_USD = 5;
 
 export async function generateUnroundedPriceInUsd({
     selectedVariant,

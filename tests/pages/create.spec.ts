@@ -22,9 +22,12 @@ test.describe("Additional Options", () => {
             .filter({ hasText: "Location: None" })
             .click();
         await page.getByLabel("Location: None").click();
-        await page.getByTestId("Generate Image Button").click();
+        await page.getByTestId("Continue Button").click();
         await page.getByTestId("Continue Button").click();
         await page.waitForURL(/product/);
+        await expect(
+            page.getByRole("button", { name: "Buy now" }),
+        ).toBeVisible();
     });
 
     test("User can select pixel art for style and generate an image", async ({
@@ -38,16 +41,24 @@ test.describe("Additional Options", () => {
             .filter({ hasText: "Location: None" })
             .click();
         await page.getByLabel("Location: None").click();
-        await page.getByTestId("Generate Image Button").click();
+        await page.getByTestId("Continue Button").click();
         await page.getByTestId("Continue Button").click();
         await page.waitForURL(/product/);
+        await expect(
+            page.getByRole("button", { name: "Buy now" }),
+        ).toBeVisible();
     });
 });
 
 test("User can randomise their prompt", async ({ page }) => {
-    expect(page.getByPlaceholder("Example: An astronaut playing")).toBeEmpty();
+    expect(page.getByPlaceholder("Example: An astronaut playing")).toHaveText(
+        "test prompt",
+    );
     await page.getByText("Randomise").click();
     await expect(
         page.getByPlaceholder("Example: An astronaut playing"),
     ).not.toBeEmpty();
+    await expect(
+        page.getByPlaceholder("Example: An astronaut playing"),
+    ).not.toHaveText("test prompt");
 });

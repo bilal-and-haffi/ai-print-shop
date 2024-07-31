@@ -36,7 +36,6 @@ export function ImagesCarousel(props: { images: ProductImage[] }) {
                                         alt="Product Image"
                                         width={1200}
                                         height={1200}
-                                        placeholder="blur"
                                         onLoad={() => setImageLoaded(true)}
                                         className="rounded-lg"
                                         unoptimized

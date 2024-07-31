@@ -18,9 +18,6 @@ test.describe("product page", () => {
         await page
             .getByTestId("Generate new image with same prompt button")
             .click();
-        await page
-            .getByTestId("Generate new image with same prompt button")
-            .click();
         expect(await page.waitForURL(/test%20prompt/));
         expect(await page.waitForURL(/product/));
     });

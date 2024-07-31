@@ -34,7 +34,7 @@ export async function createPrintifyProduct({
                                 id: printifyImageId,
                                 x: 0.5,
                                 y: 0.5,
-                                scale: 1,
+                                scale: 0.7,
                                 angle: 0,
                             },
                         ],

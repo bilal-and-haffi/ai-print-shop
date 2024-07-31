@@ -11,13 +11,13 @@ import {
     SelectValue,
 } from "./ui/select";
 import { useContext } from "react";
-import { CountryCodeContext } from "./Products";
 import {
     useRouter,
     usePathname,
     useSearchParams,
     useParams,
 } from "next/navigation";
+import { CountryCode } from "@/lib/stripe/createCheckoutSession";
 
 const productsMap = new Map([
     [ProductType.TShirt, "T Shirt"],
@@ -27,16 +27,16 @@ const productsMap = new Map([
 
 export const ProductSwitcher = ({ prompt }: { prompt?: string }) => {
     const router = useRouter();
-    const pathname = usePathname();
     const searchParams = useSearchParams();
     const params = useParams();
     console.log({ searchParams });
-    const countryCode = useContext(CountryCodeContext);
+    const countryCode = searchParams.get("country") as CountryCode;
     const productType = params["productType"];
     if (!productType || typeof productType !== "string") {
         console.error("No Product Type");
         throw new Error("No product type");
     }
+    const decodedProductType = decodeURIComponent(productType);
 
     return (
         <div
@@ -55,17 +55,19 @@ export const ProductSwitcher = ({ prompt }: { prompt?: string }) => {
                             `/product/${value}?${searchParams.toString()}`,
                         );
                     }}
-                    value={productType}
+                    value={decodedProductType}
                 >
                     <SelectTrigger className="w-[180px]">
                         <SelectValue placeholder={productType} />
                     </SelectTrigger>
                     <SelectContent>
-                        {Array.from(productsMap).map(([productType, title]) => (
-                            <SelectItem key={title} value={title}>
-                                {title}
-                            </SelectItem>
-                        ))}
+                        {Array.from(productsMap).map(
+                            ([_productType, title]) => (
+                                <SelectItem key={title} value={title}>
+                                    {title}
+                                </SelectItem>
+                            ),
+                        )}
                     </SelectContent>
                 </Select>
             </div>

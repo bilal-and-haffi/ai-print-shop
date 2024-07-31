@@ -7,12 +7,11 @@ import {
 } from "@/interfaces/PrintifyTypes";
 import { ImagesCarousel } from "./ImageCarousel";
 import { Size, SizeAndColorSelector } from "./SizeAndColorForm";
-import { useContext, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { SmallLoadingSpinner } from "./loading/SmallLoadingSpinner";
 import { isSellingPriceProfitable } from "../lib/pricing/isSellingPriceProfitable";
 import { Variant } from "@/interfaces/Printify/Variant";
 import { Card, CardHeader, CardTitle, CardDescription } from "./ui/card";
-import { CountryCodeContext } from "./Products";
 import { generateUnroundedPriceInUsd } from "@/lib/pricing/generateUnroundedPriceInUsd";
 import { convertUSDToGBP } from "@/lib/currency/convertUSDToGBP";
 import {
@@ -22,9 +21,10 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog";
 import { toggleImageBackgroundButtonAction } from "@/actions/toggleImageBackgroundButtonAction";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { SomethingWrongButton } from "./buttons/SomethingWrongButton";
+import { CountryCode } from "@/lib/stripe/createCheckoutSession";
 
 export interface Options {
     id: number;
@@ -46,11 +46,21 @@ export function ProductDetails({
 }) {
     const [checkoutLoading, setCheckoutLoading] = useState(false);
     const { images, print_provider_id, blueprint_id } = retrievedProduct;
-    const country = useContext(CountryCodeContext);
+    const country = useSearchParams().get("country") as CountryCode;
     const [selectedSize, setSelectedSize] = useState(initialSize);
     const [selectedColor, setSelectedColor] = useState(initialColor);
     const [sellingPriceInLocalCurrency, setSellingPriceInLocalCurrency] =
         useState<number>();
+
+    if (!country) {
+        // TODO: GET COUNTRY or ask for country
+        console.error("No country");
+        throw new Error("No country");
+    }
+
+    if (!country) {
+        debugger;
+    }
 
     const initialSelectedVariant = findSelectedVariant(
         selectedSize,

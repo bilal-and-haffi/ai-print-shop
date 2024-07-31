@@ -25,7 +25,7 @@ export async function postUrlImageToPrintify(
 
         const imageData: PrintifyImageResponse = await imageResponse.json();
 
-        console.error({ imageData });
+        console.log({ imageData });
 
         return imageData;
     } catch (error) {

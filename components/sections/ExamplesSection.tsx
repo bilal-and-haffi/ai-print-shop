@@ -2,7 +2,7 @@ import { ExampleCard } from "../ExamplesCard";
 
 export function ExamplesSection() {
     return (
-        <div className="flex flex-col gap-8 md:flex-row">
+        <div className="flex flex-col gap-8 2xl:flex-row">
             {examples.map(
                 ({
                     productType,

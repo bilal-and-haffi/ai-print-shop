@@ -55,6 +55,19 @@ test.describe("happy path GB", () => {
             }),
         ).toBeVisible();
     });
+
+    test("buy a baseball tee", async ({ page }) => {
+        await page.locator("#product-links").getByRole("combobox").click();
+        await page.getByLabel("Baseball Tee").click();
+        await page.getByRole("button", { name: "Buy now" }).click();
+        await doStripeForm({ page, countryCode });
+        await page.waitForURL(/success/);
+        await expect(
+            page.getByRole("heading", {
+                name: "Your order has been confirmed!",
+            }),
+        ).toBeVisible();
+    });
 });
 
 test.describe("happy path us", () => {
@@ -102,6 +115,19 @@ test.describe("happy path us", () => {
     test("US - buy a mug", async ({ page }) => {
         await page.locator("#product-links").getByRole("combobox").click();
         await page.getByLabel("Mug").click();
+        await page.getByRole("button", { name: "Buy now" }).click();
+        await doStripeForm({ page, countryCode });
+        await page.waitForURL(/success/);
+        await expect(
+            page.getByRole("heading", {
+                name: "Your order has been confirmed!",
+            }),
+        ).toBeVisible();
+    });
+
+    test("US - buy a baseball tee", async ({ page }) => {
+        await page.locator("#product-links").getByRole("combobox").click();
+        await page.getByLabel("Baseball Tee").click();
         await page.getByRole("button", { name: "Buy now" }).click();
         await doStripeForm({ page, countryCode });
         await page.waitForURL(/success/);

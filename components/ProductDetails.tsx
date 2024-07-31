@@ -287,6 +287,7 @@ export function ProductDetails({
 }
 
 function findSelectedVariant(size: string, color: string, variants: Variant[]) {
+    debugger;
     const selectedVariant = variants.find(
         (variant) =>
             variant.options.color == color && variant.options.size == size,

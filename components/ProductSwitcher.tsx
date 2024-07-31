@@ -14,6 +14,7 @@ import { useRouter, useSearchParams, useParams } from "next/navigation";
 import { CountryCode } from "@/lib/stripe/createCheckoutSession";
 import { useEffect, useState } from "react";
 import { getPromptFromImageIdOrRemovedBackgroundImageId } from "@/db/image";
+import { getEnabledProductsForCountry } from "@/lib/printify/productsData";
 
 const productsMap = new Map([
     [ProductType.TShirt, "T Shirt"],
@@ -54,6 +55,8 @@ export const ProductSwitcher = () => {
     }
     const decodedProductType = decodeURIComponent(productType);
 
+    const products = getEnabledProductsForCountry(countryCode);
+
     return (
         <div
             id="links-to-products-container"
@@ -77,13 +80,16 @@ export const ProductSwitcher = () => {
                         <SelectValue placeholder={productType} />
                     </SelectTrigger>
                     <SelectContent>
-                        {Array.from(productsMap).map(
-                            ([_productType, title]) => (
-                                <SelectItem key={title} value={title}>
-                                    {title}
+                        {products.map(({ displayName }) => {
+                            return (
+                                <SelectItem
+                                    key={displayName}
+                                    value={displayName}
+                                >
+                                    {displayName}
                                 </SelectItem>
-                            ),
-                        )}
+                            );
+                        })}
                     </SelectContent>
                 </Select>
             </div>

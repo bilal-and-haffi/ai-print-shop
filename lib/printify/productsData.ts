@@ -1,3 +1,5 @@
+import { CountryCode } from "../stripe/createCheckoutSession";
+
 interface PrintifyProductsData {
     enabled: boolean;
     country: "GB" | "US";
@@ -26,7 +28,15 @@ https://printify.com/app/products/937/generic-brand/matte-canvas-stretched-075
 https://printify.com/app/products/421/generic-brand/tough-cases
 */
 
-export const productData: PrintifyProductsData[] = [
+export function getEnabledProductsForCountry(
+    country: CountryCode,
+): PrintifyProductsData[] {
+    return productData.filter(
+        (product) => product.country === country && product.enabled,
+    );
+}
+
+const productData: PrintifyProductsData[] = [
     // UK
     {
         enabled: true,

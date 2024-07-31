@@ -1,10 +1,10 @@
 import { ProductDetails } from "@/components/ProductDetails";
 import { fetchProductVariants } from "@/lib/printify/fetchProductVariants";
 import { createPrintifyProduct } from "@/lib/printify/product/createPrintifyProduct";
-import { productData } from "@/lib/printify/productsData";
+import { getEnabledProductsForCountry } from "@/lib/printify/productsData";
 import { CountryCode } from "@/lib/stripe/createCheckoutSession";
 
-export type DisplayName = "T Shirt" | "Hoodie" | "Mug";
+export type DisplayName = "T Shirt" | "Hoodie" | "Mug" | "Baseball Tee";
 export type Position = "front" | "back";
 
 export default async function ProductTypePage({
@@ -21,9 +21,8 @@ export default async function ProductTypePage({
     if (!country) {
         throw new Error("return client component to enter or detect country");
     }
-    const products = productData.filter(
-        (product) => product.country === country && product.enabled,
-    );
+
+    const products = getEnabledProductsForCountry(country);
     const displayName = decodeURIComponent(productType) as DisplayName;
     const productInfo = products.find((p) => p.displayName === displayName);
 
@@ -48,12 +47,19 @@ export default async function ProductTypePage({
             <ProductDetails
                 retrievedProduct={product}
                 initialSize={getInitialSize(displayName)}
-                initialColor="Black"
+                initialColor={getInitialColour(displayName)}
                 variants={variants}
                 printifyImageId={imageId}
             />
         </>
     );
+}
+
+function getInitialColour(displayName: DisplayName) {
+    if (displayName === "Baseball Tee") {
+        return "Black/ White";
+    }
+    return "Black";
 }
 
 function getInitialSize(displayName: DisplayName) {

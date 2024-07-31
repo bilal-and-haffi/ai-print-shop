@@ -1,10 +1,12 @@
 import { CountryCode } from "../stripe/createCheckoutSession";
 
+export type DisplayName = "T Shirt" | "Hoodie" | "Mug" | "Baseball Tee";
+
 interface PrintifyProductsData {
     enabled: boolean;
     country: "GB" | "US";
     name: string;
-    displayName: string;
+    displayName: DisplayName;
     blueprintId: number;
     printProviderId: number;
 }

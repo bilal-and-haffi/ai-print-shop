@@ -22,10 +22,9 @@ import {
 } from "@/components/ui/dialog";
 import { toggleImageBackgroundButtonAction } from "@/actions/toggleImageBackgroundButtonAction";
 import { useParams, usePathname, useSearchParams } from "next/navigation";
-import Link from "next/link";
 import { SomethingWrongButton } from "./buttons/SomethingWrongButton";
 import { CountryCode } from "@/lib/stripe/createCheckoutSession";
-import { DisplayName } from "@/app/product/[productType]/page";
+import { DisplayName } from "@/lib/printify/productsData";
 
 export interface Options {
     id: number;
@@ -287,7 +286,6 @@ export function ProductDetails({
 }
 
 function findSelectedVariant(size: string, color: string, variants: Variant[]) {
-    debugger;
     const selectedVariant = variants.find(
         (variant) =>
             variant.options.color == color && variant.options.size == size,

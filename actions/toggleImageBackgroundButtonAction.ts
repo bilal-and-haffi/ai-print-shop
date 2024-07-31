@@ -8,13 +8,16 @@ import { removeBackgroundAndReturnBase64Image } from "./removeBackgroundAndRetur
 import { redirect } from "next/navigation";
 import { CountryCode } from "@/lib/stripe/createCheckoutSession";
 import { postBase64ImageToPrintify } from "@/lib/printify/postBase64ImageToPrintify";
+import { DisplayName } from "@/app/product/[productType]/page";
 
 export async function toggleImageBackgroundButtonAction({
     currentImageId,
     country,
+    productType,
 }: {
     currentImageId: string;
     country: CountryCode;
+    productType: DisplayName;
 }) {
     console.log("Removing background image");
     const {
@@ -37,7 +40,7 @@ export async function toggleImageBackgroundButtonAction({
         if (existingRemovedBackgroundPrintifyImageId) {
             console.log("existingRemovedBackgroundPrintifyImageId");
             redirect(
-                `/product?country=${country}&imageId=${existingRemovedBackgroundPrintifyImageId}`,
+                `/product/${productType}?country=${country}&imageId=${existingRemovedBackgroundPrintifyImageId}`,
             );
         } else {
             console.log("else A");
@@ -60,7 +63,7 @@ export async function toggleImageBackgroundButtonAction({
             });
 
             redirect(
-                `/product?country=${country}&imageId=${removedBackgroundPrintifyImageId}`,
+                `/product/${productType}?country=${country}&imageId=${removedBackgroundPrintifyImageId}`,
             );
         }
     } else if (currentImageId === existingRemovedBackgroundPrintifyImageId) {
@@ -68,7 +71,7 @@ export async function toggleImageBackgroundButtonAction({
             "currentImageId === existingRemovedBackgroundPrintifyImageId",
         );
         redirect(
-            `/product?country=${country}&imageId=${existingPrintifyImageId}`,
+            `/product/${productType}?country=${country}&imageId=${existingPrintifyImageId}`,
         );
     }
 }

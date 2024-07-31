@@ -21,10 +21,11 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog";
 import { toggleImageBackgroundButtonAction } from "@/actions/toggleImageBackgroundButtonAction";
-import { usePathname, useSearchParams } from "next/navigation";
+import { useParams, usePathname, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { SomethingWrongButton } from "./buttons/SomethingWrongButton";
 import { CountryCode } from "@/lib/stripe/createCheckoutSession";
+import { DisplayName } from "@/app/product/[productType]/page";
 
 export interface Options {
     id: number;
@@ -46,7 +47,11 @@ export function ProductDetails({
 }) {
     const [checkoutLoading, setCheckoutLoading] = useState(false);
     const { images, print_provider_id, blueprint_id } = retrievedProduct;
-    const country = useSearchParams().get("country") as CountryCode;
+    const searchParams = useSearchParams();
+    const country = searchParams.get("country") as CountryCode;
+    const imageId = searchParams.get("imageId") as string;
+    const params = useParams();
+    const productType = params["productType"] as DisplayName;
     const [selectedSize, setSelectedSize] = useState(initialSize);
     const [selectedColor, setSelectedColor] = useState(initialColor);
     const [sellingPriceInLocalCurrency, setSellingPriceInLocalCurrency] =
@@ -192,13 +197,14 @@ export function ProductDetails({
                         await toggleImageBackgroundButtonAction({
                             currentImageId: printifyImageId,
                             country,
+                            productType,
                         });
                     }}
                 >
                     Toggle Image Background
                 </Button>
                 <Link
-                    href={`${pathname}?country=${country}`}
+                    href={`${pathname}?country=${country}&imageId=${imageId}`}
                     className="w-full"
                 >
                     <Button variant={"secondary"} className="w-full">
@@ -206,7 +212,7 @@ export function ProductDetails({
                     </Button>
                 </Link>
                 <Link
-                    href={`${pathname}?position=back&country=${country}`}
+                    href={`${pathname}?position=back&country=${country}&imageId=${imageId}`}
                     className="w-full"
                 >
                     <Button variant={"secondary"} className="w-full">

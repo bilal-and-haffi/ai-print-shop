@@ -1,10 +1,12 @@
 import { ProductDetails } from "@/components/ProductDetails";
 import { fetchProductVariants } from "@/lib/printify/fetchProductVariants";
 import { createPrintifyProduct } from "@/lib/printify/product/createPrintifyProduct";
-import { getEnabledProductsForCountry } from "@/lib/printify/productsData";
+import {
+    DisplayName,
+    getEnabledProductsForCountry,
+} from "@/lib/printify/productsData";
 import { CountryCode } from "@/lib/stripe/createCheckoutSession";
 
-export type DisplayName = "T Shirt" | "Hoodie" | "Mug" | "Baseball Tee";
 export type Position = "front" | "back";
 
 export default async function ProductTypePage({

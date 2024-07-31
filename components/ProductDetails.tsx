@@ -202,7 +202,9 @@ export function ProductDetails({
                 >
                     Toggle Image Background
                 </Button>
-                {["T Shirt", "Hoodie"].some((p) => p === productType) && (
+                {["T Shirt", "Hoodie", "Baseball Tee"].some(
+                    (p) => p === productType,
+                ) && (
                     <>
                         <a
                             href={`${pathname}?country=${country}&imageId=${imageId}`}

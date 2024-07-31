@@ -158,4 +158,12 @@ const productData: PrintifyProductsData[] = [
         printProviderId: printProviderIds.jondo,
         country: "US",
     },
+    {
+        enabled: true,
+        name: "Unisex 3\\4 Sleeve Baseball Tee",
+        displayName: "Baseball Tee",
+        blueprintId: 79,
+        printProviderId: printProviderIds.tShirtAndSons,
+        country: "GB",
+    },
 ];

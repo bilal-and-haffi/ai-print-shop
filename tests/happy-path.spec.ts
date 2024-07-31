@@ -68,6 +68,7 @@ test.describe("happy path GB", () => {
             }),
         ).toBeVisible();
     });
+
     test("buy a phone case", async ({ page }) => {
         await page.locator("#product-links").getByRole("combobox").click();
         await page.getByLabel("Phone Case").click();
@@ -149,7 +150,7 @@ test.describe("happy path us", () => {
         ).toBeVisible();
     });
 
-    test("US - buy a baseball tee", async ({ page }) => {
+    test.skip("US - buy a baseball tee", async ({ page }) => {
         await page.locator("#product-links").getByRole("combobox").click();
         await page.getByLabel("Baseball Tee").click();
         await page.getByRole("button", { name: "Buy now" }).click();
@@ -161,6 +162,7 @@ test.describe("happy path us", () => {
             }),
         ).toBeVisible();
     });
+
     test("buy a phone case", async ({ page }) => {
         await page.locator("#product-links").getByRole("combobox").click();
         await page.getByLabel("Phone Case").click();

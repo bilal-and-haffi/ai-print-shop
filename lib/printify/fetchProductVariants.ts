@@ -7,6 +7,11 @@ export async function fetchProductVariants(
     blueprintId: number,
     printProviderId: number,
 ): Promise<Variant[]> {
+    console.log({
+        msg: "Fetching product variants",
+        blueprintId,
+        printProviderId,
+    });
     const endpoint = `${PRINTIFY_BASE_URL}/v1/catalog/blueprints/${blueprintId}/print_providers/${printProviderId}/variants.json`;
     const options: RequestInit = {
         headers: {
@@ -14,6 +19,10 @@ export async function fetchProductVariants(
             authorization: `Bearer ${envServer.PRINTIFY_API_TOKEN}`,
         },
     };
-    const response = await (await fetch(endpoint, options)).json();
-    return response.variants;
+    console.log({ endpoint, options });
+    const response = await fetch(endpoint, options);
+    console.log({ response });
+    const responseJson = await response.json();
+    console.log({ responseJson });
+    return responseJson.variants;
 }

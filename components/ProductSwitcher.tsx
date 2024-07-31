@@ -10,39 +10,33 @@ import {
     SelectTrigger,
     SelectValue,
 } from "./ui/select";
-import { JSX, useContext } from "react";
+import { useContext } from "react";
 import { CountryCodeContext } from "./Products";
+import {
+    useRouter,
+    usePathname,
+    useSearchParams,
+    useParams,
+} from "next/navigation";
 
-export const ProductSwitcher = ({
-    selectedProductType,
-    setSelectedProductType,
-    prompt,
-    productsMap,
-}: {
-    selectedProductType: ProductType;
-    setSelectedProductType: (productType: ProductType) => void;
-    prompt: string;
-    productsMap: Map<ProductType, string>;
-}) => {
-    const ProductButtons: JSX.IntrinsicAttributes | JSX.Element[] = [];
+const productsMap = new Map([
+    [ProductType.TShirt, "T Shirt"],
+    [ProductType.Hoodie, "Hoodie"],
+    [ProductType.Mug, "Mug"],
+]);
+
+export const ProductSwitcher = ({ prompt }: { prompt?: string }) => {
+    const router = useRouter();
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
+    const params = useParams();
+    console.log({ searchParams });
     const countryCode = useContext(CountryCodeContext);
-
-    productsMap.forEach((name, productType) => {
-        ProductButtons.push(
-            <Button
-                className={
-                    selectedProductType === productType
-                        ? "ring-1 ring-white"
-                        : ""
-                }
-                variant={"outline"}
-                onClick={() => setSelectedProductType(productType)}
-                key={name}
-            >
-                {name}
-            </Button>,
-        );
-    });
+    const productType = params["productType"];
+    if (!productType || typeof productType !== "string") {
+        console.error("No Product Type");
+        throw new Error("No product type");
+    }
 
     return (
         <div
@@ -54,27 +48,26 @@ export const ProductSwitcher = ({
                     <ChevronLeft className="h-4 w-4" />
                 </Button>
             </Link>
-            <div id="product-links" className="flex md:hidden">
+            <div id="product-links" className="flex">
                 <Select
-                    onValueChange={(value: ProductType) =>
-                        setSelectedProductType(value)
-                    }
-                    value={selectedProductType}
+                    onValueChange={(value: ProductType) => {
+                        router.push(
+                            `/product/${value}?${searchParams.toString()}`,
+                        );
+                    }}
+                    value={productType}
                 >
                     <SelectTrigger className="w-[180px]">
-                        <SelectValue placeholder={selectedProductType} />
+                        <SelectValue placeholder={productType} />
                     </SelectTrigger>
                     <SelectContent>
                         {Array.from(productsMap).map(([productType, title]) => (
-                            <SelectItem key={productType} value={productType}>
+                            <SelectItem key={title} value={title}>
                                 {title}
                             </SelectItem>
                         ))}
                     </SelectContent>
                 </Select>
-            </div>
-            <div id="product-links-md" className="hidden space-x-2 md:flex">
-                {ProductButtons}
             </div>
             {/* needs to be an <a> because otherwise causes bugs */}
             <a href={`/image/${prompt}?country=${countryCode}`}>

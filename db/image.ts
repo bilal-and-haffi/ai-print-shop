@@ -62,7 +62,9 @@ export const getPromptFromImageIdOrRemovedBackgroundImageId = async (
                 ),
             ),
         );
-    return selectResult[0].prompt;
+    const { prompt } = selectResult[0];
+    console.info({ msg: "Found prompt", prompt });
+    return prompt;
 };
 
 export const selectAllFromImageWhereImageIdEquals = async (

@@ -31,7 +31,7 @@ export interface Options {
     title: string;
 }
 
-export function ClothingProductDetails({
+export function CanvasProductDetails({
     retrievedProduct,
     initialSize,
     initialColor,

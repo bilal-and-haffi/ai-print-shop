@@ -10,14 +10,10 @@ import {
     SelectTrigger,
     SelectValue,
 } from "./ui/select";
-import { useContext } from "react";
-import {
-    useRouter,
-    usePathname,
-    useSearchParams,
-    useParams,
-} from "next/navigation";
+import { useRouter, useSearchParams, useParams } from "next/navigation";
 import { CountryCode } from "@/lib/stripe/createCheckoutSession";
+import { useEffect, useState } from "react";
+import { getPromptFromImageIdOrRemovedBackgroundImageId } from "@/db/image";
 
 const productsMap = new Map([
     [ProductType.TShirt, "T Shirt"],
@@ -25,13 +21,33 @@ const productsMap = new Map([
     [ProductType.Mug, "Mug"],
 ]);
 
-export const ProductSwitcher = ({ prompt }: { prompt?: string }) => {
+export const ProductSwitcher = () => {
     const router = useRouter();
     const searchParams = useSearchParams();
     const params = useParams();
     const productType = params["productType"];
-    console.log({ searchParams });
     const countryCode = searchParams.get("country") as CountryCode;
+    const imageId = searchParams.get("imageId");
+    const [prompt, setPrompt] = useState<string | undefined>();
+
+    if (!imageId) {
+        console.error("No imageId");
+        throw new Error("No imageId");
+    }
+
+    useEffect(() => {
+        const x = async () => {
+            const prompt =
+                await getPromptFromImageIdOrRemovedBackgroundImageId(imageId);
+            setPrompt(prompt);
+        };
+        x();
+    }, [imageId]);
+
+    if (!prompt) {
+        <div>Loading...</div>;
+    }
+
     if (!productType || typeof productType !== "string") {
         console.error("No Product Type");
         throw new Error("No product type");

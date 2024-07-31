@@ -8,7 +8,7 @@ import { removeBackgroundAndReturnBase64Image } from "./removeBackgroundAndRetur
 import { redirect } from "next/navigation";
 import { CountryCode } from "@/lib/stripe/createCheckoutSession";
 import { postBase64ImageToPrintify } from "@/lib/printify/postBase64ImageToPrintify";
-import { DisplayName } from "@/app/product/[productType]/page";
+import { DisplayName } from "@/lib/printify/productsData";
 
 export async function toggleImageBackgroundButtonAction({
     currentImageId,

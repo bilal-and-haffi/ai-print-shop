@@ -1,9 +1,10 @@
 import { Variant } from "@/interfaces/Printify/Variant";
 import { fetchProductVariants } from "@/lib/printify/fetchProductVariants";
-import { productData } from "@/lib/printify/productsData";
+import { getEnabledProductsForCountry } from "@/lib/printify/productsData";
 import { ProductType } from "@/types/ProductType";
 import { redirect } from "next/navigation";
 import { createPrintifyProduct } from "./product/createPrintifyProduct";
+import { CountryCode } from "../stripe/createCheckoutSession";
 
 export async function getProductsAndVariants({
     printifyImageId,
@@ -11,7 +12,7 @@ export async function getProductsAndVariants({
     position,
 }: {
     printifyImageId: string;
-    country: string;
+    country: CountryCode;
     position: "front" | "back";
 }) {
     if (!country) {
@@ -22,10 +23,7 @@ export async function getProductsAndVariants({
         redirect(`/product?country=US&imageId=${printifyImageId}`);
     }
 
-    const products = productData.filter(
-        (product) => product.country === country && product.enabled,
-    );
-
+    const products = getEnabledProductsForCountry(country);
     const tShirtProductInfo = products.find((p) => p.displayName === "T Shirt");
     const hoodieProductInfo = products.find((p) => p.displayName === "Hoodie");
     const mugProductInfo = products.find((p) => p.displayName === "Mug");

@@ -25,14 +25,7 @@ export const SizeAndColorSelector = ({
     setSelectedSize: (size: string) => void;
     setSelectedColor: (color: string) => void;
 }) => {
-    function onSizeChange(value: string) {
-        setSelectedSize(value);
-    }
-
-    function onColorChange(value: string) {
-        setSelectedColor(value);
-    }
-
+    debugger;
     const weights = new Map<Size, number>([
         ["S", 1],
         ["M", 2],
@@ -46,41 +39,46 @@ export const SizeAndColorSelector = ({
 
     return (
         <>
-            <Select
-                onValueChange={(value) => onColorChange(value)}
-                value={selectedColorId}
-            >
-                <SelectTrigger>
-                    <SelectValue placeholder="Color" />
-                </SelectTrigger>
-                <SelectContent>
-                    {colours.sort().map((colour) => (
-                        <SelectItem key={colour} value={colour}>
-                            {colour}
-                        </SelectItem>
-                    ))}
-                </SelectContent>
-            </Select>
-            <Select
-                onValueChange={(value) => onSizeChange(value)}
-                value={selectedSizeId}
-            >
-                <SelectTrigger>
-                    <SelectValue placeholder="Size" />
-                </SelectTrigger>
-                <SelectContent>
-                    {sizes
-                        .sort(
-                            (a: Size, b: Size) =>
-                                weights.get(a)! - weights.get(b)!,
-                        )
-                        .map((size) => (
-                            <SelectItem key={size} value={size}>
-                                {size}
+            {colours.length > 0 && (
+                <Select
+                    onValueChange={(value) => setSelectedColor(value)}
+                    value={selectedColorId}
+                >
+                    <SelectTrigger>
+                        <SelectValue placeholder="Color" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        {colours.sort().map((colour) => (
+                            <SelectItem key={colour} value={colour}>
+                                {colour}
                             </SelectItem>
                         ))}
-                </SelectContent>
-            </Select>
+                    </SelectContent>
+                </Select>
+            )}
+
+            {sizes.length > 0 && (
+                <Select
+                    onValueChange={(value) => setSelectedSize(value)}
+                    value={selectedSizeId}
+                >
+                    <SelectTrigger>
+                        <SelectValue placeholder="Size" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        {sizes
+                            .sort(
+                                (a: Size, b: Size) =>
+                                    weights.get(a)! - weights.get(b)!,
+                            )
+                            .map((size) => (
+                                <SelectItem key={size} value={size}>
+                                    {size}
+                                </SelectItem>
+                            ))}
+                    </SelectContent>
+                </Select>
+            )}
         </>
     );
 };

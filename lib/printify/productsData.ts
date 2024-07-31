@@ -24,6 +24,7 @@ const printProviderIds = {
     districtPhoto: 28,
     jondo: 105,
     woyc: 23,
+    stokedOnPrinting: 43,
 };
 
 const blueprintIds = {
@@ -32,6 +33,7 @@ const blueprintIds = {
     ceramicMug: 635, // https://printify.com/app/products/635/generic-brand/accent-coffee-mug-11-15oz
     canvas: 937, //  https://printify.com/app/products/937/generic-brand/matte-canvas-stretched-075
     phoneCases: 421, // https://printify.com/app/products/421/generic-brand/tough-cases
+    baseballTee: 79,
 };
 
 // TODO: add these
@@ -77,7 +79,7 @@ const productData: PrintifyProductsData[] = [
         enabled: true,
         name: "Unisex 3\\4 Sleeve Baseball Tee",
         displayName: "Baseball Tee",
-        blueprintId: 79,
+        blueprintId: blueprintIds.baseballTee,
         printProviderId: printProviderIds.tShirtAndSons,
         country: "GB",
     },
@@ -158,12 +160,12 @@ const productData: PrintifyProductsData[] = [
         printProviderId: printProviderIds.jondo,
         country: "US",
     },
-    // {
-    //     enabled: true,
-    //     name: "Unisex 3\\4 Sleeve Baseball Tee",
-    //     displayName: "Baseball Tee",
-    //     blueprintId: 79,
-    //     printProviderId: printProviderIds.tShirtAndSons,
-    //     country: "GB",
-    // },
+    {
+        enabled: true,
+        name: "Unisex 3\\4 Sleeve Baseball Tee",
+        displayName: "Baseball Tee",
+        blueprintId: blueprintIds.baseballTee,
+        printProviderId: printProviderIds.stokedOnPrinting,
+        country: "GB",
+    },
 ];

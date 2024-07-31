@@ -150,7 +150,7 @@ test.describe("happy path us", () => {
         ).toBeVisible();
     });
 
-    test.skip("US - buy a baseball tee", async ({ page }) => {
+    test("US - buy a baseball tee", async ({ page }) => {
         await page.locator("#product-links").getByRole("combobox").click();
         await page.getByLabel("Baseball Tee").click();
         await page.getByRole("button", { name: "Buy now" }).click();

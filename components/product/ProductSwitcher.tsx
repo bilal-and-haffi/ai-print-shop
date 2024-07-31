@@ -1,6 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { ProductType } from "../types/ProductType";
+import { ProductType } from "../../types/ProductType";
 import { RefreshCw, ChevronLeft } from "lucide-react";
 import Link from "next/link";
 import {
@@ -9,7 +9,7 @@ import {
     SelectItem,
     SelectTrigger,
     SelectValue,
-} from "./ui/select";
+} from "../ui/select";
 import { useRouter, useSearchParams, useParams } from "next/navigation";
 import { CountryCode } from "@/lib/stripe/createCheckoutSession";
 import { useEffect, useState } from "react";

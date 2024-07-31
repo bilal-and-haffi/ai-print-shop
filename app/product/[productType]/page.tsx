@@ -1,4 +1,4 @@
-import { ProductDetails } from "@/components/ProductDetails";
+import { ClothingProductDetails } from "@/components/product/ClothingProductDetails";
 import { fetchProductVariants } from "@/lib/printify/fetchProductVariants";
 import { createPrintifyProduct } from "@/lib/printify/product/createPrintifyProduct";
 import {
@@ -46,7 +46,7 @@ export default async function ProductTypePage({
 
     return (
         <>
-            <ProductDetails
+            <ClothingProductDetails
                 retrievedProduct={product}
                 initialSize={getInitialSize(displayName)}
                 initialColor={getInitialColour(displayName)}

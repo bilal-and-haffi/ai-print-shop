@@ -203,6 +203,7 @@ export function ProductDetails({
                     Toggle Image Background
                 </Button>
                 {["T Shirt", "Hoodie", "Baseball Tee"].some(
+                    // TODO: make my dynamic
                     (p) => p === productType,
                 ) && (
                     <>

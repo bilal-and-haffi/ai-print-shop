@@ -29,9 +29,9 @@ export const ProductSwitcher = ({ prompt }: { prompt?: string }) => {
     const router = useRouter();
     const searchParams = useSearchParams();
     const params = useParams();
+    const productType = params["productType"];
     console.log({ searchParams });
     const countryCode = searchParams.get("country") as CountryCode;
-    const productType = params["productType"];
     if (!productType || typeof productType !== "string") {
         console.error("No Product Type");
         throw new Error("No product type");

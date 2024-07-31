@@ -4,21 +4,27 @@ import { createPrintifyProduct } from "@/lib/printify/product/createPrintifyProd
 import { productData } from "@/lib/printify/productsData";
 import { CountryCode } from "@/lib/stripe/createCheckoutSession";
 
+export type DisplayName = "T Shirt" | "Hoodie" | "Mug";
+export type Position = "front" | "back";
+
 export default async function ProductTypePage({
     params: { productType },
-    searchParams: { imageId, country },
+    searchParams: { imageId, country, position = "front" },
 }: {
     params: { productType: string };
-    searchParams: { imageId: string; country: CountryCode };
+    searchParams: {
+        imageId: string;
+        country: CountryCode;
+        position?: Position;
+    };
 }) {
     if (!country) {
         throw new Error("return client component to enter or detect country");
     }
-    const position = "front";
     const products = productData.filter(
         (product) => product.country === country && product.enabled,
     );
-    const displayName = decodeURIComponent(productType);
+    const displayName = decodeURIComponent(productType) as DisplayName;
     const productInfo = products.find((p) => p.displayName === displayName);
 
     if (!productInfo) {
@@ -36,16 +42,24 @@ export default async function ProductTypePage({
         productInfo.blueprintId,
         productInfo.printProviderId,
     );
-    console.log({ variants });
+
     return (
         <>
             <ProductDetails
                 retrievedProduct={product}
-                initialSize="L"
+                initialSize={getInitialSize(displayName)}
                 initialColor="Black"
                 variants={variants}
                 printifyImageId={imageId}
             />
         </>
     );
+}
+
+function getInitialSize(displayName: DisplayName) {
+    if (displayName === "Mug") {
+        return "11oz";
+    } else {
+        return "L";
+    }
 }

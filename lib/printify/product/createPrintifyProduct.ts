@@ -49,6 +49,7 @@ export async function createPrintifyProduct({
             price: 1, // Updated later in success webhook to the actual selling price which is dynamically
         })),
     };
+    console.log({ productRequest });
     const productRequestString = JSON.stringify(productRequest);
 
     const productResponse: any = await fetch(
@@ -62,6 +63,8 @@ export async function createPrintifyProduct({
             body: productRequestString,
         },
     );
+    console.log({ productResponse });
     const productData = await productResponse.json();
+    console.log({ productData });
     return productData;
 }

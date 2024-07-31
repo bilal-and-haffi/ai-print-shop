@@ -8,11 +8,6 @@ import { ProductType } from "../types/ProductType";
 import { CountryCode } from "@/lib/stripe/createCheckoutSession";
 import { getCountryFromIpAddress } from "@/lib/country/getCountryFromIpAddress";
 
-const productsMap = new Map([
-    [ProductType.TShirt, "T Shirt"],
-    [ProductType.Hoodie, "Hoodie"],
-    [ProductType.Mug, "Mug"],
-]);
 export const CountryCodeContext = createContext<CountryCode>("GB");
 
 export const Products = ({
@@ -95,12 +90,7 @@ export const Products = ({
     return (
         <>
             <CountryCodeContext.Provider value={countryCode ?? "GB"}>
-                <ProductSwitcher
-                    selectedProductType={selectedProductType}
-                    setSelectedProductType={setSelectedProductType}
-                    prompt={tShirtProduct.title}
-                    productsMap={productsMap}
-                />
+                <ProductSwitcher prompt={tShirtProduct.title} />
                 <CurrentProductDetails />
             </CountryCodeContext.Provider>
         </>

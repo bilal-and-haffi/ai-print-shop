@@ -1,4 +1,4 @@
-import { ProductSwitcher } from "@/components/ProductSwitcher";
+import { ProductSwitcher } from "@/components/product/ProductSwitcher";
 
 export default function Layout({
     children,

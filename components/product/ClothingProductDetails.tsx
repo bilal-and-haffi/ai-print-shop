@@ -5,13 +5,13 @@ import {
     ProductVariant,
     RetrieveProductResponse,
 } from "@/interfaces/PrintifyTypes";
-import { ImagesCarousel } from "./ImageCarousel";
-import { Size, SizeAndColorSelector } from "./SizeAndColorForm";
+import { ImagesCarousel } from "../ImageCarousel";
+import { Size, SizeAndColorSelector } from "../SizeAndColorForm";
 import { useEffect, useMemo, useState } from "react";
-import { SmallLoadingSpinner } from "./loading/SmallLoadingSpinner";
-import { isSellingPriceProfitable } from "../lib/pricing/isSellingPriceProfitable";
+import { SmallLoadingSpinner } from "../loading/SmallLoadingSpinner";
+import { isSellingPriceProfitable } from "../../lib/pricing/isSellingPriceProfitable";
 import { Variant } from "@/interfaces/Printify/Variant";
-import { Card, CardHeader, CardTitle, CardDescription } from "./ui/card";
+import { Card, CardHeader, CardTitle, CardDescription } from "../ui/card";
 import { generateUnroundedPriceInUsd } from "@/lib/pricing/generateUnroundedPriceInUsd";
 import { convertUSDToGBP } from "@/lib/currency/convertUSDToGBP";
 import {
@@ -22,7 +22,7 @@ import {
 } from "@/components/ui/dialog";
 import { toggleImageBackgroundButtonAction } from "@/actions/toggleImageBackgroundButtonAction";
 import { useParams, usePathname, useSearchParams } from "next/navigation";
-import { SomethingWrongButton } from "./buttons/SomethingWrongButton";
+import { SomethingWrongButton } from "../buttons/SomethingWrongButton";
 import { CountryCode } from "@/lib/stripe/createCheckoutSession";
 import { DisplayName } from "@/lib/printify/productsData";
 
@@ -31,7 +31,7 @@ export interface Options {
     title: string;
 }
 
-export function ProductDetails({
+export function ClothingProductDetails({
     retrievedProduct,
     initialSize,
     initialColor,

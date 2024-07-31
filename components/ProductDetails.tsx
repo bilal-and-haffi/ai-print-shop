@@ -51,6 +51,7 @@ export function ProductDetails({
     const imageId = searchParams.get("imageId") as string;
     const params = useParams();
     const productType = params["productType"] as DisplayName;
+    const displayName = decodeURIComponent(productType);
     const [selectedSize, setSelectedSize] = useState(initialSize);
     const [selectedColor, setSelectedColor] = useState(initialColor);
     const [sellingPriceInLocalCurrency, setSellingPriceInLocalCurrency] =
@@ -204,7 +205,7 @@ export function ProductDetails({
                 </Button>
                 {["T Shirt", "Hoodie", "Baseball Tee"].some(
                     // TODO: make my dynamic
-                    (p) => p === productType,
+                    (p) => p === displayName,
                 ) && (
                     <>
                         <a

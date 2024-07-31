@@ -81,8 +81,8 @@ export function ProductDetails({
             findSelectedVariant(selectedSize, selectedColor, variants),
         );
     }, [selectedSize, selectedColor, retrievedProduct, variants]);
-    const pathname = usePathname();
 
+    const pathname = usePathname();
     const filteredImages = useMemo(
         () =>
             selectedVariant

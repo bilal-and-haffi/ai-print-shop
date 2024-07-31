@@ -25,7 +25,6 @@ export const SizeAndColorSelector = ({
     setSelectedSize: (size: string) => void;
     setSelectedColor: (color: string) => void;
 }) => {
-    debugger;
     const weights = new Map<Size, number>([
         ["S", 1],
         ["M", 2],

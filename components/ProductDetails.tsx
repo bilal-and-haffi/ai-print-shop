@@ -203,22 +203,22 @@ export function ProductDetails({
                 >
                     Toggle Image Background
                 </Button>
-                <Link
+                <a
                     href={`${pathname}?country=${country}&imageId=${imageId}`}
                     className="w-full"
                 >
                     <Button variant={"secondary"} className="w-full">
                         Position Image on Front
                     </Button>
-                </Link>
-                <Link
+                </a>
+                <a
                     href={`${pathname}?position=back&country=${country}&imageId=${imageId}`}
                     className="w-full"
                 >
                     <Button variant={"secondary"} className="w-full">
                         Position Image on Back
                     </Button>
-                </Link>
+                </a>
             </DialogContent>
         </Dialog>
     );

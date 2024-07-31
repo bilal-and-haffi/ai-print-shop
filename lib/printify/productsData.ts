@@ -1,6 +1,12 @@
 import { CountryCode } from "../stripe/createCheckoutSession";
 
-export type DisplayName = "T Shirt" | "Hoodie" | "Mug" | "Baseball Tee";
+export type DisplayName =
+    | "T Shirt"
+    | "Hoodie"
+    | "Mug"
+    | "Baseball Tee"
+    | "Phone Case"
+    | "Canvas";
 
 interface PrintifyProductsData {
     enabled: boolean;
@@ -16,17 +22,20 @@ const printProviderIds = {
     tShirtAndSons: 6,
     monsterDigital: 29,
     districtPhoto: 28,
+    jondo: 105,
+    woyc: 23,
 };
 
 const blueprintIds = {
     gildan64000UnisexSoftstyleShirt: 145,
     gildan18500UnisexHeavyBlendHoodedSweatshirt: 77,
     ceramicMug: 635, // https://printify.com/app/products/635/generic-brand/accent-coffee-mug-11-15oz
+    canvas: 937, //  https://printify.com/app/products/937/generic-brand/matte-canvas-stretched-075
+    phoneCases: 421, // https://printify.com/app/products/421/generic-brand/tough-cases
 };
 
 // TODO: add these
 /* 
-https://printify.com/app/products/937/generic-brand/matte-canvas-stretched-075
 https://printify.com/app/products/421/generic-brand/tough-cases
 */
 
@@ -89,6 +98,22 @@ const productData: PrintifyProductsData[] = [
         printProviderId: printProviderIds.tShirtAndSons,
         country: "GB",
     },
+    {
+        enabled: true,
+        name: "Tough Cases",
+        displayName: "Phone Case",
+        blueprintId: blueprintIds.phoneCases,
+        printProviderId: printProviderIds.woyc,
+        country: "GB",
+    },
+    {
+        enabled: true,
+        name: "Canvas",
+        displayName: "Canvas",
+        blueprintId: blueprintIds.canvas,
+        printProviderId: printProviderIds.jondo,
+        country: "GB",
+    },
 
     // US
     {
@@ -115,6 +140,22 @@ const productData: PrintifyProductsData[] = [
         printProviderId: printProviderIds.districtPhoto,
         blueprintId: blueprintIds.ceramicMug,
         name: "Ceramic Mug",
+        country: "US",
+    },
+    {
+        enabled: true,
+        name: "Tough Cases",
+        displayName: "Phone Case",
+        blueprintId: blueprintIds.phoneCases,
+        printProviderId: printProviderIds.woyc,
+        country: "US",
+    },
+    {
+        enabled: true,
+        name: "Canvas",
+        displayName: "Canvas",
+        blueprintId: blueprintIds.canvas,
+        printProviderId: printProviderIds.jondo,
         country: "US",
     },
 ];

@@ -292,6 +292,7 @@ function findSelectedVariant(size: string, color: string, variants: Variant[]) {
     );
 
     if (!selectedVariant) {
+        return variants[0];
         throw new Error("No selected variant");
     }
 

@@ -166,6 +166,6 @@ const productData: PrintifyProductsData[] = [
         displayName: "Baseball Tee",
         blueprintId: blueprintIds.baseballTee,
         printProviderId: printProviderIds.stokedOnPrinting,
-        country: "GB",
+        country: "US",
     },
 ];

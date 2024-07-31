@@ -202,22 +202,26 @@ export function ProductDetails({
                 >
                     Toggle Image Background
                 </Button>
-                <a
-                    href={`${pathname}?country=${country}&imageId=${imageId}`}
-                    className="w-full"
-                >
-                    <Button variant={"secondary"} className="w-full">
-                        Position Image on Front
-                    </Button>
-                </a>
-                <a
-                    href={`${pathname}?position=back&country=${country}&imageId=${imageId}`}
-                    className="w-full"
-                >
-                    <Button variant={"secondary"} className="w-full">
-                        Position Image on Back
-                    </Button>
-                </a>
+                {["T Shirt", "Hoodie"].some((p) => p === productType) && (
+                    <>
+                        <a
+                            href={`${pathname}?country=${country}&imageId=${imageId}`}
+                            className="w-full"
+                        >
+                            <Button variant={"secondary"} className="w-full">
+                                Position Image on Front
+                            </Button>
+                        </a>
+                        <a
+                            href={`${pathname}?position=back&country=${country}&imageId=${imageId}`}
+                            className="w-full"
+                        >
+                            <Button variant={"secondary"} className="w-full">
+                                Position Image on Back
+                            </Button>
+                        </a>
+                    </>
+                )}
             </DialogContent>
         </Dialog>
     );
@@ -243,6 +247,7 @@ export function ProductDetails({
                         setSelectedColor={setSelectedColor}
                     />
                 </div>
+
                 <CustommiseDialog />
 
                 <Card>
@@ -293,7 +298,6 @@ function findSelectedVariant(size: string, color: string, variants: Variant[]) {
 
     if (!selectedVariant) {
         return variants[0];
-        throw new Error("No selected variant");
     }
 
     return selectedVariant;

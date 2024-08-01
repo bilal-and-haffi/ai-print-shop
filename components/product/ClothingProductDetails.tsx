@@ -21,10 +21,17 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog";
 import { toggleImageBackgroundButtonAction } from "@/actions/toggleImageBackgroundButtonAction";
-import { useParams, usePathname, useSearchParams } from "next/navigation";
+import {
+    useParams,
+    usePathname,
+    useRouter,
+    useSearchParams,
+} from "next/navigation";
 import { SomethingWrongButton } from "../buttons/SomethingWrongButton";
 import { CountryCode } from "@/lib/stripe/createCheckoutSession";
 import { DisplayName } from "@/lib/printify/productsData";
+import { Slider } from "@/components/ui/slider";
+import { Label } from "@/components/ui/label";
 
 export interface Options {
     id: number;
@@ -45,10 +52,12 @@ export function ClothingProductDetails({
     printifyImageId: string;
 }) {
     const [checkoutLoading, setCheckoutLoading] = useState(false);
+    const router = useRouter();
     const { images, print_provider_id, blueprint_id } = retrievedProduct;
     const searchParams = useSearchParams();
     const country = searchParams.get("country") as CountryCode;
     const imageId = searchParams.get("imageId") as string;
+    const scale = searchParams.get("scale") as unknown as number;
     const params = useParams();
     const productType = params["productType"] as DisplayName;
     const displayName = decodeURIComponent(productType);
@@ -222,6 +231,21 @@ export function ClothingProductDetails({
                         </a>
                     </>
                 )}
+                <Label htmlFor="scale-slider">Image Scale</Label>
+                <Slider
+                    id="scale-slider"
+                    defaultValue={[scale ?? 0.7]}
+                    max={1}
+                    step={0.1}
+                    onValueChange={(value) => {
+                        const newParams = new URLSearchParams(
+                            searchParams.toString(),
+                        );
+                        newParams.set("scale", value[0].toString());
+                        const queryString = newParams.toString();
+                        router.push(pathname + "?" + queryString);
+                    }}
+                />
             </DialogContent>
         </Dialog>
     );

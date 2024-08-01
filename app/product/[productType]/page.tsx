@@ -12,13 +12,14 @@ export type Position = "front" | "back";
 
 export default async function ProductTypePage({
     params: { productType },
-    searchParams: { imageId, country, position = "front" },
+    searchParams: { imageId, country, position = "front", scale = 0.7 },
 }: {
     params: { productType: string };
     searchParams: {
         imageId: string;
         country: CountryCode;
         position?: Position;
+        scale?: number;
     };
 }) {
     if (!country) {
@@ -38,6 +39,7 @@ export default async function ProductTypePage({
         printProviderId: productInfo.printProviderId,
         blueprintId: productInfo.blueprintId,
         position,
+        scale,
     });
     console.log({ msg: "Fetched product", product });
     const variants = await fetchProductVariants(

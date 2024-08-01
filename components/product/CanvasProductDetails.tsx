@@ -6,7 +6,6 @@ import {
     RetrieveProductResponse,
 } from "@/interfaces/PrintifyTypes";
 import { ImagesCarousel } from "../ImageCarousel";
-import { Size, SizeAndColorSelector } from "../SizeAndColorForm";
 import { useEffect, useMemo, useState } from "react";
 import { SmallLoadingSpinner } from "../loading/SmallLoadingSpinner";
 import { isSellingPriceProfitable } from "../../lib/pricing/isSellingPriceProfitable";
@@ -237,16 +236,7 @@ export function CanvasProductDetails({
                 <div
                     id="selectContainer"
                     className="flex justify-between gap-2"
-                >
-                    <SizeAndColorSelector
-                        sizes={filteredSizeOptionsForColorId as Size[]}
-                        colours={filteredColourOptionsForSizeId}
-                        selectedSize={selectedSize}
-                        selectedColor={selectedColor}
-                        setSelectedSize={setSelectedSize}
-                        setSelectedColor={setSelectedColor}
-                    />
-                </div>
+                ></div>
 
                 <CustommiseDialog />
 
@@ -274,17 +264,6 @@ export function CanvasProductDetails({
                 </Button>
 
                 <SomethingWrongButton />
-                {/* 
-                <div className="mt-4 text-sm">
-                    Powered by
-                    <Image
-                        src="/stripe.svg"
-                        alt="Stripe"
-                        width={100}
-                        height={100}
-                        priority
-                    />
-                </div> */}
             </div>
         </div>
     );

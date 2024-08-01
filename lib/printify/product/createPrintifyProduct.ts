@@ -9,11 +9,13 @@ export async function createPrintifyProduct({
     printProviderId,
     blueprintId,
     position = "front",
+    scale,
 }: {
     printifyImageId: string;
     printProviderId: number;
     blueprintId: number;
     position?: "front" | "back";
+    scale: number; // between 0 and 1
 }) {
     const variants = await fetchProductVariants(blueprintId, printProviderId);
     const variantIds = variants.map((variant) => variant.id);
@@ -34,7 +36,7 @@ export async function createPrintifyProduct({
                                 id: printifyImageId,
                                 x: 0.5,
                                 y: 0.5,
-                                scale: 0.7,
+                                scale,
                                 angle: 0,
                             },
                         ],

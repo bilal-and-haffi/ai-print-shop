@@ -54,6 +54,7 @@ export function SaveForLaterDialogueAndButton({ link }: { link: string }) {
                     placeholder="Email"
                     value={emailValue}
                     onChange={(e) => setEmailValue(e.target.value)}
+                    type="email"
                 />
                 <DialogFooter>
                     <DialogClose asChild>

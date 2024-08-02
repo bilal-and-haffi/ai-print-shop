@@ -7,7 +7,7 @@ import {
     getEnabledProductsForCountry,
 } from "@/lib/printify/productsData";
 import { CountryCode } from "@/lib/stripe/createCheckoutSession";
-import { track } from "@vercel/analytics";
+import { track } from "@vercel/analytics/server";
 
 export type Position = "front" | "back";
 

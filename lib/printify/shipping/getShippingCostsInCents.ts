@@ -1,3 +1,4 @@
+"use server";
 import { CountryCode } from "@/lib/stripe/createCheckoutSession";
 import { getShippingData } from "./getShippingData";
 

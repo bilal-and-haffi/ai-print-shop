@@ -60,7 +60,6 @@ export function ClothingProductDetails({
     const { images, print_provider_id, blueprint_id } = retrievedProduct;
     const searchParams = useSearchParams();
     const country = searchParams.get("country") as CountryCode;
-    const imageId = searchParams.get("imageId") as string;
     const scale = searchParams.get("scale") as unknown as number;
     const x = searchParams.get("x") as unknown as number;
     const y = searchParams.get("y") as unknown as number;

@@ -221,22 +221,36 @@ export function ClothingProductDetails({
                     (p) => p === displayName,
                 ) && (
                     <>
-                        <a
-                            href={`${pathname}?country=${country}&imageId=${imageId}`}
+                        <Button
+                            variant={"secondary"}
                             className="w-full"
+                            onClick={() => {
+                                setNewSearchParamsAndPushRoute({
+                                    searchParams,
+                                    name: "position",
+                                    value: "front",
+                                    router,
+                                    pathname,
+                                });
+                            }}
                         >
-                            <Button variant={"secondary"} className="w-full">
-                                Position Image on Front
-                            </Button>
-                        </a>
-                        <a
-                            href={`${pathname}?position=back&country=${country}&imageId=${imageId}`}
+                            Position Image on Front
+                        </Button>
+                        <Button
+                            variant={"secondary"}
                             className="w-full"
+                            onClick={() => {
+                                setNewSearchParamsAndPushRoute({
+                                    searchParams,
+                                    name: "position",
+                                    value: "back",
+                                    router,
+                                    pathname,
+                                });
+                            }}
                         >
-                            <Button variant={"secondary"} className="w-full">
-                                Position Image on Back
-                            </Button>
-                        </a>
+                            Position Image on Back
+                        </Button>
                     </>
                 )}
                 <UpdateSearchParamSlider

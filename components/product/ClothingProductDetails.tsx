@@ -221,45 +221,40 @@ export function ClothingProductDetails({
                 >
                     Toggle Image Background
                 </Button>
-                {["T Shirt", "Hoodie", "Baseball Tee"].some(
-                    // TODO: make my dynamic
-                    (p) => p === displayName,
-                ) && (
-                    <>
-                        <Button
-                            variant={"secondary"}
-                            className="w-full"
-                            onClick={() => {
-                                track("Position Image on Front");
-                                setNewSearchParamsAndPushRoute({
-                                    searchParams,
-                                    name: "position",
-                                    value: "front",
-                                    router,
-                                    pathname,
-                                });
-                            }}
-                        >
-                            Position Image on Front
-                        </Button>
-                        <Button
-                            variant={"secondary"}
-                            className="w-full"
-                            onClick={() => {
-                                track("Position image on back");
-                                setNewSearchParamsAndPushRoute({
-                                    searchParams,
-                                    name: "position",
-                                    value: "back",
-                                    router,
-                                    pathname,
-                                });
-                            }}
-                        >
-                            Position Image on Back
-                        </Button>
-                    </>
-                )}
+                <>
+                    <Button
+                        variant={"secondary"}
+                        className="w-full"
+                        onClick={() => {
+                            track("Position Image on Front");
+                            setNewSearchParamsAndPushRoute({
+                                searchParams,
+                                name: "position",
+                                value: "front",
+                                router,
+                                pathname,
+                            });
+                        }}
+                    >
+                        Position Image on Front
+                    </Button>
+                    <Button
+                        variant={"secondary"}
+                        className="w-full"
+                        onClick={() => {
+                            track("Position image on back");
+                            setNewSearchParamsAndPushRoute({
+                                searchParams,
+                                name: "position",
+                                value: "back",
+                                router,
+                                pathname,
+                            });
+                        }}
+                    >
+                        Position Image on Back
+                    </Button>
+                </>
                 <UpdateSearchParamSlider
                     name="scale"
                     router={router}

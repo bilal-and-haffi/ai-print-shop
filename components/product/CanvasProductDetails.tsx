@@ -160,7 +160,7 @@ export function CanvasProductDetails({
                 order_variant_label: selectedVariant.title,
                 orderVariantId: selectedVariant.id,
                 order_preview: filteredImages[0].src,
-                price: sellingPriceInLocalCurrency * 100, // 100 is weird imo
+                price: sellingPriceInLocalCurrency * 100, // 100 bc stripe expects it in cents / pence/ equivalent
                 country,
             }),
         })

@@ -338,7 +338,9 @@ export function ClothingProductDetails({
 
                 <ShareButton />
 
-                <SaveForLaterDialogueAndButton />
+                <SaveForLaterDialogueAndButton
+                    link={pathname + "?" + searchParams.toString()}
+                />
 
                 <SomethingWrongButton />
             </div>

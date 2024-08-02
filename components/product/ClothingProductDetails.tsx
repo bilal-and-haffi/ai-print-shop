@@ -40,6 +40,7 @@ import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.share
 import { capitalize } from "lodash";
 import { track } from "@vercel/analytics";
 import { Input } from "../ui/input";
+import { SaveForLaterDialogueAndButton } from "../dialogues/SaveForLaterDialogueAndButton";
 
 export interface Options {
     id: number;
@@ -360,37 +361,6 @@ function ShareButton() {
                 Share
             </Button>
         )
-    );
-}
-
-function SaveForLaterDialogueAndButton() {
-    return (
-        <Dialog>
-            <DialogTrigger asChild>
-                <Button className="w-full">Save for later</Button>
-            </DialogTrigger>
-            <DialogContent>
-                <DialogHeader>
-                    <DialogTitle>Save for later</DialogTitle>
-                    <DialogDescription>
-                        <p>
-                            We can send you an email with a link your product
-                            for you to resume later
-                        </p>
-                        <Input placeholder="Email" />
-                    </DialogDescription>
-                </DialogHeader>
-                <DialogFooter>
-                    <Button
-                        onClick={() => {
-                            throw new Error("Send Email!");
-                        }}
-                    >
-                        Send
-                    </Button>
-                </DialogFooter>
-            </DialogContent>
-        </Dialog>
     );
 }
 

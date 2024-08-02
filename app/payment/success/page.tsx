@@ -18,6 +18,7 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 import { track } from "@vercel/analytics/server";
+import { sendEmail } from "@/lib/email/sendEmail";
 
 export const dynamic = "force-dynamic";
 
@@ -75,6 +76,16 @@ export default async function Page(params: {
         if (emailId) {
             addEmailIdToOrderTable({ internalOrderId, emailId });
         }
+        await sendEmail({
+            emailAddress: "bilal@ai-print-shop.com",
+            body: `We have an order to handle: Printify Order Id: ${printifyOrderId}`,
+            subject: "We have an order to handle",
+        });
+        await sendEmail({
+            emailAddress: "bilalm354@gmail.com",
+            body: `We have an order to handle: Printify Order Id: ${printifyOrderId}`,
+            subject: "We have an order to handle",
+        });
     }
 
     return (

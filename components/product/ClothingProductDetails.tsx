@@ -69,7 +69,6 @@ export function ClothingProductDetails({
     const y = searchParams.get("y") as unknown as number;
     const params = useParams();
     const productType = params["productType"] as DisplayName;
-    const displayName = decodeURIComponent(productType);
     const [selectedSize, setSelectedSize] = useState(initialSize);
     const [selectedColor, setSelectedColor] = useState(initialColor);
     const [sellingPriceInLocalCurrency, setSellingPriceInLocalCurrency] =

@@ -24,6 +24,7 @@ import { useParams, usePathname, useSearchParams } from "next/navigation";
 import { SomethingWrongButton } from "../buttons/SomethingWrongButton";
 import { CountryCode } from "@/lib/stripe/createCheckoutSession";
 import { DisplayName } from "@/lib/printify/productsData";
+import { track } from "@vercel/analytics";
 
 export interface Options {
     id: number;
@@ -131,6 +132,7 @@ export function CanvasProductDetails({
     }, [selectedProductVariant, country, blueprint_id, print_provider_id]);
 
     const onClick = async () => {
+        track("Canvas porduct buy now");
         if (!sellingPriceInLocalCurrency) {
             throw new Error("No selling price");
         }

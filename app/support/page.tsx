@@ -18,6 +18,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { sendFeedbackEmail } from "@/lib/email/sendFeedbackEmail";
 import { Copy } from "lucide-react";
+import { track } from "@vercel/analytics";
 
 const formSchema = z.object({
     email: z.string().email().optional(),
@@ -110,6 +111,7 @@ export default function SupportPage() {
                                 title: "Copied email to clipboard",
                                 duration: 1200,
                             });
+                            track("Copy email to clipboard");
                         }}
                         variant={"secondary"}
                     >

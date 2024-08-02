@@ -1,7 +1,7 @@
 import { SomethingWrongButton } from "@/components/buttons/SomethingWrongButton";
 import { CreateLink } from "@/components/CreateLink";
 import { ExamplesSection } from "@/components/sections/ExamplesSection";
-import { track } from "@vercel/analytics";
+import { track } from "@vercel/analytics/server";
 
 export default function Home() {
     track("Landed on Home");

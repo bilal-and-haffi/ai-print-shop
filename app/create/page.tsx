@@ -1,7 +1,7 @@
 import { SomethingWrongButton } from "@/components/buttons/SomethingWrongButton";
 import { ImageGenerationForm } from "@/components/ImageGenerationForm";
 import { CountryCode } from "@/lib/stripe/createCheckoutSession";
-import { track } from "@vercel/analytics";
+import { track } from "@vercel/analytics/server";
 
 export default async function CreatePage({
     searchParams,

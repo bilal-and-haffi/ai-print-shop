@@ -17,7 +17,7 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
-import { track } from "@vercel/analytics";
+import { track } from "@vercel/analytics/server";
 
 export const dynamic = "force-dynamic";
 

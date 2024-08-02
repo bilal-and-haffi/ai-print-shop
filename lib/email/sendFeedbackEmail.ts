@@ -2,15 +2,31 @@
 
 import { Resend } from "resend";
 import { z } from "zod";
+import { envServer } from "../env/server";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 const sendFeebackEmailToBilalSchema = z.object({
-    emailAddress: z.string(),
+    emailAddress: z.string().optional(),
     body: z.string(),
 });
 
-export async function sendFeedbackEmail(emailAddress: string, body: string) {
+export async function sendFeedbackEmail({
+    emailAddress,
+    body,
+}: {
+    emailAddress?: string;
+    body: string;
+}) {
+    if (envServer.CI) {
+        console.log("Skipping email sending on CI");
+        return;
+    }
+    if (envServer.VERCEL_ENV === "development") {
+        console.log("Skipping email sending on development environment");
+        return;
+    }
+
     try {
         sendFeebackEmailToBilalSchema.parse({
             emailAddress,

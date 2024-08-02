@@ -20,7 +20,7 @@ import { sendFeedbackEmail } from "@/lib/email/sendFeedbackEmail";
 import { Copy } from "lucide-react";
 
 const formSchema = z.object({
-    email: z.string().email(),
+    email: z.string().email().optional(),
     message: z.string(),
 });
 
@@ -34,7 +34,6 @@ export default function SupportPage() {
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            email: "",
             message: "",
         },
     });
@@ -42,7 +41,7 @@ export default function SupportPage() {
     async function onSubmit(values: z.infer<typeof formSchema>) {
         const { email, message } = values;
 
-        await sendFeedbackEmail(email, message);
+        await sendFeedbackEmail({ emailAddress: email, body: message });
 
         toast({
             title: "Feedback sent :)",
@@ -66,7 +65,10 @@ export default function SupportPage() {
                         render={({ field }) => (
                             <FormItem>
                                 <FormControl>
-                                    <Input placeholder="Email" {...field} />
+                                    <Input
+                                        placeholder="Email (optional)"
+                                        {...field}
+                                    />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>

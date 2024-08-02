@@ -1,6 +1,7 @@
 import { ProductVariant } from "@/interfaces/PrintifyTypes";
 import { getShippingCostInCents } from "../printify/shipping/getShippingCostsInCents";
 import { CountryCode } from "../stripe/createCheckoutSession";
+import { UK_VAT_MULTIPLIER } from "@/app/data/consts";
 
 const MARK_UP_IN_USD = 5;
 
@@ -24,7 +25,10 @@ export async function generateUnroundedPriceInUsd({
     const totalCostInCentsWithoutTax =
         selectedVariant.cost + printifyShippingCostInCents;
 
-    const totalCostInUsd = totalCostInCentsWithoutTax / 100; // we don't need to pay VAT until we make 85k
+    const totalCostInCentsWithVAT =
+        totalCostInCentsWithoutTax * UK_VAT_MULTIPLIER;
+
+    const totalCostInUsd = totalCostInCentsWithVAT / 100; // we don't need to pay VAT until we make 85k
 
     const unroundedPriceInUsd = totalCostInUsd + MARK_UP_IN_USD;
 

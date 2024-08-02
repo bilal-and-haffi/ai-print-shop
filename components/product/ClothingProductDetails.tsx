@@ -336,7 +336,7 @@ export function ClothingProductDetails({
                     )}
                 </Button>
 
-                <ShareButton />
+                {/* <ShareButton /> */}
 
                 <SaveForLaterDialogueAndButton
                     link={pathname + "?" + searchParams.toString()}

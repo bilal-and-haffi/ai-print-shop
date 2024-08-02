@@ -17,6 +17,8 @@ import { convertUSDToGBP } from "@/lib/currency/convertUSDToGBP";
 import {
     Dialog,
     DialogContent,
+    DialogDescription,
+    DialogFooter,
     DialogHeader,
     DialogTitle,
     DialogTrigger,
@@ -37,6 +39,7 @@ import { Label } from "@/components/ui/label";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { capitalize } from "lodash";
 import { track } from "@vercel/analytics";
+import { Input } from "../ui/input";
 
 export interface Options {
     id: number;
@@ -93,6 +96,12 @@ export function ClothingProductDetails({
             findSelectedVariant(selectedSize, selectedColor, variants),
         );
     }, [selectedSize, selectedColor, retrievedProduct, variants]);
+
+    const [navigatorState, setNavigatorState] = useState<any>();
+
+    useEffect(() => {
+        setNavigatorState(navigator);
+    }, []);
 
     const pathname = usePathname();
     const filteredImages = useMemo(
@@ -332,14 +341,43 @@ export function ClothingProductDetails({
                     )}
                 </Button>
 
-                {navigator.canShare() && (
-                    <Button
-                        className="w-full"
-                        onClick={() => navigator.share()}
-                    >
-                        Share
-                    </Button>
-                )}
+                {typeof navigatorState !== "undefined" &&
+                    navigatorState &&
+                    navigatorState.canShare() && (
+                        <Button
+                            className="w-full"
+                            onClick={() => navigatorState.share()}
+                        >
+                            Share
+                        </Button>
+                    )}
+
+                <Dialog>
+                    <DialogTrigger asChild>
+                        <Button className="w-full">Save for later</Button>
+                    </DialogTrigger>
+                    <DialogContent>
+                        <DialogHeader>
+                            <DialogTitle>Save for later</DialogTitle>
+                            <DialogDescription>
+                                <p>
+                                    We can send you an email with a link your
+                                    product for you to resume later
+                                </p>
+                                <Input placeholder="Email" />
+                            </DialogDescription>
+                        </DialogHeader>
+                        <DialogFooter>
+                            <Button
+                                onClick={() => {
+                                    throw new Error("Send Email!");
+                                }}
+                            >
+                                Send
+                            </Button>
+                        </DialogFooter>
+                    </DialogContent>
+                </Dialog>
 
                 <SomethingWrongButton />
             </div>

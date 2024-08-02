@@ -382,14 +382,34 @@ function UpdateSearchParamSlider({
                 min={0.1}
                 step={0.1}
                 onValueChange={(value) => {
-                    const newParams = new URLSearchParams(
-                        searchParams.toString(),
-                    );
-                    newParams.set(name, value[0].toString());
-                    const queryString = newParams.toString();
-                    router.push(pathname + "?" + queryString);
+                    setNewSearchParamsAndPushRoute({
+                        searchParams,
+                        name,
+                        value: value[0].toString(),
+                        router,
+                        pathname,
+                    });
                 }}
             />
         </>
     );
+}
+
+function setNewSearchParamsAndPushRoute({
+    searchParams,
+    name,
+    value,
+    router,
+    pathname,
+}: {
+    name: string;
+    searchParams: ReadonlyURLSearchParams;
+    value: string;
+    router: AppRouterInstance;
+    pathname: string;
+}) {
+    const newParams = new URLSearchParams(searchParams.toString());
+    newParams.set(name, value);
+    const queryString = newParams.toString();
+    router.push(pathname + "?" + queryString);
 }

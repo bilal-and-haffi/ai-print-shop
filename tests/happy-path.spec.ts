@@ -93,6 +93,18 @@ test.describe("happy path GB", () => {
             }),
         ).toBeVisible();
     });
+    test("buy a sweatshirt", async ({ page }) => {
+        await page.locator("#product-links").getByRole("combobox").click();
+        await page.getByLabel("Sweatshirt").click();
+        await page.getByRole("button", { name: "Buy now" }).click();
+        await doStripeForm({ page, countryCode });
+        await page.waitForURL(/success/);
+        await expect(
+            page.getByRole("heading", {
+                name: "Your order has been confirmed!",
+            }),
+        ).toBeVisible();
+    });
 });
 
 test.describe("happy path us", () => {
@@ -178,6 +190,18 @@ test.describe("happy path us", () => {
     test("buy a canvas", async ({ page }) => {
         await page.locator("#product-links").getByRole("combobox").click();
         await page.getByLabel("Canvas").click();
+        await page.getByRole("button", { name: "Buy now" }).click();
+        await doStripeForm({ page, countryCode });
+        await page.waitForURL(/success/);
+        await expect(
+            page.getByRole("heading", {
+                name: "Your order has been confirmed!",
+            }),
+        ).toBeVisible();
+    });
+    test("buy a sweatshirt", async ({ page }) => {
+        await page.locator("#product-links").getByRole("combobox").click();
+        await page.getByLabel("Sweatshirt").click();
         await page.getByRole("button", { name: "Buy now" }).click();
         await doStripeForm({ page, countryCode });
         await page.waitForURL(/success/);

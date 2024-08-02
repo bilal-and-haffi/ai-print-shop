@@ -6,7 +6,8 @@ export type DisplayName =
     | "Mug"
     | "Baseball Tee"
     | "Phone Case"
-    | "Canvas";
+    | "Canvas"
+    | "Sweatshirt";
 
 interface PrintifyProductsData {
     enabled: boolean;
@@ -25,6 +26,7 @@ const printProviderIds = {
     jondo: 105,
     woyc: 23,
     stokedOnPrinting: 43,
+    marcoFineArts: 3,
 };
 
 const blueprintIds = {
@@ -34,6 +36,7 @@ const blueprintIds = {
     canvas: 937, //  https://printify.com/app/products/937/generic-brand/matte-canvas-stretched-075
     phoneCases: 421, // https://printify.com/app/products/421/generic-brand/tough-cases
     baseballTee: 79,
+    sweatshirt: 49, // https://printify.com/app/products/49/gildan/unisex-heavy-blend-crewneck-sweatshirt
 };
 
 // TODO: add these
@@ -81,6 +84,14 @@ const productData: PrintifyProductsData[] = [
         displayName: "Baseball Tee",
         blueprintId: blueprintIds.baseballTee,
         printProviderId: printProviderIds.tShirtAndSons,
+        country: "GB",
+    },
+    {
+        enabled: true,
+        name: "Gildan Sweatshirt",
+        displayName: "Sweatshirt",
+        blueprintId: blueprintIds.sweatshirt,
+        printProviderId: printProviderIds.printClever,
         country: "GB",
     },
     {
@@ -166,6 +177,14 @@ const productData: PrintifyProductsData[] = [
         displayName: "Baseball Tee",
         blueprintId: blueprintIds.baseballTee,
         printProviderId: printProviderIds.stokedOnPrinting,
+        country: "US",
+    },
+    {
+        enabled: true,
+        name: "Gildan Sweatshirt",
+        displayName: "Sweatshirt",
+        blueprintId: blueprintIds.sweatshirt,
+        printProviderId: printProviderIds.marcoFineArts,
         country: "US",
     },
 ];

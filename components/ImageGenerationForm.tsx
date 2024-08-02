@@ -21,6 +21,7 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog";
 import { sample } from "lodash";
+import { track } from "@vercel/analytics";
 
 const styleOptions = [
     "None",
@@ -92,6 +93,7 @@ export function ImageGenerationForm({
     };
 
     const generateImage = async () => {
+        track("Generated Image");
         if (promptValue.trim() === "") return;
 
         const response = await checkPromptForCopyRight(promptValue);
@@ -121,6 +123,7 @@ export function ImageGenerationForm({
     function randomisePrompt(): void {
         const randomPrompt = getRandomPrompt();
         setPromptValue(randomPrompt);
+        track("Randomise Prompt");
     }
 
     return (

@@ -17,6 +17,7 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
+import { track } from "@vercel/analytics";
 
 export const dynamic = "force-dynamic";
 
@@ -54,6 +55,7 @@ export default async function Page(params: {
         console.log("No printify order id for internal order", internalOrderId);
         throw new Error("No printify order id");
     }
+    track("Payment Success");
 
     const printifyOrder = await pollForPrintifyOrder(printifyOrderId);
 

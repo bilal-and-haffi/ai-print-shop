@@ -332,6 +332,15 @@ export function ClothingProductDetails({
                     )}
                 </Button>
 
+                {navigator.canShare() && (
+                    <Button
+                        className="w-full"
+                        onClick={() => navigator.share()}
+                    >
+                        Share
+                    </Button>
+                )}
+
                 <SomethingWrongButton />
             </div>
         </div>

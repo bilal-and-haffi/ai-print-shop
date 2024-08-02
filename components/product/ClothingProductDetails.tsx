@@ -18,10 +18,12 @@ import {
     Dialog,
     DialogContent,
     DialogHeader,
+    DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog";
 import { toggleImageBackgroundButtonAction } from "@/actions/toggleImageBackgroundButtonAction";
 import {
+    ReadonlyURLSearchParams,
     useParams,
     usePathname,
     useRouter,
@@ -32,6 +34,8 @@ import { CountryCode } from "@/lib/stripe/createCheckoutSession";
 import { DisplayName } from "@/lib/printify/productsData";
 import { Slider } from "@/components/ui/slider";
 import { Label } from "@/components/ui/label";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import { capitalize } from "lodash";
 
 export interface Options {
     id: number;
@@ -58,6 +62,8 @@ export function ClothingProductDetails({
     const country = searchParams.get("country") as CountryCode;
     const imageId = searchParams.get("imageId") as string;
     const scale = searchParams.get("scale") as unknown as number;
+    const x = searchParams.get("x") as unknown as number;
+    const y = searchParams.get("y") as unknown as number;
     const params = useParams();
     const productType = params["productType"] as DisplayName;
     const displayName = decodeURIComponent(productType);
@@ -195,7 +201,9 @@ export function ClothingProductDetails({
                 <Button variant={"outline"}>Customise</Button>
             </DialogTrigger>
             <DialogContent>
-                <DialogHeader></DialogHeader>
+                <DialogHeader>
+                    <DialogTitle>Customise</DialogTitle>
+                </DialogHeader>
                 <Button
                     variant={"secondary"}
                     onClick={async () => {
@@ -231,20 +239,29 @@ export function ClothingProductDetails({
                         </a>
                     </>
                 )}
-                <Label htmlFor="scale-slider">Image Scale</Label>
-                <Slider
-                    id="scale-slider"
-                    defaultValue={[scale ?? 0.7]}
-                    max={1}
-                    step={0.1}
-                    onValueChange={(value) => {
-                        const newParams = new URLSearchParams(
-                            searchParams.toString(),
-                        );
-                        newParams.set("scale", value[0].toString());
-                        const queryString = newParams.toString();
-                        router.push(pathname + "?" + queryString);
-                    }}
+                <UpdateSearchParamSlider
+                    name="scale"
+                    router={router}
+                    defaultValue={0.7}
+                    currentValue={scale}
+                    pathname={pathname}
+                    searchParams={searchParams}
+                />
+                <UpdateSearchParamSlider
+                    name="x"
+                    router={router}
+                    defaultValue={0.5}
+                    currentValue={x}
+                    pathname={pathname}
+                    searchParams={searchParams}
+                />
+                <UpdateSearchParamSlider
+                    name="y"
+                    router={router}
+                    defaultValue={0.5}
+                    currentValue={y}
+                    pathname={pathname}
+                    searchParams={searchParams}
                 />
             </DialogContent>
         </Dialog>
@@ -298,17 +315,6 @@ export function ClothingProductDetails({
                 </Button>
 
                 <SomethingWrongButton />
-                {/* 
-                <div className="mt-4 text-sm">
-                    Powered by
-                    <Image
-                        src="/stripe.svg"
-                        alt="Stripe"
-                        width={100}
-                        height={100}
-                        priority
-                    />
-                </div> */}
             </div>
         </div>
     );
@@ -349,4 +355,41 @@ function getFilteredColorsForSize(size: string, variants: Variant[]) {
 }
 function roundUpToNearestInteger(x: number) {
     return Math.ceil(x / 1) * 1;
+}
+
+function UpdateSearchParamSlider({
+    name,
+    router,
+    searchParams,
+    pathname,
+    defaultValue,
+    currentValue,
+}: {
+    name: string;
+    router: AppRouterInstance;
+    searchParams: ReadonlyURLSearchParams;
+    pathname: string;
+    defaultValue: number;
+    currentValue?: number;
+}) {
+    return (
+        <>
+            <Label htmlFor={`${name}-slider`}>{capitalize(name)}</Label>
+            <Slider
+                id={`${name}-slider`}
+                defaultValue={[currentValue ?? defaultValue]}
+                max={1}
+                min={0.1}
+                step={0.1}
+                onValueChange={(value) => {
+                    const newParams = new URLSearchParams(
+                        searchParams.toString(),
+                    );
+                    newParams.set(name, value[0].toString());
+                    const queryString = newParams.toString();
+                    router.push(pathname + "?" + queryString);
+                }}
+            />
+        </>
+    );
 }

@@ -1,5 +1,4 @@
-import { CanvasProductDetails } from "@/components/product/CanvasProductDetails";
-import { ProductDetails } from "@/components/product/ClothingProductDetails";
+import { ProductDetails } from "@/components/product/ProductDetails";
 import { fetchProductVariants } from "@/lib/printify/fetchProductVariants";
 import { createPrintifyProduct } from "@/lib/printify/product/createPrintifyProduct";
 import {
@@ -59,6 +58,7 @@ export default async function ProductTypePage({
         productInfo.blueprintId,
         productInfo.printProviderId,
     );
+
     return (
         <>
             <ProductDetails

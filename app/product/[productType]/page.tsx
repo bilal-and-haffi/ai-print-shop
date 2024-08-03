@@ -1,3 +1,4 @@
+import { CountrySetter } from "@/components/CountrySetter";
 import { ProductDetails } from "@/components/product/ProductDetails";
 import { fetchProductVariants } from "@/lib/printify/fetchProductVariants";
 import { createPrintifyProduct } from "@/lib/printify/product/createPrintifyProduct";
@@ -24,7 +25,7 @@ export default async function ProductTypePage({
     params: { productType: string };
     searchParams: {
         imageId: string;
-        country: CountryCode;
+        country: CountryCode | "undefined";
         position?: Position;
         scale?: number;
         x?: number;
@@ -32,8 +33,9 @@ export default async function ProductTypePage({
     };
 }) {
     track("Product page");
-    if (!country) {
-        throw new Error("return client component to enter or detect country");
+
+    if (country === "undefined") {
+        return <CountrySetter />;
     }
 
     const products = getEnabledProductsForCountry(country);

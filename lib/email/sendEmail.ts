@@ -25,6 +25,11 @@ export async function sendEmail({
         return;
     }
 
+    if (envServer.VERCEL_ENV !== "production") {
+        console.warn("Skipping email sending because not production");
+        return;
+    }
+
     try {
         sendEmailSchema.parse({
             emailAddress,

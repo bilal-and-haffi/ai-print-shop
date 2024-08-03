@@ -6,6 +6,7 @@ import {
     RetrieveProductResponse,
 } from "@/interfaces/PrintifyTypes";
 import { ImagesCarousel } from "../ImageCarousel";
+import { Size, SizeAndColorSelector } from "../SizeAndColorForm";
 import { useEffect, useMemo, useState } from "react";
 import { SmallLoadingSpinner } from "../loading/SmallLoadingSpinner";
 import { isSellingPriceProfitable } from "../../lib/pricing/isSellingPriceProfitable";
@@ -17,21 +18,33 @@ import {
     Dialog,
     DialogContent,
     DialogHeader,
+    DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog";
 import { toggleImageBackgroundButtonAction } from "@/actions/toggleImageBackgroundButtonAction";
-import { useParams, usePathname, useSearchParams } from "next/navigation";
+import {
+    ReadonlyURLSearchParams,
+    useParams,
+    usePathname,
+    useRouter,
+    useSearchParams,
+} from "next/navigation";
 import { SomethingWrongButton } from "../buttons/SomethingWrongButton";
 import { CountryCode } from "@/lib/stripe/createCheckoutSession";
 import { DisplayName } from "@/lib/printify/productsData";
+import { Slider } from "@/components/ui/slider";
+import { Label } from "@/components/ui/label";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import { capitalize } from "lodash";
 import { track } from "@vercel/analytics";
+import { SaveForLaterDialogueAndButton } from "../dialogues/SaveForLaterDialogueAndButton";
 
 export interface Options {
     id: number;
     title: string;
 }
 
-export function CanvasProductDetails({
+export function ProductDetails({
     retrievedProduct,
     initialSize,
     initialColor,
@@ -45,13 +58,15 @@ export function CanvasProductDetails({
     printifyImageId: string;
 }) {
     const [checkoutLoading, setCheckoutLoading] = useState(false);
+    const router = useRouter();
     const { images, print_provider_id, blueprint_id } = retrievedProduct;
     const searchParams = useSearchParams();
     const country = searchParams.get("country") as CountryCode;
-    const imageId = searchParams.get("imageId") as string;
+    const scale = searchParams.get("scale") as unknown as number;
+    const x = searchParams.get("x") as unknown as number;
+    const y = searchParams.get("y") as unknown as number;
     const params = useParams();
     const productType = params["productType"] as DisplayName;
-    const displayName = decodeURIComponent(productType);
     const [selectedSize, setSelectedSize] = useState(initialSize);
     const [selectedColor, setSelectedColor] = useState(initialColor);
     const [sellingPriceInLocalCurrency, setSellingPriceInLocalCurrency] =
@@ -132,7 +147,7 @@ export function CanvasProductDetails({
     }, [selectedProductVariant, country, blueprint_id, print_provider_id]);
 
     const onClick = async () => {
-        track("Canvas porduct buy now");
+        track("Buy now");
         if (!sellingPriceInLocalCurrency) {
             throw new Error("No selling price");
         }
@@ -160,7 +175,7 @@ export function CanvasProductDetails({
                 order_variant_label: selectedVariant.title,
                 orderVariantId: selectedVariant.id,
                 order_preview: filteredImages[0].src,
-                price: sellingPriceInLocalCurrency * 100, // 100 bc stripe expects it in cents / pence/ equivalent
+                price: sellingPriceInLocalCurrency * 100, // 100 is weird imo
                 country,
             }),
         })
@@ -187,10 +202,13 @@ export function CanvasProductDetails({
                 <Button variant={"outline"}>Customise</Button>
             </DialogTrigger>
             <DialogContent>
-                <DialogHeader></DialogHeader>
+                <DialogHeader>
+                    <DialogTitle>Customise</DialogTitle>
+                </DialogHeader>
                 <Button
                     variant={"secondary"}
                     onClick={async () => {
+                        track("Toggle Background");
                         await toggleImageBackgroundButtonAction({
                             currentImageId: printifyImageId,
                             country,
@@ -200,25 +218,64 @@ export function CanvasProductDetails({
                 >
                     Toggle Image Background
                 </Button>
-
                 <>
-                    <a
-                        href={`${pathname}?country=${country}&imageId=${imageId}`}
+                    <Button
+                        variant={"secondary"}
                         className="w-full"
+                        onClick={() => {
+                            track("Position Image on Front");
+                            setNewSearchParamsAndPushRoute({
+                                searchParams,
+                                name: "position",
+                                value: "front",
+                                router,
+                                pathname,
+                            });
+                        }}
                     >
-                        <Button variant={"secondary"} className="w-full">
-                            Position Image on Front
-                        </Button>
-                    </a>
-                    <a
-                        href={`${pathname}?position=back&country=${country}&imageId=${imageId}`}
+                        Position Image on Front
+                    </Button>
+                    <Button
+                        variant={"secondary"}
                         className="w-full"
+                        onClick={() => {
+                            track("Position image on back");
+                            setNewSearchParamsAndPushRoute({
+                                searchParams,
+                                name: "position",
+                                value: "back",
+                                router,
+                                pathname,
+                            });
+                        }}
                     >
-                        <Button variant={"secondary"} className="w-full">
-                            Position Image on Back
-                        </Button>
-                    </a>
+                        Position Image on Back
+                    </Button>
                 </>
+                <UpdateSearchParamSlider
+                    name="scale"
+                    router={router}
+                    defaultValue={0.7}
+                    currentValue={scale}
+                    pathname={pathname}
+                    searchParams={searchParams}
+                />
+                <UpdateSearchParamSlider
+                    name="x"
+                    router={router}
+                    defaultValue={0.5}
+                    currentValue={x}
+                    pathname={pathname}
+                    searchParams={searchParams}
+                />
+                <UpdateSearchParamSlider
+                    name="y"
+                    router={router}
+                    defaultValue={0.5}
+                    currentValue={y}
+                    pathname={pathname}
+                    searchParams={searchParams}
+                />
             </DialogContent>
         </Dialog>
     );
@@ -234,7 +291,16 @@ export function CanvasProductDetails({
                 <div
                     id="selectContainer"
                     className="flex justify-between gap-2"
-                ></div>
+                >
+                    <SizeAndColorSelector
+                        sizes={filteredSizeOptionsForColorId as Size[]}
+                        colours={filteredColourOptionsForSizeId}
+                        selectedSize={selectedSize}
+                        selectedColor={selectedColor}
+                        setSelectedSize={setSelectedSize}
+                        setSelectedColor={setSelectedColor}
+                    />
+                </div>
 
                 <CustommiseDialog />
 
@@ -261,9 +327,33 @@ export function CanvasProductDetails({
                     )}
                 </Button>
 
+                <ShareButton />
+
+                <SaveForLaterDialogueAndButton
+                    link={pathname + "?" + searchParams.toString()}
+                />
+
                 <SomethingWrongButton />
             </div>
         </div>
+    );
+}
+
+function ShareButton() {
+    // doesn't show
+    const [navigatorState, setNavigatorState] = useState<any>();
+
+    useEffect(() => {
+        setNavigatorState(navigator);
+    }, []);
+    return (
+        typeof navigatorState !== "undefined" &&
+        navigatorState &&
+        navigatorState.canShare() && (
+            <Button className="w-full" onClick={() => navigatorState.share()}>
+                Share
+            </Button>
+        )
     );
 }
 
@@ -302,4 +392,61 @@ function getFilteredColorsForSize(size: string, variants: Variant[]) {
 }
 function roundUpToNearestInteger(x: number) {
     return Math.ceil(x / 1) * 1;
+}
+
+function UpdateSearchParamSlider({
+    name,
+    router,
+    searchParams,
+    pathname,
+    defaultValue,
+    currentValue,
+}: {
+    name: string;
+    router: AppRouterInstance;
+    searchParams: ReadonlyURLSearchParams;
+    pathname: string;
+    defaultValue: number;
+    currentValue?: number;
+}) {
+    return (
+        <>
+            <Label htmlFor={`${name}-slider`}>{capitalize(name)}</Label>
+            <Slider
+                id={`${name}-slider`}
+                defaultValue={[currentValue ?? defaultValue]}
+                max={1}
+                min={0.1}
+                step={0.1}
+                onValueChange={(value) => {
+                    setNewSearchParamsAndPushRoute({
+                        searchParams,
+                        name,
+                        value: value[0].toString(),
+                        router,
+                        pathname,
+                    });
+                }}
+            />
+        </>
+    );
+}
+
+function setNewSearchParamsAndPushRoute({
+    searchParams,
+    name,
+    value,
+    router,
+    pathname,
+}: {
+    name: string;
+    searchParams: ReadonlyURLSearchParams;
+    value: string;
+    router: AppRouterInstance;
+    pathname: string;
+}) {
+    const newParams = new URLSearchParams(searchParams.toString());
+    newParams.set(name, value);
+    const queryString = newParams.toString();
+    router.push(pathname + "?" + queryString);
 }

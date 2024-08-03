@@ -1,5 +1,5 @@
 import { CanvasProductDetails } from "@/components/product/CanvasProductDetails";
-import { ClothingProductDetails } from "@/components/product/ClothingProductDetails";
+import { ProductDetails } from "@/components/product/ClothingProductDetails";
 import { fetchProductVariants } from "@/lib/printify/fetchProductVariants";
 import { createPrintifyProduct } from "@/lib/printify/product/createPrintifyProduct";
 import {
@@ -59,22 +59,9 @@ export default async function ProductTypePage({
         productInfo.blueprintId,
         productInfo.printProviderId,
     );
-
-    if (productInfo.displayName === "Canvas") {
-        return (
-            <CanvasProductDetails
-                retrievedProduct={product}
-                initialSize={getInitialSize(displayName)}
-                initialColor={getInitialColour(displayName)}
-                variants={variants}
-                printifyImageId={imageId}
-            />
-        );
-    }
-
     return (
         <>
-            <ClothingProductDetails
+            <ProductDetails
                 retrievedProduct={product}
                 initialSize={getInitialSize(displayName)}
                 initialColor={getInitialColour(displayName)}

@@ -38,6 +38,7 @@ import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.share
 import { capitalize } from "lodash";
 import { track } from "@vercel/analytics";
 import { SaveForLaterDialogueAndButton } from "../dialogues/SaveForLaterDialogueAndButton";
+import { setNewSearchParamsAndPushRoute } from "./setNewSearchParamsAndPushRoute";
 
 export interface Options {
     id: number;
@@ -67,8 +68,8 @@ export function ProductDetails({
     const y = searchParams.get("y") as unknown as number;
     const params = useParams();
     const productType = params["productType"] as DisplayName;
-    const [selectedSize, setSelectedSize] = useState(initialSize);
-    const [selectedColor, setSelectedColor] = useState(initialColor);
+    const selectedSize = searchParams.get("size") ?? initialSize;
+    const selectedColor = searchParams.get("color") ?? initialColor;
     const [sellingPriceInLocalCurrency, setSellingPriceInLocalCurrency] =
         useState<number>();
 
@@ -297,8 +298,6 @@ export function ProductDetails({
                         colours={filteredColourOptionsForSizeId}
                         selectedSize={selectedSize}
                         selectedColor={selectedColor}
-                        setSelectedSize={setSelectedSize}
-                        setSelectedColor={setSelectedColor}
                     />
                 </div>
 
@@ -430,23 +429,4 @@ function UpdateSearchParamSlider({
             />
         </>
     );
-}
-
-function setNewSearchParamsAndPushRoute({
-    searchParams,
-    name,
-    value,
-    router,
-    pathname,
-}: {
-    name: string;
-    searchParams: ReadonlyURLSearchParams;
-    value: string;
-    router: AppRouterInstance;
-    pathname: string;
-}) {
-    const newParams = new URLSearchParams(searchParams.toString());
-    newParams.set(name, value);
-    const queryString = newParams.toString();
-    router.push(pathname + "?" + queryString);
 }

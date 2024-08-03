@@ -7,6 +7,13 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
+import { setNewSearchParamsAndPushRoute } from "./product/setNewSearchParamsAndPushRoute";
+import {
+    useParams,
+    usePathname,
+    useRouter,
+    useSearchParams,
+} from "next/navigation";
 
 export type Size = "S" | "M" | "L" | "XL" | "2XL" | "3XL" | "4XL" | "5XL";
 
@@ -15,15 +22,11 @@ export const SizeAndColorSelector = ({
     colours,
     selectedSize: selectedSizeId,
     selectedColor: selectedColorId,
-    setSelectedSize: setSelectedSize,
-    setSelectedColor: setSelectedColor,
 }: {
     sizes: Size[];
     colours: string[];
     selectedSize: string;
     selectedColor: string;
-    setSelectedSize: (size: string) => void;
-    setSelectedColor: (color: string) => void;
 }) => {
     const sizeWeightForSorting = new Map<Size, number>([
         ["S", 1],
@@ -35,12 +38,23 @@ export const SizeAndColorSelector = ({
         ["4XL", 7],
         ["5XL", 8],
     ]);
+    const searchParams = useSearchParams();
+    const pathname = usePathname();
+    const router = useRouter();
 
     return (
         <>
             {colours.length > 0 && (
                 <Select
-                    onValueChange={(value) => setSelectedColor(value)}
+                    onValueChange={(value) =>
+                        setNewSearchParamsAndPushRoute({
+                            name: "color",
+                            searchParams,
+                            pathname,
+                            router,
+                            value,
+                        })
+                    }
                     value={selectedColorId}
                 >
                     <SelectTrigger>
@@ -58,7 +72,15 @@ export const SizeAndColorSelector = ({
 
             {sizes.length > 0 && (
                 <Select
-                    onValueChange={(value) => setSelectedSize(value)}
+                    onValueChange={(value) =>
+                        setNewSearchParamsAndPushRoute({
+                            name: "size",
+                            searchParams,
+                            pathname,
+                            router,
+                            value,
+                        })
+                    }
                     value={selectedSizeId}
                 >
                     <SelectTrigger>

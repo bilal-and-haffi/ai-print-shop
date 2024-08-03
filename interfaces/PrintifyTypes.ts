@@ -260,6 +260,5 @@ export interface Placeholder {
 }
 
 export interface Options {
-    color: string;
-    size: string;
+    [key: string]: string;
 }

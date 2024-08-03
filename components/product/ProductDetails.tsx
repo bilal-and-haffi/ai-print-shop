@@ -39,6 +39,14 @@ import { capitalize } from "lodash";
 import { track } from "@vercel/analytics";
 import { SaveForLaterDialogueAndButton } from "../dialogues/SaveForLaterDialogueAndButton";
 import { setNewSearchParamsAndPushRoute } from "./setNewSearchParamsAndPushRoute";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "../ui/select";
+import { CountrySetter } from "../CountrySetter";
 
 export interface Options {
     id: number;
@@ -47,55 +55,45 @@ export interface Options {
 
 export function ProductDetails({
     retrievedProduct,
-    initialSize,
-    initialColor,
     variants,
     printifyImageId,
 }: {
     retrievedProduct: RetrieveProductResponse;
-    initialSize: string;
-    initialColor: string;
     variants: Variant[];
     printifyImageId: string;
 }) {
     const [checkoutLoading, setCheckoutLoading] = useState(false);
     const router = useRouter();
-    const { images, print_provider_id, blueprint_id } = retrievedProduct;
+    const { images, print_provider_id, blueprint_id, options } =
+        retrievedProduct;
+
+    const optionTypes = options.map(({ type }) => type);
+
     const searchParams = useSearchParams();
+    const pathname = usePathname();
     const country = searchParams.get("country") as CountryCode;
     const scale = searchParams.get("scale") as unknown as number;
     const x = searchParams.get("x") as unknown as number;
     const y = searchParams.get("y") as unknown as number;
     const params = useParams();
     const productType = params["productType"] as DisplayName;
-    const selectedSize = searchParams.get("size") ?? initialSize;
-    const selectedColor = searchParams.get("color") ?? initialColor;
     const [sellingPriceInLocalCurrency, setSellingPriceInLocalCurrency] =
         useState<number>();
 
-    if (!country) {
-        // TODO: GET COUNTRY or ask for country
-        console.error("No country");
-        throw new Error("No country");
-    }
+    const selectedOptions = optionTypes.map((type) => ({
+        title: type,
+        value: searchParams.get(type),
+    }));
 
-    const initialSelectedVariant = findSelectedVariant(
-        selectedSize,
-        selectedColor,
-        variants,
-    );
+    const selectedVariant =
+        variants.find((variant) =>
+            selectedOptions.every(
+                ({ title, value }) => variant.options[title] === value,
+            ),
+        ) ?? variants[0];
 
-    const [selectedVariant, setSelectedVariant] = useState<Variant>(
-        initialSelectedVariant,
-    );
+    // const selectedVariantOption =
 
-    useEffect(() => {
-        setSelectedVariant(
-            findSelectedVariant(selectedSize, selectedColor, variants),
-        );
-    }, [selectedSize, selectedColor, retrievedProduct, variants]);
-
-    const pathname = usePathname();
     const filteredImages = useMemo(
         () =>
             selectedVariant
@@ -104,16 +102,6 @@ export function ProductDetails({
                   )
                 : [],
         [selectedVariant, images],
-    );
-
-    const filteredSizeOptionsForColorId = useMemo(
-        () => getFilteredSizesForColor(selectedColor, variants),
-        [selectedColor, variants],
-    );
-
-    const filteredColourOptionsForSizeId = useMemo(
-        () => getFilteredColorsForSize(selectedSize, variants),
-        [selectedSize, variants],
     );
 
     const selectedProductVariant = useMemo(() => {
@@ -281,6 +269,12 @@ export function ProductDetails({
         </Dialog>
     );
 
+    if (!country) {
+        // TODO: GET COUNTRY or ask for country
+        console.error("No country on product page");
+        return <CountrySetter />;
+    }
+
     return (
         <div className="flex w-full flex-col items-center justify-center text-center">
             {images ? (
@@ -293,12 +287,43 @@ export function ProductDetails({
                     id="selectContainer"
                     className="flex justify-between gap-2"
                 >
-                    <SizeAndColorSelector
-                        sizes={filteredSizeOptionsForColorId as Size[]}
-                        colours={filteredColourOptionsForSizeId}
-                        selectedSize={selectedSize}
-                        selectedColor={selectedColor}
-                    />
+                    {optionTypes.map((type) => (
+                        <Select
+                            key={type}
+                            onValueChange={(value) =>
+                                setNewSearchParamsAndPushRoute({
+                                    name: type,
+                                    searchParams,
+                                    pathname,
+                                    router,
+                                    value,
+                                })
+                            }
+                            value={
+                                searchParams.get(type) ??
+                                variants[0].options[type]
+                            }
+                        >
+                            <SelectTrigger>
+                                <SelectValue placeholder={capitalize(type)} />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {Array.from(
+                                    new Set(
+                                        variants.map(
+                                            (variant) => variant.options[type],
+                                        ),
+                                    ),
+                                )
+                                    .sort()
+                                    .map((colour) => (
+                                        <SelectItem key={colour} value={colour}>
+                                            {colour}
+                                        </SelectItem>
+                                    ))}
+                            </SelectContent>
+                        </Select>
+                    ))}
                 </div>
 
                 <CustommiseDialog />
@@ -336,19 +361,6 @@ export function ProductDetails({
     );
 }
 
-function findSelectedVariant(size: string, color: string, variants: Variant[]) {
-    const selectedVariant = variants.find(
-        (variant) =>
-            variant.options.color == color && variant.options.size == size,
-    );
-
-    if (!selectedVariant) {
-        return variants[0];
-    }
-
-    return selectedVariant;
-}
-
 function getFilteredSizesForColor(color: string, variants: Variant[]) {
     const filteredVariants = variants.filter(
         (variant) => variant.options.color == color,
@@ -359,16 +371,6 @@ function getFilteredSizesForColor(color: string, variants: Variant[]) {
     return filteredSizes;
 }
 
-function getFilteredColorsForSize(size: string, variants: Variant[]) {
-    const filteredVariants = variants.filter(
-        (variant) => variant.options.size === size,
-    );
-    const filteredColors = filteredVariants.map(
-        (variant) => variant.options.color,
-    );
-
-    return filteredColors;
-}
 function roundUpToNearestInteger(x: number) {
     return Math.ceil(x / 1) * 1;
 }

@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 
 test.beforeEach(async ({ page }) => {
-    await page.goto("http://localhost:3000/support");
+    await page.goto("/support");
 });
 
 test("Lets user submit feedback without an email address", async ({ page }) => {

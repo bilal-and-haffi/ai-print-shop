@@ -41,9 +41,15 @@ export default async function ProductTypePage({
     const productInfo = products.find((p) => p.displayName === displayName);
 
     if (!productInfo) {
-        console.error({ msg: "No product info" });
+        console.error({
+            msg: "No product info",
+            country,
+            products,
+            displayName,
+        });
         throw new Error("No product info");
     }
+
     const product = await createPrintifyProduct({
         printifyImageId: imageId,
         printProviderId: productInfo.printProviderId,

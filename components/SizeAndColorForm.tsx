@@ -8,12 +8,7 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import { setNewSearchParamsAndPushRoute } from "./product/setNewSearchParamsAndPushRoute";
-import {
-    useParams,
-    usePathname,
-    useRouter,
-    useSearchParams,
-} from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export type Size = "S" | "M" | "L" | "XL" | "2XL" | "3XL" | "4XL" | "5XL";
 

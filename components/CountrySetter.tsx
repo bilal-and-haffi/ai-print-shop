@@ -3,6 +3,16 @@ import { getCountryFromIpAddress } from "@/lib/country/getCountryFromIpAddress";
 import { useEffect, useState } from "react";
 import { setNewSearchParamsAndPushRoute } from "./product/setNewSearchParamsAndPushRoute";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
+import { SomethingWrongButton } from "./buttons/SomethingWrongButton";
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardFooter,
+    CardHeader,
+    CardTitle,
+} from "./ui/card";
+import { PageLoadingSpinner } from "./loading/PageLoadingSpinner";
 
 export function CountrySetter() {
     const [countryCode, setCountryCode] = useState();
@@ -29,5 +39,18 @@ export function CountrySetter() {
         });
     }
 
-    return <>Fetching country...</>;
+    return (
+        <Card>
+            <CardHeader>
+                <CardTitle>Please wait</CardTitle>
+                <CardDescription>Fetching country...</CardDescription>
+            </CardHeader>
+            <CardContent className="flex flex-col items-center">
+                <PageLoadingSpinner />
+            </CardContent>
+            <CardFooter>
+                <SomethingWrongButton />
+            </CardFooter>
+        </Card>
+    );
 }

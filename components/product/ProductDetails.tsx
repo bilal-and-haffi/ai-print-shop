@@ -326,8 +326,6 @@ export function ProductDetails({
                     )}
                 </Button>
 
-                <ShareButton />
-
                 <SaveForLaterDialogueAndButton
                     link={pathname + "?" + searchParams.toString()}
                 />
@@ -335,24 +333,6 @@ export function ProductDetails({
                 <SomethingWrongButton />
             </div>
         </div>
-    );
-}
-
-function ShareButton() {
-    // doesn't show
-    const [navigatorState, setNavigatorState] = useState<any>();
-
-    useEffect(() => {
-        setNavigatorState(navigator);
-    }, []);
-    return (
-        typeof navigatorState !== "undefined" &&
-        navigatorState &&
-        navigatorState.canShare() && (
-            <Button className="w-full" onClick={() => navigatorState.share()}>
-                Share
-            </Button>
-        )
     );
 }
 

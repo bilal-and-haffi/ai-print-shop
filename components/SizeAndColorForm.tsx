@@ -25,7 +25,7 @@ export const SizeAndColorSelector = ({
     setSelectedSize: (size: string) => void;
     setSelectedColor: (color: string) => void;
 }) => {
-    const weights = new Map<Size, number>([
+    const sizeWeightForSorting = new Map<Size, number>([
         ["S", 1],
         ["M", 2],
         ["L", 3],
@@ -68,7 +68,8 @@ export const SizeAndColorSelector = ({
                         {sizes
                             .sort(
                                 (a: Size, b: Size) =>
-                                    weights.get(a)! - weights.get(b)!,
+                                    sizeWeightForSorting.get(a)! -
+                                    sizeWeightForSorting.get(b)!,
                             )
                             .map((size) => (
                                 <SelectItem key={size} value={size}>

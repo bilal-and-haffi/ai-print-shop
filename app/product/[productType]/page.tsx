@@ -76,8 +76,6 @@ export default async function ProductTypePage({
     return (
         <ProductDetails
             retrievedProduct={product}
-            initialSize={getInitialSize(displayName)}
-            initialColor={getInitialColour(displayName)}
             variants={variants}
             printifyImageId={imageId}
         />

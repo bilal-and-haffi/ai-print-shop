@@ -6,7 +6,7 @@ import {
     RetrieveProductResponse,
 } from "@/interfaces/PrintifyTypes";
 import { ImagesCarousel } from "../ImageCarousel";
-import { Size, SizeAndColorSelector } from "../SizeAndColorForm";
+import { ClothingSize, SizeAndColorSelector } from "../SizeAndColorForm";
 import { useEffect, useMemo, useState } from "react";
 import { SmallLoadingSpinner } from "../loading/SmallLoadingSpinner";
 import { isSellingPriceProfitable } from "../../lib/pricing/isSellingPriceProfitable";
@@ -294,7 +294,7 @@ export function ProductDetails({
                     className="flex justify-between gap-2"
                 >
                     <SizeAndColorSelector
-                        sizes={filteredSizeOptionsForColorId as Size[]}
+                        sizes={filteredSizeOptionsForColorId as ClothingSize[]}
                         colours={filteredColourOptionsForSizeId}
                         selectedSize={selectedSize}
                         selectedColor={selectedColor}

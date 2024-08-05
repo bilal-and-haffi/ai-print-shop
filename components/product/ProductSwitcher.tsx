@@ -71,7 +71,7 @@ export const ProductSwitcher = () => {
                 <Select
                     onValueChange={(value: ProductType) => {
                         router.push(
-                            `/product/${value}?${searchParams.toString()}`,
+                            `/product/${value}?country=${countryCode}&imageId=${imageId}`,
                         );
                     }}
                     value={decodedProductType}

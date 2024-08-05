@@ -10,7 +10,15 @@ import {
 import { setNewSearchParamsAndPushRoute } from "./product/setNewSearchParamsAndPushRoute";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-export type Size = "S" | "M" | "L" | "XL" | "2XL" | "3XL" | "4XL" | "5XL";
+export type ClothingSize =
+    | "S"
+    | "M"
+    | "L"
+    | "XL"
+    | "2XL"
+    | "3XL"
+    | "4XL"
+    | "5XL";
 
 export const SizeAndColorSelector = ({
     sizes,
@@ -18,12 +26,12 @@ export const SizeAndColorSelector = ({
     selectedSize: selectedSizeId,
     selectedColor: selectedColorId,
 }: {
-    sizes: Size[];
+    sizes: ClothingSize[];
     colours: string[];
     selectedSize: string;
     selectedColor: string;
 }) => {
-    const sizeWeightForSorting = new Map<Size, number>([
+    const sizeWeightForSorting = new Map<ClothingSize, number>([
         ["S", 1],
         ["M", 2],
         ["L", 3],
@@ -84,7 +92,7 @@ export const SizeAndColorSelector = ({
                     <SelectContent>
                         {sizes
                             .sort(
-                                (a: Size, b: Size) =>
+                                (a: ClothingSize, b: ClothingSize) =>
                                     sizeWeightForSorting.get(a)! -
                                     sizeWeightForSorting.get(b)!,
                             )

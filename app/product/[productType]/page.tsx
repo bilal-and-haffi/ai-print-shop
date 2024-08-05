@@ -75,18 +75,3 @@ export default async function ProductTypePage({
         />
     );
 }
-
-function getInitialColour(displayName: DisplayName) {
-    if (displayName === "Baseball Tee") {
-        return "Black/ White";
-    }
-    return "Black";
-}
-
-function getInitialSize(displayName: DisplayName) {
-    if (displayName === "Mug") {
-        return "11oz";
-    } else {
-        return "L";
-    }
-}

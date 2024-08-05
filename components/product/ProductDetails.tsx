@@ -6,7 +6,6 @@ import {
     RetrieveProductResponse,
 } from "@/interfaces/PrintifyTypes";
 import { ImagesCarousel } from "../ImageCarousel";
-import { Size, SizeAndColorSelector } from "../SizeAndColorForm";
 import { useEffect, useMemo, useState } from "react";
 import { SmallLoadingSpinner } from "../loading/SmallLoadingSpinner";
 import { isSellingPriceProfitable } from "../../lib/pricing/isSellingPriceProfitable";
@@ -91,8 +90,6 @@ export function ProductDetails({
                 ({ title, value }) => variant.options[title] === value,
             ),
         ) ?? variants[0];
-
-    // const selectedVariantOption =
 
     const filteredImages = useMemo(
         () =>
@@ -360,17 +357,6 @@ export function ProductDetails({
         </div>
     );
 }
-
-function getFilteredSizesForColor(color: string, variants: Variant[]) {
-    const filteredVariants = variants.filter(
-        (variant) => variant.options.color == color,
-    );
-    const filteredSizes = filteredVariants.map(
-        (variant) => variant.options.size,
-    );
-    return filteredSizes;
-}
-
 function roundUpToNearestInteger(x: number) {
     return Math.ceil(x / 1) * 1;
 }
@@ -411,4 +397,19 @@ function UpdateSearchParamSlider({
             />
         </>
     );
+}
+
+function getInitialColour(displayName: DisplayName) {
+    if (displayName === "Baseball Tee") {
+        return "Black/ White";
+    }
+    return "Black";
+}
+
+function getInitialSize(displayName: DisplayName) {
+    if (displayName === "Mug") {
+        return "11oz";
+    } else {
+        return "L";
+    }
 }

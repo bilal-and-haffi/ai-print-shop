@@ -6,7 +6,6 @@ import {
     RetrieveProductResponse,
 } from "@/interfaces/PrintifyTypes";
 import { ImagesCarousel } from "../ImageCarousel";
-import { ClothingSize, SizeAndColorSelector } from "../SizeAndColorForm";
 import { useEffect, useMemo, useState } from "react";
 import { SmallLoadingSpinner } from "../loading/SmallLoadingSpinner";
 import { isSellingPriceProfitable } from "../../lib/pricing/isSellingPriceProfitable";
@@ -46,7 +45,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "../ui/select";
-import { CountrySetter } from "../CountrySetter";
+import { CountrySetter } from "../country/CountrySetter";
 
 export interface Options {
     id: number;
@@ -91,8 +90,6 @@ export function ProductDetails({
                 ({ title, value }) => variant.options[title] === value,
             ),
         ) ?? variants[0];
-
-    // const selectedVariantOption =
 
     const filteredImages = useMemo(
         () =>
@@ -270,7 +267,6 @@ export function ProductDetails({
     );
 
     if (!country) {
-        // TODO: GET COUNTRY or ask for country
         console.error("No country on product page");
         return <CountrySetter />;
     }
@@ -360,17 +356,6 @@ export function ProductDetails({
         </div>
     );
 }
-
-function getFilteredSizesForColor(color: string, variants: Variant[]) {
-    const filteredVariants = variants.filter(
-        (variant) => variant.options.color == color,
-    );
-    const filteredSizes = filteredVariants.map(
-        (variant) => variant.options.size,
-    );
-    return filteredSizes;
-}
-
 function roundUpToNearestInteger(x: number) {
     return Math.ceil(x / 1) * 1;
 }
@@ -411,4 +396,19 @@ function UpdateSearchParamSlider({
             />
         </>
     );
+}
+
+function getInitialColour(displayName: DisplayName) {
+    if (displayName === "Baseball Tee") {
+        return "Black/ White";
+    }
+    return "Black";
+}
+
+function getInitialSize(displayName: DisplayName) {
+    if (displayName === "Mug") {
+        return "11oz";
+    } else {
+        return "L";
+    }
 }

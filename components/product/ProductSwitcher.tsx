@@ -15,6 +15,7 @@ import { CountryCode } from "@/lib/stripe/createCheckoutSession";
 import { useEffect, useState } from "react";
 import { getPromptFromImageIdOrRemovedBackgroundImageId } from "@/db/image";
 import { getEnabledProductsForCountry } from "@/lib/printify/productsData";
+import { WhatsappShareButton } from "react-share";
 
 const productsMap = new Map([
     [ProductType.TShirt, "T Shirt"],
@@ -94,6 +95,14 @@ export const ProductSwitcher = () => {
                 </Select>
             </div>
             {/* needs to be an <a> because otherwise causes bugs */}
+            <a
+                href={`https://web.whatsapp.com/send?text= Check out this t-shirt I made with AI!`}
+                rel="nofollow noopener"
+                target="_blank"
+            >
+                <img src="/img/share-icon.png" style={{ height: "36px" }} />
+                Share via Whatsapp
+            </a>
             <a href={`/image/${prompt}?country=${countryCode}`}>
                 <Button
                     data-testid="Generate new image with same prompt button"

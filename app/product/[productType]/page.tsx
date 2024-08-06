@@ -1,5 +1,6 @@
 import { CountrySetter } from "@/components/CountrySetter";
 import { ProductDetails } from "@/components/product/ProductDetails";
+import { updateImageTableWithPrintifyImageId } from "@/db/image";
 import { fetchProductVariants } from "@/lib/printify/fetchProductVariants";
 import { createPrintifyProduct } from "@/lib/printify/product/createPrintifyProduct";
 import {
@@ -61,6 +62,13 @@ export default async function ProductTypePage({
         x,
         y,
     });
+
+    // Update imageTable with printify product id where imageId matches
+    await updateImageTableWithPrintifyImageId({
+        printifyImageId: imageId,
+        printifyProductId: product.id,
+    });
+
     console.log({ msg: "Fetched product", product });
     const variants = await fetchProductVariants(
         productInfo.blueprintId,

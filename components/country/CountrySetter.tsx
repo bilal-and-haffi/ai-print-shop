@@ -1,9 +1,9 @@
 "use client";
 import { getCountryFromIpAddress } from "@/lib/country/getCountryFromIpAddress";
 import { useEffect, useState } from "react";
-import { setNewSearchParamsAndPushRoute } from "./product/setNewSearchParamsAndPushRoute";
+import { setNewSearchParamsAndPushRoute } from "../product/setNewSearchParamsAndPushRoute";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
-import { SomethingWrongButton } from "./buttons/SomethingWrongButton";
+import { SomethingWrongButton } from "../buttons/SomethingWrongButton";
 import {
     Card,
     CardContent,
@@ -11,8 +11,8 @@ import {
     CardFooter,
     CardHeader,
     CardTitle,
-} from "./ui/card";
-import { PageLoadingSpinner } from "./loading/PageLoadingSpinner";
+} from "../ui/card";
+import { PageLoadingSpinner } from "../loading/PageLoadingSpinner";
 
 export function CountrySetter() {
     const [countryCode, setCountryCode] = useState();

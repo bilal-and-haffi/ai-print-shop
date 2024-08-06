@@ -1,4 +1,5 @@
-import { CountrySetter } from "@/components/CountrySetter";
+import { CountryPicker } from "@/components/country/CountryPicker";
+import { CountrySetter } from "@/components/country/CountrySetter";
 import { ProductDetails } from "@/components/product/ProductDetails";
 import { fetchProductVariants } from "@/lib/printify/fetchProductVariants";
 import { createPrintifyProduct } from "@/lib/printify/product/createPrintifyProduct";
@@ -10,6 +11,7 @@ import { CountryCode } from "@/lib/stripe/createCheckoutSession";
 import { track } from "@vercel/analytics/server";
 
 export type Position = "front" | "back";
+const COUNTRIES_WE_SELL_IN = ["GB", "US"];
 
 export default async function ProductTypePage({
     params: { productType },
@@ -36,6 +38,10 @@ export default async function ProductTypePage({
 
     if (country === "undefined") {
         return <CountrySetter />;
+    }
+
+    if (COUNTRIES_WE_SELL_IN.indexOf(country) === -1) {
+        return <CountryPicker />;
     }
 
     const products = getEnabledProductsForCountry(country);

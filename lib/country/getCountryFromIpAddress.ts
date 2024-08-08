@@ -1,6 +1,7 @@
 "use client";
 // must be run on client because otherwise would be giving the server ip
 export async function getCountryFromIpAddress() {
+    return "JP";
     try {
         console.log("Fetching country");
         const x = await fetch("https://ipapi.co/json/", {

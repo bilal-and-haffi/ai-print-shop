@@ -1,5 +1,4 @@
 "use client";
-
 import { Button } from "@/components/ui/button";
 import {
     ProductVariant,
@@ -46,6 +45,8 @@ import {
     SelectValue,
 } from "../ui/select";
 import { CountrySetter } from "../country/CountrySetter";
+import { CountryPicker } from "../country/CountryPicker";
+import { COUNTRIES_WE_SELL_IN } from "@/app/data/consts";
 
 export interface Options {
     id: number;
@@ -269,6 +270,10 @@ export function ProductDetails({
     if (!country) {
         console.error("No country on product page");
         return <CountrySetter />;
+    }
+
+    if (COUNTRIES_WE_SELL_IN.indexOf(country) === -1) {
+        return <CountryPicker />;
     }
 
     return (

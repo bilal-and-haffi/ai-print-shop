@@ -291,19 +291,21 @@ export function ProductDetails({
                     {optionTypes.map((type) => (
                         <Select
                             key={type}
-                            onValueChange={(value) =>
+                            onValueChange={(value) => {
+                                console.log({
+                                    msg: "value changed",
+                                    type,
+                                    value,
+                                });
                                 setNewSearchParamsAndPushRoute({
                                     name: type,
                                     searchParams,
                                     pathname,
                                     router,
                                     value,
-                                })
-                            }
-                            value={
-                                searchParams.get(type) ??
-                                variants[0].options[type]
-                            }
+                                });
+                            }}
+                            value={searchParams.get(type) || undefined}
                         >
                             <SelectTrigger>
                                 <SelectValue placeholder={capitalize(type)} />
@@ -317,9 +319,9 @@ export function ProductDetails({
                                     ),
                                 )
                                     .sort()
-                                    .map((colour) => (
-                                        <SelectItem key={colour} value={colour}>
-                                            {colour}
+                                    .map((value) => (
+                                        <SelectItem key={value} value={value}>
+                                            {value}
                                         </SelectItem>
                                     ))}
                             </SelectContent>

@@ -47,6 +47,7 @@ import {
 import { CountrySetter } from "../country/CountrySetter";
 import { CountryPicker } from "../country/CountryPicker";
 import { COUNTRIES_WE_SELL_IN } from "@/app/data/consts";
+import { customSort } from "@/lib/customSort";
 
 export interface Options {
     id: number;
@@ -313,7 +314,7 @@ export function ProductDetails({
                                         ),
                                     ),
                                 )
-                                    .sort()
+                                    .sort(customSort)
                                     .map((value) => (
                                         <SelectItem key={value} value={value}>
                                             {value}
@@ -358,6 +359,7 @@ export function ProductDetails({
         </div>
     );
 }
+
 function roundUpToNearestInteger(x: number) {
     return Math.ceil(x / 1) * 1;
 }
@@ -398,19 +400,4 @@ function UpdateSearchParamSlider({
             />
         </>
     );
-}
-
-function getInitialColour(displayName: DisplayName) {
-    if (displayName === "Baseball Tee") {
-        return "Black/ White";
-    }
-    return "Black";
-}
-
-function getInitialSize(displayName: DisplayName) {
-    if (displayName === "Mug") {
-        return "11oz";
-    } else {
-        return "L";
-    }
 }

@@ -292,11 +292,6 @@ export function ProductDetails({
                         <Select
                             key={type}
                             onValueChange={(value) => {
-                                console.log({
-                                    msg: "value changed",
-                                    type,
-                                    value,
-                                });
                                 setNewSearchParamsAndPushRoute({
                                     name: type,
                                     searchParams,

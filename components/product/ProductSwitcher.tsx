@@ -1,6 +1,5 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { ProductType } from "../../types/ProductType";
 import { RefreshCw, ChevronLeft } from "lucide-react";
 import Link from "next/link";
 import {
@@ -14,13 +13,10 @@ import { useRouter, useSearchParams, useParams } from "next/navigation";
 import { CountryCode } from "@/lib/stripe/createCheckoutSession";
 import { useEffect, useState } from "react";
 import { getPromptFromImageIdOrRemovedBackgroundImageId } from "@/db/image";
-import { getEnabledProductsForCountry } from "@/lib/printify/productsData";
-
-const productsMap = new Map([
-    [ProductType.TShirt, "T Shirt"],
-    [ProductType.Hoodie, "Hoodie"],
-    [ProductType.Mug, "Mug"],
-]);
+import {
+    DisplayName,
+    getEnabledProductsForCountry,
+} from "@/lib/printify/productsData";
 
 export const ProductSwitcher = () => {
     const router = useRouter();
@@ -57,6 +53,20 @@ export const ProductSwitcher = () => {
 
     const products = getEnabledProductsForCountry(countryCode);
 
+    // TODO: !!!! add the default options to the links here xoxo
+
+    const onValueChange = (value: DisplayName) => {
+        const searchParams = new URLSearchParams();
+        searchParams.append("country", countryCode);
+        searchParams.append("imageId", imageId);
+        appendDefaultOptionsForProductToSearchParams({
+            productType: value,
+            searchParams,
+        });
+        const routeToPush = `/product/${value}?${searchParams.toString()}`;
+        router.push(routeToPush);
+    };
+
     return (
         <div
             id="links-to-products-container"
@@ -69,11 +79,7 @@ export const ProductSwitcher = () => {
             </Link>
             <div id="product-links" className="flex">
                 <Select
-                    onValueChange={(value: ProductType) => {
-                        router.push(
-                            `/product/${value}?country=${countryCode}&imageId=${imageId}`,
-                        );
-                    }}
+                    onValueChange={onValueChange}
                     value={decodedProductType}
                 >
                     <SelectTrigger className="w-[180px]">
@@ -105,3 +111,37 @@ export const ProductSwitcher = () => {
         </div>
     );
 };
+
+function appendDefaultOptionsForProductToSearchParams({
+    productType,
+    searchParams,
+}: {
+    productType: DisplayName;
+    searchParams: URLSearchParams;
+}) {
+    switch (productType) {
+        case "Mug":
+            searchParams.append("size", "11oz");
+            searchParams.append("color", "Black");
+            return;
+        case "Baseball Tee":
+            searchParams.append("size", "L");
+            searchParams.append("color", "Black/ White");
+            return;
+        case "Canvas":
+            searchParams.append("size", '6" x 6"');
+            searchParams.append("depth", "0.75''");
+            return;
+        case "Phone Case":
+            searchParams.append("size", "iPhone 15");
+            searchParams.append("surface", "Matte");
+            return;
+        case "T Shirt":
+        case "Hoodie":
+        case "Sweatshirt":
+        default:
+            searchParams.append("size", "L");
+            searchParams.append("color", "Black");
+            return;
+    }
+}

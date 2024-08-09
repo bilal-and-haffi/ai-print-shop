@@ -7,7 +7,8 @@ export type DisplayName =
     | "Baseball Tee"
     | "Phone Case"
     | "Canvas"
-    | "Sweatshirt";
+    | "Sweatshirt"
+    | "Poster";
 
 interface PrintifyProductsData {
     enabled: boolean;
@@ -37,6 +38,7 @@ const blueprintIds = {
     phoneCases: 421, // https://printify.com/app/products/421/generic-brand/tough-cases
     baseballTee: 79,
     sweatshirt: 49, // https://printify.com/app/products/49/gildan/unisex-heavy-blend-crewneck-sweatshirt
+    poster: 1220, // https://printify.com/app/products/1220/generic-brand/rolled-posters
 };
 
 // TODO: add these
@@ -92,6 +94,14 @@ const productData: PrintifyProductsData[] = [
         displayName: "Sweatshirt",
         blueprintId: blueprintIds.sweatshirt,
         printProviderId: printProviderIds.printClever,
+        country: "GB",
+    },
+    {
+        enabled: true,
+        name: "Rolled poster",
+        displayName: "Poster",
+        blueprintId: blueprintIds.poster,
+        printProviderId: printProviderIds.jondo,
         country: "GB",
     },
     {
@@ -185,6 +195,14 @@ const productData: PrintifyProductsData[] = [
         displayName: "Sweatshirt",
         blueprintId: blueprintIds.sweatshirt,
         printProviderId: printProviderIds.marcoFineArts,
+        country: "US",
+    },
+    {
+        enabled: true,
+        name: "Rolled poster",
+        displayName: "Poster",
+        blueprintId: blueprintIds.poster,
+        printProviderId: printProviderIds.jondo,
         country: "US",
     },
 ];

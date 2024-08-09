@@ -136,12 +136,16 @@ function appendDefaultOptionsForProductToSearchParams({
             searchParams.append("size", "iPhone 15");
             searchParams.append("surface", "Matte");
             return;
+        case "Poster":
+            searchParams.append("size", "10″ x 8″ (Horizontal)");
+            searchParams.append("paper", "Matte");
+            return;
         case "T Shirt":
         case "Hoodie":
         case "Sweatshirt":
-        default:
             searchParams.append("size", "L");
             searchParams.append("color", "Black");
+        default:
             return;
     }
 }

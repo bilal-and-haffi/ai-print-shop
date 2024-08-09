@@ -1,9 +1,9 @@
+import { getEnabledProductsForCountry } from "@/lib/printify/productsData";
 import { CountryCode } from "@/lib/stripe/createCheckoutSession";
 import { test, expect, Page } from "@playwright/test";
 
 test.describe("happy path GB", () => {
     const countryCode = "GB";
-
     test.beforeEach(async ({ page }) => {
         await page.route("https://ipapi.co/json/", async (route) => {
             const json = { country: countryCode };
@@ -19,92 +19,21 @@ test.describe("happy path GB", () => {
         await page.getByTestId("Continue Button").click();
     });
 
-    test("buy a t shirt", async ({ page }) => {
-        await page.getByRole("button", { name: "Buy now" }).click();
-        await doStripeForm({ page, countryCode });
-        await page.waitForURL(/success/);
-        await expect(
-            page.getByRole("heading", {
-                name: "Your order has been confirmed!",
-            }),
-        ).toBeVisible();
-    });
-
-    test("buy a hoodie", async ({ page }) => {
-        await page.locator("#product-links").getByRole("combobox").click();
-        await page.getByLabel("Hoodie").click();
-        await page.getByRole("button", { name: "Buy now" }).click();
-        await doStripeForm({ page, countryCode });
-        await page.waitForURL(/success/);
-        await expect(
-            page.getByRole("heading", {
-                name: "Your order has been confirmed!",
-            }),
-        ).toBeVisible();
-    });
-
-    test("buy a mug", async ({ page }) => {
-        await page.locator("#product-links").getByRole("combobox").click();
-        await page.getByLabel("Mug").click();
-        await page.getByRole("button", { name: "Buy now" }).click();
-        await doStripeForm({ page, countryCode });
-        await page.waitForURL(/success/);
-        await expect(
-            page.getByRole("heading", {
-                name: "Your order has been confirmed!",
-            }),
-        ).toBeVisible();
-    });
-
-    test("buy a baseball tee", async ({ page }) => {
-        await page.locator("#product-links").getByRole("combobox").click();
-        await page.getByLabel("Baseball Tee").click();
-        await page.getByRole("button", { name: "Buy now" }).click();
-        await doStripeForm({ page, countryCode });
-        await page.waitForURL(/success/);
-        await expect(
-            page.getByRole("heading", {
-                name: "Your order has been confirmed!",
-            }),
-        ).toBeVisible();
-    });
-
-    test("buy a phone case", async ({ page }) => {
-        await page.locator("#product-links").getByRole("combobox").click();
-        await page.getByLabel("Phone Case").click();
-        await page.getByRole("button", { name: "Buy now" }).click();
-        await doStripeForm({ page, countryCode });
-        await page.waitForURL(/success/);
-        await expect(
-            page.getByRole("heading", {
-                name: "Your order has been confirmed!",
-            }),
-        ).toBeVisible();
-    });
-    test("buy a canvas", async ({ page }) => {
-        await page.locator("#product-links").getByRole("combobox").click();
-        await page.getByLabel("Canvas").click();
-        await page.getByRole("button", { name: "Buy now" }).click();
-        await doStripeForm({ page, countryCode });
-        await page.waitForURL(/success/);
-        await expect(
-            page.getByRole("heading", {
-                name: "Your order has been confirmed!",
-            }),
-        ).toBeVisible();
-    });
-    test("buy a sweatshirt", async ({ page }) => {
-        await page.locator("#product-links").getByRole("combobox").click();
-        await page.getByLabel("Sweatshirt").click();
-        await page.getByRole("button", { name: "Buy now" }).click();
-        await doStripeForm({ page, countryCode });
-        await page.waitForURL(/success/);
-        await expect(
-            page.getByRole("heading", {
-                name: "Your order has been confirmed!",
-            }),
-        ).toBeVisible();
-    });
+    for (const product of getEnabledProductsForCountry("GB")) {
+        const { displayName } = product;
+        test(`buy a ${displayName}`, async ({ page }) => {
+            await page.getByRole("button", { name: "Buy now" }).click();
+            await page.locator("#product-links").getByRole("combobox").click();
+            await page.getByLabel(displayName).click();
+            await doStripeForm({ page, countryCode });
+            await page.waitForURL(/success/);
+            await expect(
+                page.getByRole("heading", {
+                    name: "Your order has been confirmed!",
+                }),
+            ).toBeVisible();
+        });
+    }
 });
 
 test.describe("happy path us", () => {
@@ -125,92 +54,21 @@ test.describe("happy path us", () => {
         await page.getByTestId("Continue Button").click();
     });
 
-    test("US - buy a t shirt", async ({ page }) => {
-        await page.getByRole("button", { name: "Buy now" }).click();
-        await doStripeForm({ page, countryCode });
-        await page.waitForURL(/success/);
-        await expect(
-            page.getByRole("heading", {
-                name: "Your order has been confirmed!",
-            }),
-        ).toBeVisible();
-    });
-
-    test("US - buy a hoodie", async ({ page }) => {
-        await page.locator("#product-links").getByRole("combobox").click();
-        await page.getByLabel("Hoodie").click();
-        await page.getByRole("button", { name: "Buy now" }).click();
-        await doStripeForm({ page, countryCode });
-        await page.waitForURL(/success/);
-        await expect(
-            page.getByRole("heading", {
-                name: "Your order has been confirmed!",
-            }),
-        ).toBeVisible();
-    });
-
-    test("US - buy a mug", async ({ page }) => {
-        await page.locator("#product-links").getByRole("combobox").click();
-        await page.getByLabel("Mug").click();
-        await page.getByRole("button", { name: "Buy now" }).click();
-        await doStripeForm({ page, countryCode });
-        await page.waitForURL(/success/);
-        await expect(
-            page.getByRole("heading", {
-                name: "Your order has been confirmed!",
-            }),
-        ).toBeVisible();
-    });
-
-    test("US - buy a baseball tee", async ({ page }) => {
-        await page.locator("#product-links").getByRole("combobox").click();
-        await page.getByLabel("Baseball Tee").click();
-        await page.getByRole("button", { name: "Buy now" }).click();
-        await doStripeForm({ page, countryCode });
-        await page.waitForURL(/success/);
-        await expect(
-            page.getByRole("heading", {
-                name: "Your order has been confirmed!",
-            }),
-        ).toBeVisible();
-    });
-
-    test("buy a phone case", async ({ page }) => {
-        await page.locator("#product-links").getByRole("combobox").click();
-        await page.getByLabel("Phone Case").click();
-        await page.getByRole("button", { name: "Buy now" }).click();
-        await doStripeForm({ page, countryCode });
-        await page.waitForURL(/success/);
-        await expect(
-            page.getByRole("heading", {
-                name: "Your order has been confirmed!",
-            }),
-        ).toBeVisible();
-    });
-    test("buy a canvas", async ({ page }) => {
-        await page.locator("#product-links").getByRole("combobox").click();
-        await page.getByLabel("Canvas").click();
-        await page.getByRole("button", { name: "Buy now" }).click();
-        await doStripeForm({ page, countryCode });
-        await page.waitForURL(/success/);
-        await expect(
-            page.getByRole("heading", {
-                name: "Your order has been confirmed!",
-            }),
-        ).toBeVisible();
-    });
-    test("buy a sweatshirt", async ({ page }) => {
-        await page.locator("#product-links").getByRole("combobox").click();
-        await page.getByLabel("Sweatshirt").click();
-        await page.getByRole("button", { name: "Buy now" }).click();
-        await doStripeForm({ page, countryCode });
-        await page.waitForURL(/success/);
-        await expect(
-            page.getByRole("heading", {
-                name: "Your order has been confirmed!",
-            }),
-        ).toBeVisible();
-    });
+    for (const product of getEnabledProductsForCountry("US")) {
+        const { displayName } = product;
+        test(`US - buy a ${displayName}`, async ({ page }) => {
+            await page.getByRole("button", { name: "Buy now" }).click();
+            await page.locator("#product-links").getByRole("combobox").click();
+            await page.getByLabel(displayName).click();
+            await doStripeForm({ page, countryCode });
+            await page.waitForURL(/success/);
+            await expect(
+                page.getByRole("heading", {
+                    name: "Your order has been confirmed!",
+                }),
+            ).toBeVisible();
+        });
+    }
 });
 
 async function doStripeForm({

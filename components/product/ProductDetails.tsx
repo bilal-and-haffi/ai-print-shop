@@ -86,12 +86,11 @@ export function ProductDetails({
         value: searchParams.get(type),
     }));
 
-    const selectedVariant =
-        variants.find((variant) =>
-            selectedOptions.every(
-                ({ title, value }) => variant.options[title] === value,
-            ),
-        ) ?? variants[0];
+    const selectedVariant = variants.find((variant) =>
+        selectedOptions.every(
+            ({ title, value }) => variant.options[title] === value,
+        ),
+    );
 
     const filteredImages = useMemo(
         () =>
@@ -105,12 +104,16 @@ export function ProductDetails({
 
     const selectedProductVariant = useMemo(() => {
         return retrievedProduct.variants.find(
-            (variants) => variants.id === selectedVariant.id,
+            (variants) => variants.id === selectedVariant?.id,
         ) as ProductVariant;
     }, [selectedVariant, retrievedProduct.variants]);
 
     useEffect(() => {
         const handlePricing = async () => {
+            if (!selectedProductVariant) {
+                console.warn("No selectedProductVariant");
+                return;
+            }
             const generatedUnroundedPriceInUsd =
                 await generateUnroundedPriceInUsd({
                     selectedVariant: selectedProductVariant,
@@ -160,8 +163,8 @@ export function ProductDetails({
                 productId: retrievedProduct.id,
                 productType: retrievedProduct.tags[1],
                 order_title: retrievedProduct.title,
-                order_variant_label: selectedVariant.title,
-                orderVariantId: selectedVariant.id,
+                order_variant_label: selectedVariant?.title, // ? to fix lint issue shouldn't really be there
+                orderVariantId: selectedVariant?.id, // ? to fix lint issue shouldn't really be there
                 order_preview: filteredImages[0].src,
                 price: sellingPriceInLocalCurrency * 100, // 100 is weird imo
                 country,
@@ -277,6 +280,56 @@ export function ProductDetails({
         return <CountryPicker />;
     }
 
+    const OptionsSelectors = () => (
+        <div id="selectContainer" className="flex justify-between gap-2">
+            {optionTypes.map((type) => (
+                <Select
+                    key={type}
+                    onValueChange={(value) => {
+                        setNewSearchParamsAndPushRoute({
+                            name: type,
+                            searchParams,
+                            pathname,
+                            router,
+                            value,
+                        });
+                    }}
+                    value={searchParams.get(type) || undefined}
+                >
+                    <SelectTrigger>
+                        <SelectValue placeholder={capitalize(type)} />
+                    </SelectTrigger>
+                    <SelectContent>
+                        {Array.from(
+                            new Set(
+                                variants.map(
+                                    (variant) => variant.options[type],
+                                ),
+                            ),
+                        )
+                            .sort(customSort)
+                            .map((value) => (
+                                <SelectItem key={value} value={value}>
+                                    {value}
+                                </SelectItem>
+                            ))}
+                    </SelectContent>
+                </Select>
+            ))}
+        </div>
+    );
+
+    if (!selectedVariant) {
+        // should really not be showing users options to get here but this will prevent them from trying to order something that doesn't actually exist
+        console.warn("No selected variant");
+        return (
+            <>
+                <p>Sorry this combination of options is unavailable</p>
+                <OptionsSelectors />
+            </>
+        );
+    }
+
     return (
         <div className="flex w-full flex-col items-center justify-center text-center">
             {images ? (
@@ -285,45 +338,7 @@ export function ProductDetails({
                 <div>Product Not Available</div>
             )}
             <div className="mt-4 flex w-full flex-col gap-2">
-                <div
-                    id="selectContainer"
-                    className="flex justify-between gap-2"
-                >
-                    {optionTypes.map((type) => (
-                        <Select
-                            key={type}
-                            onValueChange={(value) => {
-                                setNewSearchParamsAndPushRoute({
-                                    name: type,
-                                    searchParams,
-                                    pathname,
-                                    router,
-                                    value,
-                                });
-                            }}
-                            value={searchParams.get(type) || undefined}
-                        >
-                            <SelectTrigger>
-                                <SelectValue placeholder={capitalize(type)} />
-                            </SelectTrigger>
-                            <SelectContent>
-                                {Array.from(
-                                    new Set(
-                                        variants.map(
-                                            (variant) => variant.options[type],
-                                        ),
-                                    ),
-                                )
-                                    .sort(customSort)
-                                    .map((value) => (
-                                        <SelectItem key={value} value={value}>
-                                            {value}
-                                        </SelectItem>
-                                    ))}
-                            </SelectContent>
-                        </Select>
-                    ))}
-                </div>
+                <OptionsSelectors />
 
                 <CustommiseDialog />
 

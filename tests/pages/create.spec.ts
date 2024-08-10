@@ -63,3 +63,34 @@ test("User can randomise their prompt", async ({ page }) => {
         page.getByPlaceholder("Example: An astronaut playing"),
     ).not.toHaveText("test prompt");
 });
+
+test("User gets an alert if their prompt contains anything explicit", async ({
+    page,
+}) => {
+    await page.goto("http://localhost:3000/create");
+    await page.getByPlaceholder("Example: An astronaut playing").click();
+    await page
+        .getByPlaceholder("Example: An astronaut playing")
+        .fill("a naked person");
+    await page.getByTestId("Generate Image Button").click();
+    await page.getByTestId("Continue Button").click();
+    await expect(
+        page.getByRole("heading", { name: "Are you absolutely sure?" }),
+    ).toBeVisible();
+});
+
+test("User gets an alert if their prompt contains anything copyrighted", async ({
+    page,
+}) => {
+    await page.goto("http://localhost:3000/create");
+    await page.getByPlaceholder("Example: An astronaut playing").click();
+    await page
+        .getByPlaceholder("Example: An astronaut playing")
+        .fill("mario from nintendo");
+    await page.getByTestId("Generate Image Button").click();
+    await page.getByTestId("Continue Button").click();
+    await expect(
+        page.getByRole("heading", { name: "Are you absolutely sure?" }),
+    ).toBeVisible();
+    await expect(page.getByText("Warning:")).toBeVisible();
+});

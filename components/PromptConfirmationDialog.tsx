@@ -33,7 +33,8 @@ export function PromptConfirmationDialog({
                         Are you absolutely sure?
                     </AlertDialogTitle>
                     <AlertDialogDescription>
-                        <strong>Copyright warning:</strong> {alertReason}
+                        <strong>Warning:</strong> {alertReason} Your order may
+                        be cancelled and refunded if you choose to continue.
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>

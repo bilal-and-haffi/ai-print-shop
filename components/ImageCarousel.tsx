@@ -8,15 +8,10 @@ import {
     CarouselNext,
     CarouselPrevious,
 } from "@/components/ui/carousel";
-import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
-import { useState } from "react";
-import { track } from "@vercel/analytics";
+import { ImageWithLoadingAndError } from "./ImageWithLoadingAndError";
 
 export function ImagesCarousel(props: { images: ProductImage[] }) {
-    const [imageLoaded, setImageLoaded] = useState(false);
-    const [imageErrored, setImageErrored] = useState(false);
-
     const { images } = props;
 
     return (
@@ -24,33 +19,10 @@ export function ImagesCarousel(props: { images: ProductImage[] }) {
             <CarouselContent className="">
                 {images.map((image, index) => (
                     <CarouselItem key={index}>
-                        <div
-                            className={
-                                imageLoaded && !imageErrored
-                                    ? ""
-                                    : "flex aspect-square animate-pulse rounded-md bg-muted"
-                            }
-                        >
+                        <div>
                             <Card>
                                 <CardContent className="p-0">
-                                    <Image
-                                        src={image.src}
-                                        alt="Product Image"
-                                        width={1200}
-                                        height={1200}
-                                        onLoad={() => setImageLoaded(true)}
-                                        className="rounded-lg"
-                                        unoptimized
-                                        onError={(error) => {
-                                            console.error({
-                                                error,
-                                                msg: "Image loading error",
-                                            });
-                                            track("Image Error");
-                                            setImageErrored(true);
-                                        }}
-                                        priority
-                                    />
+                                    <ImageWithLoadingAndError src={image.src} />
                                 </CardContent>
                             </Card>
                         </div>

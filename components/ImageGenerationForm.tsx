@@ -8,7 +8,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { envClient } from "@/lib/env/client";
-import { checkPromptForCopyRight } from "@/lib/openai/copyrightCheck";
 import { PromptConfirmationDialog } from "./PromptConfirmationDialog";
 import { SelectFormField } from "./form/SelectFormField";
 import { CountryCode } from "@/lib/stripe/createCheckoutSession";
@@ -22,6 +21,7 @@ import {
 } from "@/components/ui/dialog";
 import { sample } from "lodash";
 import { track } from "@vercel/analytics";
+import { checkPromptForIssues } from "@/lib/openai/copyrightCheck";
 
 const styleOptions = [
     "None",
@@ -96,7 +96,7 @@ export function ImageGenerationForm({
         track("Generated Image");
         if (promptValue.trim() === "") return;
 
-        const response = await checkPromptForCopyRight(promptValue);
+        const response = await checkPromptForIssues(promptValue);
 
         if (response === "NO") {
             continueToNextStep();

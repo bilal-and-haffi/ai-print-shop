@@ -11,9 +11,11 @@ import {
 import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 import { useState } from "react";
+import { track } from "@vercel/analytics";
 
 export function ImagesCarousel(props: { images: ProductImage[] }) {
     const [imageLoaded, setImageLoaded] = useState(false);
+    const [imageErrored, setImageErrored] = useState(false);
 
     const { images } = props;
 
@@ -24,7 +26,7 @@ export function ImagesCarousel(props: { images: ProductImage[] }) {
                     <CarouselItem key={index}>
                         <div
                             className={
-                                imageLoaded
+                                imageLoaded && !imageErrored
                                     ? ""
                                     : "flex aspect-square animate-pulse rounded-md bg-muted"
                             }
@@ -39,7 +41,14 @@ export function ImagesCarousel(props: { images: ProductImage[] }) {
                                         onLoad={() => setImageLoaded(true)}
                                         className="rounded-lg"
                                         unoptimized
-                                        onError={(e) => console.error(e)}
+                                        onError={(error) => {
+                                            console.error({
+                                                error,
+                                                msg: "Image loading error",
+                                            });
+                                            track("Image Error");
+                                            setImageErrored(true);
+                                        }}
                                         priority
                                     />
                                 </CardContent>

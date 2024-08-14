@@ -1,4 +1,5 @@
 import { SomethingWrongButton } from "@/components/buttons/SomethingWrongButton";
+import { CountryPicker } from "@/components/country/CountryPicker";
 import { Button } from "@/components/ui/button";
 import {
     Card,
@@ -9,13 +10,19 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 import { getImageUrlFromPrintify } from "@/lib/printify/image/getImageFromPrintify";
+import { CountryCode } from "@/lib/stripe/createCheckoutSession";
 import Image from "next/image";
+import Link from "next/link";
 
 export default async function ImageConfirmPage({
-    searchParams: { imageId },
+    searchParams: { imageId, country },
 }: {
-    searchParams: { imageId: string };
+    searchParams: { imageId: string; country: CountryCode | "undefined" };
 }) {
+    console.log({ country });
+    if (!country || country === "undefined") {
+        return <CountryPicker />;
+    }
     return (
         <>
             <Card>
@@ -34,13 +41,10 @@ export default async function ImageConfirmPage({
                     />
                 </CardContent>
                 <CardFooter className="flex flex-col gap-4">
-                    <Button className="w-full" variant={"secondary"}>
-                        Do something else
-                    </Button>
-                    <Button className="w-full" variant={"secondary"}>
-                        Do something else else
-                    </Button>
                     <SomethingWrongButton text="Give feedback" />
+                    <Link
+                        href={`/product/T%20Shirt?country=${country}&imageId=${imageId}&size=L&color=Black`}
+                    ></Link>
                     <Button className="w-full">Continue to product</Button>
                 </CardFooter>
             </Card>

@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import { ThemeProvider } from "@/components/theme-provider";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Toaster } from "@/components/ui/toaster";
-import FacebookPixel from "../components/FacebookPixel";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -53,7 +52,6 @@ export default function RootLayout({
                     >
                         {children}
                         <Analytics />
-                        <FacebookPixel />
                     </ThemeProvider>
                 </main>
                 <footer className="mt-auto w-full">

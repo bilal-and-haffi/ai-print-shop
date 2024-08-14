@@ -1,5 +1,5 @@
 import { PRINTIFY_BASE_URL } from "@/app/data/consts";
-import { envServer } from "../env/server";
+import { envServer } from "../../env/server";
 
 export async function sendAnExistingOrderToProduction(orderId: string) {
     const endpoint = `${PRINTIFY_BASE_URL}/v1/shops/${envServer.SHOP_ID}/orders/${orderId}/send_to_production.json`;

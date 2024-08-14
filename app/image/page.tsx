@@ -1,4 +1,3 @@
-import { postUrlImageToPrintify } from "@/lib/printify/postImageToPrintify";
 import { addToImageTable } from "@/db/image";
 import { generateOpenAiImageUrl } from "@/lib/images/openai";
 import { generateStableDiffusionImageUrl } from "@/lib/images/replicate";
@@ -6,6 +5,7 @@ import { CountryCode } from "@/lib/stripe/createCheckoutSession";
 import { addOptionsToPrompt } from "@/lib/addOptionsToPrompt";
 import { redirect, RedirectType } from "next/navigation";
 import { track } from "@vercel/analytics/server";
+import { postUrlImageToPrintify } from "@/lib/printify/image/postImageToPrintify";
 
 export const maxDuration = 300;
 

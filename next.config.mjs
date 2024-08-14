@@ -14,6 +14,10 @@ const nextConfig = {
                 protocol: "https",
                 hostname: "www.facebook.com",
             },
+            {
+                protocol: "https",
+                hostname: "pfy-prod-image-storage.s3.us-east-2.amazonaws.com",
+            },
         ],
     },
 };

@@ -2,7 +2,7 @@ import { PRINTIFY_BASE_URL } from "@/app/data/consts";
 import { PrintifyProductRequest } from "@/interfaces/PrintifyTypes";
 import { envServer } from "../../env/server";
 import { getPromptFromImageIdOrRemovedBackgroundImageId } from "@/db/image";
-import { fetchProductVariants } from "../fetchProductVariants";
+import { fetchProductVariants } from "./fetchProductVariants";
 
 export async function createPrintifyProduct({
     printifyImageId,

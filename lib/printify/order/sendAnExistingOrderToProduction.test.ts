@@ -1,5 +1,5 @@
 import { PRINTIFY_BASE_URL } from "@/app/data/consts";
-import { envServer } from "../env/server";
+import { envServer } from "../../env/server";
 import { sendAnExistingOrderToProduction } from "./sendAnExistingOrderToProduction";
 
 describe("sendAnExistingOrderToProduction", () => {

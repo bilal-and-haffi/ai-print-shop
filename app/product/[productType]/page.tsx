@@ -2,8 +2,8 @@ import { COUNTRIES_WE_SELL_IN } from "@/app/data/consts";
 import { CountryPicker } from "@/components/country/CountryPicker";
 import { CountrySetter } from "@/components/country/CountrySetter";
 import { ProductDetails } from "@/components/product/ProductDetails";
-import { fetchProductVariants } from "@/lib/printify/fetchProductVariants";
 import { createPrintifyProduct } from "@/lib/printify/product/createPrintifyProduct";
+import { fetchProductVariants } from "@/lib/printify/product/fetchProductVariants";
 import {
     DisplayName,
     getEnabledProductsForCountry,

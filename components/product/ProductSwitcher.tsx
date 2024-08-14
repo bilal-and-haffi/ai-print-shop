@@ -53,8 +53,6 @@ export const ProductSwitcher = () => {
 
     const products = getEnabledProductsForCountry(countryCode);
 
-    // TODO: !!!! add the default options to the links here xoxo
-
     const onValueChange = (value: DisplayName) => {
         const searchParams = new URLSearchParams();
         searchParams.append("country", countryCode);

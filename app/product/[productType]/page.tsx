@@ -2,6 +2,7 @@ import { COUNTRIES_WE_SELL_IN } from "@/app/data/consts";
 import { CountryPicker } from "@/components/country/CountryPicker";
 import { CountrySetter } from "@/components/country/CountrySetter";
 import { ProductDetails } from "@/components/product/ProductDetails";
+import { updateImageTableWithPrintifyImageId } from "@/db/image";
 import { fetchProductVariants } from "@/lib/printify/fetchProductVariants";
 import { createPrintifyProduct } from "@/lib/printify/product/createPrintifyProduct";
 import {
@@ -71,6 +72,12 @@ export default async function ProductTypePage({
         productInfo.blueprintId,
         productInfo.printProviderId,
     );
+
+    // Update imageTable with printify product id where imageId matches
+    await updateImageTableWithPrintifyImageId({
+        printifyImageId: imageId,
+        printifyProductId: product.id,
+    });
 
     return (
         <ProductDetails

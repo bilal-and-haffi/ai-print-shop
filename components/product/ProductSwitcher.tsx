@@ -100,7 +100,7 @@ export const ProductSwitcher = () => {
                 </Select>
             </div>
             {/* needs to be an <a> because otherwise causes bugs */}
-            <a href={`/image/${prompt}?country=${countryCode}`}>
+            <a href={`/image?prompt=${prompt}?country=${countryCode}`}>
                 <Button
                     data-testid="Generate new image with same prompt button"
                     variant={"outline"}

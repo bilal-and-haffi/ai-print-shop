@@ -5,26 +5,33 @@ import { generateStableDiffusionImageUrl } from "@/lib/images/replicate";
 import { CountryCode } from "@/lib/stripe/createCheckoutSession";
 import { addOptionsToPrompt } from "@/lib/addOptionsToPrompt";
 import { redirect, RedirectType } from "next/navigation";
+import { track } from "@vercel/analytics/server";
 
 export const maxDuration = 300;
 
-export default async function GenerateImagePage(params: {
-    params: { prompt: string };
+export default async function GenerateImagePage({
+    searchParams: { style, location, country, prompt: encodedPrompt },
+}: {
     searchParams: {
         style: string;
         location: string;
         country: CountryCode;
+        prompt: string;
     };
 }) {
-    const { prompt: encodedPrompt } = params.params;
-    const { style, location, country } = params.searchParams;
+    track("Generate image page");
     const decodedPrompt = decodeURIComponent(encodedPrompt);
     console.log({ msg: "Image Page", decodedPrompt, style, location, country });
 
     if (!encodedPrompt) {
-        console.error("Text is required", { params });
+        console.error("Text is required", {
+            style,
+            location,
+            country,
+            encodedPrompt,
+        });
         console.error({ decodedPrompt });
-        return <div>Text is required</div>;
+        return <div>Prompt is required</div>;
     }
 
     const isTestPrompt = decodedPrompt === "test prompt";

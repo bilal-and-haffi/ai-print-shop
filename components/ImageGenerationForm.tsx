@@ -88,7 +88,7 @@ export function ImageGenerationForm({
 
     const continueToNextStep = () => {
         router.push(
-            `/image/${promptValue}?&style=${style}&location=${location}&country=${country}`,
+            `/image?prompt=${promptValue}&style=${style}&location=${location}&country=${country}`,
         );
     };
 

@@ -22,7 +22,11 @@ export function ImagesCarousel(props: { images: ProductImage[] }) {
                         <div>
                             <Card>
                                 <CardContent className="p-0">
-                                    <ImageWithLoadingAndError src={image.src} />
+                                    <ImageWithLoadingAndError
+                                        src={image.src}
+                                        width={1200}
+                                        height={1200}
+                                    />
                                 </CardContent>
                             </Card>
                         </div>

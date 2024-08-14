@@ -5,6 +5,10 @@ import { generateStableDiffusionImageUrl } from "@/lib/images/replicate";
 import { CountryCode } from "@/lib/stripe/createCheckoutSession";
 import { addOptionsToPrompt } from "@/lib/addOptionsToPrompt";
 import { redirect, RedirectType } from "next/navigation";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { ChevronLeft, RefreshCw } from "lucide-react";
+import { ImageWithLoadingAndError } from "@/components/ImageWithLoadingAndError";
 
 export const maxDuration = 300;
 
@@ -75,8 +79,44 @@ export default async function GenerateImagePage(params: {
         printifyImageUrl: generatedImageUrl,
     });
 
-    redirect(
-        `/product/T%20Shirt?country=${country}&imageId=${printifyImageId}&size=L&color=Black`,
-        RedirectType.replace,
+    const continueToProductPage = () => {
+        redirect(
+            `/product/T%20Shirt?country=${country}&imageId=${printifyImageId}&size=L&color=Black`,
+            RedirectType.replace,
+        );
+    };
+
+    return (
+        <div className="space-y-4">
+            <div className="space-x-2">
+                <Link
+                    href={`/create?country=${country}&prompt=${encodedPrompt}`}
+                >
+                    <Button data-testid="Go back" variant={"outline"}>
+                        <ChevronLeft className="h-4 w-4" />
+                    </Button>
+                </Link>
+                <a href={`/image/${encodedPrompt}?country=${country}`}>
+                    <Button
+                        data-testid="Generate new image with same prompt button"
+                        variant={"outline"}
+                    >
+                        <RefreshCw className="h-4 w-4" />
+                    </Button>
+                </a>
+            </div>
+            <div>
+                <ImageWithLoadingAndError
+                    src={generatedImageUrl}
+                    width={500}
+                    height={500}
+                />
+            </div>
+            <a
+                href={`/product/T%20Shirt?country=${country}&imageId=${printifyImageId}&size=L&color=Black`}
+            >
+                <Button className="p-2">Continue</Button>
+            </a>
+        </div>
     );
 }

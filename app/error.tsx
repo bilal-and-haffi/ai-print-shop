@@ -7,7 +7,6 @@ import {
     CardFooter,
     CardHeader,
 } from "@/components/ui/card";
-import { sendEmail } from "@/lib/email/sendEmail";
 import { track } from "@vercel/analytics";
 import Link from "next/link";
 
@@ -20,11 +19,7 @@ export default function ErrorPage({
 }) {
     console.error({ error });
     track("Error page");
-    sendEmail({
-        emailAddress: "something-went-wrong@ai-print-shop.com",
-        body: JSON.stringify(error),
-        subject: "Something went wrong",
-    });
+
     return (
         <Card>
             <CardHeader>

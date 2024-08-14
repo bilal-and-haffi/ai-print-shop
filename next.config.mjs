@@ -10,6 +10,10 @@ const nextConfig = {
                 protocol: "https",
                 hostname: "images-api.printify.com",
             },
+            {
+                protocol: "https",
+                hostname: "www.facebook.com",
+            },
         ],
     },
 };

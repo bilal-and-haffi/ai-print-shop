@@ -259,7 +259,6 @@ const examplPrompts = [
     "Bold typography design with a motivational quote, using contrasting fonts and colors, set against a minimalist background",
     "Cyberpunk cityscape at night, with neon lights and futuristic buildings, featuring flying cars and holographic advertisements",
     "Anime-style original character with detailed costume and dynamic pose, set against a vibrant background with cherry blossoms",
-    "Retro pop culture-inspired collage, featuring music and TV references from the past, set against a vibrant neon grid background",
     "Pixel art fantasy scene with knights and mythical creatures in a pixelated medieval setting with a castle in the background",
     "Steampunk-inspired mechanical octopus with gears and cogs, in a sepia tone, set against a Victorian underwater background",
     "Photorealistic tiger in mid-roar, with detailed fur and intense eyes, set against a lush jungle background",

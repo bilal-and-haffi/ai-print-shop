@@ -46,7 +46,6 @@ export default async function ProductTypePage({
     const products = getEnabledProductsForCountry(country);
     const displayName = decodeURIComponent(productType) as DisplayName;
     const productInfo = products.find((p) => p.displayName === displayName);
-    console.log("1");
 
     if (!productInfo) {
         console.error({

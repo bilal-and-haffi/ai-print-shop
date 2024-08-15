@@ -25,6 +25,8 @@ test.describe("Additional Options", () => {
         await page.getByLabel("Location: None").click();
         await page.getByTestId("Continue Button").click();
         await page.getByTestId("Continue Button").click();
+        await page.waitForURL(/image/);
+        await page.getByRole("button", { name: "Continue" }).click();
         await page.waitForURL(/product/);
         await expect(
             page.getByRole("button", { name: "Buy now" }),
@@ -44,6 +46,8 @@ test.describe("Additional Options", () => {
         await page.getByLabel("Location: None").click();
         await page.getByTestId("Continue Button").click();
         await page.getByTestId("Continue Button").click();
+        await page.waitForURL(/image/);
+        await page.getByRole("button", { name: "Continue" }).click();
         await page.waitForURL(/product/);
         await expect(
             page.getByRole("button", { name: "Buy now" }),

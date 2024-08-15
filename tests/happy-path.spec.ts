@@ -17,6 +17,8 @@ test.describe("happy path GB", () => {
             .fill("test prompt");
         await page.getByTestId("Generate Image Button").click();
         await page.getByTestId("Continue Button").click();
+        await page.waitForURL(/image/);
+        await page.getByRole("button", { name: "Continue" }).click();
     });
 
     for (const product of getEnabledProductsForCountry("GB")) {

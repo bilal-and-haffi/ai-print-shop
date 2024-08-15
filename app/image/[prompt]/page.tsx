@@ -79,13 +79,6 @@ export default async function GenerateImagePage(params: {
         printifyImageUrl: generatedImageUrl,
     });
 
-    const continueToProductPage = () => {
-        redirect(
-            `/product/T%20Shirt?country=${country}&imageId=${printifyImageId}&size=L&color=Black`,
-            RedirectType.replace,
-        );
-    };
-
     return (
         <div className="space-y-4">
             <div className="space-x-2">

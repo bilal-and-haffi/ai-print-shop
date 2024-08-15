@@ -80,7 +80,7 @@ export default async function GenerateImagePage(params: {
     });
 
     return (
-        <div className="space-y-4">
+        <div className="flex flex-col gap-4">
             <div className="space-x-2">
                 <Link
                     href={`/create?country=${country}&prompt=${encodedPrompt}`}
@@ -105,11 +105,14 @@ export default async function GenerateImagePage(params: {
                     height={500}
                 />
             </div>
-            <a
-                href={`/product/T%20Shirt?country=${country}&imageId=${printifyImageId}&size=L&color=Black`}
-            >
-                <Button className="p-2">Continue</Button>
-            </a>
+            <div>
+                <a
+                    href={`/product/T%20Shirt?country=${country}&imageId=${printifyImageId}&size=L&color=Black`}
+                    className="w-full"
+                >
+                    <Button className="w-full">Continue</Button>
+                </a>
+            </div>
         </div>
     );
 }

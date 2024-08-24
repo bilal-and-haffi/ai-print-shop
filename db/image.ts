@@ -21,27 +21,6 @@ export const addToImageTable = async ({
     return insertResult[0].id;
 };
 
-export const updateImageTableWithPrintifyImageId = async ({
-    printifyImageId,
-    printifyProductId,
-}: {
-    printifyImageId: string;
-    printifyProductId: string;
-}) => {
-    console.log({
-        msg: "Adding printify image id to image table",
-        printifyImageId,
-        printifyProductId,
-    });
-
-    await dbClient
-        .update(imageTable)
-        .set({
-            printifyProductId,
-        })
-        .where(eq(imageTable.printifyImageId, printifyImageId));
-};
-
 export const updateImageTableWithRemovedBackgroundImage = async ({
     printifyImageId,
     removedBackgroundPrintifyImageId,

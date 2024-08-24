@@ -81,7 +81,7 @@ export default async function GenerateImagePage(params: {
 
     return (
         <div className="flex flex-col gap-4">
-            <div className="space-x-2">
+            <div className="flex w-full items-center justify-between">
                 <Link
                     href={`/create?country=${country}&prompt=${encodedPrompt}`}
                 >
@@ -89,6 +89,7 @@ export default async function GenerateImagePage(params: {
                         <ChevronLeft className="h-4 w-4" />
                     </Button>
                 </Link>
+                <span>Your image :)</span>
                 <a href={`/image/${encodedPrompt}?country=${country}`}>
                     <Button
                         data-testid="Generate new image with same prompt button"

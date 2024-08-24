@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/card";
 import { track } from "@vercel/analytics";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function ErrorPage({
     error,
@@ -19,6 +20,7 @@ export default function ErrorPage({
 }) {
     console.error({ error });
     track("Error page");
+    const router = useRouter();
 
     return (
         <Card>
@@ -35,6 +37,9 @@ export default function ErrorPage({
             <CardFooter className="flex flex-col gap-4">
                 <Button className="w-full" onClick={() => reset()}>
                     Try again
+                </Button>
+                <Button className="w-full" onClick={() => router.back()}>
+                    Go back
                 </Button>
                 <Link href="/support" className="w-full">
                     <Button variant={"secondary"} className="w-full">

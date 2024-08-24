@@ -43,7 +43,7 @@ export default async function GenerateImagePage(params: {
         decodedPrompt,
     });
 
-    let generatedImageUrl: string;
+    let generatedImageUrl: string | undefined;
 
     if (isTestPrompt) {
         console.log(

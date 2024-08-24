@@ -32,7 +32,11 @@ export const generateOpenAiImageUrl = async ({
         style: "vivid",
     });
 
-    const url = response.data[0].url!;
+    const url = response.data[0].url;
+    if (!url) {
+        console.error("No url");
+        throw new Error("No url");
+    }
     console.log("Generated image:", { url });
 
     return url;

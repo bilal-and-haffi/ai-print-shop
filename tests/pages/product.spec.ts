@@ -9,8 +9,6 @@ test.beforeEach(async ({ page }) => {
         .fill("test prompt");
     await page.getByTestId("Generate Image Button").click();
     await page.getByTestId("Continue Button").click();
-    await page.waitForURL(/image/);
-    await page.getByRole("button", { name: "Continue" }).click();
 });
 
 test.describe("product page", () => {

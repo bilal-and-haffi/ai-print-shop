@@ -58,7 +58,6 @@ export async function sendEmail({
 
         return data.id;
     } catch (error) {
-        console.error({ error });
-        throw error;
+        console.error({ error, msg: "Email failed to send" });
     }
 }

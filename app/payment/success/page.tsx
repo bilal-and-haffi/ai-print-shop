@@ -60,33 +60,11 @@ export default async function Page(params: {
 
     const printifyOrder = await pollForPrintifyOrder(printifyOrderId);
 
-    const existingEmailId = await getEmailIdFromOrderTable({ internalOrderId });
-    const hasSentEmailAlready = Boolean(existingEmailId);
-
-    console.log({ emailId: existingEmailId, hasSentEmailAlready });
-
-    if (hasSentEmailAlready) {
-        console.log("Email has already been sent so skipping email sending");
-    } else {
-        const emailId = await sendOrderConfirmationEmail(
-            printifyOrder.address_to.email,
-            printifyOrder.address_to.first_name,
-            printifyOrder.printify_connect.url,
-        );
-        if (emailId) {
-            addEmailIdToOrderTable({ internalOrderId, emailId });
-        }
-        await sendEmail({
-            emailAddress: "bilal@ai-print-shop.com",
-            body: `We have an order to handle: Printify Order Id: ${printifyOrderId}`,
-            subject: "We have an order to handle",
-        });
-        await sendEmail({
-            emailAddress: "bilalm354@gmail.com",
-            body: `We have an order to handle: Printify Order Id: ${printifyOrderId}`,
-            subject: "We have an order to handle",
-        });
-    }
+    await handleSuccessEmails({
+        internalOrderId,
+        printifyOrder,
+        printifyOrderId,
+    });
 
     return (
         <Card className="w-full p-4 md:w-2/3">
@@ -118,4 +96,52 @@ export default async function Page(params: {
             </CardFooter>
         </Card>
     );
+}
+
+async function handleSuccessEmails({
+    internalOrderId,
+    printifyOrder,
+    printifyOrderId,
+}: {
+    internalOrderId: any;
+    printifyOrder: any;
+    printifyOrderId: any;
+}) {
+    try {
+        const existingEmailId = await getEmailIdFromOrderTable({
+            internalOrderId,
+        });
+        const hasSentEmailAlready = Boolean(existingEmailId);
+
+        console.log({ emailId: existingEmailId, hasSentEmailAlready });
+
+        if (hasSentEmailAlready) {
+            console.log(
+                "Email has already been sent so skipping email sending",
+            );
+        } else {
+            const emailId = await sendOrderConfirmationEmail(
+                printifyOrder.address_to.email,
+                printifyOrder.address_to.first_name,
+                printifyOrder.printify_connect.url,
+            );
+            if (emailId) {
+                addEmailIdToOrderTable({ internalOrderId, emailId });
+            }
+            await sendEmail({
+                emailAddress: "bilal@ai-print-shop.com",
+                body: `We have an order to handle: Printify Order Id: ${printifyOrderId}`,
+                subject: "We have an order to handle",
+            });
+            await sendEmail({
+                emailAddress: "bilalm354@gmail.com",
+                body: `We have an order to handle: Printify Order Id: ${printifyOrderId}`,
+                subject: "We have an order to handle",
+            });
+        }
+    } catch {
+        console.error(
+            "Error with email sending after payment success. Resuming.",
+        );
+    }
 }

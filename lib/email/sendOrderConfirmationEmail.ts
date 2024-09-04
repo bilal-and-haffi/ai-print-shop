@@ -58,6 +58,5 @@ export async function sendOrderConfirmationEmail(
         return data.id;
     } catch (error) {
         console.error({ error });
-        throw error;
     }
 }

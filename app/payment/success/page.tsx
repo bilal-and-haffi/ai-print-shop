@@ -139,9 +139,10 @@ async function handleSuccessEmails({
                 subject: "We have an order to handle",
             });
         }
-    } catch {
-        console.error(
-            "Error with email sending after payment success. Resuming.",
-        );
+    } catch (error) {
+        console.error({
+            msg: "Error with email sending after payment success. Resuming.",
+            error,
+        });
     }
 }

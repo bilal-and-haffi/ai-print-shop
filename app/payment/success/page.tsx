@@ -46,9 +46,10 @@ const pollForPrintifyOrder = async (
 };
 
 export default async function Page(params: {
-    searchParams: { orderId: string };
+    searchParams: Promise<{ orderId: string }>;
 }) {
-    const internalOrderId = Number(params.searchParams.orderId);
+    const { orderId } = await params.searchParams;
+    const internalOrderId = Number(orderId);
     const { printifyOrderId } = await pollForInternalOrder(internalOrderId);
 
     if (!printifyOrderId) {

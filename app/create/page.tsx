@@ -5,12 +5,12 @@ import { CountryCode } from "@/lib/stripe/createCheckoutSession";
 export default async function CreatePage({
     searchParams,
 }: {
-    searchParams: {
+    searchParams: Promise<{
         country: CountryCode;
         prompt?: string;
-    };
+    }>;
 }) {
-    const { country, prompt } = searchParams;
+    const { country, prompt } = await searchParams;
     console.log({ msg: "Create Page", country, prompt });
 
     return (

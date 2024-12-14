@@ -13,15 +13,15 @@ import { ImageWithLoadingAndError } from "@/components/ImageWithLoadingAndError"
 export const maxDuration = 300;
 
 export default async function GenerateImagePage(params: {
-    params: { prompt: string };
-    searchParams: {
+    params: Promise<{ prompt: string }>;
+    searchParams: Promise<{
         style: string;
         location: string;
         country: CountryCode;
-    };
+    }>;
 }) {
-    const { prompt: encodedPrompt } = params.params;
-    const { style, location, country } = params.searchParams;
+    const { prompt: encodedPrompt } = await params.params;
+    const { style, location, country } = await params.searchParams;
     const decodedPrompt = decodeURIComponent(encodedPrompt);
     console.log({ msg: "Image Page", decodedPrompt, style, location, country });
 

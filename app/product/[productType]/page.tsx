@@ -13,26 +13,27 @@ import { CountryCode } from "@/lib/stripe/createCheckoutSession";
 
 export type Position = "front" | "back";
 export default async function ProductTypePage({
-    params: { productType },
-    searchParams: {
-        imageId,
-        country,
-        position = "front",
-        scale = 0.7,
-        x = 0.5,
-        y = 0.5,
-    },
+    params,
+    searchParams,
 }: {
-    params: { productType: string };
-    searchParams: {
+    params: Promise<{ productType: string }>;
+    searchParams: Promise<{
         imageId: string;
         country: CountryCode | "undefined";
         position?: Position;
         scale?: number;
         x?: number;
         y?: number;
-    };
+    }>;
 }) {
+    const {
+        imageId,
+        country,
+        position = "front",
+        scale = 0.7,
+        x = 0.5,
+        y = 0.5,
+    } = await searchParams;
 
     if (country === "undefined") {
         return <CountrySetter />;
@@ -41,6 +42,8 @@ export default async function ProductTypePage({
     if (COUNTRIES_WE_SELL_IN.indexOf(country) === -1) {
         return <CountryPicker />;
     }
+
+    const { productType } = await params;
 
     const products = getEnabledProductsForCountry(country);
     const displayName = decodeURIComponent(productType) as DisplayName;

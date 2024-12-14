@@ -13,7 +13,7 @@ env:
     SHOP_ID: foo
     STRIPE_SECRET_KEY: foo
     REMOVE_BG_API_KEY: foo
-    new Resend: ${{ secrets.RESEND_API_KEY }}
+    RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
 
 jobs:
     checks:

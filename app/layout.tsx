@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from "next";
-import { Analytics } from "@vercel/analytics/react";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { CardFooter } from "@/components/ui/card";
@@ -53,7 +52,6 @@ export default function RootLayout({
                         disableTransitionOnChange
                     >
                         {children}
-                        <Analytics />
                     </ThemeProvider>
                 </main>
                 <footer className="mt-auto w-full">

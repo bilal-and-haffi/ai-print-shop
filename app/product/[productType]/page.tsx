@@ -10,7 +10,6 @@ import {
     getEnabledProductsForCountry,
 } from "@/lib/printify/productsData";
 import { CountryCode } from "@/lib/stripe/createCheckoutSession";
-import { track } from "@vercel/analytics/server";
 
 export type Position = "front" | "back";
 export default async function ProductTypePage({
@@ -34,7 +33,6 @@ export default async function ProductTypePage({
         y?: number;
     };
 }) {
-    track("Product page");
 
     if (country === "undefined") {
         return <CountrySetter />;

@@ -20,7 +20,6 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog";
 import { sample } from "lodash";
-import { track } from "@vercel/analytics";
 import { checkPromptForIssues } from "@/lib/openai/copyrightCheck";
 
 const styleOptions = [
@@ -93,7 +92,6 @@ export function ImageGenerationForm({
     };
 
     const generateImage = async () => {
-        track("Generated Image");
         if (promptValue.trim() === "") return;
 
         const response = await checkPromptForIssues(promptValue);
@@ -123,7 +121,6 @@ export function ImageGenerationForm({
     function randomisePrompt(): void {
         const randomPrompt = getRandomPrompt();
         setPromptValue(randomPrompt);
-        track("Randomise Prompt");
     }
 
     return (

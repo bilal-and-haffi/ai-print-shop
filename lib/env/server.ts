@@ -1,6 +1,8 @@
 import { z } from "zod";
 import { config as dotEnvConfig } from "dotenv";
 
+console.log(process.env.CI);
+
 dotEnvConfig({
     path: process.env.CI ? "./.env.ci" : "./.env.local",
 });

@@ -1,10 +1,8 @@
 import { SomethingWrongButton } from "@/components/buttons/SomethingWrongButton";
 import { CreateLink } from "@/components/CreateLink";
 import { ExamplesSection } from "@/components/sections/ExamplesSection";
-import { track } from "@vercel/analytics/server";
 
 export default function Home() {
-    track("Landed on Home");
     return (
         <div className="flex w-full flex-col items-center gap-20">
             <div className="flex w-4/5 flex-col gap-20 pt-20 md:w-3/5">

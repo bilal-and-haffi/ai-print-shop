@@ -7,7 +7,6 @@ import {
     CardFooter,
     CardHeader,
 } from "@/components/ui/card";
-import { track } from "@vercel/analytics";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
@@ -19,7 +18,6 @@ export default function ErrorPage({
     reset: () => void;
 }) {
     console.error({ error });
-    track("Error page");
     const router = useRouter();
 
     return (

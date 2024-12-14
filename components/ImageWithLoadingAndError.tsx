@@ -1,5 +1,4 @@
 "use client";
-import { track } from "@vercel/analytics";
 import Image from "next/image";
 import { useState } from "react";
 import { Skeleton } from "./ui/skeleton";
@@ -36,7 +35,6 @@ export function ImageWithLoadingAndError({
                         error,
                         msg: "Image loading error",
                     });
-                    track("Image Error");
                     setImageErrored(true);
                 }}
                 priority

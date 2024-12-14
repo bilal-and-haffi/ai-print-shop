@@ -34,7 +34,6 @@ import { Slider } from "@/components/ui/slider";
 import { Label } from "@/components/ui/label";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { capitalize } from "lodash";
-import { track } from "@vercel/analytics";
 import { SaveForLaterDialogueAndButton } from "../dialogues/SaveForLaterDialogueAndButton";
 import { setNewSearchParamsAndPushRoute } from "./setNewSearchParamsAndPushRoute";
 import {
@@ -138,7 +137,6 @@ export function ProductDetails({
     }, [selectedProductVariant, country, blueprint_id, print_provider_id]);
 
     const onClick = async () => {
-        track("Buy now");
         if (!sellingPriceInLocalCurrency) {
             throw new Error("No selling price");
         }
@@ -199,7 +197,6 @@ export function ProductDetails({
                 <Button
                     variant={"secondary"}
                     onClick={async () => {
-                        track("Toggle Background");
                         await toggleImageBackgroundButtonAction({
                             currentImageId: printifyImageId,
                             country,
@@ -214,7 +211,6 @@ export function ProductDetails({
                         variant={"secondary"}
                         className="w-full"
                         onClick={() => {
-                            track("Position Image on Front");
                             setNewSearchParamsAndPushRoute({
                                 searchParams,
                                 name: "position",
@@ -230,7 +226,6 @@ export function ProductDetails({
                         variant={"secondary"}
                         className="w-full"
                         onClick={() => {
-                            track("Position image on back");
                             setNewSearchParamsAndPushRoute({
                                 searchParams,
                                 name: "position",

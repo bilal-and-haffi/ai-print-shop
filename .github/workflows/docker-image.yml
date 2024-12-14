@@ -6,11 +6,6 @@ on:
     pull_request:
         branches: ["main"]
 
-env:
-    VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-    VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-    VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-
 jobs:
     build:
         runs-on: ubuntu-latest
@@ -20,7 +15,4 @@ jobs:
             - name: Build the Docker image
               run: docker build \
                   -t nextjs-docker \
-                  --secret id=VERCEL_TOKEN,env=VERCEL_TOKEN \
-                  --secret id=VERCEL_ORG_ID,env=VERCEL_ORG_ID \
-                  --secret id=VERCEL_PROJECT_ID,env=VERCEL_PROJECT_ID \
                   .

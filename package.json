@@ -13,7 +13,6 @@
         "fmt": "prettier --write .",
         "fmt:check": "prettier --check .",
         "test": "jest",
-        "test:ci": "jest",
         "get-envs": "npx vercel env pull .env.development.local",
         "stripe:listen": "stripe listen --events payment_intent.succeeded --forward-to localhost:3000/api/webhooks/pi_success",
         "db:cli": "sqlite3 sqlite.db",

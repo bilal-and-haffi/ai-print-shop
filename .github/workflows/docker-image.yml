@@ -7,7 +7,9 @@ on:
         branches: ["main"]
 
 env:
-    environment: production
+    VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+    VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+    VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 
 jobs:
     build:
@@ -15,8 +17,8 @@ jobs:
 
         steps:
             - uses: actions/checkout@v4
-            - name: Get environment variables
-              run: npm run get-envs
+            - name: Pull Vercel production environment
+              run: vercel env pull --environment=production --token=${{ secrets.VERCEL_TOKEN }}
             - uses: actions/checkout@v4
             - name: Build the Docker image
               #   run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)

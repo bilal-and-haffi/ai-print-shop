@@ -13,7 +13,8 @@
         "fmt": "prettier --write .",
         "fmt:check": "prettier --check .",
         "test": "npm run db:push && jest",
-        "get-envs": "npx vercel env pull .env.development.local",
+        "get-envs": "npx vercel env pull",
+        "get-envs-prod": "npx vercel env pull --environment=production",
         "stripe:listen": "stripe listen --events payment_intent.succeeded --forward-to localhost:3000/api/webhooks/pi_success",
         "db:cli": "sqlite3 sqlite.db",
         "db:push": "npx drizzle-kit push --config ./db/drizzle.config.ts",
@@ -24,8 +25,7 @@
         "e2e:ui": "playwright test --ui",
         "e2e:report": "playwright show-report",
         "docker-build": "docker build -t nextjs-docker .",
-        "docker-run": "docker run --env-file .vercel/.env.production.local -p 3000:3000 nextjs-docker",
-        "vercel-pull-prod-envs-and-remove-quotes": "vercel pull --environment=production && sed -i '' 's/\"//g' .vercel/.env.production.local"
+        "docker-run": "docker run --env-file .env.local -p 3000:3000 nextjs-docker"
     },
     "dependencies": {
         "@hookform/resolvers": "^3.3.4",

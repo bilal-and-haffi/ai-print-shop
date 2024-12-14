@@ -2,7 +2,7 @@ import { z } from "zod";
 import { config as dotEnvConfig } from "dotenv";
 
 dotEnvConfig({
-    path: process.env.CI ? "./.env.ci" : "./.env.development.local",
+    path: process.env.CI ? "./.env.ci" : "./.env.local",
 });
 
 const envSchema = z.object({

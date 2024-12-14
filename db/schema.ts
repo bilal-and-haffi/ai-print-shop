@@ -27,4 +27,5 @@ export const orderTable = sqliteTable("orders", {
     quantity: integer("quantity").notNull(),
     status: text("status").notNull().default("payment_pending"),
     createdAt: text().default(sql`(CURRENT_TIMESTAMP)`),
+    emailId: text("email_id"),
 });

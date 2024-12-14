@@ -34,6 +34,14 @@ export const updateImageTableWithPrintifyImageId = async ({
         printifyProductId,
     });
 
+    if (!printifyImageId) {
+        throw new Error("!printifyImageId");
+    }
+
+    if (!printifyProductId) {
+        throw new Error("No printify prouct id");
+    }
+
     await dbClient
         .update(imageTable)
         .set({

@@ -3,9 +3,9 @@ import { envServer } from "@/lib/env/server";
 
 export default defineConfig({
     schema: "./db/schema.ts",
-    driver: "pg",
+    dialect: "sqlite",
     dbCredentials: {
-        connectionString: envServer.DATABASE_URL as string,
+        url: "./sqlite.db",
     },
     verbose: true,
     strict: envServer.CI ? false : true,

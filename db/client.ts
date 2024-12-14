@@ -1,6 +1,7 @@
-import { neon } from "@neondatabase/serverless";
-import { drizzle } from "drizzle-orm/neon-http";
-import { envServer } from "@/lib/env/server";
+import { drizzle } from "drizzle-orm/better-sqlite3";
+import Database from "better-sqlite3";
 
-const sql = neon(envServer.DATABASE_URL);
-export const dbClient = drizzle(sql);
+const sqlite = new Database("sqlite.db");
+const dbClient = drizzle(sqlite);
+
+export { dbClient };

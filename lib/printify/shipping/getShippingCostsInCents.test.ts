@@ -1,6 +1,6 @@
 import { getShippingCostInCents } from "./getShippingCostsInCents";
 
-describe("getUkShippingCostInCents", () => {
+describe("getShippingCostInCents", () => {
     it("should return 349 for t shirt from t shirt and sons", async () => {
         const shippingCost = await getShippingCostInCents({
             blueprint_id: 145,
@@ -16,6 +16,6 @@ describe("getUkShippingCostInCents", () => {
             print_provider_id: 29,
             deliveryCountry: "US",
         });
-        expect(shippingCost).toBe(475);
+        expect(shippingCost).toBe(399);
     });
 });

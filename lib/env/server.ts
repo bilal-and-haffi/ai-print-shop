@@ -1,14 +1,14 @@
 import { z } from "zod";
 import { config as dotEnvConfig } from "dotenv";
 
+console.log(process.env.CI);
+
 dotEnvConfig({
-    path: process.env.CI ? "./.env.ci" : "./.env.development.local",
+    path: process.env.CI ? "./.env.ci" : "./.env.local",
 });
 
 const envSchema = z.object({
     AI_GIFTS_API_URL: z.string().url(),
-    DATABASE_URL: z.string().url(),
-    DATABASE_URL_UNPOOLED: z.string().url(),
     FREE_CURRENCY_API_KEY: z.string(),
     OPENAI_API_KEY: z.string(),
     OPENAI_ORG_ID: z.string(),
@@ -25,6 +25,7 @@ const envSchema = z.object({
         ])
         .default("development"),
     REMOVE_BG_API_KEY: z.string(),
+    RESEND_API_KEY: z.string().default("foo"),
 });
 
 export const envServer = envSchema.parse(process.env);

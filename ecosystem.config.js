@@ -2,7 +2,7 @@ module.exports = {
     apps: [
         {
             name: "ai-print-shop",
-            script: "npm run start",
+            script: "npm run start -- --port 3001",
             watch: ".",
         },
     ],

@@ -23,6 +23,10 @@ export async function createPrintifyProduct({
 }) {
     const variants = await fetchProductVariants(blueprintId, printProviderId);
     const variantIds = variants.map((variant) => variant.id);
+    const variantIdsLength = variantIds.length;
+    console.log({ variantIdsLength });
+    const MAX_NUMBER_OF_VARIANTS = 100;
+    const slicedVariantIds = variantIds.slice(0, MAX_NUMBER_OF_VARIANTS); // FIXME: I seem buggy
     const prompt =
         await getPromptFromImageIdOrRemovedBackgroundImageId(printifyImageId);
 
@@ -31,7 +35,7 @@ export async function createPrintifyProduct({
         description: "",
         print_areas: [
             {
-                variant_ids: variantIds,
+                variant_ids: slicedVariantIds,
                 placeholders: [
                     {
                         position,
@@ -50,7 +54,7 @@ export async function createPrintifyProduct({
         ],
         print_provider_id: printProviderId,
         title: prompt,
-        variants: variantIds.map((variantId) => ({
+        variants: slicedVariantIds.map((variantId) => ({
             id: variantId,
             price: 1, // Updated later in success webhook to the actual selling price which is dynamically
         })),

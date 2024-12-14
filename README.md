@@ -17,10 +17,14 @@
 -   I want emails telling me about my purchase and delivery
 -   I want to be delivered the product
 
+# Set up
+
+`npm run setup`
+
 # Webhooks
 
 -   Install stripe CLI from https://docs.stripe.com/stripe-cli
--   Run `stripe login` and login
+-   Run `npx stripe login` and login
 
 To listen to payment intent succeeded event:
 
@@ -33,6 +37,12 @@ or
 ```bash
   npm run stripe:listen
 ```
+
+# Vercel
+
+To pull production environment variables
+
+`npx vercel pull --environment=production`
 
 # DB
 

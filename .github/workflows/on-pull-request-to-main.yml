@@ -7,8 +7,6 @@ env:
     CI: true
     AI_GIFTS_API_URL: http://localhost:3000
     FREE_CURRENCY_API_KEY: ${{ secrets.FREE_CURRENCY_API_KEY }}
-    DATABASE_URL: postgres://postgres:password@localhost:5432/test
-    DATABASE_URL_UNPOOLED: postgres://postgres:password@localhost:5432/test
     OPENAI_API_KEY: foo
     OPENAI_ORG_ID: foo
     PRINTIFY_API_TOKEN: ${{secrets.PRINTIFY_API_TOKEN}}
@@ -50,4 +48,4 @@ jobs:
             - name: Install dependencies
               run: npm ci
             - name: Run unit tests
-              run: npm run test:ci
+              run: npm run test

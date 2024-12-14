@@ -22,4 +22,4 @@ jobs:
                   --secret id=VERCEL_TOKEN,env=VERCEL_TOKEN \
                   --secret id=VERCEL_ORG_ID,env=VERCEL_ORG_ID \
                   --secret id=VERCEL_PROJECT_ID,env=VERCEL_PROJECT_ID \
-                  nextjs-docker .
+                  .

@@ -25,7 +25,7 @@
         "e2e:ui": "playwright test --ui",
         "e2e:report": "playwright show-report",
         "docker-build": "docker build -t nextjs-docker .",
-        "docker-run": "docker run --env-file .env.local -p 3000:3000 nextjs-docker"
+        "docker-run": "docker run -p 3000:3000 nextjs-docker"
     },
     "dependencies": {
         "@hookform/resolvers": "^3.3.4",

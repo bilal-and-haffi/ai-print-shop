@@ -34,6 +34,22 @@ or
   npm run stripe:listen
 ```
 
+# Vercel
+
+To pull production environment variables
+
+`npx vercel pull --environment=production`
+
+# Docker / Self host
+
+Run these
+
+`npx vercel pull --environment=production`
+
+`npm run docker-build`
+
+`npm run docker-deploy`
+
 # DB
 
 -   Need to have .env.development.local with updated pg connection values

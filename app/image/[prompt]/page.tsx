@@ -54,10 +54,12 @@ export default async function GenerateImagePage(params: {
         generatedImageUrl = testImageUrl;
     } else {
         try {
+            console.log("before");
             generatedImageUrl = await generateOpenAiImageUrl({
                 prompt: concatenatedPrompt,
                 quality: "hd",
             });
+            console.log("after");
         } catch (error) {
             console.error({
                 error,
@@ -89,7 +91,7 @@ export default async function GenerateImagePage(params: {
                         <ChevronLeft className="h-4 w-4" />
                     </Button>
                 </Link>
-                <span>Your image :)</span>
+                <span>Your image below</span>
                 <a href={`/image/${encodedPrompt}?country=${country}`}>
                     <Button
                         data-testid="Generate new image with same prompt button"

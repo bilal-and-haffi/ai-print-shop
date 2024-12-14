@@ -22,7 +22,7 @@ export default function ErrorPage({
     track("Error page");
     const router = useRouter();
 
-    return (
+    return (    
         <Card>
             <CardHeader>
                 <p>Sorry, something went wrong.</p>

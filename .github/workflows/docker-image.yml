@@ -18,7 +18,8 @@ jobs:
         steps:
             - uses: actions/checkout@v4
             - name: Build the Docker image
-              run: docker build -t nextjs-docker \
+              run: docker build \
+                  -t nextjs-docker \
                   --secret id=VERCEL_TOKEN,env=VERCEL_TOKEN \
                   --secret id=VERCEL_ORG_ID,env=VERCEL_ORG_ID \
                   --secret id=VERCEL_PROJECT_ID,env=VERCEL_PROJECT_ID \

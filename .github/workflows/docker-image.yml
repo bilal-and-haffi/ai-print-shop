@@ -18,9 +18,6 @@ jobs:
 
         steps:
             - uses: actions/checkout@v4
-            - name: Pull Vercel production environment
-              run: vercel env pull --environment=production --token=${{ secrets.VERCEL_TOKEN }}
-            - uses: actions/checkout@v4
             - name: Build the Docker image
               #   run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
               run: npm run docker-build

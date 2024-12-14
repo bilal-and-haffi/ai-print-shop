@@ -23,16 +23,19 @@ COPY . .
 # Uncomment the following line in case you want to disable telemetry during the build.
 # ENV NEXT_TELEMETRY_DISABLED=1
 
-ENV AI_GIFTS_API_URL=foo,
-ENV FREE_CURRENCY_API_KEY=foo,
-ENV OPENAI_API_KEY=foo,
-ENV OPENAI_ORG_ID=foo,
-ENV PRINTIFY_API_TOKEN=foo,
-ENV SHOP_ID=foo,
-ENV STRIPE_SECRET_KEY=foo,
-ENV CI=false,
+
+# These are here because the build fails type check without environment variables
+ENV AI_GIFTS_API_URL=https://foo.com
+ENV FREE_CURRENCY_API_KEY=foo
+ENV OPENAI_API_KEY=foo
+ENV OPENAI_ORG_ID=foo
+ENV PRINTIFY_API_TOKEN=foo
+ENV SHOP_ID=foo
+ENV STRIPE_SECRET_KEY=foo
+ENV CI=false
 ENV VERCEL_ENV=production
-ENV REMOVE_BG_API_KEY=foo,
+ENV REMOVE_BG_API_KEY=foo
+ENV RESEND_API_KEY=foo
 
 RUN npm run build
 

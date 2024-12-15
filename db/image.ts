@@ -78,22 +78,28 @@ export const updateImageTableWithRemovedBackgroundImage = async ({
 export const getPromptFromImageIdOrRemovedBackgroundImageId = async (
     printifyImageId: string,
 ) => {
-    console.log({ msg: "Getting prompt from image id", printifyImageId });
-    const selectResult = await dbClient
-        .select()
-        .from(imageTable)
-        .where(
-            or(
-                eq(imageTable.printifyImageId, printifyImageId),
-                eq(
-                    imageTable.removedBackgroundPrintifyImageId,
-                    printifyImageId,
+    try {
+        console.log({ msg: "Getting prompt from image id", printifyImageId });
+        const selectResult = await dbClient
+            .select()
+            .from(imageTable)
+            .where(
+                or(
+                    eq(imageTable.printifyImageId, printifyImageId),
+                    eq(
+                        imageTable.removedBackgroundPrintifyImageId,
+                        printifyImageId,
+                    ),
                 ),
-            ),
-        );
-    const { prompt } = selectResult[0];
-    console.info({ msg: "Found prompt", prompt });
-    return prompt;
+            );
+        const { prompt } = selectResult[0];
+        console.info({ msg: "Found prompt", prompt });
+        return prompt;
+    } catch (error) {
+        console.error({ error });
+        console.warn("failed to find prompt");
+        return "XXPromptXX";
+    }
 };
 
 export const selectAllFromImageWhereImageIdEquals = async (

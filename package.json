@@ -3,7 +3,7 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
-        "pm2": "pm2 start npm --name ai-print-shop -- run start -- --port 3001",
+        "pm2-start-and-watch": "pm2 start npm --name ai-print-shop -- run start -- --port 3001 --watch",
         "setup-initial": "npm i && npm run get-envs && npm run db:push && npx stripe login",
         "setup": "npm i && npm run get-envs && npm run db:push",
         "dev": "npm run stripe:listen & next dev",

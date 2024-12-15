@@ -7,5 +7,4 @@ npm install
 npm run get-envs-prod
 npm run db:push
 npm run build 
-npm run pm2
 # TODO: notify me

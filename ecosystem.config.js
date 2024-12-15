@@ -25,7 +25,7 @@ module.exports = {
             port: "6969",
             ref: "origin/sqlite-and-node-server", // TODO: update me to main
             repo: "git@github.com:bilal-and-haffi/ai-print-shop.git",
-            path: "/home/bilal/pm2",
+            path: "/home/bilal/pm2-2",
             // "pre-deploy-local": "",
             "post-deploy":
                 "npm install && \

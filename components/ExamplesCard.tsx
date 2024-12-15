@@ -54,7 +54,6 @@ export function ExampleCard({
                 <Link
                     className="w-full"
                     href={`/product/T%20Shirt?country=${countryCode}&imageId=${printifyImageId}&size=L&color=Black`}
-                    target="_blank"
                 >
                     <Button
                         className="w-full"

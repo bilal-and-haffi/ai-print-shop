@@ -22,7 +22,7 @@ module.exports = {
             user: "bilal",
             host: "bilal-home-assistant.duckdns.org",
             port: "6969",
-            ref: "origin/main",
+            ref: "origin/sqlite-and-node-server", // TODO: update me to main
             repo: "git@github.com:bilal-and-haffi/ai-print-shop.git",
             path: "/home/bilal/pm2",
             // "pre-deploy-local": "",

@@ -6,6 +6,7 @@ module.exports = {
             watch: ".",
             exec_mode: "cluster",
             instances: "max",
+            interpreter: "node@22.12.0",
         },
     ],
 

@@ -6,7 +6,7 @@ module.exports = {
             watch: ".",
             exec_mode: "cluster",
             instances: "max",
-            interpreter: "node@22.12.0",
+            exec_interpreter: "~/.nvm/versions/node/v22.12.0/bin/node",
         },
     ],
 
@@ -28,7 +28,9 @@ module.exports = {
             path: "/home/bilal/pm2",
             // "pre-deploy-local": "",
             "post-deploy":
-                "source ~/.zshrc && npm install && npm run build && pm2 reload ecosystem.config.js --env production", // TODO: add db push , get prod envs etc
+                "npm install && \
+                npm run build && \
+                pm2 reload ecosystem.config.js --env production", // TODO: add db push , get prod envs etc
             // "pre-setup": "",
         },
     },

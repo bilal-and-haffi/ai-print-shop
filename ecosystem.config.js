@@ -12,6 +12,7 @@ module.exports = {
     env_production: {
         NODE_ENV: "production",
         VERCEL_ENV: "production",
+        NVM_DIR: "~/.nvm",
     },
     env_development: {
         NODE_ENV: "development",

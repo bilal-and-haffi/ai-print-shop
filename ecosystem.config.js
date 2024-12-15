@@ -28,7 +28,7 @@ module.exports = {
             path: "/home/bilal/pm2",
             // "pre-deploy-local": "",
             "post-deploy":
-                "npm install && npm run build && pm2 reload ecosystem.config.js --env production", // TODO: add db push , get prod envs etc
+                "source ~/.zshrc && npm install && npm run build && pm2 reload ecosystem.config.js --env production", // TODO: add db push , get prod envs etc
             // "pre-setup": "",
         },
     },

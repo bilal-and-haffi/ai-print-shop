@@ -5,7 +5,7 @@ module.exports = {
             script: "npm run start -- --port 3001",
             watch: ".",
             instances: "max",
-            exec_interpreter: "~/.nvm/versions/node/v22.12.0/bin/node",
+            interpreter: "node@22.12.0",
         },
     ],
 

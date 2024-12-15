@@ -17,21 +17,4 @@ module.exports = {
     env_development: {
         NODE_ENV: "development",
     },
-
-    deploy: {
-        production: {
-            user: "bilal",
-            host: "bilal-home-assistant.duckdns.org",
-            port: "6969",
-            ref: "origin/sqlite-and-node-server", // TODO: update me to main
-            repo: "git@github.com:bilal-and-haffi/ai-print-shop.git",
-            path: "/home/bilal/pm2-2",
-            // "pre-deploy-local": "",
-            "post-deploy":
-                "npm install && \
-                npm run build && \
-                pm2 reload ecosystem.config.js --env production", // TODO: add db push , get prod envs etc
-            // "pre-setup": "",
-        },
-    },
 };

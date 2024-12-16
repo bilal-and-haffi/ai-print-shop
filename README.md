@@ -6,16 +6,16 @@
 
 ## Technologies
 
--   UI - NextJs
+- UI - NextJs
 
 ## User Story
 
--   I want to enter text about what I want to print on a t shirt, mug or hoodie
--   I want the website to multiple options for what I want and to display it on different things
--   I want to select which product I want
--   I want to pay for this product
--   I want emails telling me about my purchase and delivery
--   I want to be delivered the product
+- I want to enter text about what I want to print on a t shirt, mug or hoodie
+- I want the website to multiple options for what I want and to display it on different things
+- I want to select which product I want
+- I want to pay for this product
+- I want emails telling me about my purchase and delivery
+- I want to be delivered the product
 
 # Set up
 
@@ -23,8 +23,8 @@
 
 # Webhooks
 
--   Install stripe CLI from https://docs.stripe.com/stripe-cli
--   Run `npx stripe login` and login
+- Install stripe CLI from https://docs.stripe.com/stripe-cli
+- Run `npx stripe login` and login
 
 To listen to payment intent succeeded event:
 
@@ -46,7 +46,7 @@ To pull production environment variables
 
 # DB
 
--   Need to have .env.development.local with updated pg connection values
+- Need to have .env.development.local with updated pg connection values
 
 Update schema:
 

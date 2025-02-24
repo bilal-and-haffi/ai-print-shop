@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { ChevronLeft, RefreshCw } from "lucide-react";
 import { ImageWithLoadingAndError } from "@/components/ImageWithLoadingAndError";
 
-export const maxDuration = 300;
+export const maxDuration = 60;
 
 export default async function GenerateImagePage(params: {
     params: Promise<{ prompt: string }>;

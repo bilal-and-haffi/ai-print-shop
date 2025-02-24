@@ -9,7 +9,7 @@ export const users = pgTable("users", {
 });
 
 export const imageTable = pgTable("image", {
-    id: integer("id").primaryKey(),
+    id: serial("id").primaryKey(),
     prompt: text("prompt").notNull(),
     printifyImageId: text("printify_image_id").notNull(),
     printifyImageUrl: text("printify_image_url").notNull(),
@@ -24,7 +24,7 @@ export const imageTable = pgTable("image", {
 });
 
 export const orderTable = pgTable("orders", {
-    id: integer("id").primaryKey(),
+    id: serial("id").primaryKey(),
     printifyOrderId: text("printify_order_id"),
     printifyProductId: text("printify_product_id").notNull(),
     printifyVariantId: text("printify_variant_id").notNull(),

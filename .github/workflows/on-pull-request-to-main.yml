@@ -9,6 +9,7 @@ env:
     FREE_CURRENCY_API_KEY: ${{ secrets.FREE_CURRENCY_API_KEY }}
     OPENAI_API_KEY: foo
     OPENAI_ORG_ID: foo
+    DATABASE_URL: ${{secrets.DATABASE_URL}}
     PRINTIFY_API_TOKEN: ${{secrets.PRINTIFY_API_TOKEN}}
     SHOP_ID: foo
     STRIPE_SECRET_KEY: foo

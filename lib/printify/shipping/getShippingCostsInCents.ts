@@ -17,6 +17,7 @@ export async function getShippingCostInCents({
         print_provider_id,
     });
     const { profiles } = shippingData;
+    console.log({ profiles, shippingData });
     const countryProfile = profiles.find((profile: any) =>
         profile.countries.some(
             (country: string) => country === deliveryCountry,

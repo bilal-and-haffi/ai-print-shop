@@ -1,8 +1,14 @@
-import { sqliteTable, integer, text } from "drizzle-orm/sqlite-core";
-
 import { sql } from "drizzle-orm";
 
-export const imageTable = sqliteTable("image", {
+import { pgTable, serial, text, varchar, integer } from "drizzle-orm/pg-core";
+
+export const users = pgTable("users", {
+    id: serial("id").primaryKey(),
+    fullName: text("full_name"),
+    phone: varchar("phone", { length: 256 }),
+});
+
+export const imageTable = pgTable("image", {
     id: integer("id").primaryKey(),
     prompt: text("prompt").notNull(),
     printifyImageId: text("printify_image_id").notNull(),
@@ -17,7 +23,7 @@ export const imageTable = sqliteTable("image", {
     createdAt: text().default(sql`(CURRENT_TIMESTAMP)`),
 });
 
-export const orderTable = sqliteTable("orders", {
+export const orderTable = pgTable("orders", {
     id: integer("id").primaryKey(),
     printifyOrderId: text("printify_order_id"),
     printifyProductId: text("printify_product_id").notNull(),

@@ -3,10 +3,11 @@ import { envServer } from "@/lib/env/server";
 
 export default defineConfig({
     schema: "./db/schema.ts",
-    dialect: "sqlite",
+    dialect: "postgresql",
     dbCredentials: {
-        url: "./sqlite.db",
+        url: envServer.DATABASE_URL,
     },
+
     verbose: true,
     strict: envServer.CI ? false : true,
 });

@@ -7,7 +7,6 @@ export default defineConfig({
     dbCredentials: {
         url: envServer.DATABASE_URL,
     },
-
     verbose: true,
     strict: envServer.CI ? false : true,
 });

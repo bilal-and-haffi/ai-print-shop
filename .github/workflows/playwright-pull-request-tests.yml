@@ -37,8 +37,8 @@ jobs:
                   sudo apt update
                   sudo apt upgrade
                   sudo apt install stripe
-            - name: Drizzle push to db branch
-              run: npm run db:push
+            # - name: Drizzle push to db branch
+            #   run: npm run db:push
             - name: Install Playwright Browsers
               run: npm run e2e:install
             - name: Run Playwright tests

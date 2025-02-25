@@ -5,6 +5,6 @@ git pull
 caddy reload
 npm install 
 npm run get-envs-prod
-npm run db:push
+# npm run db:push
 npm run build 
 # TODO: notify me

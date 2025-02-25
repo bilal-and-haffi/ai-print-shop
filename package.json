@@ -13,7 +13,7 @@
         "lint:check": "next lint",
         "fmt": "prettier --write .",
         "fmt:check": "prettier --check .",
-        "test": "npm run db:push && jest",
+        "test": "jest",
         "get-envs": "npx vercel env pull",
         "get-envs-prod": "npx vercel env pull --environment=production",
         "stripe:listen": "stripe listen --events payment_intent.succeeded --forward-to localhost:3000/api/webhooks/pi_success",
